@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Entities.Desafios
+{
+    public class Desafio
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public int Dificultad { get; set; }
+        public string dirArchivo { get; set; }
+
+
+    }
+}
