@@ -5,13 +5,12 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Hera.Data;
 
-namespace Hera.Data.Migrations
+namespace Hera.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170418192829_V1_2")]
-    partial class V1_2
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -22,6 +21,8 @@ namespace Hera.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("DesafioId");
+
                     b.Property<string>("Descripcion");
 
                     b.Property<string>("Nombre");
@@ -31,6 +32,8 @@ namespace Hera.Data.Migrations
                     b.Property<int>("ProfesorId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DesafioId");
 
                     b.HasIndex("ProfesorId");
 
@@ -57,9 +60,9 @@ namespace Hera.Data.Migrations
 
                     b.Property<int>("Dificultad");
 
-                    b.Property<string>("Nombre");
+                    b.Property<string>("DirArchivo");
 
-                    b.Property<string>("dirArchivo");
+                    b.Property<string>("Nombre");
 
                     b.HasKey("Id");
 
@@ -117,7 +120,8 @@ namespace Hera.Data.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
-                    b.Property<int>("UsuarioId");
+                    b.Property<int>("UsuarioId")
+                        .ValueGeneratedOnAdd();
 
                     b.HasKey("Id");
 
@@ -276,6 +280,11 @@ namespace Hera.Data.Migrations
 
             modelBuilder.Entity("Entities.Cursos.Curso", b =>
                 {
+                    b.HasOne("Entities.Desafios.Desafio", "Desafio")
+                        .WithMany()
+                        .HasForeignKey("DesafioId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Entities.Usuarios.Profesor", "Profesor")
                         .WithMany("Cursos")
                         .HasForeignKey("ProfesorId")

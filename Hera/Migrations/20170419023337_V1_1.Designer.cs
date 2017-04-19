@@ -5,17 +5,83 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Hera.Data;
 
-namespace Hera.Data.Migrations
+namespace Hera.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170418160613_Initial-Migration")]
-    partial class InitialMigration
+    [Migration("20170419023337_V1_1")]
+    partial class V1_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Entities.Cursos.Curso", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DesafioId");
+
+                    b.Property<string>("Descripcion");
+
+                    b.Property<string>("Nombre");
+
+                    b.Property<string>("Password");
+
+                    b.Property<int>("ProfesorId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DesafioId");
+
+                    b.HasIndex("ProfesorId");
+
+                    b.ToTable("Cursos");
+                });
+
+            modelBuilder.Entity("Entities.Cursos.Rel_CursoEstudiantes", b =>
+                {
+                    b.Property<int>("CursoId");
+
+                    b.Property<int>("EstudianteId");
+
+                    b.HasKey("CursoId", "EstudianteId");
+
+                    b.HasIndex("EstudianteId");
+
+                    b.ToTable("Rel_Cursos_Estudiantes");
+                });
+
+            modelBuilder.Entity("Entities.Desafios.Desafio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Dificultad");
+
+                    b.Property<string>("DirArchivo");
+
+                    b.Property<string>("Nombre");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Desafios");
+                });
+
+            modelBuilder.Entity("Entities.Desafios.Rel_DesafiosCursos", b =>
+                {
+                    b.Property<int>("DesafioID");
+
+                    b.Property<int>("CursoId");
+
+                    b.HasKey("DesafioID", "CursoId");
+
+                    b.HasIndex("CursoId");
+
+                    b.ToTable("Rel_Cursos_Desafios");
+                });
 
             modelBuilder.Entity("Entities.Usuarios.ApplicationUser", b =>
                 {
@@ -55,9 +121,12 @@ namespace Hera.Data.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
-                    b.Property<int>("UsuarioId");
+                    b.Property<int>("UsuarioId")
+                        .ValueGeneratedOnAdd();
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("UsuarioId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -67,6 +136,40 @@ namespace Hera.Data.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Entities.Usuarios.Estudiante", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Apellidos");
+
+                    b.Property<int>("Edad");
+
+                    b.Property<string>("Nombres");
+
+                    b.Property<int>("UsuarioId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Estudiantes");
+                });
+
+            modelBuilder.Entity("Entities.Usuarios.Profesor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Apellidos");
+
+                    b.Property<string>("Nombres");
+
+                    b.Property<int>("UsuarioId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Profesores");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
@@ -174,6 +277,45 @@ namespace Hera.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Entities.Cursos.Curso", b =>
+                {
+                    b.HasOne("Entities.Desafios.Desafio", "Desafio")
+                        .WithMany()
+                        .HasForeignKey("DesafioId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Entities.Usuarios.Profesor", "Profesor")
+                        .WithMany("Cursos")
+                        .HasForeignKey("ProfesorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Entities.Cursos.Rel_CursoEstudiantes", b =>
+                {
+                    b.HasOne("Entities.Cursos.Curso", "Curso")
+                        .WithMany("Estudiantes")
+                        .HasForeignKey("CursoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Entities.Usuarios.Estudiante", "Estudiante")
+                        .WithMany("Cursos")
+                        .HasForeignKey("EstudianteId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Entities.Desafios.Rel_DesafiosCursos", b =>
+                {
+                    b.HasOne("Entities.Cursos.Curso", "Curso")
+                        .WithMany("Desafios")
+                        .HasForeignKey("CursoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Entities.Desafios.Desafio", "Desafio")
+                        .WithMany()
+                        .HasForeignKey("DesafioID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
