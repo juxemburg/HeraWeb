@@ -28,7 +28,8 @@ namespace Hera.Data
         //Desafios
         void AddDesafio(Desafio model);
         IQueryable<Desafio> GetAll_Desafios();
-        Task<Desafio> Find_Desafio();
+        Task<Desafio> Find_Desafio(int id);
+        Task<bool> Exist_Desafio(int id);
 
         //Cursos
         void AddCurso(Curso model);

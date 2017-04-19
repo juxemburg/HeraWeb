@@ -1,0 +1,87 @@
+@model Hera.Models.EntitiesViewModels.CreateCursoViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Crea tu</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>Curso</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Nombre" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Descripcion" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ProfesorId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ProfesorId" class="form-control" />
+                <span asp-validation-for="ProfesorId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div>
+                <hr />
+                <p>Datos Del Desafio Inicial</p>
+            </div>
+            <label asp-for="Desafio.Nombre" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DesafioId" class="form-control" type="hidden"/>
+                <input asp-for="Desafio.Nombre" class="form-control" />
+                <span asp-validation-for="Desafio.Nombre" class="text-danger"></span>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="Desafio.Dificultad" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Desafio.Dificultad" class="form-control" />
+                <span asp-validation-for="Desafio.Dificultad" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="Desafio.DirArchivo" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Desafio.DirArchivo" class="form-control" />
+                <span asp-validation-for="Desafio.DirArchivo" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

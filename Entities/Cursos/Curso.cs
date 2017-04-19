@@ -15,6 +15,11 @@ namespace Entities.Cursos
         public int ProfesorId { get; set; }
         public Profesor Profesor { get; set; }
 
+        public string Password { get; set; }
+
+        public int DesafioId { get; set; }
+        public Desafio Desafio { get; set; }
+
         public virtual List<Rel_CursoEstudiantes> Estudiantes { get; set; }
         public virtual List<Rel_DesafiosCursos> Desafios { get; set; }
     }

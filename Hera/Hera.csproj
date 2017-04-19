@@ -36,5 +36,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Entities\Entities.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\ControllersMvc\" />
+    <Folder Include="Views\Cursos\" />
+  </ItemGroup>
 
 </Project>

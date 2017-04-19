@@ -16,8 +16,7 @@ namespace Hera.Data
         public DataAccess_Sql(ApplicationDbContext context)
         {
             _context = context;
-
-        }
+         }
 
         public void Add<T>(T entity) where T : class
         {
@@ -26,12 +25,17 @@ namespace Hera.Data
 
         public void AddCurso(Curso model)
         {
-            throw new NotImplementedException();
+            _context.Entry<Curso>(model).State = EntityState.Added;
+            if(model.Desafio != null)
+            {
+                _context.Entry<Desafio>(model.Desafio).State = EntityState.Added;
+            }
+
         }
 
         public void AddDesafio(Desafio model)
         {
-            throw new NotImplementedException();
+            Add<Desafio>(model);
         }
 
         public void AddEstudiante(Estudiante model)
@@ -49,14 +53,19 @@ namespace Hera.Data
             throw new NotImplementedException();
         }
 
+        public async Task<bool> Exist_Desafio(int id)
+        {
+            return (await _context.Desafios.FindAsync(id)) != null;
+        }
+
         public Task<Curso> Find_Curso()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Desafio> Find_Desafio()
+        public async Task<Desafio> Find_Desafio(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Desafios.FindAsync(id);
         }
 
         public Task<Estudiante> Find_Estudiante(int id)
@@ -71,12 +80,12 @@ namespace Hera.Data
 
         public IQueryable<Curso> GetAll_Cursos()
         {
-            throw new NotImplementedException();
+            return _context.Cursos;
         }
 
         public IQueryable<Desafio> GetAll_Desafios()
         {
-            throw new NotImplementedException();
+            return _context.Desafios;
         }
 
         public IQueryable<Estudiante> GetAll_Estudiante()
