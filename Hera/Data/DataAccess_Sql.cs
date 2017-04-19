@@ -6,6 +6,7 @@ using Entities.Cursos;
 using Entities.Desafios;
 using Entities.Usuarios;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Hera.Data
 {
@@ -16,7 +17,16 @@ namespace Hera.Data
         public DataAccess_Sql(ApplicationDbContext context)
         {
             _context = context;
-         }
+        }
+
+        public int Get_UserId(IEnumerable<Claim> claims)
+        {
+            var res = claims
+                .Where(c => c.Type.Equals("UsuarioId"))
+                .FirstOrDefault();
+            int id = Convert.ToInt32(res);
+            return id;
+        }
 
         public void Add<T>(T entity) where T : class
         {

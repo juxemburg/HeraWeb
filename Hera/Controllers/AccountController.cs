@@ -138,6 +138,8 @@ namespace Hera.Controllers
                     };
                 var result
                     = await _userManager.CreateAsync(user, model.Password);
+                await _userManager.AddClaimAsync(user,
+                    new Claim("UsuarioId", ""+user.UsuarioId));
                 var roleResult = await _userManager.AddToRoleAsync(user, model.Role);
                 if (result.Succeeded && roleResult.Succeeded)
                 {

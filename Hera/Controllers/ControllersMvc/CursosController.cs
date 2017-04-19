@@ -38,17 +38,24 @@ namespace Hera.Controllers.ControllersMvc
         [HttpPost]
         public async Task<IActionResult> Create(CreateCursoViewModel model)
         {
+            
             if(ModelState.IsValid)
             {
-                var desafio = await  _data.Find_Desafio(model.DesafioId);
-                if (desafio != null)
-                    _data.Add<Curso>(model.Map(desafio));
-                else
-                    _data.AddCurso(model.Map());
+                try
+                {
+                    var id = _data.Get_UserId(User.Claims); 
+                    var desafio = await _data.Find_Desafio(model.DesafioId);
+                    if (desafio != null)
+                        _data.Add<Curso>(model.Map(id, desafio));
+                    else
+                        _data.AddCurso(model.Map(id));
 
-                var res = await _data.SaveAllAsync();
-                if (res)
-                    return RedirectToAction("Index");
+                    var res = await _data.SaveAllAsync();
+                    if (res)
+                        return RedirectToAction("Index");
+                }
+                catch (Exception e) { }
+
                 
                 
             }

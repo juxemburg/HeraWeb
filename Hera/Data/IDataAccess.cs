@@ -4,6 +4,7 @@ using Entities.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Hera.Data
@@ -14,6 +15,9 @@ namespace Hera.Data
         void Add<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;
         Task<bool> SaveAllAsync();
+
+        //Claims
+        int Get_UserId(IEnumerable<Claim> claims);
 
         //Estudiantes
         void AddEstudiante(Estudiante model);
