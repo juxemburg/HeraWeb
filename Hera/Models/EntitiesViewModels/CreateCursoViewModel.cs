@@ -22,7 +22,7 @@ namespace Hera.Models.EntitiesViewModels
         [Compare("Password", ErrorMessage = "Las contraseñas no coinciden.")]
         public string ConfirmPassword { get; set; }
 
-        public int DesafioId { get; set; }
+        public int? DesafioId { get; set; }
 
         public CreateDesafioViewModel Desafio { get; set; }
 

@@ -43,12 +43,13 @@ namespace Hera.Controllers.ControllersMvc
             {
                 try
                 {
-                    var id = _data.Get_UserId(User.Claims); 
-                    var desafio = await _data.Find_Desafio(model.DesafioId);
+                    var id = _data.Get_UserId(User.Claims);
+                    var profId = await _data.Find_ProfesorId(id);
+                    var desafio = await _data.Find_Desafio(model.DesafioId.GetValueOrDefault());
                     if (desafio != null)
-                        _data.Add<Curso>(model.Map(id, desafio));
+                        _data.Add<Curso>(model.Map(profId, desafio));
                     else
-                        _data.AddCurso(model.Map(id));
+                        _data.AddCurso(model.Map(profId));
 
                     var res = await _data.SaveAllAsync();
                     if (res)
@@ -56,6 +57,7 @@ namespace Hera.Controllers.ControllersMvc
                 }
                 catch (Exception e) { }
             }
+            ModelState.AddModelError("", "Error de cosos ");
             return View(model);
         }
 

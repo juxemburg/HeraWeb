@@ -156,7 +156,7 @@ namespace Hera.Controllers
                         case "Profesor":
                             _dataAccess.AddProfesor(new Profesor()
                             {
-                                Id = user.UsuarioId,
+                                UsuarioId = user.UsuarioId,
                                 Nombres = model.Nombres,
                                 Apellidos = model.Apellidos
                             });
@@ -164,7 +164,7 @@ namespace Hera.Controllers
                         case "Estudiante":
                             _dataAccess.AddEstudiante(new Estudiante()
                             {
-                                Id = user.UsuarioId,
+                                UsuarioId = user.UsuarioId,
                                 Nombres = model.Nombres,
                                 Apellidos = model.Apellidos,
                                 Edad = model.Edad

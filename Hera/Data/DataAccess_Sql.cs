@@ -23,6 +23,7 @@ namespace Hera.Data
         {
             var res = claims
                 .Where(c => c.Type.Equals("UsuarioId"))
+                .Select(c => c.Value)
                 .FirstOrDefault();
             int id = Convert.ToInt32(res);
             return id;
@@ -88,9 +89,19 @@ namespace Hera.Data
             throw new NotImplementedException();
         }
 
+        public async Task<int> Find_ProfesorId(int usuarioId)
+        {
+            var id = await _context.Profesores
+                .Where(p => p.UsuarioId == usuarioId)
+                .Select(p => p.Id)
+                .FirstOrDefaultAsync();
+            return id;
+        }
+
         public IQueryable<Curso> GetAll_Cursos()
         {
-            return _context.Cursos;
+            return _context.Cursos
+                .Include(c => c.Profesor);
         }
 
         public IQueryable<Desafio> GetAll_Desafios()
