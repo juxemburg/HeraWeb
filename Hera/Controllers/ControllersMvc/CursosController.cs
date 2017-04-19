@@ -55,9 +55,6 @@ namespace Hera.Controllers.ControllersMvc
                         return RedirectToAction("Index");
                 }
                 catch (Exception e) { }
-
-                
-                
             }
             return View(model);
         }

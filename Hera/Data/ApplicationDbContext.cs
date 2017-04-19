@@ -34,6 +34,9 @@ namespace Hera.Data
             builder.Entity<ApplicationUser>()
                 .HasAlternateKey(e => e.UsuarioId);
 
+            builder.Entity<ApplicationUser>()
+                .Property(u => u.UsuarioId)
+                .ValueGeneratedOnAdd();
             
 
             builder.Entity<Rel_CursoEstudiantes>()

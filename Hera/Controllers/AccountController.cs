@@ -128,6 +128,14 @@ namespace Hera.Controllers
             string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            ViewData["roles"] = await _roleManager
+                .Roles
+                .Where(r => !r.Name.Equals("Admin"))
+                .Select(r => new SelectListItem()
+                {
+                    Text = r.Name,
+                    Value = r.Name
+                }).ToListAsync();
             if (ModelState.IsValid)
             {
                 var user
