@@ -1,7 +1,7 @@
 @model PaginationViewModel<Curso>
 
 @{
-    ViewData["Title"] = "Cursos";
+ViewData["Title"] = "Mis Cursos";
 }
 
 <h2>Cursos</h2>
@@ -33,13 +33,13 @@
                 Descripcion
             </th>
             <th>
-                Profesor
+                Acciones
             </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
-        {
+    {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Nombre)
@@ -48,23 +48,23 @@
                     @Html.DisplayFor(modelItem => item.Descripcion)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Profesor.Nombres)
+                    
                 </td>
             </tr>
-        }
+    }
     </tbody>
 </table>
 
 <div class="text-center">
     <ul class="pagination">
         @foreach (var item in Model.Pages)
-        {
+    {
             <li class="@item.Item2">
                 <a asp-action="Index" asp-route-skip="@((item.Item1-1)*Model.Take)"
-                   asp-route-take="@Model.Take">
+                    asp-route-take="@Model.Take">
                     @item.Item1
                 </a>
             </li>
-        }
+    }
     </ul>
 </div>

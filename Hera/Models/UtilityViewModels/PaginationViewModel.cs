@@ -32,7 +32,7 @@ namespace Hera.Models.UtilityViewModels
                 string itemClass = ((i-1)* take == skip) ? "active" : "";
                 pages.Add(new Tuple<int, string>(i, itemClass));
             }
-            Pages = pages;
+            Pages = (PageCount > 1) ? pages : new List<Tuple<int, string>>();
 
         }
 

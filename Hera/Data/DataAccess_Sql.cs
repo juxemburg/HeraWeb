@@ -109,6 +109,18 @@ namespace Hera.Data
                 .Where(c => c.ProfesorId == profId)
                 .Include(c => c.Profesor);
         }
+        public IQueryable<Curso> Autocomplete_Cursos(string queryString)
+        {
+            return Autocomplete_Cursos(queryString, null);
+        }
+        public IQueryable<Curso> Autocomplete_Cursos(string queryString,
+            int? profId)
+        {
+            var query = (profId == null) ? GetAll_Cursos() :
+                GetAll_Cursos(profId.GetValueOrDefault());
+            query = query.Where(c => c.Nombre.Contains(queryString));
+            return query;
+        }
 
         public IQueryable<Desafio> GetAll_Desafios()
         {
