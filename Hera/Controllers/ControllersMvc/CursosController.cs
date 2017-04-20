@@ -34,19 +34,7 @@ namespace Hera.Controllers.ControllersMvc
             return View(new PaginationViewModel<Curso>(model,skip,take));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> MisCursos(string searchString = "",
-            int skip = 0, int take = 10)
-        {
-            var profId = await _data.Find_ProfesorId(
-                _data.Get_UserId(User.Claims));
-
-            var model = (string.IsNullOrWhiteSpace(searchString))
-                ? _data.GetAll_Cursos(profId) :
-                _data.Autocomplete_Cursos(searchString, profId);
-
-            return View(new PaginationViewModel<Curso>(model, skip, take));
-        }
+        
 
         [HttpGet]
         public IActionResult Create()

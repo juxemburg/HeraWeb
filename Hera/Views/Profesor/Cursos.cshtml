@@ -8,7 +8,7 @@ ViewData["Title"] = "Mis Cursos";
 
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="index" method="get" class="form-inline">
+        <form asp-action="Cursos" method="get" class="form-inline">
             <div class="form-group">
                 <label>Búsqueda</label>
                 <input name="searchString" type="text" class="form-control" />
@@ -18,7 +18,7 @@ ViewData["Title"] = "Mis Cursos";
     </div>
     <div class="col-md-12">
         <p>
-            <a asp-action="Create">Create New</a>
+            <a asp-action="Create" asp-controller="Cursos">Create New</a>
         </p>
     </div>
 </div>
@@ -42,13 +42,20 @@ ViewData["Title"] = "Mis Cursos";
     {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
+                    <a asp-action="Details" asp-controller="Cursos" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </a>                     
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Descripcion)
                 </td>
                 <td>
-                    
+                    <a class="btn btn-info" asp-action="Edit" asp-controller="Cursos">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a> |
+                    <a class="btn btn-danger" asp-action="Edit" asp-controller="Cursos">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a> 
                 </td>
             </tr>
     }
@@ -60,7 +67,7 @@ ViewData["Title"] = "Mis Cursos";
         @foreach (var item in Model.Pages)
     {
             <li class="@item.Item2">
-                <a asp-action="Index" asp-route-skip="@((item.Item1-1)*Model.Take)"
+                <a asp-action="Cursos" asp-route-skip="@((item.Item1-1)*Model.Take)"
                     asp-route-take="@Model.Take">
                     @item.Item1
                 </a>
