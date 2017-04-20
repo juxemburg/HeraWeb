@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 using Hera.Models.EntitiesViewModels;
 using Entities.Cursos;
 
+using Hera.Models.UtilityViewModels;
+
 namespace Hera.Controllers.ControllersMvc
 {
     [Authorize(Roles = "Profesor")]
@@ -22,10 +24,19 @@ namespace Hera.Controllers.ControllersMvc
         }
 
         [Authorize]
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int skip = 0, int take= 10)
         {
-            var model = await _data.GetAll_Cursos().ToListAsync();
-            return View(model);
+            var model =  _data.GetAll_Cursos();
+            return View(new PaginationViewModel<Curso>(model,skip,take));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MisCursos()
+        {
+            var profId = await _data.Find_ProfesorId(
+                _data.Get_UserId(User.Claims));
+            var model = await _data.GetAll_Cursos(profId).ToListAsync();
+            return View("Index", model);
         }
 
         [HttpGet]

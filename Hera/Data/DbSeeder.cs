@@ -1,4 +1,6 @@
-﻿using Entities.Usuarios;
+﻿using Entities.Cursos;
+using Entities.Desafios;
+using Entities.Usuarios;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
@@ -13,12 +15,14 @@ namespace Hera.Data
     {
         private RoleManager<IdentityRole> _roleMgr;
         private UserManager<ApplicationUser> _userMgr;
+        private IDataAccess _data;
 
         public DbSeeder(UserManager<ApplicationUser> userMgr,
             RoleManager<IdentityRole> roleMgr,
             ApplicationDbContext context,
             IDataAccess dataAccess)
         {
+            _data = dataAccess;
             _roleMgr = roleMgr;
             _userMgr = userMgr;
         }
@@ -35,7 +39,25 @@ namespace Hera.Data
 
         private async Task seedData()
         {
-            
+            for(int i =1; i<= 40; i++)
+            {
+                var curso = new Curso()
+                {
+                    Nombre = "Curso " + i,
+                    Desafio = new Desafio()
+                    {
+                        Nombre = "Desafio " + i,
+                        Dificultad = 4,
+                        DirArchivo = "/dir/dir/dir"
+                    },
+                    Password = "pass",
+                    ProfesorId = 1,
+                    Descripcion = "desc curso " + i
+                };
+                _data.AddCurso(curso);
+                await _data.SaveAllAsync();
+                
+            }
         }
 
         private async Task seedUser(string email)

@@ -103,6 +103,12 @@ namespace Hera.Data
             return _context.Cursos
                 .Include(c => c.Profesor);
         }
+        public IQueryable<Curso> GetAll_Cursos(int profId)
+        {
+            return _context.Cursos
+                .Where(c => c.ProfesorId == profId)
+                .Include(c => c.Profesor);
+        }
 
         public IQueryable<Desafio> GetAll_Desafios()
         {

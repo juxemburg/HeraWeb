@@ -39,6 +39,7 @@ namespace Hera.Data
         //Cursos
         void AddCurso(Curso model);
         IQueryable<Curso> GetAll_Cursos();
+        IQueryable<Curso> GetAll_Cursos(int profId);
         Task<Curso> Find_Curso();
 
     }
