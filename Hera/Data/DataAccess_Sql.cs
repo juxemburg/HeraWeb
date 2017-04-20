@@ -126,6 +126,11 @@ namespace Hera.Data
         {
             return _context.Desafios;
         }
+        public IQueryable<Desafio> Autocomplete_Desafios(string queryString)
+        {
+            return GetAll_Desafios()
+                .Where(d => d.Nombre.Contains(queryString));
+        }
 
         public IQueryable<Estudiante> GetAll_Estudiante()
         {

@@ -1,14 +1,14 @@
-@model PaginationViewModel<Curso>
+@model PaginationViewModel<Desafio>
 
 @{
-ViewData["Title"] = "Mis Cursos";
+    ViewData["Title"] = "Desafios";
 }
 
-<h2>Revisa tus Cursos</h2>
+<h2>Desafios</h2>
 
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Cursos" method="get" class="form-inline">
+        <form asp-action="Index" method="get" class="form-inline">
             <div class="form-group">
                 <label>Búsqueda</label>
                 <input name="searchString" type="text" class="form-control" />
@@ -18,7 +18,7 @@ ViewData["Title"] = "Mis Cursos";
     </div>
     <div class="col-md-12">
         <p>
-            <a asp-action="Create" asp-controller="Cursos">Create New</a>
+            <a asp-action="Create">Nuevo Desafío</a>
         </p>
     </div>
 </div>
@@ -30,7 +30,7 @@ ViewData["Title"] = "Mis Cursos";
                 Nombre
             </th>
             <th>
-                Descripcion
+                Dificultad
             </th>
             <th>
                 Acciones
@@ -39,39 +39,39 @@ ViewData["Title"] = "Mis Cursos";
     </thead>
     <tbody>
         @foreach (var item in Model)
-    {
+        {
             <tr>
                 <td>
-                    <a asp-action="Details" asp-controller="Cursos" asp-route-id="@item.Id">
+                    <a asp-action="Details" asp-route-id="@item.Id">
                         @Html.DisplayFor(modelItem => item.Nombre)
-                    </a>                     
+                    </a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Descripcion)
+                    @Html.DisplayFor(modelItem => item.Dificultad)
                 </td>
                 <td>
-                    <a class="btn btn-info" asp-action="Edit" asp-controller="Cursos">
+                    <a class="btn btn-info" asp-action="Edit">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </a> |
-                    <a class="btn btn-danger" asp-action="Edit" asp-controller="Cursos">
+                    <a class="btn btn-danger" asp-action="Delete">
                         <span class="glyphicon glyphicon-trash"></span>
-                    </a> 
+                    </a>
                 </td>
             </tr>
-    }
+        }
     </tbody>
 </table>
 
 <div class="text-center">
     <ul class="pagination">
         @foreach (var item in Model.Pages)
-    {
+        {
             <li class="@item.Item2">
-                <a asp-action="Cursos" asp-route-skip="@((item.Item1-1)*Model.Take)"
+                <a asp-action="Index" asp-route-skip="@((item.Item1-1)*Model.Take)"
                     asp-route-take="@Model.Take">
                     @item.Item1
                 </a>
             </li>
-    }
+        }
     </ul>
 </div>
