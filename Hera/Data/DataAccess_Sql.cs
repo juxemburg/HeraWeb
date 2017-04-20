@@ -69,9 +69,14 @@ namespace Hera.Data
             return (await _context.Desafios.FindAsync(id)) != null;
         }
 
-        public Task<Curso> Find_Curso()
+        public async Task<Curso> Find_Curso(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Cursos
+                .Where(c=> c.Id == id)
+                .Include(c => c.Desafio)
+                .Include(c => c.Desafios)
+                .ThenInclude(c => c.Desafio)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<Desafio> Find_Desafio(int id)

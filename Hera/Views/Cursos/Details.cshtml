@@ -1,0 +1,69 @@
+@model Entities.Cursos.Curso
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Información</h2>
+<h4>Curso</h4>
+
+<div class="row">
+    <hr />
+    <div class="col-md-6">                
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Password)
+            </dt>
+
+            <dd>
+                <div>
+                    <button class="btn btn-sm btn-default" data-toggle="collapse" data-target="#pwd">
+                        Mostrar Contraseña del Curso
+                    </button>
+                    <div id="pwd" class="collapse">
+                        @Html.DisplayFor(model => model.Password)
+                    </div>
+                </div>
+            </dd>
+            <dt>
+                Desafío inicial
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Desafio.Nombre)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-md-6">
+        <h3>Desafíos</h3>
+        <ul class="list-group">
+            <li class="list-group-item">
+                @Model.Desafio.Nombre
+            </li>
+            @foreach (var item in Model.Desafios)
+            {
+                <li class="list-group-item">
+                    @item.Desafio.Nombre
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+<div>
+    <hr />
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -34,6 +34,18 @@ namespace Hera.Controllers.ControllersMvc
             return View(new PaginationViewModel<Curso>(model,skip,take));
         }
 
+        public async Task<IActionResult> Details(int id)
+        {
+            var model = await _data.Find_Curso(id);
+            var profId = await _data.Find_ProfesorId(
+                _data.Get_UserId(User.Claims));
+            if (model != null && model.ProfesorId == profId)
+            {
+                return View(model);
+            }
+            else
+                return NotFound();
+        }
         
 
         [HttpGet]
@@ -68,6 +80,8 @@ namespace Hera.Controllers.ControllersMvc
             ModelState.AddModelError("", "Error de cosos ");
             return View(model);
         }
+
+
 
 
 

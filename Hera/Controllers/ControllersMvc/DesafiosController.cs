@@ -48,8 +48,7 @@ namespace Hera.Controllers.ControllersMvc
                     await _data.SaveAllAsync();
                     return RedirectToAction("Index");
                 }
-                catch (Exception e) { }
-                
+                catch (Exception e) { }                
             }
             return View(model);
         }

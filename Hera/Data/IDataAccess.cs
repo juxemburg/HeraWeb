@@ -44,7 +44,7 @@ namespace Hera.Data
             int? prodId);
         IQueryable<Curso> GetAll_Cursos();
         IQueryable<Curso> GetAll_Cursos(int profId);
-        Task<Curso> Find_Curso();
+        Task<Curso> Find_Curso(int id);
 
     }
 }
