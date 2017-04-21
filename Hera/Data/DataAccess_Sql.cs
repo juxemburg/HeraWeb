@@ -102,6 +102,14 @@ namespace Hera.Data
                 .FirstOrDefaultAsync();
             return id;
         }
+        public async Task<int> Find_EstudianteId(int usuarioId)
+        {
+            var id = await _context.Estudiantes
+                .Where(p => p.UsuarioId == usuarioId)
+                .Select(p => p.Id)
+                .FirstOrDefaultAsync();
+            return id;
+        }
 
         public IQueryable<Curso> GetAll_Cursos()
         {

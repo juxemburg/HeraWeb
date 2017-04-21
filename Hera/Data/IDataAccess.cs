@@ -28,6 +28,7 @@ namespace Hera.Data
         void AddProfesor(Profesor model);
         IQueryable<Profesor> GetAll_Profesor();
         Task<int> Find_ProfesorId(int usuarioId);
+        Task<int> Find_EstudianteId(int usuarioId);
         Task<Profesor> Find_Profesor(int id);
 
         //Desafios

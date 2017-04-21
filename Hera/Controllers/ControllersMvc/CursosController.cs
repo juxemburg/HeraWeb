@@ -13,7 +13,7 @@ using Hera.Models.UtilityViewModels;
 
 namespace Hera.Controllers.ControllersMvc
 {
-    [Authorize(Roles = "Profesor")]
+    
     public class CursosController : Controller
     {
         private IDataAccess _data;
@@ -23,7 +23,7 @@ namespace Hera.Controllers.ControllersMvc
             _data = data;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Estudiante")]
         public IActionResult Index(string searchString = "",
             int skip = 0, int take= 10)
         {
@@ -80,6 +80,28 @@ namespace Hera.Controllers.ControllersMvc
             ModelState.AddModelError("", "Error de cosos ");
             return View(model);
         }
+        [HttpPost]
+        [Authorize(Roles = "Estudiante")]
+        public async Task<IActionResult> AddEstudiante(AddEstudianteViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var id = _data.Get_UserId(User.Claims);
+                var estudianteId = await _data.Find_EstudianteId(id);
+                try
+                {
+                    var curso = await _data.Find_Curso(model.CursoId);
+                    if (curso.Password.Equals(model.Password)) {
+                        _data.Add<Rel_CursoEstudiantes>(model.Map(model.CursoId,estudianteId));
+                        await _data.SaveAllAsync();
+                    }                    
+                }
+                catch (Exception e) {
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
 
 
 
