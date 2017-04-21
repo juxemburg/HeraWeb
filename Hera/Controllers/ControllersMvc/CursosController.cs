@@ -25,13 +25,13 @@ namespace Hera.Controllers.ControllersMvc
 
         [Authorize(Roles = "Estudiante")]
         public IActionResult Index(string searchString = "",
-            int skip = 0, int take= 10)
+            int skip = 0, int take = 10)
         {
             var model = (string.IsNullOrWhiteSpace(searchString))
                 ? _data.GetAll_Cursos() :
                 _data.Autocomplete_Cursos(searchString);
 
-            return View(new PaginationViewModel<Curso>(model,skip,take));
+            return View(new PaginationViewModel<Curso>(model, skip, take));
         }
 
         public async Task<IActionResult> Details(int id)
@@ -46,7 +46,7 @@ namespace Hera.Controllers.ControllersMvc
             else
                 return NotFound();
         }
-        
+
 
         [HttpGet]
         public IActionResult Create()
@@ -58,8 +58,8 @@ namespace Hera.Controllers.ControllersMvc
         [HttpPost]
         public async Task<IActionResult> Create(CreateCursoViewModel model)
         {
-            
-            if(ModelState.IsValid)
+
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -104,7 +104,23 @@ namespace Hera.Controllers.ControllersMvc
 
 
 
+        public async Task<IActionResult> AddDesafio(AddDesafioViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var desafio = (model.DesafioId != null) ?
+                    await _data.Find_Desafio(
+                        model.DesafioId.GetValueOrDefault()) :
+                    model.Map();
 
+                if (model.DesafioId == null)
+                    _data.AddDesafio(desafio);
+
+                _data.AddDesafio(model.Id, desafio);
+                await _data.SaveAllAsync();
+            }
+            return RedirectToAction("Details", new { id = model.Id });
+        }
 
 
     }

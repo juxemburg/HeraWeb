@@ -48,6 +48,18 @@ namespace Hera.Data
         {
             Add<Desafio>(model);
         }
+        public void AddDesafio(int cursoId, Desafio model)
+        {
+            var rel = new Rel_DesafiosCursos()
+            {
+                CursoId = cursoId,
+                Desafio = model
+            };
+
+            Add<Rel_DesafiosCursos>(rel);
+            
+            
+        }
 
         public void AddEstudiante(Estudiante model)
         {
