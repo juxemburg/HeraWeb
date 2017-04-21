@@ -11,6 +11,10 @@
   <PropertyGroup>
     <UserSecretsId>aspnet-Hera-1cfe3ca2-e870-4449-8c34-3b1d6b0d8618</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\js\Cursos\Details.js" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
@@ -39,6 +43,7 @@
   <ItemGroup>
     <Folder Include="Controllers\ControllersMvc\" />
     <Folder Include="Data\Migrations\" />
+    <Folder Include="ViewComponents\" />
     <Folder Include="Views\Cursos\" />
   </ItemGroup>
 

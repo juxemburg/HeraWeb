@@ -7,16 +7,18 @@ using System.Threading.Tasks;
 
 namespace Hera.Models.EntitiesViewModels
 {
-    public class CreateDesafioViewModel
+    public class AddDesafioViewModel
     {
+        public int? DesafioId { get; set; }
 
-        [Display(Name ="Nombre del Desafio")]
+        public int Id { get; set; }
+
+        [Display(Name = "Nombre del Desafio")]
         public string Nombre { get; set; }
 
         public int Dificultad { get; set; }
-        
-        public string DirArchivo { get; set; }
 
+        public string DirArchivo { get; set; }
 
         public Desafio Map()
         {
@@ -24,7 +26,7 @@ namespace Hera.Models.EntitiesViewModels
             {
                 Nombre = this.Nombre,
                 Dificultad = this.Dificultad,
-                DirArchivo = this.DirArchivo
+                DirArchivo = this.DirArchivo                               
             };
         }
     }

@@ -9,7 +9,7 @@
 
 <div class="row">
     <hr />
-    <div class="col-md-6">                
+    <div class="col-md-6">
         <dl class="dl-horizontal">
             <dt>
                 @Html.DisplayNameFor(model => model.Nombre)
@@ -49,15 +49,23 @@
         <h3>Desafíos</h3>
         <ul class="list-group">
             <li class="list-group-item">
-                @Model.Desafio.Nombre
+                <a asp-action="Details" asp-controller="Desafios">
+                    @Model.Desafio.Nombre
+                </a>
             </li>
             @foreach (var item in Model.Desafios)
             {
                 <li class="list-group-item">
-                    @item.Desafio.Nombre
+                    <a asp-action="Details" asp-controller="Desafios">
+                        @item.Desafio.Nombre
+                    </a>
                 </li>
             }
         </ul>
+        <button class="btn btn-info" data-toggle="modal" data-target="#myModal">
+            <span class="glyphicon glyphicon-plus"></span>
+            Agregar Desafío
+        </button>
     </div>
 </div>
 
@@ -67,3 +75,52 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Añadir Desafío</h4>
+            </div>
+            <div class="modal-body">
+                <form asp-action="AddDesafio" class="form-horizontal">
+                    <input type="hidden" name="DesafioId" value="" />
+                    <input asp-for="Id" type="hidden" />
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <input name="Nombre" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Dificultad</label>
+                        <div class="col-sm-10">
+                            <input type="number" name="Dificultad" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Dirección Archivo</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="DirArchivo" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-info" type="submit" value="Crear!" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/Autocomplete/auto-complete.min.js"></script>
+    <script src="~/js/Cursos/Details.js"></script>
+}
