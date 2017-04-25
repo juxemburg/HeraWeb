@@ -10,17 +10,17 @@ using Microsoft.EntityFrameworkCore;
 namespace Hera.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Cursos")]
-    public class CursosController : Controller
+    [Route("api/Autocomplete")]
+    public class AutocompleteController : Controller
     {
         private IDataAccess _data;
 
-        public CursosController(IDataAccess data)
+        public AutocompleteController(IDataAccess data)
         {
             _data = data;
         }
 
-        [HttpGet("autocomplete/{search}")]
+        [HttpGet("Desafios/{search}")]
         public async Task<IActionResult> AutoComplete(string search)
         {
             var res = await _data.Autocomplete_Desafios(search)

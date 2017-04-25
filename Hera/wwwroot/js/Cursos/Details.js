@@ -1,15 +1,22 @@
 ﻿
-var xhr;
-var autocom = new autoComplete({
-    selector: 'input[name="Nombre"]',
-    source: function (term, response) {
-        try { xhr.abort(); } catch (e) { }
-        xhr = $.get('/api/Cursos/autocomplete/' + term,
-            (data) => { response(data); })
+
+
+var options = {
+    url: (search) => {
+        return "/api/Autocomplete/desafios/" + search;
     },
-    onSelect: function (e, term, item) {
-        alert(item);
-        alert(term);
-        alert(e);
+    getValue: data => {
+        return data.nombre;
+    },
+    list: {
+        onSelectItemEvent: function () {
+            var value = $("#input-desafioNombre").getSelectedItemData();
+
+            $("#input-desafioId").val(value.id);
+            document.getElementById('input-dirArchivo').value = '--';
+            $("#input-desafioDificultad").val(value.dificultad);
+        }
     }
-});
+};
+
+$("#input-desafioNombre").easyAutocomplete(options);

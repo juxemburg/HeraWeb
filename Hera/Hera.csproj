@@ -12,6 +12,9 @@
     <UserSecretsId>aspnet-Hera-1cfe3ca2-e870-4449-8c34-3b1d6b0d8618</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="wwwroot\css\Autocomplete\easy-autocomplete.min.css" />
+    <Content Include="wwwroot\css\Autocomplete\easy-autocomplete.themes.min.css" />
+    <Content Include="wwwroot\js\Autocomplete\jquery.easy-autocomplete.min.js" />
     <Content Include="wwwroot\js\Cursos\Details.js" />
 	<Content Include="wwwroot\js\Cursos\index.js" />
   </ItemGroup>
