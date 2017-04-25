@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\ControllersMvc\" />
-    <Folder Include="Data\Migrations\" />
     <Folder Include="ViewComponents\" />
     <Folder Include="Views\Cursos\" />
   </ItemGroup>

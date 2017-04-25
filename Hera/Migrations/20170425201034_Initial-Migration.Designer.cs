@@ -8,8 +8,8 @@ using Hera.Data;
 namespace Hera.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170419023337_V1_1")]
-    partial class V1_1
+    [Migration("20170425201034_Initial-Migration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

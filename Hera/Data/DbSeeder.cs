@@ -34,7 +34,7 @@ namespace Hera.Data
             if(user == null)
                 await seedUser("juanmontano@unicauca.edu.co");
 
-            await seedData();
+            //await seedData();
         }
 
         private async Task seedData()
