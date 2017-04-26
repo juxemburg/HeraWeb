@@ -44,5 +44,11 @@ namespace Hera.Controllers.ControllersMvc
 
             return View(model);
         }
+
+        [HttpGet("curso/{cursoId}/desafio/{desafioId}")]
+        public async Task<IActionResult> Desafio(int cursoId, int desafioId)
+        {
+            return NotFound();
+        }
     }
 }

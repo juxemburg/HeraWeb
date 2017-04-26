@@ -9,6 +9,8 @@ using Entities.Usuarios;
 using Entities.Cursos;
 using Entities.Desafios;
 using Hera.Models.EntitiesViewModels;
+using Entities.Calificaciones;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Hera.Data
 {
@@ -19,6 +21,8 @@ namespace Hera.Data
         public DbSet<Estudiante> Estudiantes { get; set; }
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Desafio> Desafios { get; set; }
+        public DbSet<Calificacion> Calificaciones { get; set; }
+        public DbSet<RegistroCalificacion> RegistroCalificaiones { get; set; }
         public DbSet<Rel_CursoEstudiantes> Rel_Cursos_Estudiantes { get; set; }
         public DbSet<Rel_DesafiosCursos> Rel_Cursos_Desafios { get; set; }
 
@@ -41,9 +45,39 @@ namespace Hera.Data
             
 
             builder.Entity<Rel_CursoEstudiantes>()
-                .HasKey(entity => new { entity.CursoId, entity.EstudianteId });
-            builder.Entity<Rel_DesafiosCursos>().
-                HasKey(entity => new { entity.DesafioID, entity.CursoId });
+                .HasKey(entity => 
+                new { entity.CursoId, entity.EstudianteId });
+
+            builder.Entity<Rel_DesafiosCursos>()
+                .HasKey(entity => 
+                new { entity.DesafioID, entity.CursoId });
+
+            //FK_RegistroCalificacion -> Rel_CrusoEstudiantes
+            builder.Entity<RegistroCalificacion>()
+                .HasOne(e => e.Rel_CursoEstudiantes)
+                .WithMany(rel => rel.Registros)
+                .HasForeignKey(entity =>
+                new { entity.CursoId, entity.EstudianteId })
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<RegistroCalificacion>()
+                .HasOne(e => e.Desafio)
+                .WithMany(e => e.Calificaciones)
+                .HasForeignKey(e => e.DesafioId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+
+            builder.Entity<RegistroCalificacion>()
+                .HasKey(entity =>
+                new { entity.CursoId, entity.EstudianteId, entity.DesafioId });
+
+            builder.Entity<Calificacion>()
+                .HasOne(e => e.RegistroCalificacion)
+                .WithMany(e2 => e2.Calificaciones)
+                .HasForeignKey(entity =>
+                new { entity.CursoId, entity.EstudianteId, entity.DesafioId })
+                .OnDelete(DeleteBehavior.SetNull); 
+
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);

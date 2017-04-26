@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities.Calificaciones;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,6 +13,7 @@ namespace Entities.Desafios
         public int Dificultad { get; set; }
         public string DirArchivo { get; set; }
 
+        public virtual List<RegistroCalificacion> Calificaciones { get; set; }
 
     }
 }
