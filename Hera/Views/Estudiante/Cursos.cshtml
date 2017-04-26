@@ -15,11 +15,15 @@
     {
         <div class="card shadow col-lg-3 col-md-4 col-sm-6">
             <div class="card-header">
-                <h3>@item.Nombre</h3>
-                <h5>@item.Profesor.NombreCompleto</h5>
+                <h3>
+                    <a asp-action="CursoDetails">
+                        @item.Nombre
+                    </a>
+                </h3>
+                <h4>@item.Profesor.NombreCompleto</h4>
             </div>
             <div class="card-content">
-                aquí va el contenido relevante del curso
+                <p>@item.Descripcion</p>
             </div>
         </div>
     }
