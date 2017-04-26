@@ -2,17 +2,27 @@
     background-color: #FFF;
     border-radius: 5px;
     padding: 5px 20px;
-
 }
 
     .card.bordered {
         border: 1px solid #000;
     }
 
+    .card.circle {
+        border-radius: 50%;
+    }
+
+        .card.circle:before {
+            content: "";
+            display: block;
+            padding-top: 100%; /* initial ratio of 1:1*/
+        }
+
     .card.shadow {
         box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
         transition: 0.3s;
     }
+
     .card:hover {
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     }
@@ -21,15 +31,16 @@
     border-bottom: 2px solid #404040;
 }
 
-.card-header h3 {
-    font-weight: 700;
-}
+    .card-header h3 {
+        font-weight: 700;
+    }
 
 .card-content {
     margin-top: 10%;
     padding: 2px 16px;
 }
-.card-content p {
-    font-size: 0.8em;
-    color: #404040;
-}
+
+    .card-content p {
+        font-size: 0.8em;
+        color: #404040;
+    }

@@ -87,6 +87,7 @@ namespace Hera.Data
             return await _context.Cursos
                 .Where(c=> c.Id == id)
                 .Include(c => c.Desafio)
+                .Include(c => c.Profesor)
                 .Include(c => c.Desafios)
                 .ThenInclude(c => c.Desafio)
                 .Include(c => c.Estudiantes)

@@ -2,6 +2,7 @@
 using Entities.Usuarios;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Entities.Cursos
@@ -22,5 +23,13 @@ namespace Entities.Cursos
 
         public virtual List<Rel_CursoEstudiantes> Estudiantes { get; set; }
         public virtual List<Rel_DesafiosCursos> Desafios { get; set; }
+
+        public bool ContieneEstudiante(int estId)
+        {
+            var query = Estudiantes
+                .Where(rel => rel.EstudianteId == estId)
+                .FirstOrDefault();
+            return query != null;                
+        }
     }
 }

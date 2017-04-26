@@ -11,7 +11,7 @@ using Entities.Cursos;
 
 namespace Hera.Controllers.ControllersMvc
 {
-    [Authorize(Roles ="Estudiante")]
+    [Authorize(Roles = "Estudiante")]
     public class EstudianteController : Controller
     {
         private IDataAccess _data;
@@ -23,13 +23,26 @@ namespace Hera.Controllers.ControllersMvc
         [HttpGet]
         public async Task<IActionResult> Cursos()
         {
-            var estudianteId 
+            var estudianteId
                 = await _data.Find_EstudianteId(
                     _data.Get_UserId(User.Claims));
             var model = _data.GetAll_CursosEstudiante(estudianteId);
-            
+
             return View(new PaginationViewModel<Curso>
-                (await model.ToListAsync(),0,10));
+                (await model.ToListAsync(), 0, 10));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Curso(int id)
+        {
+            var estId
+                = await _data.Find_EstudianteId(
+                    _data.Get_UserId(User.Claims));
+            var model = await _data.Find_Curso(id);
+            if (model == null || !model.ContieneEstudiante(estId))
+                return NotFound();
+
+            return View(model);
         }
     }
 }

@@ -20,12 +20,16 @@ namespace Hera.Models.EntitiesViewModels
 
         public string DirArchivo { get; set; }
 
+        [Display(Name = "Descripción")]
+        public string Descripcion { get; set; }
+
         public Desafio Map()
         {
             return new Desafio()
             {
                 Nombre = this.Nombre,
                 Dificultad = this.Dificultad,
+                Descripcion = this.Descripcion,
                 DirArchivo = this.DirArchivo                               
             };
         }

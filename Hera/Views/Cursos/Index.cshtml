@@ -49,8 +49,9 @@
                     @Html.DisplayFor(modelItem => item.Profesor.Nombres)
                 </td>
                 <td>
-                    
-                    <button id="@item.Id" type="button" class="btn-item btn btn-info" data-toggle="modal" data-target="#myModal">Matricular</button>
+                    <button id="@item.Id" type="button" class="btn-item btn btn-info" data-toggle="modal" data-target="#myModal">
+                        Matricular
+                    </button>
                 </td>
             </tr>
         }
@@ -89,7 +90,7 @@
             </div>
             <div class="modal-body">
                 <form asp-action="AddEstudiante">
-                                      
+
                     <input id="input-curso" type="hidden" name="CursoId" value="" />
                     <label class="col-md-2 control-label"> Password </label>
                     <div class="col-md-10">
@@ -101,7 +102,7 @@
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                     </div>
                 </form>
-            </div>            
+            </div>
         </div>
 
     </div>

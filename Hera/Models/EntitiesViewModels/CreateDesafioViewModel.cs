@@ -14,7 +14,9 @@ namespace Hera.Models.EntitiesViewModels
         public string Nombre { get; set; }
 
         public int Dificultad { get; set; }
-        
+
+        public string Descripcion { get; set; }
+
         public string DirArchivo { get; set; }
 
 
@@ -24,6 +26,7 @@ namespace Hera.Models.EntitiesViewModels
             {
                 Nombre = this.Nombre,
                 Dificultad = this.Dificultad,
+                Descripcion = this.Descripcion,
                 DirArchivo = this.DirArchivo
             };
         }
