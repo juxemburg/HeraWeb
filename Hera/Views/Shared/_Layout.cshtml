@@ -9,6 +9,8 @@
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link href="~/css/colors.css" rel="stylesheet" />
+        <link href="~/css/cards.css" rel="stylesheet" />
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -16,6 +18,7 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    
     @RenderSection("Styles", false)
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
@@ -43,10 +46,10 @@
     </nav>
     <div class="container body-content">
         @RenderBody()
-        <hr />
+        @*<hr />
         <footer>
             <p>&copy; 2017 - Hera</p>
-        </footer>
+        </footer>*@
     </div>
 
     <environment names="Development">

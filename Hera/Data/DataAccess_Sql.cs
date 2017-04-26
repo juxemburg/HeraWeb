@@ -99,14 +99,14 @@ namespace Hera.Data
             return await _context.Desafios.FindAsync(id);
         }
 
-        public Task<Estudiante> Find_Estudiante(int id)
+        public async Task<Estudiante> Find_Estudiante(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Estudiantes.FindAsync(id);
         }
 
-        public Task<Profesor> Find_Profesor(int id)
+        public async Task<Profesor> Find_Profesor(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Profesores.FindAsync(id);
         }
 
         public async Task<int> Find_ProfesorId(int usuarioId)
@@ -136,6 +136,14 @@ namespace Hera.Data
             return _context.Cursos
                 .Where(c => c.ProfesorId == profId)
                 .Include(c => c.Profesor);
+        }
+        public IQueryable<Curso> GetAll_CursosEstudiante(int idEst)
+        {
+            return _context.Rel_Cursos_Estudiantes
+                .Where(rel => rel.EstudianteId == idEst)
+                .Include(rel => rel.Curso)                
+                .Select(rel => rel.Curso)
+                .Include(cur => cur.Profesor);
         }
         public IQueryable<Curso> Autocomplete_Cursos(string queryString)
         {
