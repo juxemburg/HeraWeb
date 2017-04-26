@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Hera.Data;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Hera.Models.EntitiesViewModels;
 using Entities.Cursos;
@@ -13,7 +10,7 @@ using Hera.Models.UtilityViewModels;
 
 namespace Hera.Controllers.ControllersMvc
 {
-    
+
     public class CursosController : Controller
     {
         private IDataAccess _data;
@@ -103,21 +100,25 @@ namespace Hera.Controllers.ControllersMvc
         }
 
 
-
+        [HttpPost]
         public async Task<IActionResult> AddDesafio(AddDesafioViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var desafio = (model.DesafioId != null) ?
+                try
+                {
+                    var desafio = (model.DesafioId != null) ?
                     await _data.Find_Desafio(
                         model.DesafioId.GetValueOrDefault()) :
                     model.Map();
 
-                if (model.DesafioId == null)
-                    _data.AddDesafio(desafio);
+                    if (model.DesafioId == null)
+                        _data.AddDesafio(desafio);
 
-                _data.AddDesafio(model.Id, desafio);
-                await _data.SaveAllAsync();
+                    _data.AddDesafio(model.Id, desafio);
+                    await _data.SaveAllAsync();
+                }
+                catch (Exception) { }
             }
             return RedirectToAction("Details", new { id = model.Id });
         }

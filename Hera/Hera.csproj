@@ -14,6 +14,7 @@
   <ItemGroup>
     <Content Include="wwwroot\css\Autocomplete\easy-autocomplete.min.css" />
     <Content Include="wwwroot\css\Autocomplete\easy-autocomplete.themes.min.css" />
+    <Content Include="wwwroot\js\Autocomplete\autocomplete-client.js" />
     <Content Include="wwwroot\js\Autocomplete\jquery.easy-autocomplete.min.js" />
     <Content Include="wwwroot\js\Cursos\Details.js" />
 	<Content Include="wwwroot\js\Cursos\index.js" />

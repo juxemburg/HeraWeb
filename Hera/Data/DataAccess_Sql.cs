@@ -7,6 +7,7 @@ using Entities.Desafios;
 using Entities.Usuarios;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using System.Data.SqlClient;
 
 namespace Hera.Data
 {
@@ -88,6 +89,8 @@ namespace Hera.Data
                 .Include(c => c.Desafio)
                 .Include(c => c.Desafios)
                 .ThenInclude(c => c.Desafio)
+                .Include(c => c.Estudiantes)
+                .ThenInclude(rel => rel.Estudiante)
                 .FirstOrDefaultAsync();
         }
 
@@ -169,7 +172,14 @@ namespace Hera.Data
 
         public async Task<bool> SaveAllAsync()
         {
-            return (await _context.SaveChangesAsync()) > 0;
+            try
+            {
+                return (await _context.SaveChangesAsync()) > 0;
+            }
+            catch(SqlException)
+            {
+                return false;
+            }
         }
     }
 }
