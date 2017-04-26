@@ -139,11 +139,15 @@ namespace Hera.Data
         }
         public IQueryable<Curso> GetAll_CursosEstudiante(int idEst)
         {
-            return _context.Rel_Cursos_Estudiantes
+            var ids = _context.Rel_Cursos_Estudiantes
                 .Where(rel => rel.EstudianteId == idEst)
-                .Include(rel => rel.Curso)                
-                .Select(rel => rel.Curso)
+                .Select(rel => rel.CursoId);
+
+            var query = _context.Cursos
+                .Where(cur => ids.Contains(cur.Id))
                 .Include(cur => cur.Profesor);
+            return query;
+                
         }
         public IQueryable<Curso> Autocomplete_Cursos(string queryString)
         {
