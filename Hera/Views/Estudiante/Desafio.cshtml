@@ -1,12 +1,12 @@
-@model Desafio
+@model RegistroCalificacion
 
 @{
-    ViewData["Title"] = Model.Nombre;
+    ViewData["Title"] = Model.Desafio.Nombre;
 }
 
 <div class="row">
     <div class="col-md-6">
-        <h2>@Model.Nombre</h2>
+        <h2>@Model.Desafio.Nombre</h2>
     </div>
     <div class="col-md-6">
         <h3>Sin Completar</h3>
@@ -17,10 +17,11 @@
     <hr />
     <div class="col-md-6">
         <h3>Instrucciones</h3>
-        <p>@Model.Descripcion</p>
+        <p>@Model.Desafio.Descripcion</p>
     </div>
     <div class="col-md-6">
-        <a class="btn btn-info" asp-controller="Desafios" asp-action="DownloadEscenario" asp-route-desafioId="@Model.Id">
+        <a class="btn btn-info" asp-action="IniciarDesafio" asp-route-desafioId="@Model.DesafioId"
+           asp-route-cursoId="@Model.CursoId">
             ¡Descarga la escena!
             <span class="glyphicon glyphicon-download"></span>
         </a>

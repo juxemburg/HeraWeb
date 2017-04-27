@@ -8,6 +8,7 @@ using Hera.Data;
 using Microsoft.EntityFrameworkCore;
 using Hera.Models.UtilityViewModels;
 using Entities.Cursos;
+using Entities.Calificaciones;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -51,14 +52,54 @@ namespace Hera.Controllers.ControllersMvc
             var estId
                 = await _data.Find_EstudianteId(
                     _data.Get_UserId(User.Claims));
-            var model = await _data.Find_Curso(cursoId);
-            if (model == null || !model.ContieneEstudiante(estId)
-                || !model.ContieneDesafio(desafioId))
+            var curso = await _data.Find_Curso(cursoId);
+            if (curso == null || !curso.ContieneEstudiante(estId)
+                || !curso.ContieneDesafio(desafioId))
                 return NotFound();
 
-            var desafio = await _data.Find_Desafio(desafioId);
+            var model = await _data.Find_RegistroCalificacion(
+                cursoId, estId, desafioId);
+            if(model == null)
+            {
+                model = new RegistroCalificacion()
+                {
+                    CursoId = cursoId,
+                    DesafioId = desafioId,
+                    EstudianteId = estId
+                };
+                _data.Add<RegistroCalificacion>(model);
+                var res = await _data.SaveAllAsync();
+                if (!res)
+                    return BadRequest();
+            }
 
-            return View(desafio);
+            return View(model);
+
+        }
+
+        public async Task<IActionResult> IniciarDesafio(
+            int cursoId, int desafioId)
+        {
+            var estId
+                = await _data.Find_EstudianteId(
+                    _data.Get_UserId(User.Claims));
+
+            var model = new Calificacion()
+            {
+                BloquesRepetidos = 0,
+                Inicializacion = 0,
+                Tiempoinicio = DateTime.Now,
+                CursoId = cursoId,
+                EstudianteId = estId,
+                DesafioId = desafioId
+            };
+            _data.Add<Calificacion>(model);
+            bool res = await _data.SaveAllAsync();
+            if (!res)
+                return BadRequest();
+
+            return RedirectToAction("DownloadEscenario", "Desafios"
+                , new { desafioId = desafioId });
 
         }
     }
