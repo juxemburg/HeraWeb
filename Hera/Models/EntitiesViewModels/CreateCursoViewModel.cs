@@ -39,7 +39,7 @@ namespace Hera.Models.EntitiesViewModels
             };
         }
 
-        public Curso Map(int ProfesorId)
+        public Curso Map(int ProfesorId, string filePath)
         {
             return new Curso()
             {
@@ -47,7 +47,7 @@ namespace Hera.Models.EntitiesViewModels
                 Descripcion = this.Descripcion,
                 ProfesorId = ProfesorId,
                 Password = this.Password,
-                Desafio = this.Desafio.Map()
+                Desafio = this.Desafio.Map(filePath)
             };
         }
 

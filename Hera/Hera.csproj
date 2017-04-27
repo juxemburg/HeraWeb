@@ -11,6 +11,13 @@
   <PropertyGroup>
     <UserSecretsId>aspnet-Hera-1cfe3ca2-e870-4449-8c34-3b1d6b0d8618</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Files\Temp\**" />
+    <Content Remove="Files\Temp\**" />
+    <EmbeddedResource Remove="Files\Temp\**" />
+    <None Remove="Files\Temp\**" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="wwwroot\css\Autocomplete\easy-autocomplete.min.css" />
     <Content Include="wwwroot\css\Autocomplete\easy-autocomplete.themes.min.css" />
@@ -49,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\ControllersMvc\" />
-    <Folder Include="Files\Temp\" />
+    <Folder Include="Files\" />
     <Folder Include="ViewComponents\" />
     <Folder Include="Views\Cursos\" />
     <Folder Include="Views\Estudiante\" />

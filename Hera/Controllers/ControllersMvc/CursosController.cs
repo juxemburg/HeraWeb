@@ -66,13 +66,13 @@ namespace Hera.Controllers.ControllersMvc
                     if (desafio != null)
                         _data.Add<Curso>(model.Map(profId, desafio));
                     else
-                        _data.AddCurso(model.Map(profId));
+                        _data.AddCurso(model.Map(profId, ""));
 
                     var res = await _data.SaveAllAsync();
                     if (res)
                         return RedirectToAction("Index");
                 }
-                catch (Exception e) { }
+                catch (Exception) { }
             }
             ModelState.AddModelError("", "Error de cosos ");
             return View(model);
@@ -93,7 +93,7 @@ namespace Hera.Controllers.ControllersMvc
                         await _data.SaveAllAsync();
                     }                    
                 }
-                catch (Exception e) {
+                catch (Exception) {
                 }
             }
             return RedirectToAction("Index");

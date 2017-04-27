@@ -17,17 +17,17 @@ namespace Hera.Models.EntitiesViewModels
 
         public string Descripcion { get; set; }
 
-        public string DirArchivo { get; set; }
+        
 
 
-        public Desafio Map()
+        public Desafio Map(string filePath)
         {
             return new Desafio()
             {
                 Nombre = this.Nombre,
                 Dificultad = this.Dificultad,
                 Descripcion = this.Descripcion,
-                DirArchivo = this.DirArchivo
+                DirArchivo = filePath
             };
         }
     }

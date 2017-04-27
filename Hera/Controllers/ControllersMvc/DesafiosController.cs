@@ -44,11 +44,11 @@ namespace Hera.Controllers.ControllersMvc
             {
                 try
                 {
-                    _data.AddDesafio(model.Map());
+                    _data.AddDesafio(model.Map(""));
                     await _data.SaveAllAsync();
                     return RedirectToAction("Index");
                 }
-                catch (Exception e) { }                
+                catch (Exception) { }                
             }
             return View(model);
         }
