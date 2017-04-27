@@ -4,6 +4,10 @@
     ViewData["Title"] = "Create";
 }
 
+@section Styles {
+    <link href="~/css/Autocomplete/easy-autocomplete.min.css" rel="stylesheet" />
+    <link href="~/css/Autocomplete/easy-autocomplete.themes.min.css" rel="stylesheet" />
+}
 <h2>Crea tu</h2>
     
 <form asp-action="Create">
@@ -48,8 +52,8 @@
             </div>
             <label asp-for="Desafio.Nombre" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="DesafioId" class="form-control" type="hidden"/>
-                <input asp-for="Desafio.Nombre" class="form-control" />
+                <input id="input-desafioId" asp-for="DesafioId" class="form-control" type="hidden"/>
+                <input id="input-desafioNombre" asp-for="Desafio.Nombre" class="form-control" />
                 <span asp-validation-for="Desafio.Nombre" class="text-danger"></span>
             </div>
         </div>
@@ -57,19 +61,11 @@
         <div class="form-group">
             <label asp-for="Desafio.Dificultad" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Desafio.Dificultad" class="form-control" />
+                <input id="input-desafioDificultad" asp-for="Desafio.Dificultad" class="form-control" />
                 <span asp-validation-for="Desafio.Dificultad" class="text-danger"></span>
             </div>
         </div>
 
-
-        <div class="form-group">
-            <label asp-for="Desafio.DirArchivo" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Desafio.DirArchivo" class="form-control" />
-                <span asp-validation-for="Desafio.DirArchivo" class="text-danger"></span>
-            </div>
-        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -85,4 +81,8 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="~/js/Autocomplete/jquery.easy-autocomplete.min.js"></script>
+    <script src="~/js/Autocomplete/autocomplete-client.js"></script>
+    <script src="~/js/Cursos/Details.js"></script>
 }

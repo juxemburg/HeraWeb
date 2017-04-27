@@ -26,6 +26,7 @@
     <Content Include="wwwroot\css\Estudiante\cursos.css" />
     <Content Include="wwwroot\js\Autocomplete\autocomplete-client.js" />
     <Content Include="wwwroot\js\Autocomplete\jquery.easy-autocomplete.min.js" />
+    <Content Include="wwwroot\js\Cursos\create.js" />
     <Content Include="wwwroot\js\Cursos\Details.js" />
 	<Content Include="wwwroot\js\Cursos\index.js" />
   </ItemGroup>

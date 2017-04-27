@@ -64,17 +64,16 @@ namespace Hera.Controllers.ControllersMvc
                     var profId = await _data.Find_ProfesorId(id);
                     var desafio = await _data.Find_Desafio(model.DesafioId.GetValueOrDefault());
                     if (desafio != null)
+                    {
                         _data.Add<Curso>(model.Map(profId, desafio));
-                    else
-                        _data.AddCurso(model.Map(profId, ""));
-
-                    var res = await _data.SaveAllAsync();
-                    if (res)
-                        return RedirectToAction("Index");
+                        var res = await _data.SaveAllAsync();
+                        if (res)
+                            return RedirectToAction("Cursos","Profesor");
+                    }
                 }
                 catch (Exception) { }
             }
-            ModelState.AddModelError("", "Error de cosos ");
+            ModelState.AddModelError("", "Error en la creación del curso");
             return View(model);
         }
         [HttpPost]

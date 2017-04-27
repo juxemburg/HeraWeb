@@ -5,7 +5,6 @@ loadAutocomplete('input-desafioNombre',
 
         $("#input-desafioId").val(value.id);
         $("#input-desafioDescripcion").val(value.descripcion);
-        document.getElementById('input-dirArchivo').value = '--';
         $("#input-desafioDificultad").val(value.dificultad);
     });
 

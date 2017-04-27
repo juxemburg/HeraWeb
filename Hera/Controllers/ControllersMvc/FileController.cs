@@ -22,17 +22,13 @@ namespace Hera.Controllers.ControllersMvc
             _data = data;
             _fileManager = service;
         }
-        public IActionResult Index()
-        {
-            ViewData["Info"] = "";
-            return View();
-        }
+        
 
 
 
         [HttpPost]
         [DisableFormValueModelBinding]
-        public async Task<IActionResult> Upload()
+        public async Task<IActionResult> UploadDesafio()
         {
             string fileName 
                 = "Files/Temp/" + _fileManager.GetFilePath() + ".sb2";
@@ -41,24 +37,22 @@ namespace Hera.Controllers.ControllersMvc
             {
                 formModel = await Request.StreamFile(stream);
             }
-
             var viewModel = new CreateDesafioViewModel();
 
             var bindingSuccessful = await TryUpdateModelAsync(viewModel, prefix: "",
                valueProvider: formModel);
 
-            if (!bindingSuccessful)
+            if (!bindingSuccessful || !ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
+                _fileManager.DeleteFile(fileName);
+                return BadRequest(ModelState);
             }
-
             _data.AddDesafio(viewModel.Map(fileName));
             await _data.SaveAllAsync();
             
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Desafios");
         }
+
+        
     }
 }
