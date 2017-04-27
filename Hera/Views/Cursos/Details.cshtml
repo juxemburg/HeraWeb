@@ -5,8 +5,13 @@
 }
 
 @section Styles {
-    <link href="~/css/Autocomplete/easy-autocomplete.min.css" rel="stylesheet" />
-    <link href="~/css/Autocomplete/easy-autocomplete.themes.min.css" rel="stylesheet" />
+    <enviroment names="Development">
+        <link href="~/css/Autocomplete/easy-autocomplete.min.css" rel="stylesheet" />
+        <link href="~/css/Autocomplete/easy-autocomplete.themes.min.css" rel="stylesheet" />
+    </enviroment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/autocomplete.min.css" asp-append-version="true" />
+    </environment>
 }
 
 <h2>Información</h2>
@@ -144,7 +149,13 @@
     </div>
 </div>
 @section Scripts {
-    <script src="~/js/Autocomplete/jquery.easy-autocomplete.min.js"></script>
-    <script src="~/js/Autocomplete/autocomplete-client.js"></script>
-    <script src="~/js/Cursos/Details.js"></script>
+    <environment names="Development">
+        <script src="~/js/Autocomplete/jquery.easy-autocomplete.min.js"></script>
+        <script src="~/js/Autocomplete/autocomplete-client.js"></script>
+        <script src="~/js/Cursos/Details.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/autocomplete.min.js"></script>
+        <script src="~/js/cursos.min.js"></script>        
+    </environment>
 }

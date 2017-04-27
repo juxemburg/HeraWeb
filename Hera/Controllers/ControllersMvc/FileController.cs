@@ -94,5 +94,19 @@ namespace Hera.Controllers.ControllersMvc
             return RedirectToAction("Desafio", "Estudiante",
                 new { cursoId = model.CursoId, desafioId = model.DesafioId});
         }
+
+        public async Task<FileResult> DownloadEscenario(int desafioId)
+        {
+            var desafio = await _data.Find_Desafio(desafioId);
+            if (desafio != null)
+            {
+
+                var filepath = desafio.DirArchivo;
+                byte[] fileBytes = System.IO.File.ReadAllBytes(filepath);
+                return File(fileBytes, "application/x-msdownload",
+                    $"Escenario{desafio.Nombre}.sb2");
+            }
+            return null;
+        }
     }
 }

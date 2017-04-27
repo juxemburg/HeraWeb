@@ -5,7 +5,25 @@
     "outputFileName": "wwwroot/css/site.min.css",
     // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
-      "wwwroot/css/site.css"
+      "wwwroot/css/site.css",
+      "wwwroot/css/cards.css",
+      "wwwroot/css/colors.css",
+      "wwwroot/css/padding.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/estudiante.min.css",
+    // An array of relative input file paths. Globbing patterns supported
+    "inputFiles": [
+      "wwwroot/css/Estudiante/cursos.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/autocomplete.min.css",
+    // An array of relative input file paths. Globbing patterns supported
+    "inputFiles": [
+      "wwwroot/css/Autocomplete/easy-autocomplete.min.css",
+      "wwwroot/css/Autocomplete/easy-autocomplete.themes.min.css"
     ]
   },
   {
@@ -19,6 +37,30 @@
       "renameLocals": true
     },
     // Optionally generate .map file
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/autocomplete.min.js",
+    "inputFiles": [
+      "wwwroot/js/Autocomplete/jquery.easy-autocomplete.min.js",
+      "wwwroot/js/Autocomplete/autocomplete-client.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/cursos.min.js",
+    "inputFiles": [
+      "wwwroot/js/Cursos/index.js",
+      "wwwroot/js/Cursos/Details.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
     "sourceMap": false
   }
 ]

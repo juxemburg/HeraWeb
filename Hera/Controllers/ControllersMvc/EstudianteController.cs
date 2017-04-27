@@ -99,7 +99,7 @@ namespace Hera.Controllers.ControllersMvc
             if (!res)
                 return BadRequest();
 
-            return RedirectToAction("DownloadEscenario", "Desafios"
+            return RedirectToAction("DownloadEscenario", "File"
                 , new { desafioId = desafioId });
 
         }

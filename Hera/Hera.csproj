@@ -24,6 +24,7 @@
     <Content Include="wwwroot\css\cards.css" />
     <Content Include="wwwroot\css\colors.css" />
     <Content Include="wwwroot\css\Estudiante\cursos.css" />
+    <Content Include="wwwroot\css\padding.css" />
     <Content Include="wwwroot\js\Autocomplete\autocomplete-client.js" />
     <Content Include="wwwroot\js\Autocomplete\jquery.easy-autocomplete.min.js" />
     <Content Include="wwwroot\js\Cursos\create.js" />

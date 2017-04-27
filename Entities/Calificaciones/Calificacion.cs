@@ -18,7 +18,7 @@ namespace Entities.Calificaciones
         public string DirArchivo { get; set; }
 
 
-
+        public TimeSpan Duracion { get { return (TiempoFinal - Tiempoinicio).GetValueOrDefault(); } }
         public bool EnCurso
         {
             get
@@ -26,6 +26,8 @@ namespace Entities.Calificaciones
                 return TiempoFinal == null;
             }
         }
+
+
 
         public void TerminarCalificacion(string dirArchivo)
         {
