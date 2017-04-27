@@ -20,10 +20,10 @@
         <p>@Model.Descripcion</p>
     </div>
     <div class="col-md-6">
-        <button class="btn btn-info">
+        <a class="btn btn-info" asp-controller="Desafios" asp-action="DownloadEscenario" asp-route-desafioId="@Model.Id">
             ¡Descarga la escena!
             <span class="glyphicon glyphicon-download"></span>
-        </button>
+        </a>
     </div>
 </div>
 

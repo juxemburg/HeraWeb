@@ -28,7 +28,7 @@ namespace Hera.Controllers.ControllersMvc
             var model = (string.IsNullOrWhiteSpace(searchString)) ?
                 _data.GetAll_Desafios() :
                 _data.Autocomplete_Desafios(searchString);
-            return View(new PaginationViewModel<Desafio>(model,skip,take));
+            return View(new PaginationViewModel<Desafio>(model, skip, take));
         }
 
         [HttpGet]
@@ -40,7 +40,7 @@ namespace Hera.Controllers.ControllersMvc
         [HttpPost]
         public async Task<IActionResult> Create(CreateDesafioViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -48,10 +48,24 @@ namespace Hera.Controllers.ControllersMvc
                     await _data.SaveAllAsync();
                     return RedirectToAction("Index");
                 }
-                catch (Exception) { }                
+                catch (Exception) { }
             }
             return View(model);
         }
 
+
+        [AllowAnonymous]
+        public async Task<FileResult> DownloadEscenario(int desafioId)
+        {
+            var desafio = await _data.Find_Desafio(desafioId);
+            if (desafio != null)
+            {
+
+                var filepath = desafio.DirArchivo;
+                byte[] fileBytes = System.IO.File.ReadAllBytes(filepath);
+                return File(fileBytes, "application/x-msdownload", "Escenario.sb2");
+            }
+            return null;
+        }
     }
 }
