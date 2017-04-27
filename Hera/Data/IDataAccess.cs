@@ -1,4 +1,5 @@
-﻿using Entities.Cursos;
+﻿using Entities.Calificaciones;
+using Entities.Cursos;
 using Entities.Desafios;
 using Entities.Usuarios;
 using System;
@@ -13,6 +14,7 @@ namespace Hera.Data
     {
         // Operaciones Básicas
         void Add<T>(T entity) where T : class;
+        void Edit<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;
         Task<bool> SaveAllAsync();
 
@@ -48,6 +50,22 @@ namespace Hera.Data
         IQueryable<Curso> GetAll_Cursos(int profId);
         IQueryable<Curso> GetAll_CursosEstudiante(int idEst);
         Task<Curso> Find_Curso(int id);
+
+
+        //RegistroCalificacion
+        Task<RegistroCalificacion> Find_RegistroCalificacion(int cursoId,
+            int estudianteId, int desafioId);
+        IQueryable<RegistroCalificacion> GetAll_RegistroCalificacion(
+            int? cursoId, int? estudianteId, int? desafioId);
+
+
+        //RegistroCalificacion
+        Task<Calificacion> Find_Calificacion(int calificacionId);
+        void AddCalificacion(Calificacion calificacion);
+        void EditFinalizarCalificacion(int calificacionId);
+
+        
+
 
     }
 }

@@ -9,7 +9,7 @@ namespace Entities.Calificaciones
         public int BloquesRepetidos { get; set; }
         public int Inicializacion { get; set; }
         public DateTime Tiempoinicio { get; set; }
-        public DateTime TiempoFinal { get; set; }
+        public DateTime? TiempoFinal { get; set; }
 
         public int CursoId { get; set; }
         public int EstudianteId { get; set; }

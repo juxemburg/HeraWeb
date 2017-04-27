@@ -8,6 +8,7 @@ using Entities.Usuarios;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Data.SqlClient;
+using Entities.Calificaciones;
 
 namespace Hera.Data
 {
@@ -33,6 +34,10 @@ namespace Hera.Data
         public void Add<T>(T entity) where T : class
         {
             _context.Entry<T>(entity).State = EntityState.Added;
+        }
+        public void Edit<T>(T entity) where T : class
+        {
+            _context.Entry<T>(entity).State = EntityState.Modified;
         }
 
         public void AddCurso(Curso model)
@@ -193,6 +198,66 @@ namespace Hera.Data
             {
                 return false;
             }
+        }
+
+        public async Task<RegistroCalificacion> Find_RegistroCalificacion(
+            int cursoId, int estudianteId, int desafioId)
+        {
+            var query  = await _context.RegistroCalificaiones
+                .Where(reg => reg.CursoId == cursoId
+                && reg.EstudianteId == reg.EstudianteId
+                && reg.DesafioId == desafioId)
+                .Include(reg => reg.Desafio)
+                .Include(reg => reg.Calificaciones)
+                .FirstOrDefaultAsync();
+
+            return query;
+        }
+
+        public IQueryable<RegistroCalificacion> GetAll_RegistroCalificacion(
+            int? cursoId, int? estudianteId, int? desafioId)
+        {
+            var query = 
+                (IQueryable<RegistroCalificacion>)
+                _context.RegistroCalificaiones;
+
+            if (cursoId != null)
+                query = query
+                    .Where(reg =>
+                    reg.CursoId == cursoId.GetValueOrDefault());
+
+            if (estudianteId != null)
+                query = query
+                    .Where(reg =>
+                    reg.EstudianteId == estudianteId.GetValueOrDefault());
+
+            if (desafioId != null)
+                query = query
+                    .Where(reg =>
+                    reg.DesafioId == desafioId.GetValueOrDefault());
+
+            return query;
+        }
+
+        public void AddCalificacion(Calificacion calificacion)
+        {
+            Add<Calificacion>(calificacion);
+        }
+
+        public async void EditFinalizarCalificacion(int calificacionId)
+        {
+            var model = await Find_Calificacion(calificacionId);
+            if(model != null)
+            {
+                model.TiempoFinal = DateTime.Now;
+                Edit<Calificacion>(model);
+            }
+        }
+
+        public async Task<Calificacion> Find_Calificacion(
+            int calificacionId)
+        {
+            return await _context.Calificaciones.FindAsync(calificacionId);
         }
     }
 }
