@@ -27,6 +27,8 @@ namespace Hera.Migrations
 
                     b.Property<int>("DesafioId");
 
+                    b.Property<string>("DirArchivo");
+
                     b.Property<int>("EstudianteId");
 
                     b.Property<int>("Inicializacion");

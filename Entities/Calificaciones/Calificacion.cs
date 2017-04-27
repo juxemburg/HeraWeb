@@ -15,5 +15,23 @@ namespace Entities.Calificaciones
         public int EstudianteId { get; set; }
         public int DesafioId { get; set; }
         public RegistroCalificacion RegistroCalificacion { get; set; }
+        public string DirArchivo { get; set; }
+
+
+
+        public bool EnCurso
+        {
+            get
+            {
+                return TiempoFinal == null;
+            }
+        }
+
+        public void TerminarCalificacion(string dirArchivo)
+        {
+            this.DirArchivo = dirArchivo;
+            TiempoFinal = DateTime.Now;
+        }
+
     }
 }

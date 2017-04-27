@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Hera.Services;
 using Hera.Models.EntitiesViewModels;
 using Hera.Data;
+using Entities.Calificaciones;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -22,7 +23,7 @@ namespace Hera.Controllers.ControllersMvc
             _data = data;
             _fileManager = service;
         }
-        
+
 
 
 
@@ -30,7 +31,7 @@ namespace Hera.Controllers.ControllersMvc
         [DisableFormValueModelBinding]
         public async Task<IActionResult> UploadDesafio()
         {
-            string fileName 
+            string fileName
                 = "Files/Temp/" + _fileManager.GetFilePath() + ".sb2";
             FormValueProvider formModel;
             using (var stream = System.IO.File.Create(fileName))
@@ -49,10 +50,49 @@ namespace Hera.Controllers.ControllersMvc
             }
             _data.AddDesafio(viewModel.Map(fileName));
             await _data.SaveAllAsync();
-            
-            return RedirectToAction("Index","Desafios");
+
+            return RedirectToAction("Index", "Desafios");
         }
 
-        
+
+
+        [HttpPost]
+        [DisableFormValueModelBinding]
+        public async Task<IActionResult> UploadResultado()
+        {
+            string fileName
+                = "Files/Temp/" + _fileManager.GetFilePath() + ".sb2";
+            FormValueProvider formModel;
+            using (var stream = System.IO.File.Create(fileName))
+            {
+                formModel = await Request.StreamFile(stream);
+            }
+            var viewModel = new TerminarDesafioViewModel();
+
+            var bindingSuccessful = await TryUpdateModelAsync(viewModel, prefix: "",
+               valueProvider: formModel);
+
+            if (!bindingSuccessful || !ModelState.IsValid)
+            {
+                _fileManager.DeleteFile(fileName);
+                return BadRequest(ModelState);
+            }
+
+            var model = await _data.Find_RegistroCalificacion(
+                viewModel.CursoId, viewModel.EstudianteId,
+                viewModel.DesafioId);
+            if(model != null && model.Iniciada)
+            {
+                var cal = model.CalificacionPendiente;
+                cal.TerminarCalificacion(fileName);
+                _data.Edit<Calificacion>(cal);
+                await _data.SaveAllAsync();
+            }
+            
+            
+
+            return RedirectToAction("Desafio", "Estudiante",
+                new { cursoId = model.CursoId, desafioId = model.DesafioId});
+        }
     }
 }

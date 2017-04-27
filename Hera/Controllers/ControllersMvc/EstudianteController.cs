@@ -65,7 +65,8 @@ namespace Hera.Controllers.ControllersMvc
                 {
                     CursoId = cursoId,
                     DesafioId = desafioId,
-                    EstudianteId = estId
+                    EstudianteId = estId,
+                    Calificaciones = new List<Calificacion>()
                 };
                 _data.Add<RegistroCalificacion>(model);
                 var res = await _data.SaveAllAsync();
