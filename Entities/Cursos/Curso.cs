@@ -31,5 +31,15 @@ namespace Entities.Cursos
                 .FirstOrDefault();
             return query != null;                
         }
+
+        public bool ContieneDesafio(int desafioId)
+        {
+            var query = Desafios
+                .Where(rel => rel.DesafioID == desafioId)
+                .FirstOrDefault();
+            return (query != null || Desafio.Id == desafioId);
+        }
+
+        
     }
 }

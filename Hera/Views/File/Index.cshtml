@@ -1,0 +1,33 @@
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>@ViewData["Info"]</p>
+
+
+<form method="post" enctype="multipart/form-data" asp-action="Upload">
+    
+    <div>
+        <p>Nombre</p>
+        <input type="text" name="Nombre" />
+    </div>
+
+    <div>
+        <p>Dificultad</p>
+        <input type="number" name="Dificultad" value="" />
+    </div>
+    <div>
+        <p>Descripcion</p>
+        <input type="text" name="Descripcion" value="" />
+    </div>
+    <div>
+        <p>Escenario Inicial</p>
+        <input type="file" name="file" />
+    </div>
+    <div>
+        <input type="submit" value="Upload" />
+    </div>
+</form>

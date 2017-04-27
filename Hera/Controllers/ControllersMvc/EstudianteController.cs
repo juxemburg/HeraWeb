@@ -45,10 +45,21 @@ namespace Hera.Controllers.ControllersMvc
             return View(model);
         }
 
-        [HttpGet("curso/{cursoId}/desafio/{desafioId}")]
+        [HttpGet]
         public async Task<IActionResult> Desafio(int cursoId, int desafioId)
         {
-            return NotFound();
+            var estId
+                = await _data.Find_EstudianteId(
+                    _data.Get_UserId(User.Claims));
+            var model = await _data.Find_Curso(cursoId);
+            if (model == null || !model.ContieneEstudiante(estId)
+                || !model.ContieneDesafio(desafioId))
+                return NotFound();
+
+            var desafio = await _data.Find_Desafio(desafioId);
+
+            return View(desafio);
+
         }
     }
 }

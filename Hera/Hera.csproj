@@ -49,9 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\ControllersMvc\" />
+    <Folder Include="Files\Temp\" />
     <Folder Include="ViewComponents\" />
     <Folder Include="Views\Cursos\" />
     <Folder Include="Views\Estudiante\" />
+    <Folder Include="Views\File\" />
   </ItemGroup>
 
 </Project>

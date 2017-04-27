@@ -17,15 +17,23 @@
         <div class="list-group">
             <div class="list-group-item">
                 <span class="badge">@Model.Desafio.Dificultad</span>
-                <h3><a href="#">@Model.Desafio.Nombre</a></h3>
-                <h4>@Model.Desafio.Descripcion</h4>                
+                <h3>
+                    <a asp-action="Desafio" asp-route-cursoId="@Model.Id" asp-route-desafioId="@Model.DesafioId">
+                        @Model.Desafio.Nombre
+                    </a>
+                </h3>
+                <h4>@Model.Desafio.Descripcion</h4>
             </div>
             @foreach (var item in Model.Desafios)
             {
-                <div class="list-group-item">                    
+                <div class="list-group-item">
                     <span class="badge">@item.Desafio.Dificultad</span>
-                    <h3><a href="#">@item.Desafio.Nombre</a></h3>
-                    <h4>@item.Desafio.Descripcion</h4>                    
+                    <h3>
+                        <a asp-action="Desafio" asp-route-cursoId="@Model.Id" asp-route-desafioId="@item.DesafioID">
+                            @item.Desafio.Nombre
+                        </a>
+                    </h3>
+                    <h4>@item.Desafio.Descripcion</h4>
                 </div>
             }
         </div>
