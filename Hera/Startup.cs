@@ -77,7 +77,8 @@ namespace Hera
         public void Configure(IApplicationBuilder app,
             IHostingEnvironment env,
             ILoggerFactory loggerFactory,
-            DbSeeder seeder)
+            DbSeeder seeder,
+            FileManagerService fileManager)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -107,6 +108,7 @@ namespace Hera
             });
 
             seeder.Seed().Wait();
+            fileManager.InitializePath();
         }
     }
 }

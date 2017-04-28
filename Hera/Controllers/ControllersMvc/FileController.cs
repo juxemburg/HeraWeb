@@ -104,7 +104,7 @@ namespace Hera.Controllers.ControllersMvc
                 var filepath = desafio.DirArchivo;
                 byte[] fileBytes = System.IO.File.ReadAllBytes(filepath);
                 return File(fileBytes, "application/x-msdownload",
-                    $"Escenario{desafio.Nombre}.sb2");
+                    $"{desafio.Nombre}.sb2");
             }
             return null;
         }
