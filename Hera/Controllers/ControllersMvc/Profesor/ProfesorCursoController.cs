@@ -32,5 +32,18 @@ namespace Hera.Controllers.ControllersMvc.Profesor
             }
             return View(model);
         }
+
+        [HttpGet("{idDesafio:int}")]
+        public async Task<IActionResult> Desafio(int idCurso, int idDesafio)
+        {
+            var curso = await _data.Find_Curso(idCurso);
+            var model = await _data.Find_Desafio(idDesafio);
+            if(model == null || curso == null
+                || curso.ContieneDesafio(idDesafio))
+            {
+                return NotFound();
+            }
+            return View(model);
+        }
     }
 }
