@@ -10,6 +10,12 @@ namespace Hera.Controllers
     {
         public IActionResult Index()
         {
+            if (User.IsInRole("Profesor"))
+                ViewData["Validacion"] = 1;
+            else if (User.IsInRole("Estudiante"))
+                ViewData["Validacion"] = 2;
+            else
+                ViewData["Validacion"] = 0;
             return View();
         }
 
@@ -31,5 +37,8 @@ namespace Hera.Controllers
         {
             return View();
         }
+
+       
+        
     }
 }
