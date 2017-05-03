@@ -54,7 +54,7 @@
                         </a>
                     </h4>
                 </div>
-                <div id="collapse-@i" class="panel-collapse collapse in">
+                <div id="collapse-@i" class="panel-collapse collapse">
                     <div class="panel-body">
                         <label>Relaizado en: </label>
                         <p class="text-centered">
@@ -66,6 +66,8 @@
                             <label>Tiempo Transcurrido:</label>
                             <p class="text-centered">
                                 @Model.Calificaciones[i].Duracion.Hours Horas
+                                @Model.Calificaciones[i].Duracion.Minutes Minutos
+                                @Model.Calificaciones[i].Duracion.Seconds Segundos
                             </p>
                         </div>
                     </div>

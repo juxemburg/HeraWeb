@@ -92,7 +92,7 @@ namespace Hera.Controllers.ControllersMvc
             
 
             return RedirectToAction("Desafio", "EstudianteCurso",
-                new { cursoId = model.CursoId, desafioId = model.DesafioId});
+                new { idCurso = model.CursoId, idDesafio = model.DesafioId});
         }
 
         public async Task<FileResult> DownloadEscenario(int desafioId)

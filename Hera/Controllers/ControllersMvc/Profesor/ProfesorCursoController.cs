@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Hera.Data;
 using Microsoft.AspNetCore.Authorization;
+using Hera.Models.EntitiesViewModels;
 
 namespace Hera.Controllers.ControllersMvc.Profesor
 {
@@ -45,6 +46,22 @@ namespace Hera.Controllers.ControllersMvc.Profesor
                 return NotFound();
             }
             return View(model);
+        }
+
+        [HttpGet("{idEstudiante:int}")]
+        public async Task<IActionResult> Estudiante(int idCurso,
+            int idEstudiante)
+        {
+            var profId = await _data.Find_ProfesorId(
+                _data.Get_UserId(User.Claims));
+            var model = await _data.Find_Estudiante(idEstudiante,
+                idCurso, profId);
+            if(model == null)
+            {
+                return NotFound();
+            }
+
+            return View(new EstudianteCalificacionViewModel(model));
         }
     }
 }

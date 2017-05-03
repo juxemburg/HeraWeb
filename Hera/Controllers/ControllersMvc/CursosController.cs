@@ -122,7 +122,7 @@ namespace Hera.Controllers.ControllersMvc
                 }
                 catch (Exception) { }
             }
-            return RedirectToAction("Details", new { id = model.Id });
+            return RedirectToAction("Details","ProfesorCurso", new { idCurso = model.Id });
         }
 
 

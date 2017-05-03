@@ -25,6 +25,8 @@ namespace Hera.Data
         void AddEstudiante(Estudiante model);
         IQueryable<Estudiante> GetAll_Estudiante();
         Task<Estudiante> Find_Estudiante(int id);
+        Task<Rel_CursoEstudiantes> Find_Estudiante(int idEstudiante,
+            int idCurso,int idProfesor);
 
         //Profesores
         void AddProfesor(Profesor model);

@@ -29,7 +29,7 @@
                 <div class="list-group-item">
                     <span class="badge">@item.Desafio.Dificultad</span>
                     <h3>
-                        <a asp-action="Desafio" asp-route-idCurso="@Model.Id" asp-route-idDesafio="@Model.DesafioId">
+                        <a asp-action="Desafio" asp-route-idCurso="@Model.Id" asp-route-idDesafio="@item.DesafioID">
                             @item.Desafio.Nombre
                         </a>
                     </h3>

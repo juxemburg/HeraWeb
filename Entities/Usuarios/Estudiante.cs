@@ -11,5 +11,7 @@ namespace Entities.Usuarios
         public int Edad { get; set; }
 
         public virtual List<Rel_CursoEstudiantes> Cursos { get; set; }        
+
+        
     }
 }

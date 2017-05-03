@@ -89,7 +89,7 @@
         <div class="list-group">
             @foreach (var item in Model.Estudiantes)
             {
-                <a class="list-group-item">
+                <a asp-action="Estudiante" asp-route-idCurso="@Model.Id" asp-route-idEstudiante="@item.EstudianteId" class="list-group-item">
                     @item.Estudiante.Nombres @item.Estudiante.Apellidos
                 </a>
             }
@@ -115,7 +115,7 @@
                 <h4 class="modal-title">Añadir Desafío</h4>
             </div>
             <div class="modal-body">
-                <form method="post" asp-action="AddDesafio" class="form-horizontal">
+                <form method="post" asp-action="AddDesafio" asp-controller="Cursos" class="form-horizontal">
                     <input id="input-desafioId" type="hidden" name="DesafioId" value="" />
                     <input asp-for="Id" type="hidden" />
                     <div class="form-group">
