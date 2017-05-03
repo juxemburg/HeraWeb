@@ -44,6 +44,31 @@ namespace Hera.Migrations
                     b.ToTable("Calificaciones");
                 });
 
+            modelBuilder.Entity("Entities.Calificaciones.CalificacionCualitativa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Completada");
+
+                    b.Property<int>("CursoId");
+
+                    b.Property<int>("DesafioId");
+
+                    b.Property<string>("Descripcion");
+
+                    b.Property<int>("EstudianteId");
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CursoId", "EstudianteId", "DesafioId")
+                        .IsUnique();
+
+                    b.ToTable("CalificacionesCualitativas");
+                });
+
             modelBuilder.Entity("Entities.Calificaciones.RegistroCalificacion", b =>
                 {
                     b.Property<int>("CursoId");
@@ -328,6 +353,14 @@ namespace Hera.Migrations
                     b.HasOne("Entities.Calificaciones.RegistroCalificacion", "RegistroCalificacion")
                         .WithMany("Calificaciones")
                         .HasForeignKey("CursoId", "EstudianteId", "DesafioId")
+                        .OnDelete(DeleteBehavior.SetNull);
+                });
+
+            modelBuilder.Entity("Entities.Calificaciones.CalificacionCualitativa", b =>
+                {
+                    b.HasOne("Entities.Calificaciones.RegistroCalificacion", "RegistroCalificacion")
+                        .WithOne("CalificacionCualitativa")
+                        .HasForeignKey("Entities.Calificaciones.CalificacionCualitativa", "CursoId", "EstudianteId", "DesafioId")
                         .OnDelete(DeleteBehavior.SetNull);
                 });
 

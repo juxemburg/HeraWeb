@@ -25,6 +25,8 @@ namespace Hera.Data
         void AddEstudiante(Estudiante model);
         IQueryable<Estudiante> GetAll_Estudiante();
         Task<Estudiante> Find_Estudiante(int id);
+        Task<Rel_CursoEstudiantes> Find_Estudiante(int idEstudiante,
+            int idCurso,int idProfesor);
 
         //Profesores
         void AddProfesor(Profesor model);
@@ -50,6 +52,7 @@ namespace Hera.Data
         IQueryable<Curso> GetAll_Cursos(int profId);
         IQueryable<Curso> GetAll_CursosEstudiante(int idEst);
         Task<Curso> Find_Curso(int id);
+        Task<Curso> Find_Curso_Public(int id);
 
 
         //RegistroCalificacion

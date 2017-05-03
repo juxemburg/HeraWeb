@@ -1,0 +1,115 @@
+@model RegistroCalificacion
+
+@{
+    ViewData["Title"] = Model.Desafio.Nombre;
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>@Model.Desafio.Nombre</h2>
+        <div class="padding-40">
+            <div class="col-md-6">
+                <h3>Instrucciones</h3>
+                <p>@Model.Desafio.Descripcion</p>
+            </div>
+            @if (!Model.Iniciada)
+            {
+                <div class="col-md-6 padding-20">
+                    <a class="btn btn-info" asp-action="IniciarDesafio" asp-route-desafioId="@Model.DesafioId"
+                       asp-route-cursoId="@Model.CursoId">
+                        ¡Descarga la escena!
+                        <span class="glyphicon glyphicon-download"></span>
+                    </a>
+                    <p>
+                        <strong>Nota:</strong>
+                        al descargar la escena se iniciará automáticamente el desafío.
+                    </p>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-md-6 padding-40">
+        <div class="padding-20">
+            @if (Model.Iniciada)
+            {
+                <h3>Iniciada</h3>
+            }
+            else
+            {
+                <h3>Sin Completar</h3>
+            }
+        </div>
+        <div class="panel-group" id="accordion">
+            @for (int i = 0; i < Model.Calificaciones.Count; i++)
+            {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-@i">
+                            Calificación #@(i+1)
+                            @if(Model.Calificaciones[i].EnCurso)
+                                {
+                                <span>Pendiente</span>
+                                }
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse-@i" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <label>Relaizado en: </label>
+                        <p class="text-centered">
+                            @Model.Calificaciones[i].Tiempoinicio
+                            -
+                            @Model.Calificaciones[i].TiempoFinal
+                        </p>
+                        <div>
+                            <label>Tiempo Transcurrido:</label>
+                            <p class="text-centered">
+                                @Model.Calificaciones[i].Duracion.Hours Horas
+                                @Model.Calificaciones[i].Duracion.Minutes Minutos
+                                @Model.Calificaciones[i].Duracion.Seconds Segundos
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+
+    
+</div>
+
+
+
+@if (Model.Iniciada)
+{
+    <div class="row">
+        <hr />
+        <form method="post" enctype="multipart/form-data" asp-action="UploadResultado" asp-controller="File">
+            <div class="form-horizontal">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="@Model.DesafioId" type="hidden" />
+                <input asp-for="@Model.EstudianteId" type="hidden" />
+                <input asp-for="@Model.CursoId" type="hidden" />
+                <div class="form-group">
+                    <label class="col-md-2 control-label">
+                        Escenario Desafío
+                    </label>
+                    <div class="col-md-10">
+                        <label class="btn btn-success btn-file">
+                            Selecciona el Archivo...
+                            <input style="display: none;" type="file" name="file" required />
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-1 col-md-10">
+                        <input type="submit" value="¡Completar Desafío!" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+

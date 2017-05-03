@@ -1,0 +1,161 @@
+@model Entities.Cursos.Curso
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+@section Styles {
+    <enviroment names="Development">
+        <link href="~/css/Autocomplete/easy-autocomplete.min.css" rel="stylesheet" />
+        <link href="~/css/Autocomplete/easy-autocomplete.themes.min.css" rel="stylesheet" />
+    </enviroment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/autocomplete.min.css" asp-append-version="true" />
+    </environment>
+}
+
+<h2>Información</h2>
+<h4>Curso</h4>
+
+<div class="row">
+    <hr />
+    <div class="col-md-6">
+        <h3>Información Básica</h3>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Password)
+            </dt>
+
+            <dd>
+                <div>
+                    <button class="btn btn-sm btn-default" data-toggle="collapse" data-target="#pwd">
+                        Mostrar Contraseña del Curso
+                    </button>
+                    <div id="pwd" class="collapse">
+                        @Html.DisplayFor(model => model.Password)
+                    </div>
+                </div>
+            </dd>
+            <dt>
+                Desafío inicial
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Desafio.Nombre)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-md-6">
+        <h3>Desafíos</h3>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a asp-action="Details" asp-controller="Desafios">
+                    @Model.Desafio.Nombre
+                </a>
+            </li>
+            @foreach (var item in Model.Desafios)
+            {
+                <li class="list-group-item">
+                    <a asp-action="Details" asp-controller="Desafios">
+                        @item.Desafio.Nombre
+                    </a>
+                    <span class="pull-right">
+                        <a href="" class="btn btn-xs btn-danger">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </span>
+                </li>
+            }
+        </ul>
+        <button class="btn btn-info" data-toggle="modal" data-target="#myModal">
+            <span class="glyphicon glyphicon-plus"></span>
+            Agregar Desafío
+        </button>
+    </div>
+    <div class="col-md-12">
+        <hr />
+        <h3>Estudiantes del Curso</h3>
+        <div class="list-group">
+            @foreach (var item in Model.Estudiantes)
+            {
+                <a asp-action="Estudiante" asp-route-idCurso="@Model.Id" asp-route-idEstudiante="@item.EstudianteId" class="list-group-item">
+                    @item.Estudiante.Nombres @item.Estudiante.Apellidos
+                </a>
+            }
+        </div>
+    </div>
+</div>
+
+<div>
+    <hr />
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Añadir Desafío</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-action="AddDesafio" asp-controller="Cursos" class="form-horizontal">
+                    <input id="input-desafioId" type="hidden" name="DesafioId" value="" />
+                    <input asp-for="Id" type="hidden" />
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <input id="input-desafioNombre" name="Nombre" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Descripción</label>
+                        <div class="col-sm-10">
+                            <input id="input-desafioDescripcion" type="text" name="Descripcion" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Dificultad</label>
+                        <div class="col-sm-10">
+                            <input id="input-desafioDificultad" type="number" name="Dificultad" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-info" type="submit" value="Crear!" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    <environment names="Development">
+        <script src="~/js/Autocomplete/jquery.easy-autocomplete.min.js"></script>
+        <script src="~/js/Autocomplete/autocomplete-client.js"></script>
+        <script src="~/js/Cursos/Details.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/autocomplete.min.js"></script>
+        <script src="~/js/cursos.min.js"></script>        
+    </environment>
+}

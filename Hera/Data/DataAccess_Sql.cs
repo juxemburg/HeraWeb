@@ -43,7 +43,7 @@ namespace Hera.Data
         public void AddCurso(Curso model)
         {
             _context.Entry<Curso>(model).State = EntityState.Added;
-            if(model.Desafio != null)
+            if (model.Desafio != null)
             {
                 _context.Entry<Desafio>(model.Desafio).State = EntityState.Added;
             }
@@ -63,8 +63,8 @@ namespace Hera.Data
             };
 
             Add<Rel_DesafiosCursos>(rel);
-            
-            
+
+
         }
 
         public void AddEstudiante(Estudiante model)
@@ -74,7 +74,7 @@ namespace Hera.Data
 
         public void AddProfesor(Profesor model)
         {
-            Add<Profesor>(model);            
+            Add<Profesor>(model);
         }
 
         public void Delete<T>(T entity) where T : class
@@ -90,7 +90,7 @@ namespace Hera.Data
         public async Task<Curso> Find_Curso(int id)
         {
             return await _context.Cursos
-                .Where(c=> c.Id == id)
+                .Where(c => c.Id == id)
                 .Include(c => c.Desafio)
                 .Include(c => c.Profesor)
                 .Include(c => c.Desafios)
@@ -98,6 +98,10 @@ namespace Hera.Data
                 .Include(c => c.Estudiantes)
                 .ThenInclude(rel => rel.Estudiante)
                 .FirstOrDefaultAsync();
+        }
+        public async Task<Curso> Find_Curso_Public(int id)
+        {
+            return await _context.Cursos.FindAsync(id);
         }
 
         public async Task<Desafio> Find_Desafio(int id)
@@ -110,6 +114,24 @@ namespace Hera.Data
             return await _context.Estudiantes.FindAsync(id);
         }
 
+        public async Task<Rel_CursoEstudiantes> Find_Estudiante(int idEstudiante,
+            int idCurso, int idProfesor)
+        {
+
+            var query = await _context
+                .Rel_Cursos_Estudiantes
+                .Include(rel => rel.Curso)
+                .Include(rel => rel.Estudiante)
+                .Include("Registros.Calificaciones")
+                .Include("Registros.Desafio")
+                .Where(rel =>
+                rel.Curso.ProfesorId == idProfesor &&
+                rel.CursoId == idCurso &&
+                rel.EstudianteId == idEstudiante)
+                .FirstOrDefaultAsync();
+
+            return query;
+        }
         public async Task<Profesor> Find_Profesor(int id)
         {
             return await _context.Profesores.FindAsync(id);
@@ -153,7 +175,7 @@ namespace Hera.Data
                 .Where(cur => ids.Contains(cur.Id))
                 .Include(cur => cur.Profesor);
             return query;
-                
+
         }
         public IQueryable<Curso> Autocomplete_Cursos(string queryString)
         {
@@ -194,7 +216,7 @@ namespace Hera.Data
             {
                 return (await _context.SaveChangesAsync()) > 0;
             }
-            catch(SqlException)
+            catch (SqlException)
             {
                 return false;
             }
@@ -203,7 +225,7 @@ namespace Hera.Data
         public async Task<RegistroCalificacion> Find_RegistroCalificacion(
             int cursoId, int estudianteId, int desafioId)
         {
-            var query  = await _context.RegistroCalificaiones
+            var query = await _context.RegistroCalificaiones
                 .Where(reg => reg.CursoId == cursoId
                 && reg.EstudianteId == reg.EstudianteId
                 && reg.DesafioId == desafioId)
@@ -217,7 +239,7 @@ namespace Hera.Data
         public IQueryable<RegistroCalificacion> GetAll_RegistroCalificacion(
             int? cursoId, int? estudianteId, int? desafioId)
         {
-            var query = 
+            var query =
                 (IQueryable<RegistroCalificacion>)
                 _context.RegistroCalificaiones;
 
@@ -247,7 +269,7 @@ namespace Hera.Data
         public async void EditFinalizarCalificacion(int calificacionId)
         {
             var model = await Find_Calificacion(calificacionId);
-            if(model != null)
+            if (model != null)
             {
                 model.TiempoFinal = DateTime.Now;
                 Edit<Calificacion>(model);

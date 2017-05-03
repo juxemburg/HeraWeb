@@ -17,6 +17,7 @@ namespace Entities.Calificaciones
         public Desafio Desafio { get; set; }
 
         public virtual List<Calificacion> Calificaciones { get; set; }
+        public virtual CalificacionCualitativa CalificacionCualitativa { get; set; }
 
         public bool Iniciada
         {

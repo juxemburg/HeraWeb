@@ -60,6 +60,7 @@ namespace Hera.Controllers.ControllersMvc
         [DisableFormValueModelBinding]
         public async Task<IActionResult> UploadResultado()
         {
+            
             string fileName
                 = "Files/Temp/" + _fileManager.GetFilePath() + ".sb2";
             FormValueProvider formModel;
@@ -91,8 +92,8 @@ namespace Hera.Controllers.ControllersMvc
             
             
 
-            return RedirectToAction("Desafio", "Estudiante",
-                new { cursoId = model.CursoId, desafioId = model.DesafioId});
+            return RedirectToAction("Desafio", "EstudianteCurso",
+                new { idCurso = model.CursoId, idDesafio = model.DesafioId});
         }
 
         public async Task<FileResult> DownloadEscenario(int desafioId)
@@ -104,7 +105,7 @@ namespace Hera.Controllers.ControllersMvc
                 var filepath = desafio.DirArchivo;
                 byte[] fileBytes = System.IO.File.ReadAllBytes(filepath);
                 return File(fileBytes, "application/x-msdownload",
-                    $"Escenario{desafio.Nombre}.sb2");
+                    $"{desafio.Nombre}.sb2");
             }
             return null;
         }

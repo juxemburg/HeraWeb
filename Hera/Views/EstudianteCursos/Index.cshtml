@@ -1,0 +1,51 @@
+@model PaginationViewModel<Curso>
+
+@{
+    ViewData["Title"] = "Mis Cursos";
+}
+@section Styles {
+    <link href="~/css/Estudiante/cursos.css" rel="stylesheet" />
+}
+
+<h2>Mis Cursos</h2>
+<hr />
+<br />
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="card shadow col-lg-3 col-md-4 col-sm-6">
+            <div class="card-header">
+                <h3>
+                    <a asp-action="Details" asp-controller="EstudianteCurso" asp-route-idCurso="@item.Id">
+                        @item.Nombre
+                    </a>
+                </h3>
+                <h4>@item.Profesor.NombreCompleto</h4>
+            </div>
+            <div class="card-content">
+                <p>@item.Descripcion</p>
+            </div>
+        </div>
+    }
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-center">
+            <ul class="pagination">
+                @foreach (var item in Model.Pages)
+                {
+                    <li class="@item.Item2">
+                        <a asp-action="Index" asp-route-skip="@((item.Item1-1)*Model.Take)"
+                           asp-route-take="@Model.Take">
+                            @item.Item1
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
