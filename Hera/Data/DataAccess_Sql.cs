@@ -99,6 +99,10 @@ namespace Hera.Data
                 .ThenInclude(rel => rel.Estudiante)
                 .FirstOrDefaultAsync();
         }
+        public async Task<Curso> Find_Curso_Public(int id)
+        {
+            return await _context.Cursos.FindAsync(id);
+        }
 
         public async Task<Desafio> Find_Desafio(int id)
         {

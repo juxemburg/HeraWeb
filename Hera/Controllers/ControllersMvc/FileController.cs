@@ -91,7 +91,7 @@ namespace Hera.Controllers.ControllersMvc
             
             
 
-            return RedirectToAction("Desafio", "Estudiante",
+            return RedirectToAction("Desafio", "EstudianteCurso",
                 new { cursoId = model.CursoId, desafioId = model.DesafioId});
         }
 

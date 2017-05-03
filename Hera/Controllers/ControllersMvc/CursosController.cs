@@ -7,6 +7,7 @@ using Hera.Models.EntitiesViewModels;
 using Entities.Cursos;
 
 using Hera.Models.UtilityViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -20,7 +21,8 @@ namespace Hera.Controllers.ControllersMvc
             _data = data;
         }
 
-        [Authorize(Roles = "Estudiante")]
+        
+        [HttpGet]
         public IActionResult Index(string searchString = "",
             int skip = 0, int take = 10)
         {
@@ -31,28 +33,28 @@ namespace Hera.Controllers.ControllersMvc
             return View(new PaginationViewModel<Curso>(model, skip, take));
         }
 
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var model = await _data.Find_Curso(id);
-            var profId = await _data.Find_ProfesorId(
-                _data.Get_UserId(User.Claims));
-            if (model != null && model.ProfesorId == profId)
+            var model = await _data.Find_Curso_Public(id);
+            if(model != null)
             {
                 return View(model);
             }
-            else
-                return NotFound();
+            return NotFound();
         }
 
-
         [HttpGet]
+        [Authorize(Roles ="Profesor")]
         public IActionResult Create()
         {
             return View();
         }
 
-        [ValidateAntiForgeryToken]
+        
         [HttpPost]
+        [Authorize(Roles = "Profesor")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateCursoViewModel model)
         {
 
@@ -76,6 +78,7 @@ namespace Hera.Controllers.ControllersMvc
             ModelState.AddModelError("", "Error en la creación del curso");
             return View(model);
         }
+
         [HttpPost]
         [Authorize(Roles = "Estudiante")]
         public async Task<IActionResult> AddEstudiante(AddEstudianteViewModel model)
@@ -95,11 +98,11 @@ namespace Hera.Controllers.ControllersMvc
                 catch (Exception) {
                 }
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","EstudianteCurso");
         }
-
-
+        
         [HttpPost]
+        [Authorize(Roles = "Profesor")]
         public async Task<IActionResult> AddDesafio(AddDesafioViewModel model)
         {
             if (ModelState.IsValid)

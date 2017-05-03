@@ -50,6 +50,7 @@ namespace Hera.Data
         IQueryable<Curso> GetAll_Cursos(int profId);
         IQueryable<Curso> GetAll_CursosEstudiante(int idEst);
         Task<Curso> Find_Curso(int id);
+        Task<Curso> Find_Curso_Public(int id);
 
 
         //RegistroCalificacion
