@@ -20,6 +20,7 @@ namespace Hera.Controllers.ControllersMvc.Profesor
         }
 
         [HttpGet]
+        [Route("/Profesor/Curso/{idCurso:int}")]
         public async Task<IActionResult> Details(int idCurso)
         {
             var model = await _data.Find_Curso(idCurso);

@@ -18,7 +18,7 @@
             <div class="list-group-item">
                 <span class="badge">@Model.Desafio.Dificultad</span>
                 <h3>
-                    <a asp-action="Desafio" asp-route-cursoId="@Model.Id" asp-route-desafioId="@Model.DesafioId">
+                    <a asp-action="Desafio" asp-route-idCurso="@Model.Id" asp-route-idDesafio="@Model.DesafioId">
                         @Model.Desafio.Nombre
                     </a>
                 </h3>
@@ -29,7 +29,7 @@
                 <div class="list-group-item">
                     <span class="badge">@item.Desafio.Dificultad</span>
                     <h3>
-                        <a asp-action="Desafio" asp-route-cursoId="@Model.Id" asp-route-desafioId="@item.DesafioID">
+                        <a asp-action="Desafio" asp-route-idCurso="@Model.Id" asp-route-idDesafio="@Model.DesafioId">
                             @item.Desafio.Nombre
                         </a>
                     </h3>
