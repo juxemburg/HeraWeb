@@ -60,6 +60,7 @@ namespace Hera.Controllers.ControllersMvc
         [DisableFormValueModelBinding]
         public async Task<IActionResult> UploadResultado()
         {
+            
             string fileName
                 = "Files/Temp/" + _fileManager.GetFilePath() + ".sb2";
             FormValueProvider formModel;

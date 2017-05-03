@@ -22,9 +22,11 @@ namespace Hera.Data
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Desafio> Desafios { get; set; }
         public DbSet<Calificacion> Calificaciones { get; set; }
+        public DbSet<CalificacionCualitativa> CalificacionesCualitativas { get; set; }
         public DbSet<RegistroCalificacion> RegistroCalificaiones { get; set; }
         public DbSet<Rel_CursoEstudiantes> Rel_Cursos_Estudiantes { get; set; }
         public DbSet<Rel_DesafiosCursos> Rel_Cursos_Desafios { get; set; }
+
 
 
 
@@ -66,10 +68,16 @@ namespace Hera.Data
                 .HasForeignKey(e => e.DesafioId)
                 .OnDelete(DeleteBehavior.SetNull);
 
-
             builder.Entity<RegistroCalificacion>()
                 .HasKey(entity =>
                 new { entity.CursoId, entity.EstudianteId, entity.DesafioId });
+
+            builder.Entity<RegistroCalificacion>()
+                .HasOne(e => e.CalificacionCualitativa)
+                .WithOne(e2 => e2.RegistroCalificacion)
+                .HasForeignKey<CalificacionCualitativa>(entity =>
+                new { entity.CursoId, entity.EstudianteId, entity.DesafioId })
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.Entity<Calificacion>()
                 .HasOne(e => e.RegistroCalificacion)
