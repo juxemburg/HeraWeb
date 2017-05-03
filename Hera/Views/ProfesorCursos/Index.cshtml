@@ -42,7 +42,8 @@ ViewData["Title"] = "Mis Cursos";
     {
             <tr>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">
+                    <a asp-action="Details" asp-controller="ProfesorCurso" 
+                       asp-route-idCurso="@item.Id">
                         @Html.DisplayFor(modelItem => item.Nombre)
                     </a>                     
                 </td>

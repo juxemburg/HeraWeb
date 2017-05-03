@@ -13,7 +13,7 @@ using Entities.Calificaciones;
 namespace Hera.Controllers.ControllersMvc
 {
     
-    [Route("Estudiante/Cursos/[action]")]
+    [Route("/Estudiante/Cursos/[action]")]
     [Authorize(Roles = "Estudiante")]
     public class EstudianteCursoController : Controller
     {

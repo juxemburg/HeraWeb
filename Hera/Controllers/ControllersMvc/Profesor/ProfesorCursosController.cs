@@ -12,11 +12,11 @@ namespace Hera.Controllers.ControllersMvc
 {    
     [Route("/Profesor/Cursos/[action]")]
     [Authorize(Roles = "Profesor")]
-    public class ProfesorCursoController : Controller
+    public class ProfesorCursosController : Controller
     {
         private IDataAccess _data;
 
-        public ProfesorCursoController(IDataAccess data)
+        public ProfesorCursosController(IDataAccess data)
         {
             _data = data;
         }
@@ -36,19 +36,9 @@ namespace Hera.Controllers.ControllersMvc
             return View(new PaginationViewModel<Curso>(model, skip, take));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Details(int id)
-        {
-            var model = await _data.Find_Curso(id);
-            var profId = await _data.Find_ProfesorId(
-                _data.Get_UserId(User.Claims));
+        
 
-            if(model == null || model.ProfesorId != profId)
-            {
-                return NotFound();
-            }
-            return View(model);
-
-        }
+        
+        
     }
 }
