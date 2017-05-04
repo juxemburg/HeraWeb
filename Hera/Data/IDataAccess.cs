@@ -71,7 +71,11 @@ namespace Hera.Data
         void EditFinalizarCalificacion(int calificacionId);
 
         //Calificacion Cualitativa
-        //Task<CalificacionCualitativa> Find_CalificacionCualitativa(int calificacionId);
+        Task<CalificacionCualitativa> Find_CalificacionCualitativa(
+            int calificacionId);
+        Task<CalificacionCualitativa>
+            Find_CalificacionCualitativa(int estudianteId,
+            int cursoId, int desafioId);
 
 
         //Validacion

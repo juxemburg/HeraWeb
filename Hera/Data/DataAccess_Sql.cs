@@ -216,7 +216,7 @@ namespace Hera.Data
             {
                 return (await _context.SaveChangesAsync()) > 0;
             }
-            catch (SqlException)
+            catch (Exception)
             {
                 return false;
             }
@@ -296,6 +296,24 @@ namespace Hera.Data
                 .Where(cal => cal.EstudianteId == estudianteId &&
                 cal.Id == calificacionId && cal.DesafioId == desafioId &&
                 cal.CursoId == cursoId)
+                .FirstOrDefaultAsync();
+            return model;
+        }
+
+        public async Task<CalificacionCualitativa> 
+            Find_CalificacionCualitativa(int calificacionId)
+        {
+            return await _context.CalificacionesCualitativas
+                .FindAsync(calificacionId);
+        }
+
+        public async Task<CalificacionCualitativa>
+            Find_CalificacionCualitativa(int estudianteId,
+            int cursoId, int desafioId)
+        {
+            var model = await _context.CalificacionesCualitativas
+                .Where(cal => cal.DesafioId == desafioId &&
+                cal.CursoId == cursoId && cal.EstudianteId == estudianteId)
                 .FirstOrDefaultAsync();
             return model;
         }

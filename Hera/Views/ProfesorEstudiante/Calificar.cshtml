@@ -7,11 +7,28 @@
     <link href="~/css/Calificar/calificar.css" rel="stylesheet" />
 }
 
-<h2>Vista detallada de las notas del estudiante</h2>
+<h2>Calificación del estudiante en el desafio: @Model.NombreDesafio</h2>
+@if (!Model.Calificado)
+{
+    <div class="row">
+        <div class="card bordered">
+            <div class="card-header">
+                <h3>Califica éste estudiante:</h3>
+            </div>
+            <div class="card-content">
+                @Html.Partial("_AddCalificacionCualitativa", Model.FormModel)
+            </div>
+        </div>
+    </div>
+}
+else
+{
+
+}
 <div class="row">
-    
+    <hr />
     @foreach (var item in Model.Registro.Calificaciones)
-    {   
+    {
         <div class="card shadow col-sm-12">
             <div class="card-header">
                 <h3>
@@ -20,14 +37,14 @@
             </div>
             <div class="card-content">
                 <p>
-                    Duracion: @item.Duracion.Hours 
+                    Duracion: @item.Duracion.Hours
                     : @item.Duracion.Minutes
                     : @item.Duracion.Seconds
                 </p>
             </div>
             <div class="card-footer">
-                <a class="btn btn-info" asp-controller="File" 
-                   asp-action="DownloadResultado" 
+                <a class="btn btn-info" asp-controller="File"
+                   asp-action="DownloadResultado"
                    asp-route-estudianteId="@item.EstudianteId"
                    asp-route-cursoId="@item.CursoId"
                    asp-route-desafioId="@item.DesafioId"

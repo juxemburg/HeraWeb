@@ -9,6 +9,7 @@ using Hera.Services;
 using Hera.Models.EntitiesViewModels;
 using Hera.Data;
 using Entities.Calificaciones;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -107,6 +108,7 @@ namespace Hera.Controllers.ControllersMvc
             return null;
         }
 
+        [Authorize(Roles ="Estudiante, Profesor")]
         public async Task<FileResult> DownloadResultado(int estudianteId,
             int cursoId, int desafioId, int idCalificacion)
         {
