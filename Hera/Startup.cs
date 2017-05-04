@@ -62,7 +62,7 @@ namespace Hera
             {
                 if (!_env.IsProduction())
                 {
-                    opt.SslPort = 44340;
+                    opt.SslPort = 44352;
                 }
                 opt.Filters.Add(new RequireHttpsAttribute());
 
