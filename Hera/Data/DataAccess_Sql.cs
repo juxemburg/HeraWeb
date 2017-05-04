@@ -238,9 +238,11 @@ namespace Hera.Data
                 && reg.DesafioId == desafioId)
                 .Include(reg => reg.Desafio)
                 .Include(reg => reg.Calificaciones);
+                return await query.FirstOrDefaultAsync();
             }
+            return null;
 
-            return await query.FirstOrDefaultAsync();
+            
         }
 
         public IQueryable<RegistroCalificacion> GetAll_RegistroCalificacion(

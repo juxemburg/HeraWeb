@@ -8,23 +8,36 @@
 }
 
 <h2>Calificación del estudiante en el desafio: @Model.NombreDesafio</h2>
-@if (!Model.Calificado)
-{
-    <div class="row">
-        <div class="card bordered">
+
+<div class="row">
+    <div class="card bordered">
+        @if (!Model.Calificado)
+            {
             <div class="card-header">
                 <h3>Califica éste estudiante:</h3>
             </div>
             <div class="card-content">
                 @Html.Partial("_AddCalificacionCualitativa", Model.FormModel)
             </div>
-        </div>
-    </div>
-}
-else
-{
+        }
+        else
+        {
+            <div class="card-header">
+                <h3 class="color-success">
+                    Estudiante Calificado el:
+                    @Model.FormModel.FechaRegistro
+                    <span class="pull-right glyphicon glyphicon-ok"></span>
+                </h3>
+            </div>
+            <div class="card-content">
+                @Html.Partial("_EditCalificacionCualitativa", Model.FormModel)
+            </div>
+            
+        }
 
-}
+    </div>
+</div>
+
 <div class="row">
     <hr />
     @foreach (var item in Model.Registro.Calificaciones)

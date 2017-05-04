@@ -15,15 +15,28 @@ namespace Hera.Models.EntitiesViewModels
         public int EstudianteId { get; set; }
         public int DesafioId { get; set; }
 
+        public DateTime? FechaRegistro { get; set; }
+
         [Display(Name="El estudiante completó satisfacoriamente los objetivos del desafío?")]
         public bool Completada { get; set; }
 
         [Display(Name ="¿Por Qué?")]
         public string Descripcion { get; set; }
 
-        public CreateCalificacionCualitativaViewModel(CalificacionCualitativa map)
+        public CreateCalificacionCualitativaViewModel()
         {
 
+        }
+        public CreateCalificacionCualitativaViewModel(
+            CalificacionCualitativa model)
+        {
+            this.Id = model.Id;
+            CursoId = model.CursoId;
+            EstudianteId = model.EstudianteId;
+            DesafioId = model.DesafioId;
+            Completada = model.Completada;
+            Descripcion = model.Descripcion;
+            FechaRegistro = model.FechaRegistro;
         }
 
         public CalificacionCualitativa Map()

@@ -40,11 +40,17 @@ namespace Hera.Controllers.ControllersMvc.Profesor
                 model,
                 desafio.Nombre);
 
-            resultModel.FormModel = await _data
+            var formModel = await _data
                 .Find_CalificacionCualitativa(idEstudiante,
                 idCurso, idDesafio);
+            if(formModel != null)
+            {
+                resultModel.FormModel =
+                new CreateCalificacionCualitativaViewModel(formModel);
+                resultModel.Calificado = true;
+            }
 
-            return View();
+            return View(resultModel);
         }
 
         [HttpPost]
@@ -58,6 +64,35 @@ namespace Hera.Controllers.ControllersMvc.Profesor
                 var res = await _data.SaveAllAsync();
                 if (!res)
                     ModelState.AddModelError("", "Error al insertar " +
+                        "la calificación");
+            }
+            return RedirectToAction("Calificar",
+                new
+                {
+                    idCurso = model.CursoId,
+                    idEstudiante = model.EstudianteId,
+                    idDesafio = model.DesafioId
+                });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditCalificar(
+            CreateCalificacionCualitativaViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var entity = await _data
+                    .Find_CalificacionCualitativa(model.Id.Value);
+
+                entity.Completada = model.Completada;
+                entity.Descripcion = model.Descripcion;
+
+                _data.Edit<CalificacionCualitativa>(entity);
+
+                var res = await _data.SaveAllAsync();
+                if (!res)
+                    ModelState.AddModelError("", "Error al editar " +
                         "la calificación");
             }
             return RedirectToAction("Calificar",
