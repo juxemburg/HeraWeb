@@ -78,7 +78,12 @@
                                 <a class="btn btn-info">
                                     ver más
                                 </a>
-                                <a class="btn btn-info">
+                                <a class="btn btn-info"
+                                   asp-action="Calificar"
+                                   asp-controller="ProfesorEstudiante"
+                                   asp-route-idCurso="@item.CursoId"
+                                   asp-route-idEstudiante="@item.EstudianteId"
+                                   asp-route-idDesafio="@item.DesafioId">
                                     Calificar
                                 </a>
                             </div>

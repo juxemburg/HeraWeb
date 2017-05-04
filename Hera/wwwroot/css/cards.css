@@ -2,7 +2,7 @@
     background-color: #FFF;
     border-radius: 5px;
     padding: 5px 20px;
-    margin: 0px 10px;
+    margin: 20px 10px;
 }
 
     .card.bordered {
@@ -45,3 +45,10 @@
         font-size: 0.8em;
         color: #404040;
     }
+.card-footer {
+    padding: 15px 15px;
+    border-top: 0.5px solid #393939;
+    font-size: 0.9em;
+    font-style: italic;
+    color: #393939;
+}

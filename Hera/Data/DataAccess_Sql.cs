@@ -223,17 +223,24 @@ namespace Hera.Data
         }
 
         public async Task<RegistroCalificacion> Find_RegistroCalificacion(
-            int cursoId, int estudianteId, int desafioId)
+            int cursoId, int estudianteId, int desafioId,
+            int? profesorId = null)
         {
-            var query = await _context.RegistroCalificaiones
+            var query = Enumerable
+                .Empty<RegistroCalificacion>().AsQueryable();
+            
+            if(profesorId != null 
+                && await Exist_Profesor_Curso(profesorId.Value, cursoId))
+            {
+                query = _context.RegistroCalificaiones
                 .Where(reg => reg.CursoId == cursoId
                 && reg.EstudianteId == reg.EstudianteId
                 && reg.DesafioId == desafioId)
                 .Include(reg => reg.Desafio)
-                .Include(reg => reg.Calificaciones)
-                .FirstOrDefaultAsync();
+                .Include(reg => reg.Calificaciones);
+            }
 
-            return query;
+            return await query.FirstOrDefaultAsync();
         }
 
         public IQueryable<RegistroCalificacion> GetAll_RegistroCalificacion(
@@ -281,5 +288,29 @@ namespace Hera.Data
         {
             return await _context.Calificaciones.FindAsync(calificacionId);
         }
+
+        public async Task<Calificacion> Find_Calificacion(int calificacionId,
+            int estudianteId, int cursoId, int desafioId)
+        {
+            var model = await _context.Calificaciones
+                .Where(cal => cal.EstudianteId == estudianteId &&
+                cal.Id == calificacionId && cal.DesafioId == desafioId &&
+                cal.CursoId == cursoId)
+                .FirstOrDefaultAsync();
+            return model;
+        }
+
+
+        //Validacion
+        public async Task<bool> Exist_Profesor_Curso(int profesorId,
+            int cursoId)
+        {
+            var value = await _context.Cursos
+                .Where(cur => cur.Id == cursoId
+                && cur.ProfesorId == profesorId)
+                .FirstOrDefaultAsync();
+            return value != null;
+        }
+
     }
 }

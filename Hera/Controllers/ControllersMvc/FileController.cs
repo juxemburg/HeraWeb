@@ -101,13 +101,32 @@ namespace Hera.Controllers.ControllersMvc
             var desafio = await _data.Find_Desafio(desafioId);
             if (desafio != null)
             {
-
-                var filepath = desafio.DirArchivo;
-                byte[] fileBytes = System.IO.File.ReadAllBytes(filepath);
-                return File(fileBytes, "application/x-msdownload",
-                    $"{desafio.Nombre}.sb2");
+                return getFile(desafio.DirArchivo,
+                    desafio.Nombre);
             }
             return null;
+        }
+
+        public async Task<FileResult> DownloadResultado(int estudianteId,
+            int cursoId, int desafioId, int idCalificacion)
+        {
+            var calificacion = await _data.Find_Calificacion(idCalificacion,
+                estudianteId, cursoId, desafioId);
+            if(calificacion != null)
+            {
+                var fileName = 
+                    $"calificacion_{desafioId}_{cursoId}_{estudianteId}";
+                return getFile(calificacion.DirArchivo, fileName);
+            }
+            return null;
+        }
+
+        private FileResult getFile(string filePath, string fileName,
+            string ext = "sb2")
+        {   
+            byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
+            return File(fileBytes, "application/x-msdownload",
+                $"{fileName}.{ext}");
         }
     }
 }
