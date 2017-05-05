@@ -64,6 +64,7 @@
     <Folder Include="Views\Estudiante\" />
     <Folder Include="Views\File\" />
     <Folder Include="Views\Profesor\" />
+    <Folder Include="Views\ProgresoDesafio\" />
     <Folder Include="wwwroot\Files\Temp\" />
   </ItemGroup>
 

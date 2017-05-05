@@ -98,7 +98,7 @@ namespace Hera.Controllers.ControllersMvc
                 catch (Exception) {
                 }
             }
-            return RedirectToAction("Index","EstudianteCurso");
+            return RedirectToAction("Index","EstudianteCursos");
         }
         
         [HttpPost]

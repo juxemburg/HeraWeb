@@ -67,7 +67,11 @@ namespace Hera.Data
         void AddCalificacion(Calificacion calificacion);
         void EditFinalizarCalificacion(int calificacionId);
 
-        
+        //Cantidad de estudiantes que finalizaron y no finalizaron los desafios
+        IQueryable<Estudiante> Find_Estudiantes_Finalizaron(int desafioId, int cursoId);
+        IQueryable<Estudiante> Find_Estudiantes_No_Finalizaron(int desafioId, int cursoId);
+
+
 
 
     }

@@ -60,15 +60,15 @@
         <h3>Desafíos</h3>
         <ul class="list-group">
             <li class="list-group-item">
-                <a asp-action="Details" asp-controller="Desafios">
-                    @Model.Desafio.Nombre
+                <a asp-controller="ProfesorCurso" asp-action="Progres" asp-route-idDesafio="@Model.DesafioId">
+                    @Model.Desafio.Nombre hhhhhhh
                 </a>
             </li>
             @foreach (var item in Model.Desafios)
             {
                 <li class="list-group-item">
-                    <a asp-action="Details" asp-controller="Desafios">
-                        @item.Desafio.Nombre
+                    <a asp-controller="ProfesorCurso" asp-action="Progres"  asp-route-idDesafio="@item.DesafioID">
+                        @item.Desafio.Nombre  
                     </a>
                     <span class="pull-right">
                         <a href="" class="btn btn-xs btn-danger">

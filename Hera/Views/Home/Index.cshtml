@@ -10,14 +10,16 @@
                 break;
         case 1:
                     <h1>Soy Profesor</h1>
-                    <li><a asp-area="" asp-controller="Account" asp-action="Register">Buscar cursos</a></li>
-                    <li><a asp-area="" asp-controller="Account" asp-action="Register">Mis cursos</a></li>
-                    <li><a asp-area="" asp-controller="Account" asp-action="Register">Crear curso</a></li>
-                    <li><a asp-area="" asp-controller="Account" asp-action="Register">Crear desafio</a></li>
+                    <li><a asp-area="" asp-controller="ProfesorCursos" asp-action="Index">Mis cursos</a></li>
+                    <li><a asp-area="" asp-controller="Cursos" asp-action="Index">Buscar cursos</a></li>
+                    <li><a asp-area="" asp-controller="Cursos" asp-action="Create">Crear curso</a></li>
+                    <li><a asp-area="" asp-controller="Desafios" asp-action="Create">Crear desafio</a></li>
             break;
         case 2:
                     <h1>Soy estudiante</h1>
-                    break;
+                    <li><a asp-area="" asp-controller="EstudianteCursos" asp-action="Busqueda">Buscar cursos</a></li>
+                    <li><a asp-area="" asp-controller="EstudianteCursos" asp-action="Index">Mis cursos</a></li>
+            break;
     }
 }
 

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Hera.Data;
 using Microsoft.AspNetCore.Authorization;
 using Hera.Models.EntitiesViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hera.Controllers.ControllersMvc.Profesor
 {
@@ -62,6 +63,32 @@ namespace Hera.Controllers.ControllersMvc.Profesor
             }
 
             return View(new EstudianteCalificacionViewModel(model));
+        }
+        [HttpGet("{idDesafio:int}")]
+        public async Task<IActionResult> Progres(int idCurso,
+        int idDesafio)
+        {
+            ProgresoDesafioViewModel nuevoProgreso = new ProgresoDesafioViewModel();
+
+            var profId = await _data.Find_ProfesorId(
+                _data.Get_UserId(User.Claims));
+
+            var desafios = await _data.Find_Desafio(idDesafio);
+            var calculo = desafios.Calificaciones
+                .Select(c => c.Calificaciones.Average(c1 => c1.Duracion.Milliseconds)).Average();
+            var estudiantesSi = await _data.Find_Estudiantes_Finalizaron(idDesafio, idCurso).ToListAsync();
+            var estudiantesNo = await _data.Find_Estudiantes_No_Finalizaron(idDesafio, idCurso).ToListAsync();
+
+            nuevoProgreso.promedioTiempos = calculo;
+            nuevoProgreso.estudiantesQueFinalizaron = estudiantesSi;
+            nuevoProgreso.estudiantesQueNoFinalizaron = estudiantesNo;
+
+
+            if (desafios == null)
+            {
+                return NotFound();
+            }            
+            return View("Progres", nuevoProgreso);
         }
     }
 }

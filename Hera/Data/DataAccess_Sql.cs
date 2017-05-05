@@ -281,5 +281,41 @@ namespace Hera.Data
         {
             return await _context.Calificaciones.FindAsync(calificacionId);
         }
+
+
+
+
+
+
+        public IQueryable<Estudiante> Find_Estudiantes_Finalizaron(int desafioId, int cursoId)
+        {
+            var consulta = _context.RegistroCalificaiones
+                .Where(y => y.DesafioId == desafioId && 
+                y.CursoId == cursoId)
+                .Select(e => e.EstudianteId);
+            var query = _context.Estudiantes
+                .Where(est => consulta.Contains(est.Id));
+            return query;
+        }
+
+        public IQueryable<Estudiante> Find_Estudiantes_No_Finalizaron(int desafioId, int cursoId)
+        {
+            var consulta = Find_Curso(cursoId).Result;
+            
+            if(consulta != null)
+            {
+                return new List<Estudiante>().AsQueryable();
+            }
+
+            var est = consulta.Estudiantes
+                    .Select(rel => rel.Estudiante);
+            var estSi = Find_Estudiantes_Finalizaron(desafioId, cursoId);
+            var query =  est
+                .Where(e => !estSi.Contains(e));
+            return query.AsQueryable();
+            
+
+            
+        }
     }
 }
