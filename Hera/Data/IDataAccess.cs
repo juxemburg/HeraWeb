@@ -26,7 +26,7 @@ namespace Hera.Data
         IQueryable<Estudiante> GetAll_Estudiante();
         Task<Estudiante> Find_Estudiante(int id);
         Task<Rel_CursoEstudiantes> Find_Estudiante(int idEstudiante,
-            int idCurso,int idProfesor);
+            int idCurso, int idProfesor);
 
         //Profesores
         void AddProfesor(Profesor model);
@@ -44,7 +44,7 @@ namespace Hera.Data
         Task<bool> Exist_Desafio(int id);
 
         //Cursos
-        void AddCurso(Curso model);        
+        void AddCurso(Curso model);
         IQueryable<Curso> Autocomplete_Cursos(string queryString);
         IQueryable<Curso> Autocomplete_Cursos(string queryString,
             int? prodId);
@@ -56,14 +56,17 @@ namespace Hera.Data
 
 
         //RegistroCalificacion
-        Task<RegistroCalificacion> Find_RegistroCalificacion(int cursoId,
-            int estudianteId, int desafioId);
+        Task<RegistroCalificacion> Find_RegistroCalificacion(
+            int cursoId, int estudianteId,
+            int desafioId, int? profesorId = null);
         IQueryable<RegistroCalificacion> GetAll_RegistroCalificacion(
             int? cursoId, int? estudianteId, int? desafioId);
 
 
-        //RegistroCalificacion
+        //Calificacion
         Task<Calificacion> Find_Calificacion(int calificacionId);
+        Task<Calificacion> Find_Calificacion(int calificacionId,
+            int estudianteId, int cursoId, int desafioId);
         void AddCalificacion(Calificacion calificacion);
         void EditFinalizarCalificacion(int calificacionId);
 
@@ -73,6 +76,9 @@ namespace Hera.Data
 
 
 
+        //Validacion
+        Task<bool> Exist_Profesor_Curso(int profesorId,
+            int cursoId);
 
     }
 }

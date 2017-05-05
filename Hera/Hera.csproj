@@ -21,6 +21,7 @@
   <ItemGroup>
     <Content Include="wwwroot\css\Autocomplete\easy-autocomplete.min.css" />
     <Content Include="wwwroot\css\Autocomplete\easy-autocomplete.themes.min.css" />
+    <Content Include="wwwroot\css\Calificar\calificar.css" />
     <Content Include="wwwroot\css\cards.css" />
     <Content Include="wwwroot\css\colors.css" />
     <Content Include="wwwroot\css\Estudiante\cursos.css" />

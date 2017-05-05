@@ -81,7 +81,8 @@ namespace Hera.Controllers.ControllersMvc
 
         [HttpPost]
         [Authorize(Roles = "Estudiante")]
-        public async Task<IActionResult> AddEstudiante(AddEstudianteViewModel model)
+        public async Task<IActionResult> AddEstudiante(
+            AddEstudianteViewModel model)
         {
             if (ModelState.IsValid)
             {
