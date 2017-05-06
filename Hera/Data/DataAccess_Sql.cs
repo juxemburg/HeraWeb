@@ -230,19 +230,17 @@ namespace Hera.Data
                 .Empty<RegistroCalificacion>().AsQueryable();
             
             if(profesorId != null 
-                && await Exist_Profesor_Curso(profesorId.Value, cursoId))
+                && !(await Exist_Profesor_Curso(profesorId.Value, cursoId)))
             {
-                query = _context.RegistroCalificaiones
+                return null;
+            }
+            query = _context.RegistroCalificaiones
                 .Where(reg => reg.CursoId == cursoId
                 && reg.EstudianteId == reg.EstudianteId
                 && reg.DesafioId == desafioId)
                 .Include(reg => reg.Desafio)
                 .Include(reg => reg.Calificaciones);
-                return await query.FirstOrDefaultAsync();
-            }
-            return null;
-
-            
+            return await query.FirstOrDefaultAsync();
         }
 
         public IQueryable<RegistroCalificacion> GetAll_RegistroCalificacion(
