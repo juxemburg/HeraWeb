@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hera", "Hera\Hera.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{35AC10B0-78E5-4950-80B6-4743DF1D5B93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClient", "HttpClient\HttpClient.csproj", "{A978D8EF-C452-476E-BE24-54F37AB9029A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestClient", "HttpClient\RestClient.csproj", "{A978D8EF-C452-476E-BE24-54F37AB9029A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClient.Test", "HttpClient.Test\HttpClient.Test.csproj", "{138F862B-1CEF-4D1C-93A0-431CEBD62AAD}"
 EndProject
