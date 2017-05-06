@@ -1,13 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace HttpClient.Test
 {
-    public class Proyecto
+    [DataContract(Name ="proyecto")]
+    class Proyecto
     {
-        public string objName { get; set; }
-        public IEnumerable<Proyecto> children { get; set; }
-        public InfoProyecto info { get; set; }
+        [DataMember(Name="objName")]
+        public string ObjName { get; set; }
+
+        [DataMember(Name = "children")]
+        public IEnumerable<Proyecto> Children { get; set; }
+
+        [DataMember(Name ="scripts")]
+        public IEnumerable<object> Scripts { get; set; }
+
+        [DataMember(Name = "info")]
+        public InfoProyecto Info { get; set; }
     }
 }

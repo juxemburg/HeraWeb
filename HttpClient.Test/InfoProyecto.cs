@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace HttpClient.Test
 {
-    public class InfoProyecto
+    [DataContract(Name = "info")]
+    class InfoProyecto
     {
-        public int scriptCount { get; set; }
+        [DataMember(Name = "projectID")]
+        public int Id { get; set; }
+
+        [DataMember(Name = "scriptCount")]
+        public int ScriptCount { get; set; }
     }
 }
