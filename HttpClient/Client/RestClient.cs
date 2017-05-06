@@ -15,7 +15,7 @@ namespace RestClient.Client
 
         public Client(string baseurl)
         {
-            _baseurl = baseurl;            
+            _baseurl = baseurl;
             _client = new HttpClient();
         }
 
@@ -24,11 +24,11 @@ namespace RestClient.Client
         {
             _serializer = new DataContractJsonSerializer(typeof(T));
             var geturl = createUrl(suburl, args);
-            var response = await processResponse<T>(()
-                => {
-                return  _client.GetStreamAsync(
-                geturl);
-            });
+            var response = await processResponse<T>(
+                () =>
+                {
+                    return _client.GetStreamAsync(geturl);
+                });
             return response;
         }
 
@@ -45,13 +45,13 @@ namespace RestClient.Client
         private async Task<T> processResponse<T>(Func<Task<Stream>> method)
             where T : class
         {
-            
+
             _client.DefaultRequestHeaders.Accept.Clear();
 
             var resultTask = method();
 
             return _serializer.ReadObject(await resultTask) as T;
-            
+
         }
     }
 }
