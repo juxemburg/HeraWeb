@@ -11,6 +11,7 @@ using Entities.Desafios;
 using Hera.Models.EntitiesViewModels;
 using Entities.Calificaciones;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Entities.Valoracion;
 
 namespace Hera.Data
 {
@@ -26,7 +27,8 @@ namespace Hera.Data
         public DbSet<RegistroCalificacion> RegistroCalificaiones { get; set; }
         public DbSet<Rel_CursoEstudiantes> Rel_Cursos_Estudiantes { get; set; }
         public DbSet<Rel_DesafiosCursos> Rel_Cursos_Desafios { get; set; }
-
+        public DbSet<ResultadoScratch> ResultadosScratch { get; set; }
+        public DbSet<BloqueScratch> BloquesScratch { get; set; }
 
 
 
@@ -44,7 +46,8 @@ namespace Hera.Data
             builder.Entity<ApplicationUser>()
                 .Property(u => u.UsuarioId)
                 .ValueGeneratedOnAdd();
-            
+            builder.Entity<BloqueScratch>()
+                .HasKey(e => new { e.ResultadoScratchId, e.Nombre });
 
             builder.Entity<Rel_CursoEstudiantes>()
                 .HasKey(entity => 
