@@ -22,30 +22,24 @@ namespace HttpClient.Test
                 "159291183", "get");
             //var s = await client.Get<ScratchObject>("internalapi/project",
             //    "159291183", "get");
-
-
-            var scriptn = 0;
             Console.WriteLine("Done!");
             Console.WriteLine(s.ObjName);
             if (s.Info != null)
             {
                 Console.WriteLine($"script count:" +
                     $" {s.Info.ScriptCount}");
+                var eval = s.GeneralEvaluation();
+                Console.WriteLine($"Evaluation:\n\n {eval}");
             }
-            Console.WriteLine("Clildren");
+            Console.WriteLine("----------------Clildren");
             foreach (var item in s.Children)
             {
-                if (item == null)
+                if (item == null || item.RawScripts == null)
                     continue;
+
                 Console.WriteLine(item.ObjName);
-                
-                if (item.RawScripts == null)
-                    continue;
                 var evaluation = item.Evaluate();
-                Console.WriteLine($"Dead Scripts" +
-                    $": {evaluation.DeadCode.Count}");
-                scriptn++;
-                
+                Console.WriteLine($"Evaluation: \n\n{evaluation}");
             }
         }
     }
