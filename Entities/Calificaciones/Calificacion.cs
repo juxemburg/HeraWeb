@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Entities.Valoracion;
+using System;
+using System.Collections.Generic;
 
 namespace Entities.Calificaciones
 {
@@ -6,10 +8,10 @@ namespace Entities.Calificaciones
     {
         public int Id { get; set; }
 
-        public int BloquesRepetidos { get; set; }
-        public int Inicializacion { get; set; }
         public DateTime Tiempoinicio { get; set; }
         public DateTime? TiempoFinal { get; set; }
+
+        public virtual List<ResultadoScratch> Resultados { get; set; }
 
         public int CursoId { get; set; }
         public int EstudianteId { get; set; }

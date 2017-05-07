@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entities\Entities.csproj" />
+    <ProjectReference Include="..\HeraScratch\HeraScratch.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Files\" />

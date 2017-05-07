@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace HeraScratch
 {
@@ -17,11 +18,33 @@ namespace HeraScratch
         {
             _client = new Client("https://projects.scratch.mit.edu");
         }
-        public async Task<ScratchValoration> Evaluate(string proyectId)
+        public async Task<T> Evaluate<T, U>(string proyectId)
+            where T : IEvaluation, new()
+            where U : IValoration, new()
         { 
             var result = await _client.Get<ScratchObject>(
-                "internalapi/project","159291183", "get");
-            return result.GeneralEvaluation();
+                "internalapi/project", proyectId, "get");
+
+            var evaluation = new T();
+            var list = (IEnumerable<IValoration>)result
+                .Children
+                .Where(child => child.RawScripts != null &&
+                !string.IsNullOrWhiteSpace(child.ObjName))
+                .Select(child =>
+                {
+                    var eval = child.Evaluate();
+                    return new U()
+                    {
+                        SpriteName = child.ObjName,
+                        ScriptCount = eval.ScriptCount,
+                        BlockCount = eval.BlockCount,
+                        BlockFrequency = eval.BlockFrequency
+                    };
+                });
+            var childEvaluations = new List<IValoration>();
+            evaluation.Initialize(result.GeneralEvaluation(),
+                list);
+            return evaluation;
         }
 
     }

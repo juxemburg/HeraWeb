@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entiti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestClient", "HttpClient\RestClient.csproj", "{A978D8EF-C452-476E-BE24-54F37AB9029A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hera.Scratch", "Hera.Scratch\Hera.Scratch.csproj", "{1F73CE9E-B1D7-4B8C-AD39-6A150639F09B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeraScratch", "HeraScratch\HeraScratch.csproj", "{27EC2A94-37B6-48D2-8CA3-45C225EA7601}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{A978D8EF-C452-476E-BE24-54F37AB9029A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A978D8EF-C452-476E-BE24-54F37AB9029A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A978D8EF-C452-476E-BE24-54F37AB9029A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F73CE9E-B1D7-4B8C-AD39-6A150639F09B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F73CE9E-B1D7-4B8C-AD39-6A150639F09B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F73CE9E-B1D7-4B8C-AD39-6A150639F09B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F73CE9E-B1D7-4B8C-AD39-6A150639F09B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{27EC2A94-37B6-48D2-8CA3-45C225EA7601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{27EC2A94-37B6-48D2-8CA3-45C225EA7601}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27EC2A94-37B6-48D2-8CA3-45C225EA7601}.Release|Any CPU.ActiveCfg = Release|Any CPU

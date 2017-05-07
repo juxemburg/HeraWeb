@@ -4,12 +4,13 @@ using System.Text;
 
 namespace HeraScratch.Valoration
 {
-    public class ScratchValoration
+    public class ScratchValoration : IValoration
     {
         public int ScriptCount { get; set; }
         public int BlockCount { get; set; }
         public List<Tuple<string,int>> BlockFrequency { get; set; }
         public List<List<object>> DeadCode { get; set; }
+        public string SpriteName { get; set; }
 
         public override string ToString()
         {

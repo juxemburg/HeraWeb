@@ -75,8 +75,6 @@ namespace Hera.Controllers.ControllersMvc
 
             var model = new Calificacion()
             {
-                BloquesRepetidos = 0,
-                Inicializacion = 0,
                 Tiempoinicio = DateTime.Now,
                 CursoId = idCurso,
                 EstudianteId = estId,
