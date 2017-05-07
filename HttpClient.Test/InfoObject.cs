@@ -6,7 +6,7 @@ using System.Text;
 namespace HttpClient.Test
 {
     [DataContract(Name = "info")]
-    class InfoProyecto
+    class InfoObject
     {
         [DataMember(Name = "projectID")]
         public int Id { get; set; }

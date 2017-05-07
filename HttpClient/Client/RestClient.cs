@@ -20,7 +20,7 @@ namespace RestClient.Client
         }
 
         public async Task<T> Get<T>(string suburl, params string[] args)
-            where T : class
+            where T : class, IHttpObject
         {
             _serializer = new DataContractJsonSerializer(typeof(T));
             var geturl = createUrl(suburl, args);
@@ -43,14 +43,16 @@ namespace RestClient.Client
         }
 
         private async Task<T> processResponse<T>(Func<Task<Stream>> method)
-            where T : class
+            where T : class, IHttpObject
         {
 
             _client.DefaultRequestHeaders.Accept.Clear();
 
             var resultTask = method();
 
-            return _serializer.ReadObject(await resultTask) as T;
+            var obj =  _serializer.ReadObject(await resultTask) as T;
+            obj.Initialize();
+            return obj;
 
         }
     }
