@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hera", "Hera\Hera.csproj", "{E8F18EE1-BBCE-4B30-93D9-4039D745DE49}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{35AC10B0-78E5-4950-80B6-4743DF1D5B93}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestClient", "HttpClient\RestClient.csproj", "{A978D8EF-C452-476E-BE24-54F37AB9029A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hera.Scratch", "Hera.Scratch\Hera.Scratch.csproj", "{1F73CE9E-B1D7-4B8C-AD39-6A150639F09B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeraScratch", "HeraScratch\HeraScratch.csproj", "{27EC2A94-37B6-48D2-8CA3-45C225EA7601}"
 EndProject
@@ -31,10 +29,6 @@ Global
 		{A978D8EF-C452-476E-BE24-54F37AB9029A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A978D8EF-C452-476E-BE24-54F37AB9029A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A978D8EF-C452-476E-BE24-54F37AB9029A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F73CE9E-B1D7-4B8C-AD39-6A150639F09B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F73CE9E-B1D7-4B8C-AD39-6A150639F09B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F73CE9E-B1D7-4B8C-AD39-6A150639F09B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F73CE9E-B1D7-4B8C-AD39-6A150639F09B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{27EC2A94-37B6-48D2-8CA3-45C225EA7601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{27EC2A94-37B6-48D2-8CA3-45C225EA7601}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27EC2A94-37B6-48D2-8CA3-45C225EA7601}.Release|Any CPU.ActiveCfg = Release|Any CPU

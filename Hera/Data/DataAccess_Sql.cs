@@ -86,6 +86,12 @@ namespace Hera.Data
         {
             return (await _context.Desafios.FindAsync(id)) != null;
         }
+        public async Task<bool> Exist_Desafio(int idDesafio, int idCurso)
+        {
+            return await _context.Rel_Cursos_Desafios
+                .AnyAsync(des => des.CursoId == idCurso &&
+                des.DesafioID == idDesafio);
+        }
 
         public async Task<Curso> Find_Curso(int id)
         {
@@ -349,15 +355,12 @@ namespace Hera.Data
 
         public IQueryable<Estudiante> Find_Estudiantes_No_Finalizaron(int desafioId, int cursoId)
         {
-            var consulta = Find_Curso(cursoId).Result;
-            
-            if(consulta != null)
-            {
-                return new List<Estudiante>().AsQueryable();
-            }
 
-            var est = consulta.Estudiantes
-                    .Select(rel => rel.Estudiante);
+            var est = _context.Rel_Cursos_Estudiantes
+                .Include(rel => rel.Estudiante)
+                .Where(rel => rel.CursoId == cursoId)
+                .Select(rel => rel.Estudiante);
+
             var estSi = Find_Estudiantes_Finalizaron(desafioId, cursoId);
             var query =  est
                 .Where(e => !estSi.Contains(e));

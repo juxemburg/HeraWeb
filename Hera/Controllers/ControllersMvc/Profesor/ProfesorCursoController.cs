@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Hera.Controllers.ControllersMvc.Profesor
 {
     [Route("/Profesor/Curso/{idCurso:int}/[action]")]
-    [Authorize(Roles="Profesor")]
+    [Authorize(Roles = "Profesor")]
     public class ProfesorCursoController : Controller
     {
         private IDataAccess _data;
@@ -41,7 +41,7 @@ namespace Hera.Controllers.ControllersMvc.Profesor
         {
             var curso = await _data.Find_Curso(idCurso);
             var model = await _data.Find_Desafio(idDesafio);
-            if(model == null || curso == null
+            if (model == null || curso == null
                 || curso.ContieneDesafio(idDesafio))
             {
                 return NotFound();
@@ -57,7 +57,7 @@ namespace Hera.Controllers.ControllersMvc.Profesor
                 _data.Get_UserId(User.Claims));
             var model = await _data.Find_Estudiante(idEstudiante,
                 idCurso, profId);
-            if(model == null)
+            if (model == null)
             {
                 return NotFound();
             }
@@ -68,26 +68,25 @@ namespace Hera.Controllers.ControllersMvc.Profesor
         public async Task<IActionResult> Progres(int idCurso,
         int idDesafio)
         {
-            ProgresoDesafioViewModel nuevoProgreso = new ProgresoDesafioViewModel();
-
             var profId = await _data.Find_ProfesorId(
                 _data.Get_UserId(User.Claims));
-
-            var desafios = await _data.Find_Desafio(idDesafio);
-            var calculo = desafios.Calificaciones
-                .Select(c => c.Calificaciones.Average(c1 => c1.Duracion.Milliseconds)).Average();
-            var estudiantesSi = await _data.Find_Estudiantes_Finalizaron(idDesafio, idCurso).ToListAsync();
-            var estudiantesNo = await _data.Find_Estudiantes_No_Finalizaron(idDesafio, idCurso).ToListAsync();
-
-            nuevoProgreso.promedioTiempos = calculo;
-            nuevoProgreso.estudiantesQueFinalizaron = estudiantesSi;
-            nuevoProgreso.estudiantesQueNoFinalizaron = estudiantesNo;
-
-
-            if (desafios == null)
+            if (!(await _data.Exist_Profesor_Curso(profId, idCurso)) && await _data.Exist_Desafio(idDesafio, idCurso))
             {
                 return NotFound();
-            }            
+            }
+            var calificaciones = _data.GetAll_RegistroCalificacion(idCurso, null, idDesafio);
+            var nuevoProgreso = new ProgresoDesafioViewModel()
+            {
+                estudiantesQueFinalizaron = await _data
+                .Find_Estudiantes_Finalizaron(idDesafio, idCurso).ToListAsync(),
+
+                estudiantesQueNoFinalizaron = await _data
+                .Find_Estudiantes_No_Finalizaron(idDesafio, idCurso).ToListAsync(),
+
+                promedioTiempos = calificaciones
+                .Select(c => c.Calificaciones.Average(c1 => c1.Duracion.Milliseconds))
+                .Average()
+            };
             return View("Progres", nuevoProgreso);
         }
     }
