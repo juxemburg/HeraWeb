@@ -12,6 +12,7 @@ namespace HeraScratch.Valoration
         public List<List<object>> DeadCode { get; set; }
         public string SpriteName { get; set; }
         public bool GeneralValoration { get; set; }
+        public int DeadCodeCount { get; set; }
 
         public override string ToString()
         {

@@ -1,4 +1,4 @@
-@model RegistroCalificacion
+@model CalificacionDesafioViewModel
 
 @{
     ViewData["Title"] = Model.Desafio.Nombre;
@@ -42,53 +42,60 @@
         <div class="panel-group" id="accordion">
             @for (int i = 0; i < Model.Calificaciones.Count; i++)
             {
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse-@i">
-                            Calificación #@(i+1)
-                            @if(Model.Calificaciones[i].EnCurso)
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-@i">
+                                Calificación #@(i + 1)
+                                @if (Model.Calificaciones[i].EnCurso)
                                 {
-                                <span>Pendiente</span>
+                                    <span>Pendiente</span>
                                 }
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapse-@i" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <label>Relaizado en: </label>
-                        <p class="text-centered">
-                            @Model.Calificaciones[i].Tiempoinicio
-                            -
-                            @Model.Calificaciones[i].TiempoFinal
-                        </p>
-                        <div>
-                            <label>Tiempo Transcurrido:</label>
-                            <p class="text-centered">
-                                @Model.Calificaciones[i].Duracion.Hours Horas
-                                @Model.Calificaciones[i].Duracion.Minutes Minutos
-                                @Model.Calificaciones[i].Duracion.Seconds Segundos
-                            </p>
-                        </div>
-                        <div>
-                            @*@if (@Model.Calificaciones[i].ResultadoScratch != null)
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse-@i" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="col-sm-12">
+                                <label>Relaizado en: </label>
+                                <p class="text-centered">
+                                    @Model.Calificaciones[i].Tiempoinicio
+                                    -
+                                    @Model.Calificaciones[i].TiempoFinal
+                                </p>
+                                <label>Tiempo Transcurrido:</label>
+                                <p class="text-centered">
+                                    @Model.Calificaciones[i].Duracion.Hours Horas
+                                    @Model.Calificaciones[i].Duracion.Minutes Minutos
+                                    @Model.Calificaciones[i].Duracion.Seconds Segundos
+                                </p>
+                                <hr />
+                            </div>
+                            @if (@Model.Calificaciones[i].ResultadoGeneral != null)
                             {
-                                <label>Nombre:</label>
-                                <p>@Model.Calificaciones[i].ResultadoScratch.Nombre</p>
-                                <label>Num Bloques:</label>
-                                <p>@Model.Calificaciones[i].ResultadoScratch.NumBloques</p>
-                                <label>Num Scripts:</label>
-                                <p>@Model.Calificaciones[i].ResultadoScratch.NumScripts</p>
-                            }*@
+                                <h4>Evaluación General</h4>
+                                <div class="col-sm-6">
+                                    <label>Nombre:</label>
+                                    <p>@Model.Calificaciones[i].ResultadoGeneral.Nombre</p>
+                                    <label>Num Bloques:</label>
+                                    <p>@Model.Calificaciones[i].ResultadoGeneral.NumBloques</p>
+                                    <label>Num Scripts:</label>
+                                    <p>@Model.Calificaciones[i].ResultadoGeneral.NumScripts</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <a asp-action=""
+                                       asp-route-calificacionId="@Model.Calificaciones[i].ResultadoGeneral.Id"
+                                       class="btn btn-default">Más info</a>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
-            </div>
             }
         </div>
     </div>
 
-    
+
 </div>
 
 
@@ -97,7 +104,7 @@
 {
     <div class="row">
         <hr />
-        <form asp-action="CalificarDesafio" >
+        <form asp-action="CalificarDesafio">
             <div class="form-horizontal">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input asp-for="@Model.DesafioId" type="hidden" />
@@ -108,7 +115,7 @@
                         Id Proyecto:
                     </label>
                     <div class="col-md-10">
-                        <input type="text" name="projId" value="" required/>
+                        <input type="text" name="projId" value="" required />
                     </div>
                 </div>
                 <div class="form-group">

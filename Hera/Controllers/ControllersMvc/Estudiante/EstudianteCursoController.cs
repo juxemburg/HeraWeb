@@ -7,6 +7,7 @@ using Hera.Data;
 using Entities.Calificaciones;
 using Hera.Services;
 using Hera.Services.ScratchServices;
+using Hera.Models.EntitiesViewModels.EstudianteDesafio;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -66,8 +67,7 @@ namespace Hera.Controllers.ControllersMvc
                 if (!res)
                     return BadRequest();
             }
-
-            return View(model);
+            return View(new CalificacionDesafioViewModel(model));
         }
 
         [HttpPost("{idDesafio:int}/Calificar")]

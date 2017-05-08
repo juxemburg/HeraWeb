@@ -8,9 +8,10 @@ using Hera.Data;
 namespace Hera.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170508171023_v2_6")]
+    partial class v2_6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -256,8 +257,6 @@ namespace Hera.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("CalificacionId");
-
-                    b.Property<int>("DeadCodeCount");
 
                     b.Property<bool>("General");
 

@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Files\" />
-    <Folder Include="Models\EntitiesViewModels\EstudianteDesafio\" />
     <Folder Include="ViewComponents\" />
     <Folder Include="Views\Cursos\" />
     <Folder Include="Views\Estudiante\" />

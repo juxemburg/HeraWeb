@@ -14,14 +14,17 @@ namespace Hera.Services.ScratchServices
         public List<Tuple<string, int>> BlockFrequency { get; set; }
         public string SpriteName { get; set; }
         public bool GeneralValoration { get; set; }
+        public int DeadCodeCount { get; set; }
 
         public ResultadoScratch Map()
         {
             return new ResultadoScratch()
             {
                 Nombre = SpriteName,
+                General = GeneralValoration,
                 NumBloques = BlockCount,
                 NumScripts = ScriptCount,
+                DeadCodeCount = DeadCodeCount,
                 Bloques = BlockFrequency
                 .Select(b =>
                 {
@@ -38,6 +41,7 @@ namespace Hera.Services.ScratchServices
             return new ResultadoScratch()
             {
                 CalificacionId = calId,
+                General = GeneralValoration,
                 Nombre = SpriteName,
                 NumBloques = BlockCount,
                 NumScripts = ScriptCount,
