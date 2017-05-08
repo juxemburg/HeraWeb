@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Hera.Data;
 using Entities.Calificaciones;
+using Hera.Services;
+using Hera.Services.ScratchServices;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -12,9 +14,13 @@ namespace Hera.Controllers.ControllersMvc
     public class EstudianteCursoController : Controller
     {
         private IDataAccess _data;
+        private ScratchService _evaluator;
+        
 
-        public EstudianteCursoController(IDataAccess data)
+        public EstudianteCursoController(IDataAccess data,
+            ScratchService scratchService)
         {
+            _evaluator = scratchService;
             _data = data;
         }
 
@@ -62,7 +68,37 @@ namespace Hera.Controllers.ControllersMvc
             }
 
             return View(model);
+        }
 
+        [HttpPost("{idDesafio:int}/Calificar")]
+        public async Task<IActionResult> CalificarDesafio(
+            int idCurso, int idDesafio, string projId)
+        {
+            var estId
+                = await _data.Find_EstudianteId(
+                    _data.Get_UserId(User.Claims));
+
+            var model = await _data.Find_RegistroCalificacion(
+                idCurso, estId,idDesafio);
+
+            if (model != null && model.Iniciada)
+            {
+                var cal = model.CalificacionPendiente;
+                cal.TerminarCalificacion(projId);
+                var res = await _evaluator.Get_Evaluation(projId);
+
+                var resultados = res.IndividualValorations
+                    .Select(val => ((Valoration_Scatch)val).Map(cal.Id))
+                    .ToList();
+                var general = ((Valoration_Scatch)res.General).Map(cal.Id);
+                _data.Add_ResultadoScratch(general);
+                _data.AddRange_ResultadoScratch(resultados);
+                cal.ResultadoScratch = general;
+                _data.Edit<Calificacion>(cal);
+                await _data.SaveAllAsync();
+            }
+            return RedirectToAction("Desafio",
+                new { idCurso = idCurso, idDesafio = idDesafio });
         }
 
         [HttpGet("{idDesafio:int}")]

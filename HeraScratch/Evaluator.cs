@@ -42,7 +42,16 @@ namespace HeraScratch
                     };
                 });
             var childEvaluations = new List<IValoration>();
-            evaluation.Initialize(result.GeneralEvaluation(),
+            var gEval = result.GeneralEvaluation();
+            var gResult = new U()
+            {
+                SpriteName = "General",
+                ScriptCount = gEval.ScriptCount,
+                BlockCount = gEval.BlockCount,
+                BlockFrequency = gEval.BlockFrequency
+            };
+
+            evaluation.Initialize(gResult,
                 list);
             return evaluation;
         }

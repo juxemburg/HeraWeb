@@ -86,7 +86,7 @@
 {
     <div class="row">
         <hr />
-        <form method="post" enctype="multipart/form-data" asp-action="UploadResultado" asp-controller="File">
+        <form asp-action="CalificarDesafio" >
             <div class="form-horizontal">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input asp-for="@Model.DesafioId" type="hidden" />
@@ -94,13 +94,10 @@
                 <input asp-for="@Model.CursoId" type="hidden" />
                 <div class="form-group">
                     <label class="col-md-2 control-label">
-                        Escenario Desafío
+                        Id Proyecto:
                     </label>
                     <div class="col-md-10">
-                        <label class="btn btn-success btn-file">
-                            Selecciona el Archivo...
-                            <input style="display: none;" type="file" name="file" required />
-                        </label>
+                        <input type="text" name="projId" value="" required/>
                     </div>
                 </div>
                 <div class="form-group">

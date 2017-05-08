@@ -8,9 +8,10 @@ using Hera.Data;
 namespace Hera.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170508000120_V2_2")]
+    partial class V2_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -29,7 +30,7 @@ namespace Hera.Migrations
 
                     b.Property<int>("EstudianteId");
 
-                    b.Property<int?>("ResultadoScratchId");
+                    b.Property<int>("ResultadoScratchId");
 
                     b.Property<DateTime?>("TiempoFinal");
 
@@ -386,7 +387,8 @@ namespace Hera.Migrations
                 {
                     b.HasOne("Entities.Valoracion.ResultadoScratch", "ResultadoScratch")
                         .WithOne("Calificacion")
-                        .HasForeignKey("Entities.Calificaciones.Calificacion", "ResultadoScratchId");
+                        .HasForeignKey("Entities.Calificaciones.Calificacion", "ResultadoScratchId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Entities.Calificaciones.RegistroCalificacion", "RegistroCalificacion")
                         .WithMany("Calificaciones")

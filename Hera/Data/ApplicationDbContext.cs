@@ -46,6 +46,7 @@ namespace Hera.Data
             builder.Entity<ApplicationUser>()
                 .Property(u => u.UsuarioId)
                 .ValueGeneratedOnAdd();
+
             builder.Entity<BloqueScratch>()
                 .HasKey(e => new { e.ResultadoScratchId, e.Nombre });
 
@@ -81,6 +82,12 @@ namespace Hera.Data
                 .HasForeignKey<CalificacionCualitativa>(entity =>
                 new { entity.CursoId, entity.EstudianteId, entity.DesafioId })
                 .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Calificacion>()
+                .HasOne(e => e.ResultadoScratch)
+                .WithOne(e2 => e2.Calificacion)
+                .HasForeignKey<Calificacion>
+                (entity => entity.ResultadoScratchId);
 
             builder.Entity<Calificacion>()
                 .HasOne(e => e.RegistroCalificacion)

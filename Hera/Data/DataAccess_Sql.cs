@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Data.SqlClient;
 using Entities.Calificaciones;
+using Entities.Valoracion;
 
 namespace Hera.Data
 {
@@ -222,7 +223,7 @@ namespace Hera.Data
             {
                 return (await _context.SaveChangesAsync()) > 0;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }
@@ -322,6 +323,24 @@ namespace Hera.Data
                 cal.CursoId == cursoId && cal.EstudianteId == estudianteId)
                 .FirstOrDefaultAsync();
             return model;
+        }
+
+        //Resultados Scratch
+        public void Add_ResultadoScratch(ResultadoScratch resultado)
+        {
+            Add<ResultadoScratch>(resultado);
+            foreach (var bloque in resultado.Bloques)
+            {
+                Add<BloqueScratch>(bloque);
+            }
+        }
+        public void AddRange_ResultadoScratch(
+            IEnumerable<ResultadoScratch> resultados)
+        {
+            foreach (var item in resultados)
+            {
+                Add_ResultadoScratch(item);
+            }
         }
 
 

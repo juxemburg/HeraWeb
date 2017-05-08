@@ -32,5 +32,24 @@ namespace Hera.Services.ScratchServices
                 }).ToList()
             };
         }
+        public ResultadoScratch Map(int calId)
+        {
+            return new ResultadoScratch()
+            {
+                CalificacionId = calId,
+                Nombre = SpriteName,
+                NumBloques = BlockCount,
+                NumScripts = ScriptCount,
+                Bloques = BlockFrequency
+                .Select(b =>
+                {
+                    return new BloqueScratch()
+                    {
+                        Nombre = b.Item1,
+                        Frecuencia = b.Item2
+                    };
+                }).ToList()
+            };
+        }
     }
 }

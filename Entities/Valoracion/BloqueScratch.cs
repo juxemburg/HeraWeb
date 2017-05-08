@@ -10,7 +10,6 @@ namespace Entities.Valoracion
         public ResultadoScratch ResultadoScratch { get; set; }
 
         public string Nombre { get; set; }
-
         public int Frecuencia { get; set; }
     }
 }

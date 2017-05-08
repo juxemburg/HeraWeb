@@ -2,6 +2,7 @@
 using Entities.Cursos;
 using Entities.Desafios;
 using Entities.Usuarios;
+using Entities.Valoracion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,6 +85,11 @@ namespace Hera.Data
         IQueryable<Estudiante> Find_Estudiantes_No_Finalizaron
             (int desafioId, int cursoId);
 
+        //Resultados Scratch
+        void AddRange_ResultadoScratch(
+            IEnumerable<ResultadoScratch> resultados);
+        void Add_ResultadoScratch(
+            ResultadoScratch resultado);
 
         //Validacion
         Task<bool> Exist_Profesor_Curso(int profesorId,
