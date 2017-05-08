@@ -47,7 +47,7 @@ namespace Hera.Controllers.ControllersMvc
             if (!bindingSuccessful || !ModelState.IsValid)
             {
                 _fileManager.DeleteFile(fileName);
-                return BadRequest(ModelState);
+                return View("../Desafios/Create", viewModel);
             }
             _data.AddDesafio(viewModel.Map(fileName));
             await _data.SaveAllAsync();

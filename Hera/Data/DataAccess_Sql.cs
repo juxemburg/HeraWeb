@@ -255,7 +255,8 @@ namespace Hera.Data
         {
             var query =
                 (IQueryable<RegistroCalificacion>)
-                _context.RegistroCalificaiones;
+                _context.RegistroCalificaiones
+                .Where(cal => !cal.Iniciada);
 
             if (cursoId != null)
                 query = query

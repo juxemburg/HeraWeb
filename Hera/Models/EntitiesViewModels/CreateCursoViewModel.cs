@@ -10,15 +10,16 @@ namespace Hera.Models.EntitiesViewModels
 {
     public class CreateCursoViewModel
     {
+        [Required(ErrorMessage ="Este campo es obligatorio")]
         public string Nombre { get; set; }
+
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         public string Descripcion { get; set; }
 
-        
-        
-        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         public string Password { get; set; }
 
-        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         [Compare("Password", ErrorMessage = "Las contraseñas no coinciden.")]
         public string ConfirmPassword { get; set; }
 
