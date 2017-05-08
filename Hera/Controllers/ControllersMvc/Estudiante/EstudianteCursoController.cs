@@ -84,10 +84,9 @@ namespace Hera.Controllers.ControllersMvc
             if(await _data.Exist_Desafio(idDesafio, idCurso) &&
                 await _data.Exist_Estudiante_Curso(estId, idCurso))
             {
-                var model = await _data
-                    .GetAll_ResultadoScratch(idCalificacion)
-                    .ToListAsync();
-                return View(model);
+                var model = _data
+                    .GetAll_ResultadoScratch(idCalificacion);
+                return View(new ResultadosScratchViewModel(model));
             }
             return NotFound("asdad");
         }
