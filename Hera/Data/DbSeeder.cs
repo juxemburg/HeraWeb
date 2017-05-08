@@ -3,6 +3,7 @@ using Entities.Desafios;
 using Entities.Usuarios;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Hera.Data
         private RoleManager<IdentityRole> _roleMgr;
         private UserManager<ApplicationUser> _userMgr;
         private IDataAccess _data;
+        private ApplicationDbContext _context;
 
         public DbSeeder(UserManager<ApplicationUser> userMgr,
             RoleManager<IdentityRole> roleMgr,
@@ -25,6 +27,22 @@ namespace Hera.Data
             _data = dataAccess;
             _roleMgr = roleMgr;
             _userMgr = userMgr;
+            _context = context;
+        }
+
+        public async Task ClearDatabase()
+        {
+            _context.Database
+                .ExecuteSqlCommand("Delete from [BloquesScratch]");
+            _context.Database
+                .ExecuteSqlCommand("Delete From [ResultadosScratch]");
+            _context.Database
+                .ExecuteSqlCommand("Delete From [Calificaciones]");
+            _context.Database
+                .ExecuteSqlCommand("Delete From [CalificacionesCualitativas]");
+            _context.Database
+                .ExecuteSqlCommand("Delete From [RegistroCalificaiones]");
+            await _data.SaveAllAsync();
         }
 
         public async Task Seed()

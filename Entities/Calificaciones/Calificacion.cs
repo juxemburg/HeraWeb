@@ -10,11 +10,7 @@ namespace Entities.Calificaciones
 
         public DateTime Tiempoinicio { get; set; }
         public DateTime? TiempoFinal { get; set; }
-
-        //Resultado General
-        public int? ResultadoScratchId { get; set; }
-        public ResultadoScratch ResultadoScratch { get; set; }
-
+        
         public virtual List<ResultadoScratch> Resultados { get; set; }
 
         public int CursoId { get; set; }

@@ -244,9 +244,10 @@ namespace Hera.Data
             query = _context.RegistroCalificaiones
                 .Where(reg => reg.CursoId == cursoId
                 && reg.EstudianteId == reg.EstudianteId
-                && reg.DesafioId == desafioId)
+                && reg.DesafioId == desafioId)                
                 .Include(reg => reg.Desafio)
-                .Include(reg => reg.Calificaciones);
+                .Include(reg => reg.Calificaciones)
+                .ThenInclude(cal => cal.Resultados);
             return await query.FirstOrDefaultAsync();
         }
 

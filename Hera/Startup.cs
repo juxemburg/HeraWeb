@@ -109,6 +109,7 @@ namespace Hera
             });
 
             seeder.Seed().Wait();
+            seeder.ClearDatabase().Wait();
             fileManager.InitializePath();
         }
     }

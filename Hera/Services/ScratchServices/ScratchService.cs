@@ -16,10 +16,11 @@ namespace Hera.Services
         {
             _evaluator = new Evaluator();
         }
-        public async Task<EvaluationScratch> Get_Evaluation(string projId)           
+        public async Task<IEnumerable<Valoration_Scatch>> 
+            Get_Evaluation(string projId)           
         {
             var result = await _evaluator
-                .Evaluate<EvaluationScratch, Valoration_Scatch>(projId);
+                .Evaluate<Valoration_Scatch>(projId);
             return result;
         }
     }

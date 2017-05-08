@@ -8,9 +8,10 @@ using Hera.Data;
 namespace Hera.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170508133541_v2_4")]
+    partial class v2_4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -29,11 +30,16 @@ namespace Hera.Migrations
 
                     b.Property<int>("EstudianteId");
 
+                    b.Property<int?>("ResultadoScratchId");
+
                     b.Property<DateTime?>("TiempoFinal");
 
                     b.Property<DateTime>("Tiempoinicio");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ResultadoScratchId")
+                        .IsUnique();
 
                     b.HasIndex("CursoId", "EstudianteId", "DesafioId");
 
@@ -379,6 +385,11 @@ namespace Hera.Migrations
 
             modelBuilder.Entity("Entities.Calificaciones.Calificacion", b =>
                 {
+                    b.HasOne("Entities.Valoracion.ResultadoScratch", "ResultadoScratch")
+                        .WithOne("Calificacion")
+                        .HasForeignKey("Entities.Calificaciones.Calificacion", "ResultadoScratchId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("Entities.Calificaciones.RegistroCalificacion", "RegistroCalificacion")
                         .WithMany("Calificaciones")
                         .HasForeignKey("CursoId", "EstudianteId", "DesafioId")
@@ -455,7 +466,7 @@ namespace Hera.Migrations
 
             modelBuilder.Entity("Entities.Valoracion.ResultadoScratch", b =>
                 {
-                    b.HasOne("Entities.Calificaciones.Calificacion", "Calificacion")
+                    b.HasOne("Entities.Calificaciones.Calificacion")
                         .WithMany("Resultados")
                         .HasForeignKey("CalificacionId")
                         .OnDelete(DeleteBehavior.Cascade);

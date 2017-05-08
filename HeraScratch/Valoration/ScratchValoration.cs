@@ -11,6 +11,7 @@ namespace HeraScratch.Valoration
         public List<Tuple<string,int>> BlockFrequency { get; set; }
         public List<List<object>> DeadCode { get; set; }
         public string SpriteName { get; set; }
+        public bool GeneralValoration { get; set; }
 
         public override string ToString()
         {

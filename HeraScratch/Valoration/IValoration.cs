@@ -6,6 +6,7 @@ namespace HeraScratch.Valoration
 {
     public interface IValoration
     {
+        bool GeneralValoration { get; set; }
         string SpriteName { get; set; }
         int ScriptCount { get; set; }
         int BlockCount { get; set; }

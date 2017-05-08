@@ -18,15 +18,15 @@ namespace HeraScratch
         {
             _client = new Client("https://projects.scratch.mit.edu");
         }
-        public async Task<T> Evaluate<T, U>(string proyectId)
-            where T : IEvaluation, new()
+        public async Task<IEnumerable<U>> Evaluate<U>(string proyectId)            
             where U : IValoration, new()
         { 
             var result = await _client.Get<ScratchObject>(
                 "internalapi/project", proyectId, "get");
 
-            var evaluation = new T();
-            var list = (IEnumerable<IValoration>)result
+            var gEval = result.GeneralEvaluation();
+            var eval1 = result.Evaluate();
+            var list = result
                 .Children
                 .Where(child => child.RawScripts != null &&
                 !string.IsNullOrWhiteSpace(child.ObjName))
@@ -38,22 +38,28 @@ namespace HeraScratch
                         SpriteName = child.ObjName,
                         ScriptCount = eval.ScriptCount,
                         BlockCount = eval.BlockCount,
-                        BlockFrequency = eval.BlockFrequency
+                        BlockFrequency = eval.BlockFrequency,
+                        GeneralValoration = false
                     };
+                })
+                .Append(new U()
+                {
+                    SpriteName = "General",
+                    ScriptCount = gEval.ScriptCount,
+                    BlockCount = gEval.BlockCount,
+                    BlockFrequency = gEval.BlockFrequency,
+                    GeneralValoration = true
+                })
+                .Append(new U()
+                {
+                    SpriteName = "Stage",
+                    ScriptCount = eval1.ScriptCount,
+                    BlockCount = eval1.BlockCount,
+                    BlockFrequency = eval1.BlockFrequency,
+                    GeneralValoration = false
                 });
-            var childEvaluations = new List<IValoration>();
-            var gEval = result.GeneralEvaluation();
-            var gResult = new U()
-            {
-                SpriteName = "General",
-                ScriptCount = gEval.ScriptCount,
-                BlockCount = gEval.BlockCount,
-                BlockFrequency = gEval.BlockFrequency
-            };
 
-            evaluation.Initialize(gResult,
-                list);
-            return evaluation;
+            return list;
         }
 
     }

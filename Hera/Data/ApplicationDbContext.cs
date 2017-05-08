@@ -84,12 +84,6 @@ namespace Hera.Data
                 .OnDelete(DeleteBehavior.SetNull);
 
             builder.Entity<Calificacion>()
-                .HasOne(e => e.ResultadoScratch)
-                .WithOne(e2 => e2.Calificacion)
-                .HasForeignKey<Calificacion>
-                (entity => entity.ResultadoScratchId);
-
-            builder.Entity<Calificacion>()
                 .HasOne(e => e.RegistroCalificacion)
                 .WithMany(e2 => e2.Calificaciones)
                 .HasForeignKey(entity =>

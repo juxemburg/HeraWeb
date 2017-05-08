@@ -87,13 +87,10 @@ namespace Hera.Controllers.ControllersMvc
                 cal.TerminarCalificacion(projId);
                 var res = await _evaluator.Get_Evaluation(projId);
 
-                var resultados = res.IndividualValorations
-                    .Select(val => ((Valoration_Scatch)val).Map(cal.Id))
-                    .ToList();
-                var general = ((Valoration_Scatch)res.General).Map(cal.Id);
-                _data.Add_ResultadoScratch(general);
-                _data.AddRange_ResultadoScratch(resultados);
-                cal.ResultadoScratch = general;
+                var resultados = res.Select(val => val.Map(cal.Id))
+                    .ToList();                
+                
+                _data.AddRange_ResultadoScratch(resultados);                
                 _data.Edit<Calificacion>(cal);
                 await _data.SaveAllAsync();
             }

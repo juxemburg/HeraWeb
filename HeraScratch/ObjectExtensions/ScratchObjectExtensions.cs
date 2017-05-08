@@ -33,13 +33,16 @@ namespace HeraScratch.ObjectExtensions
         public static ScratchValoration GeneralEvaluation(
             this ScratchObject obj)
         {
-            if (obj.RawScripts == null ||
-                obj.Children == null)
+            if (obj.Children == null)
                 return ScratchValoration.Default();
 
             var blocks = new List<string>();
             var scripts = new List<List<object>>();
-
+            if(obj.RawScripts != null)
+            {
+                blocks.AddRange(obj.Blocks);
+                scripts.AddRange(obj.Scripts);
+            }
             foreach (var child in obj.Children)
             {
                 if (child.RawScripts != null)

@@ -13,6 +13,7 @@ namespace Hera.Services.ScratchServices
         public int BlockCount { get; set; }
         public List<Tuple<string, int>> BlockFrequency { get; set; }
         public string SpriteName { get; set; }
+        public bool GeneralValoration { get; set; }
 
         public ResultadoScratch Map()
         {
