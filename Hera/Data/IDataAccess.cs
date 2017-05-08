@@ -90,9 +90,13 @@ namespace Hera.Data
             IEnumerable<ResultadoScratch> resultados);
         void Add_ResultadoScratch(
             ResultadoScratch resultado);
+        IQueryable<ResultadoScratch> GetAll_ResultadoScratch(
+            int calificacionId);
 
         //Validacion
         Task<bool> Exist_Profesor_Curso(int profesorId,
+            int cursoId);
+        Task<bool> Exist_Estudiante_Curso(int estudianteId,
             int cursoId);
 
     }

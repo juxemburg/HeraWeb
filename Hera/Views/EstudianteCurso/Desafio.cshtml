@@ -83,8 +83,10 @@
                                     <p>@Model.Calificaciones[i].ResultadoGeneral.NumScripts</p>
                                 </div>
                                 <div class="col-sm-6">
-                                    <a asp-action=""
-                                       asp-route-calificacionId="@Model.Calificaciones[i].ResultadoGeneral.Id"
+                                    <a asp-action="Resultados"
+                                       asp-route-idCurso="@Model.CursoId"
+                                       asp-route-idDesafio="@Model.DesafioId"
+                                       asp-route-idCalificacion="@Model.Calificaciones[i].Id"
                                        class="btn btn-default">Más info</a>
                                 </div>
                             }

@@ -1,0 +1,42 @@
+@model IEnumerable<ResultadoScratch>
+@{
+    ViewData["Title"] = "Resultados";
+}
+
+<h2>Resultados</h2>
+
+<div class="row">
+    <h4>Objetos</h4>
+    @foreach (var item in Model)
+    {
+        <div class="card col-md-3">
+            <div class="card-header">
+                @item.Nombre
+            </div>
+            <div class="card-content">
+                <h5>Bloques Usados</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre del bloque</th>
+                            <th>Frecuencia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var block in item.Bloques)
+                        {
+                            <tr>
+                                <td>@block.Nombre</td>
+                                <td>@block.Frecuencia</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+
+            </div>
+        </div>
+    }
+</div>
+

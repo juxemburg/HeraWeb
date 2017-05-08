@@ -90,8 +90,10 @@ namespace Hera.Data
         public async Task<bool> Exist_Desafio(int idDesafio, int idCurso)
         {
             return await _context.Rel_Cursos_Desafios
-                .AnyAsync(des => des.CursoId == idCurso &&
-                des.DesafioID == idDesafio);
+                .Include(rel => rel.Curso)
+                .AnyAsync(des => (des.CursoId == idCurso &&
+                des.DesafioID == idDesafio) ||
+                des.Curso.DesafioId == idDesafio);
         }
 
         public async Task<Curso> Find_Curso(int id)
@@ -344,19 +346,34 @@ namespace Hera.Data
                 Add_ResultadoScratch(item);
             }
         }
+        public IQueryable<ResultadoScratch> GetAll_ResultadoScratch(
+            int calificacionId)
+        {
+            var query = _context.ResultadosScratch
+                .Where(res => res.CalificacionId == calificacionId)
+                .Include(res => res.Bloques);
+            return query;
+        }
 
 
         //Validacion
         public async Task<bool> Exist_Profesor_Curso(int profesorId,
             int cursoId)
         {
-            var value = await _context.Cursos
-                .Where(cur => cur.Id == cursoId
-                && cur.ProfesorId == profesorId)
-                .FirstOrDefaultAsync();
-            return value != null;
+            return  await _context.Cursos
+                .AnyAsync(cur => cur.Id == cursoId
+                && cur.ProfesorId == profesorId);
+                
         }
 
+        public async Task<bool> Exist_Estudiante_Curso(int estudianteId,
+            int cursoId)
+        {
+            return await _context.Rel_Cursos_Estudiantes
+                .AnyAsync(rel => rel.EstudianteId == estudianteId &&
+                rel.CursoId == cursoId);
+
+        }
 
 
 
