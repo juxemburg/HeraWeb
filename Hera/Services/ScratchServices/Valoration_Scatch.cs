@@ -45,6 +45,7 @@ namespace Hera.Services.ScratchServices
                 Nombre = SpriteName,
                 NumBloques = BlockCount,
                 NumScripts = ScriptCount,
+                DeadCodeCount = DeadCodeCount,
                 Bloques = BlockFrequency
                 .Select(b =>
                 {

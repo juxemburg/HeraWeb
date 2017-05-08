@@ -37,6 +37,7 @@ namespace HeraScratch
                     {
                         SpriteName = child.ObjName,
                         ScriptCount = eval.ScriptCount,
+                        DeadCodeCount = eval.DeadCode.Count(),
                         BlockCount = eval.BlockCount,
                         BlockFrequency = eval.BlockFrequency,
                         GeneralValoration = false
@@ -46,8 +47,9 @@ namespace HeraScratch
                 {
                     SpriteName = "General",
                     ScriptCount = gEval.ScriptCount,
+                    DeadCodeCount = gEval.DeadCode.Count(),
                     BlockCount = gEval.BlockCount,
-                    BlockFrequency = gEval.BlockFrequency,
+                    BlockFrequency = gEval.BlockFrequency,                    
                     GeneralValoration = true
                 })
                 .Append(new U()
@@ -56,6 +58,7 @@ namespace HeraScratch
                     ScriptCount = eval1.ScriptCount,
                     BlockCount = eval1.BlockCount,
                     BlockFrequency = eval1.BlockFrequency,
+                    DeadCodeCount = eval1.DeadCode.Count(),
                     GeneralValoration = false
                 });
 

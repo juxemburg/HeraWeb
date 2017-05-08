@@ -1,0 +1,66 @@
+@model ResultadoScratch
+
+<div class="card col-sm-5">
+    <div class="card-header">
+        <h4>@Model.Nombre</h4>
+    </div>
+    <div class="card-content">
+        <div>
+            <dl>
+                <dt class="col-sm-10">Número de Scripts Muertos:</dt>
+                <dd>@Model.DeadCodeCount</dd>
+
+                <dt class="col-sm-10">Número de bloques usados:</dt>
+                <dd>@Model.NumBloques</dd>
+
+                <dt class="col-sm-10">Número de Scripts usados:</dt>
+                <dd>@Model.NumScripts</dd>
+            </dl>
+        </div>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-@Model.Id">
+            Bloques Usados
+        </button>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div id="modal-@Model.Id" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre del bloque</th>
+                            <th>Frecuencia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var block in Model.Bloques)
+                        {
+                        <tr>
+                            <td>@block.Nombre</td>
+                            <td>@block.Frecuencia</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

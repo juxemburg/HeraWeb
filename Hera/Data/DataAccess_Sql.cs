@@ -351,7 +351,9 @@ namespace Hera.Data
         {
             var query = _context.ResultadosScratch
                 .Where(res => res.CalificacionId == calificacionId)
-                .Include(res => res.Bloques);
+                .Include(res => res.Bloques)
+                .OrderBy(res => res.General)
+                .ThenBy(res => res.Nombre);
             return query;
         }
 
