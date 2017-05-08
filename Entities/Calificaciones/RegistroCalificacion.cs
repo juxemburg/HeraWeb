@@ -23,9 +23,25 @@ namespace Entities.Calificaciones
         {
             get
             {
-                return Calificaciones
+                return (Calificaciones != null) ?
+                Calificaciones
                     .Where(cal => cal.EnCurso)
-                    .Count() > 0;
+                    .Count() > 0
+                    : true;
+                
+            }
+        }
+
+        public bool Terminada
+        {
+            get
+            {
+                return (Calificaciones != null) ?
+                (Calificaciones
+                    .Where(cal => !cal.EnCurso)
+                    .Count() > 0
+                    && Calificaciones.Count > 0)
+                    : false;
             }
         }
 

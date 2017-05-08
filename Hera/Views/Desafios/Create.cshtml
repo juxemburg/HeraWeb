@@ -4,12 +4,10 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>Crear desafio</h2>
 
 <form method="post" enctype="multipart/form-data" asp-action="UploadDesafio" asp-controller="File">
     <div class="form-horizontal">
-        <h4>CreateDesafioViewModel</h4>
-        <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Nombre" class="col-md-2 control-label"></label>
@@ -28,7 +26,7 @@
         <div class="form-group">
             <label asp-for="Dificultad" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Dificultad" class="form-control" />
+                <input asp-for="Dificultad" class="form-control" type="number" min="0"/>
                 <span asp-validation-for="Dificultad" class="text-danger"></span>
             </div>
         </div>

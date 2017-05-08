@@ -10,11 +10,14 @@ namespace Hera.Models.EntitiesViewModels
     public class CreateDesafioViewModel
     {
 
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         [Display(Name ="Nombre del Desafio")]
         public string Nombre { get; set; }
 
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         public int Dificultad { get; set; }
 
+        [Required(ErrorMessage = "Este campo es obligatorio")]
         public string Descripcion { get; set; }
 
         

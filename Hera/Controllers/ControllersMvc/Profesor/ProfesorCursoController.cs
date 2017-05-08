@@ -70,11 +70,14 @@ namespace Hera.Controllers.ControllersMvc.Profesor
         {
             var profId = await _data.Find_ProfesorId(
                 _data.Get_UserId(User.Claims));
-            if (!(await _data.Exist_Profesor_Curso(profId, idCurso)) && await _data.Exist_Desafio(idDesafio, idCurso))
+            if (!(await _data.Exist_Profesor_Curso(profId, idCurso))
+                && await _data.Exist_Desafio(idDesafio, idCurso))
             {
                 return NotFound();
             }
-            var calificaciones = _data.GetAll_RegistroCalificacion(idCurso, null, idDesafio);
+            var calificaciones = _data
+                .GetAll_RegistroCalificacion(idCurso, null, idDesafio);
+
             var nuevoProgreso = new ProgresoDesafioViewModel()
             {
                 estudiantesQueFinalizaron = await _data
@@ -83,9 +86,10 @@ namespace Hera.Controllers.ControllersMvc.Profesor
                 estudiantesQueNoFinalizaron = await _data
                 .Find_Estudiantes_No_Finalizaron(idDesafio, idCurso).ToListAsync(),
 
-                promedioTiempos = calificaciones
-                .Select(c => c.Calificaciones.Average(c1 => c1.Duracion.Milliseconds))
+                promedioTiempos = (calificaciones.Count() > 0) ? calificaciones
+                .Select(c => c.Calificaciones.Average(c1 => c1.Duracion.TotalSeconds))
                 .Average()
+                : 0
             };
             return View("Progres", nuevoProgreso);
         }
