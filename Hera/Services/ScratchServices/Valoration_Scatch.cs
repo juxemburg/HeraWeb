@@ -20,8 +20,8 @@ namespace Hera.Services.ScratchServices
         {
             return new ResultadoScratch()
             {
-                Nombre = SpriteName,
                 General = GeneralValoration,
+                Nombre = SpriteName,
                 NumBloques = BlockCount,
                 NumScripts = ScriptCount,
                 DeadCodeCount = DeadCodeCount,

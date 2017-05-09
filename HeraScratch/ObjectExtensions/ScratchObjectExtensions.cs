@@ -45,9 +45,12 @@ namespace HeraScratch.ObjectExtensions
             }
             foreach (var child in obj.Children)
             {
-                if (child.RawScripts != null)
+                if (child.Blocks != null )
                 {
                     blocks.AddRange(child.Blocks);
+                }
+                if(child.Scripts != null)
+                {
                     scripts.AddRange(child.Scripts);
                 }
             }
@@ -59,12 +62,13 @@ namespace HeraScratch.ObjectExtensions
         {
             var i = ((IEnumerable<object>)script[0]).First();
             var item = ((IEnumerable<object>)i).FirstOrDefault();
-            if (typeof(string) == item.GetType())
+            if (item != null && 
+                typeof(string) == item.GetType())
             {
                 var value = !_EventBlocks.ContainsKey(item.ToString());
                 return item.ToString();
             }
-            return "";
+            return "unknown";
 
         }
         private static ScratchValoration Get_valoration(
