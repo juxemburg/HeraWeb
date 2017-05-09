@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Hera.Services;
+using Hera.Models.EntitiesViewModels.EstudianteDesafio;
 
 namespace Hera.Controllers
 {
     public class HomeController : Controller
     {
+        private ScratchService _evaluator;
+
+        public HomeController(ScratchService evaluator)
+        {
+            _evaluator = evaluator;
+        }
         public IActionResult Index()
         {
             if (User.IsInRole("Profesor"))
@@ -19,26 +27,20 @@ namespace Hera.Controllers
             return View();
         }
 
-        public IActionResult About()
+        [HttpGet]
+        public async Task<IActionResult> Evaluacion(string idProyecto)
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
+            if(!string.IsNullOrWhiteSpace(idProyecto))
+            {
+                var model= (await _evaluator
+                    .Get_Evaluation(idProyecto))
+                    .Select(val => val.Map());
+                return View(new ResultadosScratchViewModel(model));
+            }
+            return RedirectToAction("Index");
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
 
-            return View();
-        }
 
-        public IActionResult Error()
-        {
-            return View();
-        }
-
-       
-        
     }
 }

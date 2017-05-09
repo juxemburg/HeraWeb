@@ -1,0 +1,25 @@
+@model ResultadosScratchViewModel
+@{
+    ViewData["Title"] = "Resultados";
+}
+@section Styles {
+    <link href="~/css/card-body.css" rel="stylesheet" />
+}
+
+<h2>Resultados</h2>
+
+<div class="row">
+    <div class="col-sm-12">
+        @await Html.PartialAsync("_ResultadoScratchPartial", Model.ResultadoGeneral)
+    </div>
+    <div class="col-sm-12">
+        <h4>Objetos</h4>
+        @foreach (var item in Model.ScriptsResultados)
+        {   
+            <div class="col-sm-4">
+                @await Html.PartialAsync("_ResultadoScratchPartial", item)
+            </div>
+        }
+    </div>
+</div>
+

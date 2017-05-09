@@ -43,6 +43,21 @@
             </ul>
             break;
     }
+
+    <div class="row">
+        <div class="col-sm-6">
+            <form method="get" 
+                  asp-action="Evaluacion" 
+                  asp-controller="Home"
+                  class="form-form-inline">
+                <div class="form-group">
+                    <label>Id Proyecto:</label>
+                    <input type="text" name="idProyecto" class="form-control" required/>
+                </div>
+                <button type="submit" class="btn btn-info">Evaluar!</button>
+            </form>
+        </div>
+    </div>
 }
 
 

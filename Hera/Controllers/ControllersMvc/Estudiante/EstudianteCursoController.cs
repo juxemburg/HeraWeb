@@ -109,7 +109,7 @@ namespace Hera.Controllers.ControllersMvc
                 var res = await _evaluator.Get_Evaluation(projId);
 
                 var resultados = res.Select(val => val.Map(cal.Id))
-                    .ToList();                
+                    .ToList();
                 
                 _data.AddRange_ResultadoScratch(resultados);                
                 _data.Edit<Calificacion>(cal);
