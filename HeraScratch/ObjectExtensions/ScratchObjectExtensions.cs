@@ -19,7 +19,9 @@ namespace HeraScratch.ObjectExtensions
                 ["whenSceneStarts"] = "whenSceneStarts",
                 ["whenSensorGreaterThan"] = "whenSensorGreaterThan",
                 ["broadcast:"] = "broadcast:",
-                ["doBroadcastAndWait"] = "doBroadcastAndWait"
+                ["doBroadcastAndWait"] = "doBroadcastAndWait",
+                ["procDef"] = "procDef",
+                ["whenCloned"] = "whenCloned"
             };
         public static ScratchValoration Evaluate(this ScratchObject obj)
         {
