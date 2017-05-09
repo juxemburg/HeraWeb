@@ -28,7 +28,9 @@ namespace HeraScratch.ObjectExtensions
                 return ScratchValoration.Default();
             }
 
-            return Get_valoration(obj.Scripts, obj.Blocks);
+            return Get_valoration(obj.Scripts,
+                obj.Blocks,
+                obj.ScriptsString);
         }
         public static ScratchValoration GeneralEvaluation(
             this ScratchObject obj)
@@ -38,10 +40,12 @@ namespace HeraScratch.ObjectExtensions
 
             var blocks = new List<string>();
             var scripts = new List<List<object>>();
+            var scriptList = new List<string>();
             if(obj.RawScripts != null)
             {
                 blocks.AddRange(obj.Blocks);
                 scripts.AddRange(obj.Scripts);
+                scriptList.AddRange(obj.ScriptsString);
             }
             foreach (var child in obj.Children)
             {
@@ -53,8 +57,12 @@ namespace HeraScratch.ObjectExtensions
                 {
                     scripts.AddRange(child.Scripts);
                 }
+                if(child.ScriptsString != null)
+                {
+                    scriptList.AddRange(child.ScriptsString);
+                }
             }
-            return Get_valoration(scripts, blocks);
+            return Get_valoration(scripts, blocks, scriptList);
 
         }
 
@@ -72,7 +80,8 @@ namespace HeraScratch.ObjectExtensions
 
         }
         private static ScratchValoration Get_valoration(
-            List<List<object>> scripts, List<string> blocks)
+            List<List<object>> scripts, List<string> blocks,
+            List<string> scriptList)
         {
             return new ScratchValoration()
             {
@@ -84,6 +93,11 @@ namespace HeraScratch.ObjectExtensions
                     b.Count()))
                 .OrderByDescending(i => i.Item2)
                 .ToList(),
+                DuplicateScriptCount = scriptList
+                .GroupBy(i => i)
+                .Where(grp => grp.Count() >1)
+                .Select(grp => grp.Key)
+                .Count(),
                 DeadCode = scripts
                                .Where(o =>
                                o.Count > 0 &&

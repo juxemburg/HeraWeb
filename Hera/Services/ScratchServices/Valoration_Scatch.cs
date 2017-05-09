@@ -15,6 +15,7 @@ namespace Hera.Services.ScratchServices
         public string SpriteName { get; set; }
         public bool GeneralValoration { get; set; }
         public int DeadCodeCount { get; set; }
+        public int DuplicateScriptCount { get; set; }
 
         public ResultadoScratch Map()
         {

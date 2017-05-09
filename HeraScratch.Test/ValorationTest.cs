@@ -1,0 +1,18 @@
+﻿using HeraScratch.Valoration;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace HeraScratch.Test
+{
+    class ValorationTest : IValoration
+    {
+        public bool GeneralValoration {get; set;}
+        public string SpriteName {get; set;}
+        public int ScriptCount {get; set;}
+        public int BlockCount {get; set;}
+        public int DeadCodeCount {get; set;}
+        public List<Tuple<string, int>> BlockFrequency {get; set;}
+        public int DuplicateScriptCount { get; set; }
+    }
+}

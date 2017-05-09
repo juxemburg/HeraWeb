@@ -11,6 +11,7 @@ namespace HeraScratch.Valoration
         int ScriptCount { get; set; }
         int BlockCount { get; set; }
         int DeadCodeCount { get; set; }
+        int DuplicateScriptCount { get; set; }
         List<Tuple<string, int>> BlockFrequency { get; set; }
     }
 }

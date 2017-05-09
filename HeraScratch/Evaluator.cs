@@ -40,6 +40,7 @@ namespace HeraScratch
                         DeadCodeCount = eval.DeadCode.Count(),
                         BlockCount = eval.BlockCount,
                         BlockFrequency = eval.BlockFrequency,
+                        DuplicateScriptCount = eval.DuplicateScriptCount,
                         GeneralValoration = false
                     };
                 })
@@ -49,7 +50,8 @@ namespace HeraScratch
                     ScriptCount = gEval.ScriptCount,
                     DeadCodeCount = gEval.DeadCode.Count(),
                     BlockCount = gEval.BlockCount,
-                    BlockFrequency = gEval.BlockFrequency,                    
+                    BlockFrequency = gEval.BlockFrequency,
+                    DuplicateScriptCount = gEval.DuplicateScriptCount,
                     GeneralValoration = true
                 })
                 .Append(new U()
@@ -59,6 +61,7 @@ namespace HeraScratch
                     BlockCount = eval1.BlockCount,
                     BlockFrequency = eval1.BlockFrequency,
                     DeadCodeCount = eval1.DeadCode.Count(),
+                    DuplicateScriptCount = eval1.DuplicateScriptCount,
                     GeneralValoration = false
                 });
 

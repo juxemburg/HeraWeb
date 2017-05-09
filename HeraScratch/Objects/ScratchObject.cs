@@ -25,6 +25,8 @@ namespace HeraScratch.Objects
         public List<List<object>> Scripts { get; set; }
         public List<string> Blocks { get; set; }
 
+        public List<string> ScriptsString { get; set; }
+
         [DataMember(Name = "variables")]
         public IEnumerable<Variable> Variables { get; set; }
 
@@ -46,20 +48,28 @@ namespace HeraScratch.Objects
                 return;
             Scripts = new List<List<object>>();
             Blocks = new List<string>();
+            ScriptsString = new List<string>();
             var index = 1;
             foreach (object[] item in RawScripts)
             {
+                var value = "";
                 Scripts.Add((List<object>)Do_deserializeScript(
-                    item, Blocks));
+                    item, Blocks, 0,ref value));
+                ScriptsString.Add(value);
                 index++;
             }
         }
 
         private IEnumerable<object> Do_deserializeScript(object[] script,
-            List<string> blocks)
+            List<string> blocks, int depth, ref string stringScript)
         {
             List<object> array = new List<object>();
             var index = 0;
+            var spaces = "";
+            for (int i = 0; i < depth; i++)
+            {
+                spaces += "    ";
+            }
             foreach (var item in script)
             {
                 if (item == null)
@@ -69,13 +79,15 @@ namespace HeraScratch.Objects
                     && (Variables == null ||
                     !Variables.Any(var => var.Name.Equals(item))))
                 {
+                    stringScript += item.ToString();
                     array.Add(item);
                     blocks.Add(item.ToString());
                 }
                 if (typeof(object[]) == item.GetType())
                 {
+                    stringScript += $"\n{spaces}";
                     var result = Do_deserializeScript((object[])item,
-                        blocks);
+                        blocks, depth++,ref stringScript);
                     array.Add(result);
                 }
                 index++;
