@@ -9,6 +9,7 @@ namespace Entities.Valoracion
         public string Nombre { get; set; }
         public int NumScripts { get; set; }
         public int NumBloques { get; set; }
+        public int DuplicateScriptsCount { get; set; }
         public int DeadCodeCount { get; set; }
         public virtual List<BloqueScratch> Bloques { get; set; }        
         public bool General { get; set; }

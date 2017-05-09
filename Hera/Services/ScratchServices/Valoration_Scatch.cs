@@ -9,13 +9,17 @@ namespace Hera.Services.ScratchServices
 {
     public class Valoration_Scatch : IValoration
     {
-        public int ScriptCount { get; set; }
-        public int BlockCount { get; set; }
-        public List<Tuple<string, int>> BlockFrequency { get; set; }
         public string SpriteName { get; set; }
         public bool GeneralValoration { get; set; }
+
+        public int ScriptCount { get; set; }
+        public int BlockCount { get; set; }
         public int DeadCodeCount { get; set; }
         public int DuplicateScriptCount { get; set; }
+
+        public List<Tuple<string, int>> BlockFrequency { get; set; }
+        public List<Tuple<string, string>> DuplicatedScripts { get; set; }
+        public List<Tuple<string, string>> DeadScripts { get; set; }
 
         public ResultadoScratch Map()
         {
@@ -26,6 +30,7 @@ namespace Hera.Services.ScratchServices
                 NumBloques = BlockCount,
                 NumScripts = ScriptCount,
                 DeadCodeCount = DeadCodeCount,
+                DuplicateScriptsCount = DuplicateScriptCount,
                 Bloques = BlockFrequency
                 .Select(b =>
                 {
@@ -47,6 +52,7 @@ namespace Hera.Services.ScratchServices
                 NumBloques = BlockCount,
                 NumScripts = ScriptCount,
                 DeadCodeCount = DeadCodeCount,
+                DuplicateScriptsCount = DuplicateScriptCount,
                 Bloques = BlockFrequency
                 .Select(b =>
                 {

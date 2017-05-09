@@ -9,10 +9,14 @@ namespace HeraScratch.Test
     {
         public bool GeneralValoration {get; set;}
         public string SpriteName {get; set;}
+
         public int ScriptCount {get; set;}
         public int BlockCount {get; set;}
         public int DeadCodeCount {get; set;}
-        public List<Tuple<string, int>> BlockFrequency {get; set;}
         public int DuplicateScriptCount { get; set; }
+
+        public List<Tuple<string, int>> BlockFrequency {get; set;}
+        public List<Tuple<string, string>> DuplicatedScripts { get; set; }
+        public List<Tuple<string, string>> DeadScripts { get; set; }
     }
 }

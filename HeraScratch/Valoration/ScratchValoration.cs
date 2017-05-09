@@ -6,14 +6,19 @@ namespace HeraScratch.Valoration
 {
     public class ScratchValoration : IValoration
     {
-        public int ScriptCount { get; set; }
-        public int BlockCount { get; set; }
-        public List<Tuple<string,int>> BlockFrequency { get; set; }
-        public List<List<object>> DeadCode { get; set; }
         public string SpriteName { get; set; }
         public bool GeneralValoration { get; set; }
+        
+        public int ScriptCount { get; set; }
+        public int BlockCount { get; set; }
         public int DeadCodeCount { get; set; }
         public int DuplicateScriptCount { get; set; }
+
+        public List<Tuple<string, int>> BlockFrequency { get; set; }
+        public List<Tuple<string, string>> DuplicatedScripts { get; set; }
+        public List<Tuple<string, string>> DeadScripts { get; set; }
+
+        public List<List<object>> DeadCode { get; set; }
 
         public override string ToString()
         {

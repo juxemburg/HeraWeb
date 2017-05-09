@@ -8,10 +8,14 @@ namespace HeraScratch.Valoration
     {
         bool GeneralValoration { get; set; }
         string SpriteName { get; set; }
+
         int ScriptCount { get; set; }
         int BlockCount { get; set; }
         int DeadCodeCount { get; set; }
         int DuplicateScriptCount { get; set; }
+
         List<Tuple<string, int>> BlockFrequency { get; set; }
+        List<Tuple<string, string>> DuplicatedScripts { get; set; }
+        List<Tuple<string, string>> DeadScripts { get; set; }
     }
 }
