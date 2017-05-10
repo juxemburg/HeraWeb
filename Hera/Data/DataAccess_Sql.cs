@@ -356,6 +356,14 @@ namespace Hera.Data
                 .ThenBy(res => res.Nombre);
             return query;
         }
+        public async Task<ResultadoScratch> Find_ResultadoScratchGeneral(
+            int calificacionId)
+        {
+            return await _context.ResultadosScratch
+                .FirstOrDefaultAsync(res =>
+                res.CalificacionId == calificacionId &&
+                res.General);
+        }
 
 
         //Validacion

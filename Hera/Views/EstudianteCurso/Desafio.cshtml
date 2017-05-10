@@ -77,17 +77,20 @@
                                 <div class="col-sm-6">
                                     <label>Nombre:</label>
                                     <p>@Model.Calificaciones[i].ResultadoGeneral.Nombre</p>
-                                    <label>Num Bloques:</label>
-                                    <p>@Model.Calificaciones[i].ResultadoGeneral.NumBloques</p>
-                                    <label>Num Scripts:</label>
+
+                                    <label>Total Scripts:</label>
                                     <p>@Model.Calificaciones[i].ResultadoGeneral.NumScripts</p>
+
+                                    <label>Total bloques: </label>
+                                    <p>@Model.Calificaciones[i].ResultadoGeneral.NumBloques</p>
+                                    
                                 </div>
                                 <div class="col-sm-6">
-                                    <a asp-action="Resultados"
-                                       asp-route-idCurso="@Model.CursoId"
-                                       asp-route-idDesafio="@Model.DesafioId"
-                                       asp-route-idCalificacion="@Model.Calificaciones[i].Id"
-                                       class="btn btn-default">Más info</a>
+                                    <label>Scripts duplicados</label>
+                                    <p>@Model.Calificaciones[i].ResultadoGeneral.DuplicateScriptsCount</p>
+
+                                    <label>Código Muerto:</label>
+                                    <p>@Model.Calificaciones[i].ResultadoGeneral.DeadCodeCount</p>
                                 </div>
                             }
                         </div>

@@ -92,6 +92,8 @@ namespace Hera.Data
             ResultadoScratch resultado);
         IQueryable<ResultadoScratch> GetAll_ResultadoScratch(
             int calificacionId);
+        Task<ResultadoScratch> Find_ResultadoScratchGeneral(
+            int calificacionId);
 
         //Validacion
         Task<bool> Exist_Profesor_Curso(int profesorId,
