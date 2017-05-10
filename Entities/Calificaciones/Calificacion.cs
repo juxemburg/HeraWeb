@@ -1,6 +1,7 @@
 ﻿using Entities.Valoracion;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Entities.Calificaciones
 {
@@ -10,7 +11,7 @@ namespace Entities.Calificaciones
 
         public DateTime Tiempoinicio { get; set; }
         public DateTime? TiempoFinal { get; set; }
-        
+
         public virtual List<ResultadoScratch> Resultados { get; set; }
 
         public int CursoId { get; set; }
@@ -32,6 +33,14 @@ namespace Entities.Calificaciones
         {
             this.DirArchivo = dirArchivo;
             TiempoFinal = DateTime.Now;
+        }
+        public ResultadoScratch ResultadoGeneral
+        {
+            get
+            {
+                return Resultados != null ? Resultados
+                    .FirstOrDefault(res => res.General) : null;
+            }
         }
 
     }

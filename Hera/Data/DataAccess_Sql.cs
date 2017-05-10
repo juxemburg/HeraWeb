@@ -112,6 +112,18 @@ namespace Hera.Data
         {
             return await _context.Cursos.FindAsync(id);
         }
+        public async Task<Rel_CursoEstudiantes> Find_Rel_CursoEstudiantes(int idCurso,
+            int idEstudiante)
+        {
+            return await _context.Rel_Cursos_Estudiantes
+                .Include("Curso")
+                .Include("Curso.Desafio")
+                .Include("Curso.Profesor")
+                .Include(cur => cur.Registros)
+                .FirstOrDefaultAsync(rel => rel.CursoId == idCurso &&
+                rel.EstudianteId == idEstudiante);
+                
+        }
 
         public async Task<Desafio> Find_Desafio(int id)
         {
@@ -203,6 +215,14 @@ namespace Hera.Data
         {
             return _context.Desafios;
         }
+        public IQueryable<Desafio> GetAll_Desafios(int cursoId)
+        {
+            var query = _context.Rel_Cursos_Desafios
+                .Where(rel => rel.CursoId == cursoId)
+                .Include(rel => rel.Desafio)                
+                .Select(rel => rel.Desafio);
+            return query;
+        }
         public IQueryable<Desafio> Autocomplete_Desafios(string queryString)
         {
             return GetAll_Desafios()
@@ -246,10 +266,11 @@ namespace Hera.Data
             query = _context.RegistroCalificaiones
                 .Where(reg => reg.CursoId == cursoId
                 && reg.EstudianteId == reg.EstudianteId
-                && reg.DesafioId == desafioId)                
+                && reg.DesafioId == desafioId)
                 .Include(reg => reg.Desafio)
                 .Include(reg => reg.Calificaciones)
-                .ThenInclude(cal => cal.Resultados);
+                .Include("Calificaciones.Resultados")
+                .Include("Calificaciones.Resultados.Bloques");
             return await query.FirstOrDefaultAsync();
         }
 

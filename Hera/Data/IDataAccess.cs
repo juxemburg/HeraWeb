@@ -40,6 +40,7 @@ namespace Hera.Data
         void AddDesafio(Desafio model);
         void AddDesafio(int cursoId, Desafio model);
         IQueryable<Desafio> GetAll_Desafios();
+        IQueryable<Desafio> GetAll_Desafios(int cursoId);
         IQueryable<Desafio> Autocomplete_Desafios(string queryString);
         Task<Desafio> Find_Desafio(int id);
         Task<bool> Exist_Desafio(int id);
@@ -55,6 +56,10 @@ namespace Hera.Data
         IQueryable<Curso> GetAll_CursosEstudiante(int idEst);
         Task<Curso> Find_Curso(int id);
         Task<Curso> Find_Curso_Public(int id);
+
+        //Rel_Cursos_Estudiantes
+        Task<Rel_CursoEstudiantes> Find_Rel_CursoEstudiantes(int idCurso,
+            int idEstudiante);
 
 
         //RegistroCalificacion

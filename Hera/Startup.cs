@@ -13,6 +13,7 @@ using Hera.Data;
 using Entities.Usuarios;
 using Hera.Services;
 using Microsoft.AspNetCore.Mvc;
+using Hera.Services.DesafiosServices;
 
 namespace Hera
 {
@@ -46,7 +47,8 @@ namespace Hera
             // Add framework services.
             
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("HERAdb")));
+                options.UseSqlServer(Configuration
+                .GetConnectionString("HERAdb")));
             services.AddSingleton<FileManagerService>();
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -57,6 +59,7 @@ namespace Hera
                 config.Password.RequireNonAlphanumeric = false;
             });
             services.AddScoped<IDataAccess, DataAccess_Sql>();
+            services.AddScoped<DesafioService>();
             services.AddTransient<DbSeeder>();
             services.AddMvc(opt =>
             {

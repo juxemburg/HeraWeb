@@ -10,6 +10,8 @@ using Hera.Services.ScratchServices;
 using Hera.Models.EntitiesViewModels.EstudianteDesafio;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Hera.Models.EntitiesViewModels.EstudianteCurso;
+using Hera.Services.DesafiosServices;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -19,11 +21,13 @@ namespace Hera.Controllers.ControllersMvc
     {
         private IDataAccess _data;
         private ScratchService _evaluator;
-        
+        private DesafioService _desafioService;
 
         public EstudianteCursoController(IDataAccess data,
-            ScratchService scratchService)
+            ScratchService scratchService,
+            DesafioService desafioService)
         {
+            _desafioService = desafioService;
             _evaluator = scratchService;
             _data = data;
         }
@@ -35,11 +39,17 @@ namespace Hera.Controllers.ControllersMvc
             var estId
                 = await _data.Find_EstudianteId(
                     _data.Get_UserId(User.Claims));
-            var model = await _data.Find_Curso(idCurso);
-            if (model == null || !model.ContieneEstudiante(estId))
-                return NotFound();
+            
+            if (await _data.Exist_Estudiante_Curso(estId, idCurso))
+            {
+                var model = await _desafioService.Get_RelEstudianteCurso(
+                    idCurso, estId);
+                return View(model);
+            }
+                
 
-            return View(model);
+            
+            return NotFound();
         }
 
         [HttpGet("{idDesafio:int}")]

@@ -49,7 +49,7 @@ namespace Hera.Controllers.ControllersMvc.Profesor
                 new CreateCalificacionCualitativaViewModel(formModel);
                 resultModel.Calificado = true;
             }
-
+            Console.WriteLine($"Calificaciones: {resultModel.Registro.Calificaciones.Count()}");
             return View(resultModel);
         }
 
