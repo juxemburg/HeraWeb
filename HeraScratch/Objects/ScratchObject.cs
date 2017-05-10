@@ -82,6 +82,13 @@ namespace HeraScratch.Objects
                     stringScript += item.ToString();
                     array.Add(item);
                     blocks.Add(item.ToString());
+                    continue;
+                }
+                if (item != null &&
+                    typeof(string) == item.GetType())
+                {
+                    stringScript += $" {item.ToString()}";
+                    continue;
                 }
                 if (typeof(object[]) == item.GetType())
                 {
