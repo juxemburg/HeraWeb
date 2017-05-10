@@ -1,0 +1,22 @@
+@model DesafioCompletadoViewModel
+@{
+    ViewData["Title"] = "DesafioCompletado";
+}
+
+<div class="row text-center">
+    <h3>Felicidades!</h3>
+    <p>Completaste el desafío, estos son tus resultados:</p>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @await Html.PartialAsync("_ResultadoScratchPartial", 
+       Model.Resultado)
+    </div>
+    <a asp-action="Desafio" asp-route-idCurso="@Model.CursoId"
+       asp-route-idDesafio="@Model.SiguienteDesafio.Id"
+       class="btn btn-info">
+        Pulsa aquí para el siguente desafío
+    </a>
+</div>
+
+

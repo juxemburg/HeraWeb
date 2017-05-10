@@ -380,7 +380,9 @@ namespace Hera.Data
         public async Task<ResultadoScratch> Find_ResultadoScratchGeneral(
             int calificacionId)
         {
-            return await _context.ResultadosScratch
+            return await _context
+                .ResultadosScratch
+                .Include(res => res.Bloques)
                 .FirstOrDefaultAsync(res =>
                 res.CalificacionId == calificacionId &&
                 res.General);

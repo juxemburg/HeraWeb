@@ -82,6 +82,7 @@ namespace Hera.Controllers.ControllersMvc
             }
             return View(new CalificacionDesafioViewModel(model));
         }
+        
 
         //[HttpGet]
         //[Route("/Estudiante/Curso/{idCurso:int}/Desafio/" +
@@ -124,9 +125,43 @@ namespace Hera.Controllers.ControllersMvc
                 _data.AddRange_ResultadoScratch(resultados);                
                 _data.Edit<Calificacion>(cal);
                 await _data.SaveAllAsync();
+                return RedirectToAction("DesafioCompletado",
+                new
+                {
+                    idCurso = idCurso,
+                    idDesafio = idDesafio,
+                    idCalificacion = cal.Id
+                });
             }
             return RedirectToAction("Desafio",
-                new { idCurso = idCurso, idDesafio = idDesafio });
+                new
+                {
+                    idCurso = idCurso,
+                    idDesafio = idDesafio
+                });
+
+        }
+
+        [HttpGet("{idDesafio:int}")]
+        public async Task<IActionResult> DesafioCompletado(int idCurso,
+            int idDesafio, int idCalificacion)
+        {
+            var idEstudiante
+                = await _data.Find_EstudianteId(
+                    _data.Get_UserId(User.Claims));
+            if(await _data.Exist_Estudiante_Curso(idEstudiante, idCurso))
+            {
+                var desafio = await _desafioService
+                    .Get_SiguienteDesafio(idCurso, idEstudiante);
+
+                var resultado = await _data
+                    .Find_ResultadoScratchGeneral(idCalificacion);
+
+                return View(
+                    new DesafioCompletadoViewModel(idCurso,
+                    resultado, desafio));
+            }
+            return NotFound();
         }
 
         [HttpGet("{idDesafio:int}")]

@@ -28,7 +28,7 @@ namespace Hera.Models.EntitiesViewModels.EstudianteCurso
             this.Descripcion = model.Descripcion;
             this.Profesor = model.Profesor;
             this.DesafiosRealizados =
-                (desafiosRealizados != null) ? desafiosRealizados
+                desafiosRealizados != null ? desafiosRealizados
                 : new List<Desafio>();
             this.DesafioPendiente = desafioPendiente;
             

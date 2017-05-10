@@ -17,7 +17,7 @@ namespace Hera.Models.EntitiesViewModels
         [Required(ErrorMessage = "Este campo es obligatorio")]
         public int Dificultad { get; set; }
 
-        [Required(ErrorMessage = "Este campo es obligatorio")]
+        
         public string Descripcion { get; set; }
 
         
