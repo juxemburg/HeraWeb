@@ -1,63 +1,77 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-    var validacion = ViewData["Validacion"];
-    switch ((int)validacion)
-    {
-        case 0:
-            <h1>Bienvenido</h1>
-            break;
-        case 1:
-            <h1>Bienvenido Profesor</h1>
-            <ul>
-                <li>
-                    <a asp-controller="ProfesorCursos"
-                       asp-action="index">Mis cursos</a>
-                </li>
-                <li>
-                    <a asp-controller="Cursos"
-                       asp-action="Index">Ver otros cursos</a>
-                </li>
-                <li>
-                    <a asp-controller="Cursos"
-                       asp-action="Create">
-                        Crear curso
-                    </a>
-                </li>
-                <li>
-                    <a asp-controller="Desafios"
-                       asp-action="Create">Crear desafio</a>
-                </li>
-            </ul>
-            break;
-        case 2:
-            <h1>Bienvenido estudiante</h1>
-            <ul>
-                <li>
-                    <a asp-controller="EstudianteCursos"
-                       asp-action="Index">Mis Cursos</a>
-                </li>
-                <li>
-                    <a asp-controller="EstudianteCursos"
-                       asp-action="Busqueda">Buscar Cursos</a>
-                </li>
-            </ul>
-            break;
-    }
 
-    <div class="row">
-        <div class="col-sm-6">
-            <form method="get" 
-                  asp-action="Evaluacion" 
-                  asp-controller="Home"
-                  class="form-form-inline">
-                <div class="form-group">
-                    <label>Id Proyecto:</label>
-                    <input type="text" name="idProyecto" class="form-control" required/>
-                </div>
-                <button type="submit" class="btn btn-info">Evaluar!</button>
-            </form>
-        </div>
-    </div>
 }
+
+
+
+<div class="row">
+    <div class="col-sm-6">
+        @{
+            var validacion = ViewData["Validacion"];
+            switch ((int)validacion)
+            {
+                case 0:
+                    <h2>Bienvenido</h2>
+                    break;
+                case 1:
+                    <h2>Bienvenido Profesor</h2>
+                        <ul>
+                            <li>
+                                <a asp-controller="ProfesorCursos"
+                                   asp-action="index">Mis cursos</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Cursos"
+                                   asp-action="Index">Ver otros cursos</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Cursos"
+                                   asp-action="Create">
+                                    Crear curso
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Desafios"
+                                   asp-action="Create">Crear desafio</a>
+                            </li>
+                        </ul>
+                    break;
+                case 2:
+                    <h2>Bienvenido estudiante</h2>
+                        <ul>
+                            <li>
+                                <a asp-controller="EstudianteCursos"
+                                   asp-action="Index">Mis Cursos</a>
+                            </li>
+                            <li>
+                                <a asp-controller="EstudianteCursos"
+                                   asp-action="Busqueda">Buscar Cursos</a>
+                            </li>
+                        </ul>
+                    break;
+            }
+        }
+    </div>
+    <div class="col-sm-6">
+        <h2>Evalua de forma rápida cualquier proyecto de scratch</h2>
+        <form method="get"
+              asp-action="Evaluacion"
+              asp-controller="Home"
+              class="form-form-inline">            
+            <div class="form-group label-floating">
+                <label class="control-label">Id Proyecto:</label>
+                <input type="text" name="idProyecto" class="form-control"
+                       required />
+            </div>
+            <button type="submit" class="btn btn-info">Evaluar!</button>
+        </form>        
+    </div>
+</div>
+
+
+
+
+
 
 

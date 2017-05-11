@@ -1,52 +1,71 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿pre.prettyprint {
+    background-color: #eee;
+    border: 0px;
+    margin-bottom: 60px;
+    margin-top: 30px;
+    padding: 20px;
+    text-align: left;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.atv, .str {
+    color: #05AE0E;
 }
 
-/* Set widths on the form inputs since otherwise they're 100% wide */
-input,
-select,
-textarea {
-    max-width: 280px;
+.tag, .pln, .kwd {
+    color: #3472F7;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+.atn {
+    color: #2C93FF;
 }
 
-/* buttons and links extension to use brackets: [ click me ] */
-.btn-bracketed::before {
-    display: inline-block;
-    content: "[";
-    padding-right: 0.5em;
+.pln {
+    color: #333;
 }
 
-.btn-bracketed::after {
-    display: inline-block;
-    content: "]";
-    padding-left: 0.5em;
+.com {
+    color: #999;
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
+.space-top {
+    margin-top: 50px;
 }
 
+.btn-primary .caret {
+    border-top-color: #3472F7;
+    color: #3472F7;
+}
 
+.area-line {
+    border: 1px solid #999;
+    border-left: 0;
+    border-right: 0;
+    color: #666;
+    display: block;
+    margin-top: 20px;
+    padding: 8px 0;
+    text-align: center;
+}
 
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
+    .area-line a {
+        color: #666;
     }
+
+.container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.table-shopping .td-name {
+    min-width: 130px;    
+}
+
+.form-control, .form-group .form-control {
+    border-bottom: 2px solid;
+    border-bottom-color: #D2D2D2;
+}
+
+.profile-content{
+    margin-bottom: 60px;
+    padding-bottom: 20%;
 }

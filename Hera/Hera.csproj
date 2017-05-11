@@ -31,11 +31,17 @@
     <Content Include="wwwroot\css\colors.css" />
     <Content Include="wwwroot\css\Estudiante\cursos.css" />
     <Content Include="wwwroot\css\padding.css" />
+    <Content Include="wwwroot\css\Theme\demo.css" />
+    <Content Include="wwwroot\css\Theme\material-kit.css" />
+    <Content Include="wwwroot\css\Theme\material-kit.css.map" />
     <Content Include="wwwroot\js\Autocomplete\autocomplete-client.js" />
     <Content Include="wwwroot\js\Autocomplete\jquery.easy-autocomplete.min.js" />
     <Content Include="wwwroot\js\Cursos\create.js" />
     <Content Include="wwwroot\js\Cursos\Details.js" />
 	<Content Include="wwwroot\js\Cursos\index.js" />
+	<Content Include="wwwroot\js\Theme\material-kit.js" />
+	<Content Include="wwwroot\js\Theme\material.min.js" />
+	<Content Include="wwwroot\js\Theme\nouislider.min.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />

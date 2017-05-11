@@ -13,17 +13,20 @@
 <div class="row">
     @foreach (var item in Model)
     {
-        <div class="card shadow col-lg-3 col-md-4 col-sm-6">
-            <div class="card-header">
-                <h3>
-                    <a asp-action="Details" asp-controller="EstudianteCurso" asp-route-idCurso="@item.Id">
-                        @item.Nombre
-                    </a>
-                </h3>
-                <h4>@item.Profesor.NombreCompleto</h4>
-            </div>
-            <div class="card-content">
-                <p>@item.Descripcion</p>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card margin-10">
+                <div class="header header-warning padding-10"
+                     style="height: 100%;">
+                    <h3>
+                        <a asp-action="Details" asp-controller="EstudianteCurso" asp-route-idCurso="@item.Id">
+                            @item.Nombre
+                        </a>
+                    </h3>
+                    <h4>@item.Profesor.NombreCompleto</h4>
+                </div>
+                <div class="content">
+                    <p>@item.Descripcion</p>
+                </div>
             </div>
         </div>
     }

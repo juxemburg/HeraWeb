@@ -1,11 +1,12 @@
 @model ResultadoScratch
 
 
-<div class="card">
-    <div class="card-header">
-        <h4>@Model.Nombre</h4>
+<div class="card margin-10">
+    <div class="header header-warning padding-10"
+         style="height: 100%;">
+        <h3>@Model.Nombre</h3>
     </div>
-    <div class="card-content">
+    <div class="content">
         <div>
             <dl>
                 <dt>Scripts Muertos:</dt>
@@ -29,15 +30,12 @@
 
 
 
-<!-- Modal -->
-<div id="modal-@Model.Nombre" class="modal fade" role="dialog">
+<div class="modal fade" id="modal-@Model.Nombre" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-
-        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
             </div>
             <div class="modal-body">
                 <table class="table">
@@ -50,21 +48,18 @@
                     <tbody>
                         @foreach (var block in Model.Bloques)
                         {
-                        <tr>
-                            <td>@block.Nombre</td>
-                            <td>@block.Frecuencia</td>
-                        </tr>
+                            <tr>
+                                <td>@block.Nombre</td>
+                                <td>@block.Frecuencia</td>
+                            </tr>
                         }
                     </tbody>
                 </table>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                    Cerrar
-                </button>
+                <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
-
     </div>
 </div>
