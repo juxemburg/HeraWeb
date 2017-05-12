@@ -15,11 +15,18 @@
     <div class="col-sm-12">
         <h4>Objetos</h4>
         @foreach (var item in Model.ScriptsResultados)
-        {   
+        {
             <div class="col-sm-4">
                 @await Html.PartialAsync("_ResultadoScratchPartial", item)
             </div>
         }
     </div>
 </div>
+
+@section Modals {
+    @foreach (var item in Model.ScriptsResultados)
+    {
+        @await Html.PartialAsync("_Modal_ResultadoScratchPartial", item)
+    }
+}
 

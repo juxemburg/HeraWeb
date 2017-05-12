@@ -239,13 +239,18 @@ namespace Hera.Migrations
 
             modelBuilder.Entity("Entities.Valoracion.BloqueScratch", b =>
                 {
-                    b.Property<int>("ResultadoScratchId");
-
-                    b.Property<string>("Nombre");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("Frecuencia");
 
-                    b.HasKey("ResultadoScratchId", "Nombre");
+                    b.Property<string>("Nombre");
+
+                    b.Property<int>("ResultadoScratchId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResultadoScratchId");
 
                     b.ToTable("BloquesScratch");
                 });

@@ -47,8 +47,8 @@ namespace Hera.Data
                 .Property(u => u.UsuarioId)
                 .ValueGeneratedOnAdd();
 
-            builder.Entity<BloqueScratch>()
-                .HasKey(e => new { e.ResultadoScratchId, e.Nombre });
+            //builder.Entity<BloqueScratch>()
+            //    .HasKey(e => new { e.ResultadoScratchId, e.Nombre, e.Id });
 
             builder.Entity<Rel_CursoEstudiantes>()
                 .HasKey(entity => 

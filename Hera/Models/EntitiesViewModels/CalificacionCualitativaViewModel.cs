@@ -15,6 +15,9 @@ namespace Hera.Models.EntitiesViewModels
             string nombreDesafio)
         {
             this.Registro = registro;
+            this.Registro.Calificaciones = registro.Calificaciones
+                .Where(cal => cal.ResultadoGeneral != null)
+                .ToList();
             this.NombreDesafio = nombreDesafio;
             this.Calificado = false;
             this.FormModel = new CreateCalificacionCualitativaViewModel()

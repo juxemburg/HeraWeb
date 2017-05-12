@@ -124,14 +124,15 @@ namespace Hera.Controllers.ControllersMvc
                 
                 _data.AddRange_ResultadoScratch(resultados);                
                 _data.Edit<Calificacion>(cal);
-                await _data.SaveAllAsync();
-                return RedirectToAction("DesafioCompletado",
-                new
-                {
-                    idCurso = idCurso,
-                    idDesafio = idDesafio,
-                    idCalificacion = cal.Id
-                });
+                var result = await _data.SaveAllAsync();
+                if(result)
+                    return RedirectToAction("DesafioCompletado",
+                    new
+                    {
+                        idCurso = idCurso,
+                        idDesafio = idDesafio,
+                        idCalificacion = cal.Id
+                    });
             }
             return RedirectToAction("Desafio",
                 new

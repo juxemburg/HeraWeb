@@ -1,0 +1,39 @@
+@model ResultadoScratch
+
+
+
+
+
+<div class="modal fade" id="modal-@Model.Nombre" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre del bloque</th>
+                            <th>Frecuencia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var block in Model.Bloques)
+                        {
+                            <tr>
+                                <td>@block.Nombre</td>
+                                <td>@block.Frecuencia</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

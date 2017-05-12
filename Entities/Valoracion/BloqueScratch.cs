@@ -6,6 +6,7 @@ namespace Entities.Valoracion
 {
     public class BloqueScratch
     {
+        public int Id { get; set; }
         public int ResultadoScratchId { get; set; }
         public ResultadoScratch ResultadoScratch { get; set; }
 

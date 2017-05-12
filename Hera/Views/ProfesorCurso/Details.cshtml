@@ -52,14 +52,14 @@
         <ul class="list-group">
             <li class="list-group-item">
                 <a asp-controller="ProfesorCurso" asp-action="Progres" asp-route-idDesafio="@Model.DesafioId">
-                    @Model.Desafio.Nombre hhhhhhh
+                    @Model.Desafio.Nombre
                 </a>
             </li>
             @foreach (var item in Model.Desafios)
             {
                 <li class="list-group-item">
-                    <a asp-controller="ProfesorCurso" asp-action="Progres"  asp-route-idDesafio="@item.DesafioID">
-                        @item.Desafio.Nombre  
+                    <a asp-controller="ProfesorCurso" asp-action="Progres" asp-route-idDesafio="@item.DesafioID">
+                        @item.Desafio.Nombre
                     </a>
                     <span class="pull-right">
                         <a href="" class="btn btn-xs btn-danger">
@@ -96,50 +96,54 @@
 
 
 
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Añadir Desafío</h4>
-            </div>
-            <div class="modal-body">
-                <form method="post" asp-action="AddDesafio" asp-controller="Cursos" class="form-horizontal">
-                    <input id="input-desafioId" type="hidden" name="DesafioId" value="" />
-                    <input asp-for="Id" type="hidden" />
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Nombre</label>
-                        <div class="col-sm-10">
-                            <input id="input-desafioNombre" name="Nombre" class="form-control" />
+@section Modals {
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Añadir Desafío</h4>
+                    <a class="btn btn-info" asp-action="Create" asp-controller="Desafios" target="_blank">
+                        Crear nuevo desafío
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <form method="post" asp-action="AddDesafio" asp-controller="Cursos" class="form-horizontal">
+                        <input id="input-desafioId" type="hidden" name="DesafioId" value="" />
+                        <input asp-for="Id" type="hidden" />
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Nombre</label>
+                            <div class="col-sm-10">
+                                <input id="input-desafioNombre" name="Nombre" class="form-control" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Descripción</label>
-                        <div class="col-sm-10">
-                            <input id="input-desafioDescripcion" type="text" name="Descripcion" class="form-control" disabled />
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Descripción</label>
+                            <div class="col-sm-10">
+                                <input id="input-desafioDescripcion" type="text" name="Descripcion" class="form-control" disabled />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Dificultad</label>
-                        <div class="col-sm-10">
-                            <input id="input-desafioDificultad" type="number" name="Dificultad" class="form-control" disabled />
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Dificultad</label>
+                            <div class="col-sm-10">
+                                <input id="input-desafioDificultad" type="number" name="Dificultad" class="form-control" disabled />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <input class="btn btn-info" type="submit" value="Agregar antiguo curso" />
-                        <a class="btn btn-info" asp-action="Create" asp-controller="Cursos">Crear nuevo curso</a>
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <input class="btn btn-info" type="submit" value="Agregar éste desafío" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
 
+        </div>
     </div>
-</div>
+}
 @section Scripts {
     <environment names="Development">
         <script src="~/js/Autocomplete/jquery.easy-autocomplete.min.js"></script>
@@ -148,6 +152,6 @@
     </environment>
     <environment names="Staging,Production">
         <script src="~/js/autocomplete.min.js"></script>
-        <script src="~/js/cursos.min.js"></script>        
+        <script src="~/js/cursos.min.js"></script>
     </environment>
 }
