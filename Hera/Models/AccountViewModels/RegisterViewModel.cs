@@ -35,10 +35,12 @@ namespace Hera.Models.AccountViewModels
         public string Apellidos { get; set; }
 
         [Required]
+        [Range(7, 100,
+            ErrorMessage = "Error la edad debe estar entre 7 y 100 años")]
         public int Edad { get; set; }
 
         [Required]
-        [Display(Name = "Rol de usuario")]
+        [Display(Name = "Soy un: ")]
         public string Role { get; set; }
     }
 }
