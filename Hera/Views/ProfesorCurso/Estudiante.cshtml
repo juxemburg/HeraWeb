@@ -49,6 +49,12 @@
                 <h4>Desafíos Completados</h4>
                 @foreach (var item in Model.Calificaciones)
                 {
+                    if (!item.Terminada)
+                    {
+                        continue;
+                    }
+
+
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
