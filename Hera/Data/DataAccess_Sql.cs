@@ -265,7 +265,7 @@ namespace Hera.Data
             }
             query = _context.RegistroCalificaiones
                 .Where(reg => reg.CursoId == cursoId
-                && reg.EstudianteId == reg.EstudianteId
+                && reg.EstudianteId == estudianteId
                 && reg.DesafioId == desafioId)
                 .Include(reg => reg.Desafio)
                 .Include(reg => reg.Calificaciones)

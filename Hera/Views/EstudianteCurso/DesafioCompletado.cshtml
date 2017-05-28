@@ -9,7 +9,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        @await Html.PartialAsync("_ResultadoScratchPartial", 
+        @await Html.PartialAsync("_ResultadoScratchPartial",
        Model.Resultado)
     </div>
     <a asp-action="Desafio" asp-route-idCurso="@Model.CursoId"
@@ -18,5 +18,10 @@
         Pulsa aquí para el siguente desafío
     </a>
 </div>
+
+@section Modals
+{
+    @await Html.PartialAsync("_Modal_ResultadoScratchPartial", Model.Resultado)
+}
 
 
