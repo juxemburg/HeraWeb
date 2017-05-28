@@ -30,7 +30,7 @@
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body class="index-page">
-    <nav class="navbar navbar-primary navbar-fixed-top">
+    <nav class="navbar navbar-transparent navbar-fixed-top navbar-color-on-scroll">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -51,8 +51,19 @@
             </div>
         </div>
     </nav>
-    <div class="header"
-             style="height:100%; background-size: cover; background-position: top center; height: 200px">
+    <div class="header header-filter"
+             style="height:100%; background-image: url('/images/bg-login.jpg');
+         background-size: cover; background-position: top center; height: 600px">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="brand">
+                        <h1>Hera.</h1>
+                        <h3>Una herramienta que te permitirá evaluar tus proyectos de scratch.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="wrapper">
         <div class="main main-raised">
