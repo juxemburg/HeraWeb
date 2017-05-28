@@ -9,10 +9,13 @@
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Bienvenido @UserManager.GetUserName(User)!</a>
             </li>
             <li>
-                <button type="submit" class="btn btn-simple navbar-btn navbar-link">Cerrar sesión</button>
+                <button type="submit" class="btn btn-simple navbar-btn navbar-link">
+                    Cerrar sesión
+                    <i class="material-icons">exit_to_app</i>
+                </button>
             </li>
         </ul>
     </form>

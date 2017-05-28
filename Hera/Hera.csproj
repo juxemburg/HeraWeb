@@ -72,12 +72,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Files\" />
-    <Folder Include="ViewComponents\" />
     <Folder Include="Views\Cursos\" />
     <Folder Include="Views\Estudiante\" />
     <Folder Include="Views\Estudiante\" />
     <Folder Include="Views\File\" />
     <Folder Include="Views\Profesor\" />
+    <Folder Include="Views\Shared\Components\Navbar\" />
     <Folder Include="wwwroot\Files\Temp\" />
   </ItemGroup>
 

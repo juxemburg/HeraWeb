@@ -1,0 +1,63 @@
+@model int
+
+<ul class="nav navbar-nav">
+    @switch (Model)
+            {
+                case 1:
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Cursos
+                    <i class="material-icons">class</i>
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a asp-controller="ProfesorCursos"
+                           asp-action="index">Mis cursos</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a asp-controller="Cursos"
+                           asp-action="Create">
+                            Crear curso
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Desafios
+                    <i class="material-icons">view_list</i>
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a asp-controller="ProfesorCursos"
+                           asp-action="index">Mis cursos</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a asp-controller="Desafios"
+                           asp-action="Create">Crear desafio</a>
+                    </li>
+                </ul>
+            </li>
+            break;
+        case 2:
+            <li>
+                <a asp-controller="EstudianteCursos"
+                   asp-action="Index">
+                    Mis Cursos
+                    <i class="material-icons">class</i>    
+                </a>
+            </li>
+            <li>
+                <a asp-controller="EstudianteCursos"
+                   asp-action="Busqueda">
+                    Buscar Cursos
+                    <i class="material-icons">search</i>
+                </a>
+            </li>
+            break;
+    }
+</ul>

@@ -18,12 +18,14 @@ namespace Hera.Controllers
         }
         public IActionResult Index()
         {
+            ViewData["Validacion"] = 0;
+
             if (User.IsInRole("Profesor"))
                 ViewData["Validacion"] = 1;
             else if (User.IsInRole("Estudiante"))
                 ViewData["Validacion"] = 2;
-            else
-                ViewData["Validacion"] = 0;
+            
+                
             return View();
         }
 
