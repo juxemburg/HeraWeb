@@ -14,6 +14,7 @@ using Entities.Usuarios;
 using Hera.Services;
 using Microsoft.AspNetCore.Mvc;
 using Hera.Services.DesafiosServices;
+using Hera.Services.MessageServices;
 
 namespace Hera
 {
@@ -74,6 +75,7 @@ namespace Hera
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.Configure<SendgridSenderOptions>(Configuration.GetSection("Sendgrid"));
             services.AddScoped<ScratchService>();
         }
 
