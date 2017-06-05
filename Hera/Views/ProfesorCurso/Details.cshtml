@@ -1,4 +1,4 @@
-@model Entities.Cursos.Curso
+ï»¿@model Entities.Cursos.Curso
 
 @{
     ViewData["Title"] = "Details";
@@ -14,12 +14,12 @@
     </environment>
 }
 
-<h2>Información del curso</h2>
+<h2>InformaciÃ³n del curso</h2>
 
 <div class="row">
     <hr />
     <div class="col-md-6">
-        <h3>Información Básica</h3>
+        <h3>InformaciÃ³n BÃ¡sica</h3>
         <dl class="dl-horizontal">
             <dt>
                 @Html.DisplayNameFor(model => model.Nombre)
@@ -40,15 +40,25 @@
                 @Html.DisplayFor(model => model.Password)
             </dd>
             <dt>
-                Desafío inicial
+                DesafÃ­o inicial
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.Desafio.Nombre)
             </dd>
         </dl>
     </div>
+    
+</div>
+<div class="row">
+    
     <div class="col-md-6">
-        <h3>Desafíos</h3>
+        <div class="row padding-20">
+            <h3 class="col-sm-6">DesafÃ­os</h3>
+            <button class="pull-right btn btn-info" data-toggle="modal" data-target="#myModal">
+                <span class="glyphicon glyphicon-plus"></span>
+                Agregar DesafÃ­o
+            </button>
+        </div>
         <ul class="list-group">
             <li class="list-group-item">
                 <div class="row">
@@ -82,12 +92,8 @@
                 </li>
             }
         </ul>
-        <button class="btn btn-info" data-toggle="modal" data-target="#myModal">
-            <span class="glyphicon glyphicon-plus"></span>
-            Agregar Desafío
-        </button>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-6">
         <hr />
         <h3>Estudiantes del Curso</h3>
         <div class="list-group">
@@ -117,9 +123,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Añadir Desafío</h4>
+                    <h4 class="modal-title">AÃ±adir DesafÃ­o</h4>
                     <a class="btn btn-info" asp-action="Create" asp-controller="Desafios" target="_blank">
-                        Crear nuevo desafío
+                        Crear nuevo desafÃ­o
                     </a>
                 </div>
                 <div class="modal-body">
@@ -133,7 +139,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Descripción</label>
+                            <label class="col-sm-2 control-label">DescripciÃ³n</label>
                             <div class="col-sm-10">
                                 <input id="input-desafioDescripcion" type="text" name="Descripcion" class="form-control" disabled />
                             </div>
@@ -145,7 +151,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <input class="btn btn-info" type="submit" value="Agregar éste desafío" />
+                            <input class="btn btn-info" type="submit" value="Agregar Ã©ste desafÃ­o" />
                         </div>
                     </form>
                 </div>

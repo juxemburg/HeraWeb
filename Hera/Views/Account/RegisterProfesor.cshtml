@@ -1,0 +1,60 @@
+﻿@model RegisterProfesorViewModel
+@{
+    ViewData["Title"] = "Registro Profesor";
+}
+
+<h2>@ViewData["Title"].</h2>
+
+<form asp-controller="Account" asp-action="RegisterProfesor" 
+      asp-route-returnurl="@ViewData["ReturnUrl"]" >
+    <h4>Bienvenido! Por favor, regálanos algunos de tus datos:</h4>
+    <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="col-sm-6">
+        <div class="form-group label-floating">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+
+        </div>
+
+        <div class="form-group label-floating">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group label-floating">
+            <label asp-for="ConfirmPassword" class="control-label"></label>
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group label-floating">
+            <label class="control-label col-md-2 " asp-for="Nombres"></label>
+            <input asp-for="Nombres" class="form-control" />
+            <span asp-validation-for="Nombres" class="text-danger"></span>
+        </div>
+
+        <div class="form-group label-floating">
+            <label class="control-label col-md-2 " asp-for="Apellidos"></label>
+            <input asp-for="Apellidos" class="form-control" />
+            <span asp-validation-for="Apellidos" class="text-danger"></span>
+        </div>
+
+        <div class="form-group label-floating">
+            <label class="control-label col-md-2 " asp-for="Edad"></label>
+            <input asp-for="Edad" class="form-control" />
+            <span asp-validation-for="Edad" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="col-sm-12 text-center">
+        <button type="submit" class="btn btn-info">Regístrate!</button>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

@@ -22,25 +22,21 @@ namespace Hera.Models.AccountViewModels
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirma tu contraseña")]
+        [Display(Name = "Repite contraseña")]
         [Compare("Password", ErrorMessage = "Las contraseñas no coinciden.")]
         public string ConfirmPassword { get; set; }
 
         [Required]
-        [Display(Name = "Nombres Completos")]
+        [Display(Name = "Nombres")]
         public string Nombres { get; set; }
 
         [Required]
-        [Display(Name = "Apellidos Completos")]
+        [Display(Name = "Apellidos")]
         public string Apellidos { get; set; }
 
         [Required]
         [Range(7, 100,
             ErrorMessage = "Error la edad debe estar entre 7 y 100 años")]
         public int Edad { get; set; }
-
-        [Required]
-        [Display(Name = "Soy un: ")]
-        public string Role { get; set; }
     }
 }

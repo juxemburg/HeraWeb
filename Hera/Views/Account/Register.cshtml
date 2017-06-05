@@ -5,78 +5,26 @@
 
 <h2>@ViewData["Title"].</h2>
 
-<form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-    <h4>Create a new account.</h4>
-    <hr />
-    <div asp-validation-summary="All" class="text-danger"></div>
+<h4>Dinos algo sobre ti.</h4>
+
+
+<div class="row padding-20">
+    <h5>Vas a registrarte como:</h5>    
     <div class="col-sm-6">
-        <div class="form-group">
-            <label asp-for="Email" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Password" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="ConfirmPassword" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-        </div>
-
+        <a asp-action="RegisterProfesor" 
+           asp-route-returnurl="@ViewData["ReturnUrl"]"
+           class="btn btn-info">
+            Profesor
+        </a>
     </div>
     <div class="col-sm-6">
-        <div class="form-group">
-            <label class="control-label col-md-2 " asp-for="Nombres"></label>
-            <div class="col-md-10">
-                <input asp-for="Nombres" class="form-control" />
-                <span asp-validation-for="Nombres" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2 " asp-for="Apellidos"></label>
-            <div class="col-md-10">
-                <input asp-for="Apellidos" class="form-control" />
-                <span asp-validation-for="Apellidos" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2 " asp-for="Edad"></label>
-            <div class="col-md-10">
-                <input asp-for="Edad" class="form-control" />
-                <span asp-validation-for="Edad" class="text-danger"></span>
-            </div>
-        </div> 
+        <a asp-action="RegisterEstudiante" 
+           asp-route-returnurl="@ViewData["ReturnUrl"]"
+           class="btn btn-info">
+            Estudiante
+        </a>
     </div>
-
-    <div class="col-sm-12">
-        <div class="form-group">
-            <label class="col-md-2 control-label" asp-for="Role"></label>
-            <div class="col-md-10">
-                <select class="form-control" asp-for="Role"
-                        asp-items='(List<SelectListItem>)ViewData["roles"]'></select>
-                <span class="text-danger" asp-validation-for="Role"></span>
-            </div>
-        </div>
-
-        <div class="form-group text-center">
-            <div class="col-md-12">
-                <button type="submit" class="btn btn-default">Regístrate!</button>
-            </div>
-        </div>
-    </div>
-</form>
+</div>
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }

@@ -119,24 +119,77 @@ namespace Hera.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Register
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult
+            RegisterProfesor(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult
+            RegisterEstudiante(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model,
-            string returnUrl = null)
+        public async Task<IActionResult> RegisterProfesor
+            (RegisterProfesorViewModel model, string returnUrl = null)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-            ViewData["roles"] = await _roleManager
-                .Roles
-                .Where(r => !r.Name.Equals("Admin"))
-                .Select(r => new SelectListItem()
-                {
-                    Text = r.Name,
-                    Value = r.Name
-                }).ToListAsync();
             if (ModelState.IsValid)
+            {
+                var result = await RegisterUser(model, "Profesor",
+                    (usuarioId) =>
+                    {
+                        _dataAccess.AddProfesor(model.Map(usuarioId));
+                    });
+                if (result)
+                {
+                    return RedirectToLocal(returnUrl);
+                }
+
+            }
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterEstudiante
+            (RegisterEstudianteViewModel model, string returnUrl = null)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await RegisterUser(model, "Estudiante",
+                    (usuarioId) =>
+                    {
+                        _dataAccess.AddEstudiante(model.Map(usuarioId));
+                    });
+                if (result)
+                {
+                    return RedirectToLocal(returnUrl);
+                }
+
+            }
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        //
+        // POST: /Account/Register        
+        private async Task<bool> RegisterUser(RegisterViewModel model,
+            string role, Action<int> userCreation)
+        {
+
+            try
             {
                 var user
                     = new ApplicationUser
@@ -150,42 +203,26 @@ namespace Hera.Controllers
                 {
                     await _userManager.AddClaimAsync(user,
                     new Claim("UsuarioId", "" + user.UsuarioId));
-                    var roleResult = await _userManager.AddToRoleAsync(user, model.Role);
-                }
-                if (result.Succeeded)
-                {
-                    switch (model.Role)
+                    var roleResult =
+                        await _userManager.AddToRoleAsync(user, role);
+
+                    if (roleResult.Succeeded)
                     {
-                        case "Profesor":
-                            _dataAccess.AddProfesor(new Profesor()
-                            {
-                                UsuarioId = user.UsuarioId,
-                                Nombres = model.Nombres,
-                                Apellidos = model.Apellidos
-                            });
-                            break;
-                        case "Estudiante":
-                            _dataAccess.AddEstudiante(new Estudiante()
-                            {
-                                UsuarioId = user.UsuarioId,
-                                Nombres = model.Nombres,
-                                Apellidos = model.Apellidos,
-                                Edad = model.Edad
-                            });
-                            break;
-                        default:
-                            break;
+                        userCreation(user.UsuarioId);
                     }
                     await _dataAccess.SaveAllAsync();
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation(3, "User created a new account with password.");
-                    return RedirectToLocal(returnUrl);
+                    return true;
                 }
-                AddErrors(result);
+                else
+                    AddErrors(result);
             }
+            catch (Exception)
+            {
+                return false;
+            }
+            return false;
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
         }
 
         //
@@ -339,7 +376,7 @@ namespace Hera.Controllers
                     nameof(ResetPassword), "Account",
                     new { userId = user.Id, code = code },
                     protocol: HttpContext.Request.Scheme);
-                await _emailSender.SendEmailAsync(model.Email, 
+                await _emailSender.SendEmailAsync(model.Email,
                     "Cambio de Contraseña",
                    $"Hola, para cambiar tu contraseña haz click " +
                    $"en el siguiente " +

@@ -1,4 +1,4 @@
-@model EstudianteCalificacionViewModel
+Ôªø@model EstudianteCalificacionViewModel
 
 @{
     ViewData["Title"] = "Estudiante";
@@ -7,7 +7,7 @@
 <h2>Estudiante</h2>
 <div>
     <a asp-action="Details" asp-route-idCurso="@Model.CursoId">
-        Volver a la informaciÛn del curso
+        Volver a la informaci√≥n del curso
     </a>
 </div>
 
@@ -15,7 +15,7 @@
     <hr />
     <div class="row">
         <div class="col-md-6">
-            <h4>Datos b·sicos</h4>
+            <h4>Datos b√°sicos</h4>
             <dl class="dl-horizontal">
                 <dt>
                     @Html.DisplayNameFor(model => model.Estudiante.Edad)
@@ -46,7 +46,7 @@
         <div class="col-md-6">
             <h3>Calificaciones de Estudiante</h3>
             <div class="panel-group" id="accordion">
-                <h4>DesafÌos Completados</h4>
+                <h4>Desaf√≠os Completados</h4>
                 @foreach (var item in Model.Calificaciones)
                 {
                     if (!item.Terminada)
@@ -65,9 +65,9 @@
                         </div>
                         <div id="collapse-@item.DesafioId" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <label>CalificaciÛn Promedio:</label>
+                                <label>Calificaci√≥n Promedio:</label>
                                 <p>Falta</p>
-                                <label>IniciÛ en:</label>
+                                <label>Inici√≥ en:</label>
                                 <p>
                                     @item.Calificaciones.First().Tiempoinicio
                                 </p>
@@ -82,7 +82,7 @@
                                 <label>Numero de intentos:</label>
                                 <p>@item.Calificaciones.Count()</p>
                                 <a class="btn btn-info">
-                                    ver m·s
+                                    ver m√°s
                                 </a>
                                 <a class="btn btn-info"
                                    asp-action="Calificar"
