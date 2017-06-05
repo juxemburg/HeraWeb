@@ -26,5 +26,8 @@ namespace Entities.Desafios
 
         public Desafio_Analisis Analisis { get; set; }
 
+        public int DesafioId { get; set; }
+        public Desafio Desafio { get; set; }
+
     }
 }

@@ -22,6 +22,7 @@ namespace Hera.Data
         public DbSet<Estudiante> Estudiantes { get; set; }
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Desafio> Desafios { get; set; }
+        public DbSet<InfoDesafio> InfoDesafios { get; set; }
         public DbSet<Calificacion> Calificaciones { get; set; }
         public DbSet<CalificacionCualitativa> CalificacionesCualitativas { get; set; }
         public DbSet<RegistroCalificacion> RegistroCalificaiones { get; set; }
@@ -88,7 +89,12 @@ namespace Hera.Data
                 .WithMany(e2 => e2.Calificaciones)
                 .HasForeignKey(entity =>
                 new { entity.CursoId, entity.EstudianteId, entity.DesafioId })
-                .OnDelete(DeleteBehavior.SetNull); 
+                .OnDelete(DeleteBehavior.SetNull);
+            builder.Entity<InfoDesafio>()
+                .HasOne(e => e.Desafio)
+                .WithOne(e2 => e2.InfoDesafio)
+                .HasForeignKey<InfoDesafio>(e => e.DesafioId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
