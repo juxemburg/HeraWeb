@@ -49,7 +49,7 @@ namespace Hera.Controllers.ControllersMvc
                 _fileManager.DeleteFile(fileName);
                 return View("../Desafios/Create", viewModel);
             }
-            _data.AddDesafio(viewModel.Map(fileName));
+            _data.AddDesafio(viewModel.Map());
             await _data.SaveAllAsync();
 
             return RedirectToAction("Index", "Desafios");
@@ -102,7 +102,7 @@ namespace Hera.Controllers.ControllersMvc
             var desafio = await _data.Find_Desafio(desafioId);
             if (desafio != null)
             {
-                return getFile(desafio.DirArchivo,
+                return getFile(desafio.DirDesafioInicial,
                     desafio.Nombre);
             }
             return null;

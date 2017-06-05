@@ -11,7 +11,8 @@ namespace Entities.Desafios
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public int Dificultad { get; set; }
-        public string DirArchivo { get; set; }
+        public string DirDesafioInicial { get; set; }
+        public string DirSolucion { get; set; }
 
         public virtual List<RegistroCalificacion> Calificaciones { get; set; }
 

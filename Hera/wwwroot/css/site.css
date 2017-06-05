@@ -14,6 +14,8 @@ pre.prettyprint {
     text-align: left;
 }
 
+
+
 .atv, .str {
     color: #05AE0E;
 }
@@ -67,10 +69,6 @@ pre.prettyprint {
     min-width: 130px;    
 }
 
-.form-control, .form-group .form-control {
-    border-bottom: 2px solid;
-    border-bottom-color: #D2D2D2;
-}
 
 .profile-content{
     margin-bottom: 60px;

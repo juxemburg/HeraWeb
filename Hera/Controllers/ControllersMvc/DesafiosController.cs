@@ -34,7 +34,7 @@ namespace Hera.Controllers.ControllersMvc
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            return View(new CreateDesafioViewModel());
         }
 
         [HttpPost]
@@ -44,7 +44,7 @@ namespace Hera.Controllers.ControllersMvc
             {
                 try
                 {
-                    _data.AddDesafio(model.Map(""));
+                    _data.AddDesafio(model.Map());
                     await _data.SaveAllAsync();
                     return RedirectToAction("Index");
                 }

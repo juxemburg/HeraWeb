@@ -1,51 +1,110 @@
-@model Hera.Models.EntitiesViewModels.CreateDesafioViewModel
+@model  CreateDesafioViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h2>Crear desafio</h2>
+<div class="container">
+    <h2>Crear desafío</h2>
 
-<form method="post" enctype="multipart/form-data" asp-action="UploadDesafio" asp-controller="File">
-    <div class="form-horizontal">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="Nombre" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
+    <form method="post" asp-action="Create" asp-controller="Desafios">
+        <div class="row padding-10">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group label-floating col-sm-4">
+                <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Descripcion" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Descripcion" class="form-control" />
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Dificultad" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Dificultad" class="form-control" type="number" min="0"/>
+            <div class="form-group label-floating col-sm-4">
+                <label asp-for="Dificultad" class="control-label"></label>
+                <input asp-for="Dificultad" class="form-control" type="number" min="0" />
                 <span asp-validation-for="Dificultad" class="text-danger"></span>
             </div>
-        </div>
-        <div class="">
-            <label class="col-md-2 control-label"> Escenario Inicial </label>
-            <div class="col-md-10">
-                <input class="form-control-file" type="file" accept=".sb2" name="file" required/>                
+            <div class="form-group label-floating col-sm-4">
+                <label asp-for="EscenarioInicial" class="control-label"></label>
+                <input asp-for="EscenarioInicial" class="form-control" />
+                <span asp-validation-for="EscenarioInicial" class="text-danger"></span>
             </div>
-            
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Agregar Desafío!" class="btn btn-default" />
+            <div class="form-group label-floating col-sm-4">
+                <label asp-for="Solucion" class="control-label"></label>
+                <input asp-for="Solucion" class="form-control" />
+                <span asp-validation-for="Solucion" class="text-danger"></span>
             </div>
         </div>
-    </div>
-</form>
+        <div class="row padding-10">
+            <div class="text-center">
+                <div class="input-group col-sm-8">                    
+                    <textarea rows="6" asp-for="Descripcion"
+                              class="form-control" placeholder="Escribe aquí tu descripción del desafío">
+                    </textarea>
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+        
+        <div class="row padding-10">
+            <hr />
+            <h3>Información evaluativa del desafío</h3>
+            <div class="form-group col-sm-4">
+                <label asp-for="Abstraccion" class="control-label"></label>
+                <select asp-for="Abstraccion" asp-items="InfoDesafioHelper.AbstraccionItems"
+                        class="form-control"></select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label asp-for="PensamientoAlgoritmico" class="control-label"></label>
+                <select asp-for="PensamientoAlgoritmico" 
+                        asp-items="InfoDesafioHelper.PensamientoAlgoritmicoItems"
+                        class="form-control"></select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label asp-for="DescomposicionProblemas" class="control-label"></label>
+                <select asp-for="DescomposicionProblemas"
+                        asp-items="InfoDesafioHelper.DescomposicionProblemasItems"
+                        class="form-control"></select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label asp-for="Paralelismo " class="control-label"></label>
+                <select asp-for="Paralelismo"
+                        asp-items="InfoDesafioHelper.ParalelismoItems"
+                        class="form-control"></select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label asp-for="ControlFlujo" class="control-label"></label>
+                <select asp-for="ControlFlujo"
+                        asp-items="InfoDesafioHelper.ControlFlujoItems"
+                        class="form-control"></select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label asp-for="Interaccion" class="control-label"></label>
+                <select asp-for="Interaccion"
+                        asp-items="InfoDesafioHelper.InteraccionItems"
+                        class="form-control"></select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label asp-for="Representacion" class="control-label"></label>
+                <select asp-for="Representacion"
+                        asp-items="InfoDesafioHelper.RepresentacionItems"
+                        class="form-control"></select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label asp-for="Analisis" class="control-label"></label>
+                <select asp-for="Analisis"
+                        asp-items="InfoDesafioHelper.AnalisisItems"
+                        class="form-control"></select>
+            </div>
+        </div>
+        <div class="row padding-10 text-center">
+            <input type="submit" value="Agregar Desafío!" class="btn btn-info" />
+        </div>
+    </form>
+
+    <div class="row text-center">
+        <a asp-action="Index">Back to List</a>
+    </div>
 </div>
 
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial");
+}

@@ -30,7 +30,7 @@ namespace Hera.Models.EntitiesViewModels
                 Nombre = this.Nombre,
                 Dificultad = this.Dificultad,
                 Descripcion = this.Descripcion,
-                DirArchivo = this.DirArchivo                               
+                DirDesafioInicial = this.DirArchivo                               
             };
         }
     }

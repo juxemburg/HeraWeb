@@ -66,7 +66,7 @@ namespace Hera.Data
                     {
                         Nombre = "Desafio " + i,
                         Dificultad = 4,
-                        DirArchivo = "/dir/dir/dir"
+                        DirDesafioInicial = "/dir/dir/dir"
                     },
                     Password = "pass",
                     ProfesorId = 1,

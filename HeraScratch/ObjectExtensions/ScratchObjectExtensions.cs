@@ -23,6 +23,45 @@ namespace HeraScratch.ObjectExtensions
                 ["procDef"] = "procDef",
                 ["whenCloned"] = "whenCloned"
             };
+        private static Dictionary<string, string> _reservedBlocks
+            = new Dictionary<string, string>()
+            {
+                { "a","" },
+                { "b","" },
+                { "c","" },
+                { "d","" },
+                { "e","" },
+                { "f","" },
+                { "g","" },
+                { "h","" },
+                { "i","" },
+                { "j","" },
+                { "k","" },
+                { "l","" },
+                { "m","" },
+                { "n","" },
+                { "o","" },
+                { "p","" },
+                { "q","" },
+                { "r","" },
+                { "s","" },
+                { "t","" },
+                { "u","" },
+                { "v","" },
+                { "x","" },
+                { "y","" },
+                { "z","" },
+                { "up arrow",""},
+                { "right arrow",""},
+                { "left arrow",""},
+                { "down arrow",""}
+
+            };
+
+        public static bool IsReservedBlock(string name)
+        {
+            return _reservedBlocks.ContainsKey(name);
+        }
         public static ScratchValoration Evaluate(this ScratchObject obj)
         {
             if (obj.RawScripts == null)

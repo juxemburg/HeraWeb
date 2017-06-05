@@ -24,6 +24,7 @@
 </div>
 
 @section Modals {
+    @await Html.PartialAsync("_Modal_ResultadoScratchPartial", Model.ResultadoGeneral)
     @foreach (var item in Model.ScriptsResultados)
     {
         @await Html.PartialAsync("_Modal_ResultadoScratchPartial", item)

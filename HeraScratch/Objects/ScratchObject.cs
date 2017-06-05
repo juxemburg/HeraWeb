@@ -1,4 +1,5 @@
-﻿using RestClient.Client;
+﻿using HeraScratch.ObjectExtensions;
+using RestClient.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,6 +78,8 @@ namespace HeraScratch.Objects
                 if (typeof(string) == item.GetType()
                     && index == 0
                     && (Variables == null ||
+                    !ScratchObjectExtensions
+                    .IsReservedBlock(item.ToString()) ||
                     !Variables.Any(var => var.Name.Equals(item))))
                 {
                     stringScript += item.ToString();
