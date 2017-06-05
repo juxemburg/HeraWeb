@@ -54,6 +54,8 @@ namespace Hera.Data
         public void AddDesafio(Desafio model)
         {
             Add<Desafio>(model);
+            if (model.InfoDesafio != null)
+                Add<InfoDesafio>(model.InfoDesafio);
         }
         public void AddDesafio(int cursoId, Desafio model)
         {

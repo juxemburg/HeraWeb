@@ -18,14 +18,14 @@ namespace Hera.Controllers
         }
         public IActionResult Index()
         {
-            ViewData["Validacion"] = 0;
-
             if (User.IsInRole("Profesor"))
-                ViewData["Validacion"] = 1;
+            {
+                return RedirectToAction("Index", "ProfesorCursos");
+            }
             else if (User.IsInRole("Estudiante"))
-                ViewData["Validacion"] = 2;
-            
-                
+            {
+                return RedirectToAction("Index", "EstudianteCursos");
+            }   
             return View();
         }
 
@@ -41,8 +41,5 @@ namespace Hera.Controllers
             }
             return RedirectToAction("Index");
         }
-
-
-
     }
 }

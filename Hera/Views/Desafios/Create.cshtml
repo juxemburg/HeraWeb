@@ -1,11 +1,11 @@
-@model  CreateDesafioViewModel
+ï»¿@model  CreateDesafioViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
 <div class="container">
-    <h2>Crear desafío</h2>
+    <h2>Crear desafÃ­o</h2>
 
     <form method="post" asp-action="Create" asp-controller="Desafios">
         <div class="row padding-10">
@@ -35,7 +35,7 @@
             <div class="text-center">
                 <div class="input-group col-sm-8">                    
                     <textarea rows="6" asp-for="Descripcion"
-                              class="form-control" placeholder="Escribe aquí tu descripción del desafío">
+                              class="form-control" placeholder="Escribe aquÃ­ tu descripciÃ³n del desafÃ­o">
                     </textarea>
                     <span asp-validation-for="Descripcion" class="text-danger"></span>
                 </div>
@@ -45,7 +45,7 @@
         
         <div class="row padding-10">
             <hr />
-            <h3>Información evaluativa del desafío</h3>
+            <h3>InformaciÃ³n evaluativa del desafÃ­o</h3>
             <div class="form-group col-sm-4">
                 <label asp-for="Abstraccion" class="control-label"></label>
                 <select asp-for="Abstraccion" asp-items="InfoDesafioHelper.AbstraccionItems"
@@ -95,7 +95,7 @@
             </div>
         </div>
         <div class="row padding-10 text-center">
-            <input type="submit" value="Agregar Desafío!" class="btn btn-info" />
+            <input type="submit" value="Agregar DesafÃ­o!" class="btn btn-info" />
         </div>
     </form>
 

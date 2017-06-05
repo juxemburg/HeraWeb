@@ -67,7 +67,18 @@ namespace Hera.Models.EntitiesViewModels
                 Dificultad = this.Dificultad,
                 Descripcion = this.Descripcion,
                 DirDesafioInicial = EscenarioInicial,
-                DirSolucion = Solucion
+                DirSolucion = Solucion,
+                InfoDesafio = new InfoDesafio()
+                {
+                    Abstraccion = this.Abstraccion,
+                    Analisis = this.Analisis,
+                    ControlFlujo = this.ControlFlujo,
+                    DescomposicionProblemas = this.DescomposicionProblemas,
+                    Interaccion = this.Interaccion,
+                    Paralelismo = this.Paralelismo,
+                    PensamientoAlgoritmico = this.PensamientoAlgoritmico,
+                    Representacion = this.Representacion
+                }
             };
         }
 

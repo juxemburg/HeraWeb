@@ -1,16 +1,16 @@
-@model PaginationViewModel<Desafio>
+﻿@model PaginationViewModel<Desafio>
 
 @{
     ViewData["Title"] = "Desafios";
 }
 
-<h2>Desafios</h2>
+<h2>Desafíos</h2>
 
 <div class="row">
     <div class="col-md-12">
         <form asp-action="Index" method="get" class="form-inline">
             <div class="form-group">
-                <label>B�squeda</label>
+                <label>Búsqueda</label>
                 <input name="searchString" type="text" class="form-control" />
             </div>
             <button type="submit" class="btn btn-primary">Buscar</button>
@@ -18,7 +18,7 @@
     </div>
     <div class="col-md-12">
         <p>
-            <a asp-action="Create">Nuevo Desaf�o</a>
+            <a asp-action="Create">Nuevo Desafío</a>
         </p>
     </div>
 </div>
