@@ -5,44 +5,31 @@
 }
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-sm-6">
         <h2>@Model.Desafio.Nombre</h2>
         <div class="padding-40">
-            <div class="col-md-6">
+            <div class="col-sm-6">
                 <h3>Instrucciones</h3>
                 <p>@Model.Desafio.Descripcion</p>
-                <a class="btn btn-info"
-                   href="@Model.Desafio.DirDesafioInicial" target="_blank">
-                    Ir al escenario
-                </a>
             </div>
             @if (!Model.Iniciada)
             {
-                <div class="col-md-6 padding-20">
+                <div class="col-sm-6 padding-20">
                     <a class="btn btn-info" asp-action="IniciarDesafio" asp-route-desafioId="@Model.DesafioId"
                        asp-route-cursoId="@Model.CursoId">
                         Iniciar Desafío
                     </a>
                     <p>
                         <strong>Nota:</strong>
-                        al descargar la escena se iniciará automáticamente el desafío.
+                        al realizar click en iniciar desafío se iniciará automáticamente el desafío.
                     </p>
                 </div>
             }
         </div>
     </div>
-    <div class="col-md-6 padding-40">
-        <div class="padding-20">
-            @if (Model.Iniciada)
-            {
-                <h3>Iniciada</h3>
-            }
-            else
-            {
-                <h3>Sin Completar</h3>
-            }
-        </div>
+    <div class="col-sm-6">
         <div class="panel-group" id="accordion">
+            <h3>Calificaciones Previas</h3>
             @for (int i = 0; i < Model.Calificaciones.Count; i++)
             {
                 <div class="panel panel-default">
@@ -77,24 +64,24 @@
                             @if (@Model.Calificaciones[i].ResultadoGeneral != null)
                             {
                                 <h4>Evaluación General</h4>
-                                <div class="col-sm-6">
-                                    <label>Nombre:</label>
-                                    <p>@Model.Calificaciones[i].ResultadoGeneral.Nombre</p>
+                                    <div class="col-sm-6">
+                                        <label>Nombre:</label>
+                                        <p>@Model.Calificaciones[i].ResultadoGeneral.Nombre</p>
 
-                                    <label>Total Scripts:</label>
-                                    <p>@Model.Calificaciones[i].ResultadoGeneral.NumScripts</p>
+                                        <label>Total Scripts:</label>
+                                        <p>@Model.Calificaciones[i].ResultadoGeneral.NumScripts</p>
 
-                                    <label>Total bloques: </label>
-                                    <p>@Model.Calificaciones[i].ResultadoGeneral.NumBloques</p>
-                                    
-                                </div>
-                                <div class="col-sm-6">
-                                    <label>Scripts duplicados</label>
-                                    <p>@Model.Calificaciones[i].ResultadoGeneral.DuplicateScriptsCount</p>
+                                        <label>Total bloques: </label>
+                                        <p>@Model.Calificaciones[i].ResultadoGeneral.NumBloques</p>
 
-                                    <label>Código Muerto:</label>
-                                    <p>@Model.Calificaciones[i].ResultadoGeneral.DeadCodeCount</p>
-                                </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>Scripts duplicados</label>
+                                        <p>@Model.Calificaciones[i].ResultadoGeneral.DuplicateScriptsCount</p>
+
+                                        <label>Código Muerto:</label>
+                                        <p>@Model.Calificaciones[i].ResultadoGeneral.DeadCodeCount</p>
+                                    </div>
                             }
                         </div>
                     </div>
@@ -102,6 +89,7 @@
             }
         </div>
     </div>
+    
 
 
 </div>
@@ -112,6 +100,18 @@
 {
     <div class="row">
         <hr />
+        <div class="col-sm-6">
+            <div class="padding-20">
+                @if (Model.Iniciada)
+                {
+                    <h3>Iniciada</h3>
+                    <a class="btn btn-info"
+                       href="@Model.Desafio.DirDesafioInicial" target="_blank">
+                        Ir al escenario
+                    </a>
+                }
+            </div>
+        </div>
         <div class="col-sm-6">            
             <div class="card">
                 <div class="content padding-40">
