@@ -72,6 +72,7 @@
     <ProjectReference Include="..\HeraScratch\HeraScratch.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Controllers\ControllersApi\PassiveControllers\" />
     <Folder Include="Files\" />
     <Folder Include="Views\Cursos\" />
     <Folder Include="Views\Estudiante\" />

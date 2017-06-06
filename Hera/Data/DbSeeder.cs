@@ -52,7 +52,7 @@ namespace Hera.Data
             await seedRoles();
             var user = await _userMgr.FindByEmailAsync("juanmontano@unicauca.edu.co");
             if(user == null)
-                await seedUser("juanmontano@unicauca.edu.co");
+                await seedAdmin("juanmontano@unicauca.edu.co");
 
             //await seedData();
         }
@@ -80,7 +80,7 @@ namespace Hera.Data
             }
         }
 
-        private async Task seedUser(string email)
+        private async Task seedAdmin(string email)
         {
             var user = new ApplicationUser()
             {
