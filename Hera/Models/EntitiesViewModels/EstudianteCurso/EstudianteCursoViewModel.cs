@@ -17,16 +17,19 @@ namespace Hera.Models.EntitiesViewModels.EstudianteCurso
         public Profesor Profesor { get; set; }
 
         public List<Desafio> DesafiosRealizados { get; set; }
+        public List<Desafio> DesafiosNoCompletados { get; set; }
         public Desafio DesafioPendiente { get; set; }
 
         public EstudianteCursoViewModel(Curso model,
-            List<Desafio> desafiosRealizados, 
+            List<Desafio> desafiosRealizados,
+            List<Desafio> desafioNoCompletados,
             Desafio desafioPendiente)
         {
             this.Id = model.Id;
             this.Nombre = model.Nombre;
             this.Descripcion = model.Descripcion;
             this.Profesor = model.Profesor;
+            this.DesafiosNoCompletados = desafioNoCompletados;
             this.DesafiosRealizados =
                 desafiosRealizados != null ? desafiosRealizados
                 : new List<Desafio>();

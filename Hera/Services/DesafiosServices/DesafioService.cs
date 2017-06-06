@@ -20,6 +20,13 @@ namespace Hera.Services.DesafiosServices
             _random = new Random(4);
         }
 
+        /// <summary>
+        /// Método que obtiene el modelo de la relación
+        /// entre uun estudiante y curso
+        /// </summary>
+        /// <param name="idCurso">identificador del curso</param>
+        /// <param name="idEstudiante">identificador del estudiante</param>
+        /// <returns>Modelo EstudianteCursoViewModel</returns>
         public async Task<EstudianteCursoViewModel>
             Get_RelEstudianteCurso(int idCurso,
             int idEstudiante)
@@ -27,14 +34,23 @@ namespace Hera.Services.DesafiosServices
             var model = await _data
                     .Find_Rel_CursoEstudiantes(idCurso, idEstudiante);
             var desafiosRealizados = model.Registros
-                .Where(rel => rel.Desafio != null)
+                .Where(rel => rel.Terminada
+                && rel.Desafio != null)
                 .Select(rel => rel.Desafio)                
                 .ToList();
+            var desafiosNoCompletados = model.Registros
+                .Where(rel => !rel.Terminada
+                && rel.Desafio != null)
+                .Select(rel => rel.Desafio)
+                .ToList();
+
             if (desafiosRealizados == null ||
                 desafiosRealizados.Count == 0)
             {
                 return new EstudianteCursoViewModel(model.Curso,
-                    desafiosRealizados, model.Curso.Desafio);
+                    desafiosRealizados, 
+                    desafiosNoCompletados,
+                    model.Curso.Desafio);
             }
             else
             {
@@ -42,16 +58,22 @@ namespace Hera.Services.DesafiosServices
                     idEstudiante);
 
                 return new EstudianteCursoViewModel(model.Curso,
-                    desafiosRealizados, desafio);
+                    desafiosRealizados, desafiosNoCompletados, desafio);
             }
         }
 
+        /// <summary>
+        /// Método que retorna el siguiente desafío para un
+        /// estudiante, dentro de un curso
+        /// </summary>
+        /// <param name="idCurso">identificador del curso</param>
+        /// <param name="idEstudiante">identificador del estudiante</param>
+        /// <returns></returns>
         public async Task<Desafio> Get_SiguienteDesafio(int idCurso,
             int idEstudiante)
         {
             var desafios = await _data.GetAll_Desafios(idCurso)
-                    .ToListAsync();
-
+                .ToListAsync();
             return desafios.ElementAt(_random.Next(desafios.Count));
         }
     }

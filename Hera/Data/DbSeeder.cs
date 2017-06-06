@@ -42,6 +42,8 @@ namespace Hera.Data
                 .ExecuteSqlCommand("Delete From [CalificacionesCualitativas]");
             _context.Database
                 .ExecuteSqlCommand("Delete From [RegistroCalificaiones]");
+            _context.Database
+                .ExecuteSqlCommand("Delete From [Rel_Cursos_Desafios]");
             await _data.SaveAllAsync();
         }
 

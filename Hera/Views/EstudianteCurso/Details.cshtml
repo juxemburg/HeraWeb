@@ -14,10 +14,12 @@
         <h3>Tus Desafíos</h3>
         <hr />
     </div>
-    <div class="col-md-4">
+</div>
+<div class="row">
+    <div class="col-md-6">
         <h3>Deafíos Realizados</h3>
         <hr />
-        <div class="list-group">            
+        <div class="list-group">
             @foreach (var item in Model.DesafiosRealizados)
             {
                 <div class="list-group-item">
@@ -33,21 +35,40 @@
             }
         </div>
     </div>
-    <div class="col-md-5 col-md-offset-3">
-        <h3>Siguiente Desafío</h3>
+    <div class="col-md-6">
+        <h3>Desafíos Pendientes</h3>
         <hr />
         <div class="list-group">
-            <div class="list-group-item">
-                <span class="badge">
-                    @Model.DesafioPendiente.Dificultad
-                </span>
-                <h3>
-                    <a asp-action="Desafio" asp-route-idCurso="@Model.Id" asp-route-idDesafio="@Model.DesafioPendiente.Id">
-                        @Model.DesafioPendiente.Nombre
-                    </a>
-                </h3>
-                <h4>@Model.DesafioPendiente.Descripcion</h4>
-            </div>
+            @foreach (var item in Model.DesafiosNoCompletados)
+            {
+                <div class="list-group-item">
+                    <span class="badge">
+                        @item.Dificultad
+                    </span>
+                    <h3>
+                        <a asp-action="Desafio" asp-route-idCurso="@Model.Id" asp-route-idDesafio="@item.Id">
+                            @item.Nombre
+                        </a>
+                    </h3>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="row text-center margin-top-60">
+    <h3>Siguiente Desafío</h3>
+    <hr />
+    <div class="list-group">
+        <div class="list-group-item">
+            <span class="badge">
+                @Model.DesafioPendiente.Dificultad
+            </span>
+            <h3>
+                <a asp-action="Desafio" asp-route-idCurso="@Model.Id" asp-route-idDesafio="@Model.DesafioPendiente.Id">
+                    @Model.DesafioPendiente.Nombre
+                </a>
+            </h3>
+            <h4>@Model.DesafioPendiente.Descripcion</h4>
         </div>
     </div>
 </div>
