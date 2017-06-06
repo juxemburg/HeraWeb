@@ -67,7 +67,8 @@ namespace Hera.Data
             int cursoId, int estudianteId,
             int desafioId, int? profesorId = null);
         IQueryable<RegistroCalificacion> GetAll_RegistroCalificacion(
-            int? cursoId, int? estudianteId, int? desafioId);
+            int? cursoId = null, int? estudianteId = null,
+            int? desafioId = null);
 
 
         //Calificacion

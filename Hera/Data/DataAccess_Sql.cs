@@ -277,11 +277,14 @@ namespace Hera.Data
         }
 
         public IQueryable<RegistroCalificacion> GetAll_RegistroCalificacion(
-            int? cursoId, int? estudianteId, int? desafioId)
+            int? cursoId = null, int? estudianteId = null,
+            int? desafioId = null)
         {
             var query =
                 (IQueryable<RegistroCalificacion>)
                 _context.RegistroCalificaiones
+                .Include(reg => reg.CalificacionCualitativa)
+                .Include(reg => reg.Calificaciones)
                 .Where(cal => !cal.Iniciada);
 
             if (cursoId != null)

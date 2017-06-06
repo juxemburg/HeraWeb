@@ -1,4 +1,4 @@
-﻿@model Entities.Cursos.Curso
+﻿@model ProfesorCursoViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -22,49 +22,156 @@
         <h3>Información Básica</h3>
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.Nombre)
+                @Html.DisplayNameFor(model => model.Curso.Nombre)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Nombre)
+                @Html.DisplayFor(model => model.Curso.Nombre)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Descripcion)
+                @Html.DisplayNameFor(model => model.Curso.Descripcion)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Descripcion)
+                @Html.DisplayFor(model => model.Curso.Descripcion)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.Password)
+                @Html.DisplayNameFor(model => model.Curso.Password)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Password)
+                @Html.DisplayFor(model => model.Curso.Password)
             </dd>
             <dt>
                 Desafío inicial
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Desafio.Nombre)
+                @Html.DisplayFor(model => model.Curso.Desafio.Nombre)
             </dd>
         </dl>
     </div>
-    
+
 </div>
+
+<div class="row margin-top-40">
+    <h3>Progreso de tus estudiantes</h3>
+    <div class="col-sm-10">
+
+        <table class="table table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>@Model.Curso.Desafio.Nombre</th>
+                    @foreach (var item in Model.Curso.Desafios)
+                    {
+                        <th>
+                            @item.Desafio.Nombre
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Curso.Estudiantes)
+                {
+                    <tr>
+                        <td>
+                            <strong>@item.Estudiante.NombreCompleto</strong>
+                        </td>
+                        @if (Model.RegistrosCurso.ContainsKey(
+                new Tuple<int, int>(Model.Curso.DesafioId, item.EstudianteId)))
+                        {
+                            var reg = Model.RegistrosCurso[
+                        new Tuple<int, int>(Model.Curso.DesafioId, item.EstudianteId)];
+                            <td>
+                                <a asp-action="Calificar"
+                                   asp-controller="ProfesorEstudiante"
+                                   asp-route-idCurso="@Model.Curso.Id"
+                                   asp-route-idEstudiante="@item.EstudianteId"
+                                   asp-route-idDesafio="@Model.Curso.DesafioId">
+                                    @if (reg.First().CalificacionCualitativa != null
+                        && reg.First().CalificacionCualitativa.Completada)
+                                    {
+                                        <i class="material-icons">done</i>
+                                    }
+                                    else
+                                    {
+                                        <i class="material-icons">new_releases</i>
+                                    }
+                                </a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        @foreach (var desafio in Model.Curso.Desafios)
+                        {
+                            if (Model.RegistrosCurso.ContainsKey(
+                                new Tuple<int, int>(desafio.DesafioID, item.EstudianteId)))
+                            {
+                                var reg = Model.RegistrosCurso[
+                                new Tuple<int, int>(desafio.DesafioID, item.EstudianteId)];
+                                <td>
+                                    <a asp-action="Calificar"
+                                       asp-controller="ProfesorEstudiante"
+                                       asp-route-idCurso="@Model.Curso.Id"
+                                       asp-route-idEstudiante="@item.EstudianteId"
+                                       asp-route-idDesafio="@desafio.DesafioID">
+                                        @if (reg.First().CalificacionCualitativa != null
+                                            && reg.First().CalificacionCualitativa.Completada)
+                                        {
+                                            <i class="material-icons">done</i>
+                                        }
+                                        else
+                                        {
+                                            <i class="material-icons">new_releases</i>
+                                        }
+                                    </a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-sm-2 margin-top-30">
+        <p>
+            <i class="material-icons">new_releases</i>
+            Pendientes
+        </p>
+        <p>
+            <i class="material-icons">done</i>
+            Calificados
+        </p>
+
+    </div>
+</div>
+
 <div class="row">
-    
+    <hr />
     <div class="col-md-6">
         <div class="row padding-20">
-            <h3 class="col-sm-6">Desafíos</h3>
-            <button class="pull-right btn btn-info" data-toggle="modal" data-target="#myModal">
-                <span class="glyphicon glyphicon-plus"></span>
-                Agregar Desafío
-            </button>
+            <div class="col-sm-12">
+                <h3>
+                    Desafíos
+                    <span>
+                        <button class="pull-right btn btn-sm btn-info" data-toggle="modal" data-target="#myModal">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            Agregar Desafío
+                        </button>
+                    </span>
+                </h3>
+
+            </div>
         </div>
         <ul class="list-group">
             <li class="list-group-item">
                 <div class="row">
                     <div class="col-sm-8">
-                        <a asp-controller="ProfesorCurso" asp-action="Progres" asp-route-idDesafio="@Model.DesafioId">
-                            @Model.Desafio.Nombre
+                        <a asp-controller="ProfesorCurso" asp-action="Progres" asp-route-idDesafio="@Model.Curso.DesafioId">
+                            @Model.Curso.Desafio.Nombre
                         </a>
                     </div>
                     <div class="col-sm-4">
@@ -74,7 +181,7 @@
                     </div>
                 </div>
             </li>
-            @foreach (var item in Model.Desafios)
+            @foreach (var item in Model.Curso.Desafios)
             {
                 <li class="list-group-item">
                     <div class="row">
@@ -94,12 +201,11 @@
         </ul>
     </div>
     <div class="col-md-6">
-        <hr />
         <h3>Estudiantes del Curso</h3>
-        <div class="list-group">
-            @foreach (var item in Model.Estudiantes)
+        <div class="list-group margin-top-50">
+            @foreach (var item in Model.Curso.Estudiantes)
             {
-                <a asp-action="Estudiante" asp-route-idCurso="@Model.Id" asp-route-idEstudiante="@item.EstudianteId" class="list-group-item">
+                <a asp-action="Estudiante" asp-route-idCurso="@Model.Curso.Id" asp-route-idEstudiante="@item.EstudianteId" class="list-group-item">
                     @item.Estudiante.Nombres @item.Estudiante.Apellidos
                 </a>
             }
@@ -109,7 +215,7 @@
 
 <div>
     <hr />
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Curso.Id"> Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
 
@@ -131,7 +237,7 @@
                 <div class="modal-body">
                     <form method="post" asp-action="AddDesafio" asp-controller="Cursos" class="form-horizontal">
                         <input id="input-desafioId" type="hidden" name="DesafioId" value="" />
-                        <input asp-for="Id" type="hidden" />
+                        <input name="Id" value="@Model.Curso.Id" type="hidden" />
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Nombre</label>
                             <div class="col-sm-10">

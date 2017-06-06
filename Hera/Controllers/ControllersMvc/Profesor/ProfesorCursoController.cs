@@ -7,6 +7,7 @@ using Hera.Data;
 using Microsoft.AspNetCore.Authorization;
 using Hera.Models.EntitiesViewModels;
 using Microsoft.EntityFrameworkCore;
+using Hera.Models.EntitiesViewModels.ProfesorCursos;
 
 namespace Hera.Controllers.ControllersMvc.Profesor
 {
@@ -28,12 +29,25 @@ namespace Hera.Controllers.ControllersMvc.Profesor
             var model = await _data.Find_Curso(idCurso);
             var profId = await _data.Find_ProfesorId(
                 _data.Get_UserId(User.Claims));
-
             if (model == null || model.ProfesorId != profId)
             {
                 return NotFound();
             }
-            return View(model);
+            var registros =
+                await _data.GetAll_RegistroCalificacion(idCurso)
+                .GroupBy(reg => new
+                {
+                    reg.DesafioId,
+                    reg.EstudianteId
+                })
+                .ToDictionaryAsync(reg => 
+                new Tuple<int,int>(reg.Key.DesafioId, reg.Key.EstudianteId)
+                , reg => reg.ToList());
+
+            
+            
+            
+            return View(new ProfesorCursoViewModel(model, registros));
         }
 
         [HttpGet("{idDesafio:int}")]
