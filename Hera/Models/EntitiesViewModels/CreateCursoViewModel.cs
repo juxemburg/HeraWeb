@@ -25,7 +25,7 @@ namespace Hera.Models.EntitiesViewModels
 
         public int? DesafioId { get; set; }
 
-        public CreateDesafioViewModel Desafio { get; set; }
+        
 
         
 
@@ -41,18 +41,7 @@ namespace Hera.Models.EntitiesViewModels
                 Desafio = desafioInicial
             };
         }
-
-        public Curso Map(int ProfesorId, string filePath)
-        {
-            return new Curso()
-            {
-                Nombre = this.Nombre,
-                Descripcion = this.Descripcion,
-                ProfesorId = ProfesorId,
-                Password = this.Password,
-                Desafio = this.Desafio.Map()
-            };
-        }
+        
 
     }
 }

@@ -1,4 +1,4 @@
-@model CalificacionDesafioViewModel
+Ôªø@model CalificacionDesafioViewModel
 
 @{
     ViewData["Title"] = Model.Desafio.Nombre;
@@ -11,18 +11,21 @@
             <div class="col-md-6">
                 <h3>Instrucciones</h3>
                 <p>@Model.Desafio.Descripcion</p>
+                <a class="btn btn-info"
+                   href="@Model.Desafio.DirDesafioInicial" target="_blank">
+                    Ir al escenario
+                </a>
             </div>
             @if (!Model.Iniciada)
             {
                 <div class="col-md-6 padding-20">
                     <a class="btn btn-info" asp-action="IniciarDesafio" asp-route-desafioId="@Model.DesafioId"
                        asp-route-cursoId="@Model.CursoId">
-                        °Descarga la escena!
-                        <span class="glyphicon glyphicon-download"></span>
+                        Iniciar Desaf√≠o
                     </a>
                     <p>
                         <strong>Nota:</strong>
-                        al descargar la escena se iniciar· autom·ticamente el desafÌo.
+                        al descargar la escena se iniciar√° autom√°ticamente el desaf√≠o.
                     </p>
                 </div>
             }
@@ -46,7 +49,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse-@i">
-                                CalificaciÛn #@(i + 1)
+                                Calificaci√≥n #@(i + 1)
                                 @if (Model.Calificaciones[i].EnCurso)
                                 {
                                     <span>Pendiente</span>
@@ -73,7 +76,7 @@
                             </div>
                             @if (@Model.Calificaciones[i].ResultadoGeneral != null)
                             {
-                                <h4>EvaluaciÛn General</h4>
+                                <h4>Evaluaci√≥n General</h4>
                                 <div class="col-sm-6">
                                     <label>Nombre:</label>
                                     <p>@Model.Calificaciones[i].ResultadoGeneral.Nombre</p>
@@ -89,7 +92,7 @@
                                     <label>Scripts duplicados</label>
                                     <p>@Model.Calificaciones[i].ResultadoGeneral.DuplicateScriptsCount</p>
 
-                                    <label>CÛdigo Muerto:</label>
+                                    <label>C√≥digo Muerto:</label>
                                     <p>@Model.Calificaciones[i].ResultadoGeneral.DeadCodeCount</p>
                                 </div>
                             }
@@ -112,7 +115,7 @@
         <div class="col-sm-6">            
             <div class="card">
                 <div class="content padding-40">
-                    <h4>Completa tu desafÌo</h4>
+                    <h4>Completa tu desaf√≠o</h4>
                     <form asp-action="CalificarDesafio">
                         <div class="form-horizontal">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -126,7 +129,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-offset-1 col-md-10">
-                                    <input type="submit" value="°Completar DesafÌo!" class="btn btn-info" />
+                                    <input type="submit" value="¬°Completar Desaf√≠o!" class="btn btn-info" />
                                 </div>
                             </div>
                         </div>

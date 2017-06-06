@@ -1,4 +1,4 @@
-@model Hera.Models.EntitiesViewModels.CreateCursoViewModel
+﻿@model Hera.Models.EntitiesViewModels.CreateCursoViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -60,26 +60,26 @@
                     
                 </div>
                 <div class="form-group">                    
-                    <label asp-for="Desafio.Nombre" class="col-md-2 control-label"></label>
+                    <label class="col-md-2 control-label">
+                        Nombre del desafío
+                    </label>
                     <div class="col-md-10">
                         <input id="input-desafioId" asp-for="DesafioId" class="form-control" type="hidden" />
-                        <input id="input-desafioNombre" asp-for="Desafio.Nombre" class="form-control" />
-                        <span asp-validation-for="Desafio.Nombre" class="text-danger"></span>
+                        <input id="input-desafioNombre" class="form-control" />
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Desafio.Dificultad" class="col-md-2 control-label"></label>
+                    <label class="col-md-2 control-label">Difcultad del desafío</label>
                     <div class="col-md-10">
-                        <input id="input-desafioDificultad" asp-for="Desafio.Dificultad" class="form-control" Disabled />
-                        @*<span asp-validation-for="Desafio.Dificultad" class="text-danger"></span>*@
+                        <input id="input-desafioDificultad" class="form-control" Disabled />
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Desafio.Descripcion" class="col-md-2 control-label"></label>
+                    <label class="col-md-2 control-label">Descripción del desafíp</label>
                     <div class="col-md-10">
-                        <input id="input-desafioDescripcion" asp-for="Desafio.Descripcion" class="form-control" Disabled />
+                        <input id="input-desafioDescripcion" class="form-control" Disabled />
                         @*<span asp-validation-for="Desafio.Descripcion" class="text-danger"></span>*@
                     </div>
                 </div>

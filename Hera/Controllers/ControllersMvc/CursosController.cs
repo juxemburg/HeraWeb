@@ -73,7 +73,10 @@ namespace Hera.Controllers.ControllersMvc
                             return RedirectToAction("Cursos","Profesor");
                     }
                 }
-                catch (Exception) { }
+                catch (Exception e)
+                {
+
+                }
             }
             ModelState.AddModelError("", "Error en la creación del curso");
             return View(model);
