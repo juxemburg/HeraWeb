@@ -33,37 +33,10 @@ namespace HeraScratch
                 .Select(child =>
                 {
                     var eval = child.Evaluate();
-                    return new U()
-                    {
-                        SpriteName = child.ObjName,
-                        ScriptCount = eval.ScriptCount,
-                        DeadCodeCount = eval.DeadCode.Count(),
-                        BlockCount = eval.BlockCount,
-                        BlockFrequency = eval.BlockFrequency,
-                        DuplicateScriptCount = eval.DuplicateScriptCount,
-                        GeneralValoration = false
-                    };
+                    return eval.Map<U>(child.ObjName);
                 })
-                .Append(new U()
-                {
-                    SpriteName = "General",
-                    ScriptCount = gEval.ScriptCount,
-                    DeadCodeCount = gEval.DeadCode.Count(),
-                    BlockCount = gEval.BlockCount,
-                    BlockFrequency = gEval.BlockFrequency,
-                    DuplicateScriptCount = gEval.DuplicateScriptCount,
-                    GeneralValoration = true
-                })
-                .Append(new U()
-                {
-                    SpriteName = "Stage",
-                    ScriptCount = eval1.ScriptCount,
-                    BlockCount = eval1.BlockCount,
-                    BlockFrequency = eval1.BlockFrequency,
-                    DeadCodeCount = eval1.DeadCode.Count(),
-                    DuplicateScriptCount = eval1.DuplicateScriptCount,
-                    GeneralValoration = false
-                });
+                .Append(gEval.Map<U>("General", true))
+                .Append(eval1.Map<U>("Stage"));
 
             return list;
         }

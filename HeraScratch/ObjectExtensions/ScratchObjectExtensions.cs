@@ -4,11 +4,39 @@ using System.Collections.Generic;
 using System.Text;
 using HeraScratch.Valoration;
 using HeraScratch.Objects;
+using System.Text.RegularExpressions;
 
 namespace HeraScratch.ObjectExtensions
 {
     static class ScratchObjectExtensions
     {
+        private static Dictionary<string, string> _BasicOperators
+            = new Dictionary<string, string>()
+            {
+                ["+"] = "+",
+                ["-"] = "-",
+                ["*"] = "*",
+                ["/"] = "/",
+                ["concatenate:with:"] = "concatenate:with:"
+            };
+
+        private static Dictionary<string, string> _MediumOperators
+            = new Dictionary<string, string>()
+            {
+                ["<"] = "<",
+                ["="] = "=",
+                [">"] = ">",
+                ["randomFrom:to:"] = "randomFrom:to:"
+            };
+
+        private static Dictionary<string, string> _AdvancedOperators
+            = new Dictionary<string, string>()
+            {
+                ["&"] = "&",
+                ["|"] = "|",
+                ["not"] = "not"
+            };
+
         private static Dictionary<string, string> _EventBlocks
             = new Dictionary<string, string>()
             {
@@ -23,6 +51,23 @@ namespace HeraScratch.ObjectExtensions
                 ["procDef"] = "procDef",
                 ["whenCloned"] = "whenCloned"
             };
+        private static Dictionary<string, string> _BasicControlBlocks
+            = new Dictionary<string, string>()
+            {
+                ["doIf"] = "doIf",
+                ["stopScripts"] = "whenKeyPressed",
+                ["doForever"] = "whenClicked",
+                ["doRepeat"] = "doRepeat",
+                ["wait:elapsed:from:"] = "wait:elapsed:from:"
+            };
+        private static Dictionary<string, string> _MediumControlBlocks
+            = new Dictionary<string, string>()
+            {
+                ["doWaitUntil"] = "doWaitUntil",
+                ["doUntil"] = "doUntil",
+                ["doIfElse"] = "doIfElse"
+            };
+
         private static Dictionary<string, string> _reservedBlocks
             = new Dictionary<string, string>()
             {
@@ -120,10 +165,15 @@ namespace HeraScratch.ObjectExtensions
             return "unknown";
 
         }
+
         private static ScratchValoration Get_valoration(
             List<List<object>> scripts, List<string> blocks,
             List<string> scriptList)
         {
+            var deadCode = scripts
+                .Where(o =>o.Count > 0 &&
+                !_EventBlocks.ContainsKey(Get_firstBlock(o)))
+                .ToList();
             return new ScratchValoration()
             {
                 ScriptCount = scripts.Count,
@@ -136,17 +186,58 @@ namespace HeraScratch.ObjectExtensions
                 .ToList(),
                 DuplicateScriptCount = scriptList
                 .GroupBy(i => i)
-                .Where(grp => grp.Count() >1)
+                .Where(grp => grp.Count() > 1)
                 .Select(grp => grp.Key)
                 .Count(),
-                DeadCode = scripts
-                               .Where(o =>
-                               o.Count > 0 &&
-                               !_EventBlocks.ContainsKey(Get_firstBlock(o)))
-                               .ToList()
+                DeadCode = deadCode,
+                NonUnusedBlocks = deadCode.Count == 0,
+                UserDefinedBlocks =
+                    blocks.Any(b => b == "procDef"),
+                CloneUse =
+                     blocks.Any(b => b == "createCloneOf"),
+                SecuenceUse =
+                        scripts.Any(list =>
+                        _EventBlocks.ContainsKey(Get_firstBlock(list))
+                        && list.Count > 0),
+                MultipleThreads =
+                    scripts.Count > 1,
+                //EventsUse=
+                TwoGreenFlagTrhead =
+                    scripts.Where(s =>
+                    Get_firstBlock(s).Equals("whenGreenFlag"))
+                    .Count() > 1,
+                //MessageUse = 
+                AdvancedEventUse =
+                scripts.GroupBy(s
+                        => Get_firstBlock(s))
+                        .Count() > 1,
+                UseSimpleBlocks =
+                    blocks.Any(b => _BasicControlBlocks.ContainsKey(b)),
+                UseMediumBlocks =
+                    blocks.Any(b => _MediumControlBlocks.ContainsKey(b)),
+                //UseNestedControl = 
+                BasicInputUse = blocks
+                        .Any(b => b == "touching" || b == "whenKeyPressed"),
+                VariableUse = blocks
+                        .Any(b => b == "setVar:to:"),
+                SpriteSensing = blocks
+                .Any(b => b == "touching:" || b == "touching"),
+                //SaredVariables = 
+                //ListUse = 
+                BasicOperators = blocks
+                .Any(b => _BasicOperators.ContainsKey(b)),
+
+                MediumOperators = blocks
+                .Any(b => _MediumOperators.ContainsKey(b)),
+
+                AdvancedOperators = blocks
+                .Any(b => _AdvancedOperators.ContainsKey(b)),
+
 
             };
         }
+
+        
     }
 
 }
