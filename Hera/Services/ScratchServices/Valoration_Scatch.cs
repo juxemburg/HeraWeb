@@ -47,7 +47,7 @@ namespace Hera.Services.ScratchServices
 
         public ResultadoScratch Map()
         {
-            return new ResultadoScratch()
+            var res=  new ResultadoScratch()
             {
                 General = generalValoration,
                 Nombre = SpriteName,
@@ -65,6 +65,14 @@ namespace Hera.Services.ScratchServices
                     };
                 }).ToList()
             };
+            if (generalValoration)
+                res.IInfoScratch_General = (IInfoScratch_General)
+                ((GeneralInfo)AdditionalInfo).Map();
+            else
+                res.IInfoScratch_Sprite = (IInfoScratch_Sprite)
+                ((SpriteInfo)AdditionalInfo).Map();
+
+            return res;
         }
         public ResultadoScratch Map(int calId)
         {

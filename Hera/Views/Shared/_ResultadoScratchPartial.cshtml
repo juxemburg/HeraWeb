@@ -1,4 +1,4 @@
-@model ResultadoScratch
+﻿@model ResultadoScratch
 
 
 <div class="card margin-10">
@@ -7,24 +7,36 @@
         <h3>@Model.Nombre</h3>
     </div>
     <div class="content">
-        <div>
-            <dl>
-                <dt>Scripts Muertos:</dt>
-                <dd>@Model.DeadCodeCount</dd>
+        <div class="row">
+            <div class="col-sm-6">
+                <dl>
+                    <dt>Scripts Muertos:</dt>
+                    <dd>@Model.DeadCodeCount</dd>
 
-                <dt>Scripts Duplicados:</dt>
-                <dd>@Model.DuplicateScriptsCount</dd>
+                    <dt>Scripts Duplicados:</dt>
+                    <dd>@Model.DuplicateScriptsCount</dd>
 
-                <dt>Total Bloques:</dt>
-                <dd>@Model.NumBloques</dd>
+                    <dt>Total Bloques:</dt>
+                    <dd>@Model.NumBloques</dd>
 
-                <dt>Total Scripts:</dt>
-                <dd>@Model.NumScripts</dd>
-            </dl>
+                    <dt>Total Scripts:</dt>
+                    <dd>@Model.NumScripts</dd>
+                </dl>
+            </div>
         </div>
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-@Model.Nombre">
-            Bloques Usados
-        </button>
+        <div class="row text-center">
+            <div class="col-sm-6">
+                <button type="button" class="btn btn-info btn-simple" data-toggle="modal" data-target="#modal-@Model.Nombre">
+                    Bloques Usados
+                </button>
+            </div>
+            <div class="col-sm-6">
+                <button class="btn btn-info btn-block col-sm-6" data-toggle="modal" data-target="#modal-info-@Model.Nombre">
+                    <i class="material-icons">info_outline</i>
+                </button>
+            </div>
+        </div>
+        
     </div>
 </div>
 

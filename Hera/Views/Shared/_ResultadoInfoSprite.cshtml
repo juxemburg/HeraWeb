@@ -1,0 +1,108 @@
+﻿@model ResultadoScratch
+@{
+    var info = Model.IInfoScratch_Sprite;
+}
+<div class="col-sm-6">
+
+</div>
+
+<div class="modal fade" id="modal-info-@Model.Nombre" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Información de Evaluación</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <hr />
+                    <div class="col-sm-6">
+                        <h4>Abstracción y reconocimiento de patrones</h4>
+                        <dl>
+                            <dt>No bloques sin usar</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.NonUnusedBlocks)
+
+                            <dt>Creación de bloques propios</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.UserDefinedBlocks)
+
+                            <dt>Uso de clones</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.CloneUse)
+                        </dl>
+                    </div>
+                    <div class="col-sm-6">
+                        <h4>Pensamiento algorítmico</h4>
+                        <dl>
+                            <dt>Uso de Secuencias</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.SecuenceUse)
+
+                            <dt>Uso de Múltiples Hilos</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.MultipleThreads)
+
+                            <dt>Más de 2 hilos con Bandera Verde</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.TwoGreenFlagTrhead)
+                        </dl>
+                    </div>
+                    <div class="col-sm-6">
+                        <h4>Descomposición de Prolemas</h4>
+                        <dl>
+                            <dt>Dos hilos por sprite</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.MultipleThreads)
+                        </dl>
+                    </div>
+                    <div class="col-sm-6">
+                        <h4>Paralelismo y sincronización</h4>
+                        <dl>
+                            <dt>Dos hilos inciando con bandera verde</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.TwoGreenFlagTrhead)
+
+                            <dt>Uso de bloques de eventos avanzados</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.AdvancedEventUse)
+                        </dl>
+                    </div>
+                    <div class="col-sm-6">
+                        <h4>Control de flujo</h4>
+                        <dl>
+                            <dt>Uso de bloques simples</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.UseSimpleBlocks)
+
+                            <dt>Uso de bloques complejos</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.UseMediumBlocks)
+
+                            <dt>Uso de bloques anidados</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.UseNestedControl)
+                        </dl>
+                    </div>
+                    <div class="col-sm-6">
+                        <h4>Recolección de información</h4>
+                        <dl>
+                            <dt>Uso de bloques de entrada de datos</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.BasicInputUse)
+
+                            <dt>Uso de variables no creadas</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.VariableUse)
+
+                            <dt>Uso de sensores de sprite</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.SpriteSensing)
+                        </dl>
+                    </div>
+                    <div class="col-sm-6">
+                        <h4>Análisis de información</h4>
+                        <dl>
+                            <dt>Operadores lógicos básicos</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.BasicOperators)
+
+                            <dt>Operadores lógicos complejos</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.VariableUse)
+
+                            <dt>Operadores lógicos anidados</dt>
+                            @Html.Partial("Util/_CompletadoPartial", info.AdvancedOperators)
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

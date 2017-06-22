@@ -1,4 +1,4 @@
-@model ResultadosScratchViewModel
+﻿@model ResultadosScratchViewModel
 @{
     ViewData["Title"] = "Resultados";
 }
@@ -24,9 +24,18 @@
 </div>
 
 @section Modals {
-    @await Html.PartialAsync("_Modal_ResultadoScratchPartial", Model.ResultadoGeneral)
+    @await Html.PartialAsync("_Modal_ResultadoScratchPartial",
+    Model.ResultadoGeneral)
+    @Html.Partial("_ResultadoInfoGeneral",
+                Model.ResultadoGeneral)
+
     @foreach (var item in Model.ScriptsResultados)
     {
+        @if (!item.General)
+        {
+            @Html.Partial("_ResultadoInfoSprite",
+                item)
+        }
         @await Html.PartialAsync("_Modal_ResultadoScratchPartial", item)
     }
 }

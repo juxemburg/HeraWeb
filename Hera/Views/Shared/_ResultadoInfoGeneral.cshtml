@@ -1,0 +1,133 @@
+﻿@model ResultadoScratch
+@{
+    var info = Model.IInfoScratch_General;
+}
+<div class="col-sm-6">
+
+</div>
+
+<div class="modal fade" id="modal-info-@Model.Nombre" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Bloques</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <div class="row">
+                        <hr />
+                        <h4>Variables Generales</h4>
+                        <div class="col-sm-6">
+                            
+                            <dl class="dl-horizontal">
+                                <dt>Más de un sprite tiene eventos</dt>
+                                <dd>@Html.Partial("Util/_CompletadoPartial", info.EventsUse)</dd>
+
+                                <dt>Uso de mensasjes</dt>
+                                <dd>@Html.Partial("Util/_CompletadoPartial", info.MessageUse)</dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-6">
+                            <dl class="dl-horizontal">
+                                <dt>Uso de variables globales</dt>
+                                <dd>@Html.Partial("Util/_CompletadoPartial", info.SharedVariables)</dd>
+
+                                <dt>Uso de listas</dt>
+                                <dd>@Html.Partial("Util/_CompletadoPartial", info.ListUse)</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <hr />
+                        <div class="col-sm-6">
+                            <h4>Abstracción y reconocimiento de patrones</h4>
+                            <dl class="dl-horizontal">
+                                <dt>No bloques sin usar</dt>
+                                <dd>@info.NonUnusedBlocks</dd>
+
+                                <dt>Creación de bloques propios</dt>
+                                <dd>@info.UserDefinedBlocks</dd>
+
+                                <dt>Uso de clones</dt>
+                                <dd>@info.CloneUse</dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4>Pensamiento algorítmico</h4>
+                            <dl class="dl-horizontal">
+                                <dt>Uso de Secuencias</dt>
+                                <dd>@info.SecuenceUse</dd>
+
+                                <dt>Uso de Múltiples Hilos</dt>
+                                <dd>@info.MultipleThreads</dd>
+
+                                <dt>Más de 2 hilos con Bandera Verde</dt>
+                                <dd>@info.TwoGreenFlagTrhead</dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4>Descomposición de Prolemas</h4>
+                            <dl class="dl-horizontal">
+                                <dt>Dos hilos por sprite</dt>
+                                <dd>@info.MultipleThreads</dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4>Paralelismo y sincronización</h4>
+                            <dl class="dl-horizontal">
+                                <dt>Dos hilos inciando con bandera verde</dt>
+                                <dd>@info.TwoGreenFlagTrhead</dd>
+
+                                <dt>Uso de bloques de eventos avanzados</dt>
+                                <dd>@info.AdvancedEventUse</dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4>Control de flujo</h4>
+                            <dl class="dl-horizontal">
+                                <dt>Uso de bloques simples</dt>
+                                <dd>@info.UseSimpleBlocks</dd>
+
+                                <dt>Uso de bloques complejos</dt>
+                                <dd>@info.UseMediumBlocks</dd>
+
+                                <dt>Uso de bloques anidados</dt>
+                                <dd>@info.UseNestedControl</dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4>Recolección de información</h4>
+                            <dl class="dl-horizontal">
+                                <dt>Uso de bloques de entrada de datos</dt>
+                                <dd>@info.BasicInputUse</dd>
+
+                                <dt>Uso de variables no creadas</dt>
+                                <dd>@info.VariableUse</dd>
+
+                                <dt>Uso de sensores de sprite</dt>
+                                <dd>@info.SpriteSensing</dd>
+                            </dl>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4>Análisis de información</h4>
+                            <dl class="dl-horizontal">
+                                <dt>Operadores lógicos básicos</dt>
+                                <dd>@info.BasicOperators</dd>
+
+                                <dt>Operadores lógicos complejos</dt>
+                                <dd>@info.VariableUse</dd>
+
+                                <dt>Operadores lógicos anidados</dt>
+                                <dd>@info.AdvancedOperators</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
