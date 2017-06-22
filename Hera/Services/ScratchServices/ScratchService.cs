@@ -20,7 +20,8 @@ namespace Hera.Services
             Get_Evaluation(string projId)           
         {
             var result = await _evaluator
-                .Evaluate<Valoration_Scatch>(projId);
+                .Evaluate<Valoration_Scatch, SpriteInfo,
+                GeneralInfo>(projId);
             return result;
         }
     }

@@ -30,6 +30,8 @@ namespace Hera.Data
         public DbSet<Rel_DesafiosCursos> Rel_Cursos_Desafios { get; set; }
         public DbSet<ResultadoScratch> ResultadosScratch { get; set; }
         public DbSet<BloqueScratch> BloquesScratch { get; set; }
+        public DbSet<IInfoScratch_Sprite> InfoSprites { get; set; }
+        public DbSet<IInfoScratch_General> InfoGenerales { get; set; }
 
 
 
@@ -95,6 +97,21 @@ namespace Hera.Data
                 .WithOne(e2 => e2.InfoDesafio)
                 .HasForeignKey<InfoDesafio>(e => e.DesafioId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<IInfoScratch_General>()
+                .HasOne(e => e.ResultadoScratch)
+                .WithOne(e2 => e2.IInfoScratch_General)
+                .HasForeignKey<IInfoScratch_General>
+                (e => e.ResultadoScratchId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<IInfoScratch_Sprite>()
+                .HasOne(e => e.ResultadoScratch)
+                .WithOne(e2 => e2.IInfoScratch_Sprite)
+                .HasForeignKey<IInfoScratch_Sprite>
+                (e => e.ResultadoScratchId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.

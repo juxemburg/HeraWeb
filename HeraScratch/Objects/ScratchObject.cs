@@ -31,6 +31,9 @@ namespace HeraScratch.Objects
         [DataMember(Name = "variables")]
         public IEnumerable<Variable> Variables { get; set; }
 
+        [DataMember(Name = "lists")]
+        public IEnumerable<ScratchList> Lists { get; set; }
+
         public void Initialize()
         {
             Do_setScripts();

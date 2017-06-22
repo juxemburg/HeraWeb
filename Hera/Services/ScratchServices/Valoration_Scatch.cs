@@ -10,7 +10,7 @@ namespace Hera.Services.ScratchServices
     public class Valoration_Scatch : IValoration
     {
         public string SpriteName { get; set; }
-        public bool GeneralValoration { get; set; }
+        public bool generalValoration { get; set; }
 
         public int ScriptCount { get; set; }
         public int BlockCount { get; set; }
@@ -43,11 +43,13 @@ namespace Hera.Services.ScratchServices
         public bool MediumOperators { get; set; }
         public bool AdvancedOperators { get; set; }
 
+        public IValorationInfo AdditionalInfo { get; set; }
+
         public ResultadoScratch Map()
         {
             return new ResultadoScratch()
             {
-                General = GeneralValoration,
+                General = generalValoration,
                 Nombre = SpriteName,
                 NumBloques = BlockCount,
                 NumScripts = ScriptCount,
@@ -69,7 +71,7 @@ namespace Hera.Services.ScratchServices
             return new ResultadoScratch()
             {
                 CalificacionId = calId,
-                General = GeneralValoration,
+                General = generalValoration,
                 Nombre = SpriteName,
                 NumBloques = BlockCount,
                 NumScripts = ScriptCount,
