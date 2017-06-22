@@ -7,13 +7,14 @@
 }
 
 <h2>Resultados</h2>
-
+<hr />
 <div class="row">
     <div class="col-sm-12">
         @await Html.PartialAsync("_ResultadoScratchPartial", Model.ResultadoGeneral)
     </div>
     <div class="col-sm-12">
-        <h4>Objetos</h4>
+        <h3>Objetos</h3>
+        <hr />
         @foreach (var item in Model.ScriptsResultados)
         {
             <div class="col-sm-4">

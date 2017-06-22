@@ -156,9 +156,11 @@ namespace HeraScratch.ObjectExtensions
                     scriptList.AddRange(child.ScriptsString);
                 }
             }
+            var vars = obj.Variables != null ? obj.Variables.ToList():  new List<Variable>();
+            var lists = obj.Lists != null ? obj.Lists.ToList() : new List<ScratchList>();
             return Get_generalValoration<T, U, S>(scripts,
                 blocks,scriptList, objectName, previousValorations,
-                obj.Variables.ToList(), obj.Lists.ToList(),true);
+                vars, lists,true);
 
         }
 
