@@ -6,6 +6,7 @@ namespace HeraScratch.Valoration
 {
     public interface IGeneralValoration : IValorationInfo
     {
+        int SpriteCount { get; set; }
 
         bool EventsUse { get; set; }// General Variable
         bool MessageUse { get; set; }// To-do General Variable

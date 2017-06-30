@@ -9,6 +9,8 @@ namespace Hera.Services.ScratchServices
 {
     public class SpriteInfo : ISpriteValoration, IScratchAdapter
     {
+
+        public bool HasEvents { get; set; }
         public bool NonUnusedBlocks { get ; set ; }
         public bool UserDefinedBlocks { get ; set ; }
         public bool CloneUse { get ; set ; }
@@ -33,19 +35,32 @@ namespace Hera.Services.ScratchServices
         {
             return new IInfoScratch_Sprite()
             {
+                //Abst
                 NonUnusedBlocks = this.NonUnusedBlocks,
                 UserDefinedBlocks = this.UserDefinedBlocks,
                 CloneUse = this.CloneUse,
+
+                //Alg Thnk
                 SecuenceUse = this.SecuenceUse,
+
+                //Sync
                 MultipleThreads = this.MultipleThreads,
-                TwoGreenFlagTrhead = this.TwoGreenFlagTrhead,
+
+                //Probl solv
+                TwoGreenFlagTrhead = this.TwoGreenFlagTrhead,                
                 AdvancedEventUse = this.AdvancedEventUse,
+
+                //Flux Control
                 UseSimpleBlocks = this.UseSimpleBlocks,
                 UseMediumBlocks = this.UseMediumBlocks,
-                UseNestedControl = this.BasicInputUse,
+                UseNestedControl = this.UseNestedControl,
+
+                //Input
+                BasicInputUse = this.BasicInputUse,
                 VariableUse = this.VariableUse,
                 SpriteSensing = this.SpriteSensing,
-                VariableCreation = this.VariableCreation,
+                
+                //Analysis
                 BasicOperators = this.BasicOperators,
                 MediumOperators = this.MediumOperators,
                 AdvancedOperators = this.AdvancedOperators

@@ -9,6 +9,7 @@ namespace Hera.Services.ScratchServices
 {
     public class GeneralInfo : IGeneralValoration, IScratchAdapter
     {
+        public int SpriteCount { get; set; }
         public bool EventsUse { get; set; }
         public bool MessageUse { get; set; }
         public bool SharedVariables { get; set; }
@@ -32,11 +33,14 @@ namespace Hera.Services.ScratchServices
         public int AdvancedOperators { get; set; }
 
         public string Info => "";
+        
 
         public IInfoScratch Map()
         {
             return new IInfoScratch_General()
             {
+             
+                SpriteCount = SpriteCount,
                 EventsUse = EventsUse,
                 MessageUse = MessageUse,
                 SharedVariables = SharedVariables,

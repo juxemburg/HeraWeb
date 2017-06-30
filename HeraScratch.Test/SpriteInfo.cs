@@ -7,6 +7,7 @@ namespace HeraScratch.Test
 {
     class SpriteInfo : ISpriteValoration
     {
+        public bool HasEvents { get; set; }
         public bool NonUnusedBlocks { get ; set ; }
         public bool UserDefinedBlocks { get ; set ; }
         public bool CloneUse { get ; set ; }

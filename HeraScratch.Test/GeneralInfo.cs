@@ -7,6 +7,7 @@ namespace HeraScratch.Test
 {
     class GeneralInfo : IGeneralValoration
     {
+        public int SpriteCount { get; set; }
         public bool SharedVariables { get; set; }
         public bool EventsUse { get; set; }
         public bool MessageUse { get; set; }

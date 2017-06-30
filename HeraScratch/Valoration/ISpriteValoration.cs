@@ -6,6 +6,8 @@ namespace HeraScratch.Valoration
 {
     public interface ISpriteValoration : IValorationInfo
     {
+        bool HasEvents { get; set; }
+
         //Abstraction
 
         bool NonUnusedBlocks { get; set; }

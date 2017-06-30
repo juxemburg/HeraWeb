@@ -10,6 +10,24 @@ namespace HeraScratch.ObjectExtensions
 {
     static class ScratchObjectExtensions
     {
+        private static Dictionary<string, string> _NonUserVariables
+            = new Dictionary<string, string>()
+            {
+                ["answer"] = "answer",
+                ["soundLevel"] = "soundLevel",
+                ["timer"] = "timer",
+                ["timeAndDate"] = "timeAndDate",
+                ["senseVideoMotion"] = "senseVideoMotion",
+                ["xpos"] = "",
+                ["ypos"] = "",
+                ["heading"] = "",
+                ["costumeIndex"] = "",
+                ["sceneName"] = "",
+                ["scale"] = "",
+                ["volume"] = "",
+                ["tempo"] = ""
+            };
+
         private static Dictionary<string, string> _BasicOperators
             = new Dictionary<string, string>()
             {
@@ -35,6 +53,14 @@ namespace HeraScratch.ObjectExtensions
                 ["&"] = "&",
                 ["|"] = "|",
                 ["not"] = "not"
+            };
+
+        private static Dictionary<string, string> _SensingBlocks
+            = new Dictionary<string, string>()
+            {
+                ["keyPressed"] ="",
+                ["whenKeyPressed"] = "",
+                ["touching:"] = ""
             };
 
         private static Dictionary<string, string> _EventBlocks
@@ -162,7 +188,7 @@ namespace HeraScratch.ObjectExtensions
             var lists = obj.Lists != null ? obj.Lists.ToList() : new List<ScratchList>();
             return Get_generalValoration<T, U, S>(scripts,
                 blocks,scriptList, objectName, previousValorations,
-                vars, lists,deadCodeSums,true);
+                vars, lists,deadCodeSums,obj.Children.Count(),true);
 
         }
 
@@ -233,40 +259,52 @@ namespace HeraScratch.ObjectExtensions
 
                 AdditionalInfo = new U()
                 {
+                    HasEvents = scripts.Count >0, 
+
+                    //Abstraction
                     NonUnusedBlocks = deadCodeCount == 0,
                     UserDefinedBlocks =
                     blocks.Any(b => b == "procDef"),
                     CloneUse =
                      blocks.Any(b => b == "createCloneOf"),
+                    
+                    //Algorithmic thinking
                     SecuenceUse =
                         scripts.Any(list =>
                         _EventBlocks.ContainsKey(Get_firstBlock(list))
                         && list.Count > 0),
+
+
+                    //Sync
                     MultipleThreads =
                     scripts.Count > 1,
-                    //EventsUse=
                     TwoGreenFlagTrhead =
                     scripts.Where(s =>
                     Get_firstBlock(s).Equals("whenGreenFlag"))
                     .Count() > 1,
-                    //MessageUse = 
+                    
+                    
                     AdvancedEventUse =
                 scripts.GroupBy(s
                         => Get_firstBlock(s))
                         .Count() > 1,
+                    //Flux control
                     UseSimpleBlocks =
                     blocks.Any(b => _BasicControlBlocks.ContainsKey(b)),
                     UseMediumBlocks =
                     blocks.Any(b => _MediumControlBlocks.ContainsKey(b)),
                     //UseNestedControl = 
+
+                    //Input
                     BasicInputUse = blocks
-                        .Any(b => b == "touching" || b == "whenKeyPressed"),
+                        .Any(b => _SensingBlocks.ContainsKey(b)),
                     VariableUse = blocks
-                        .Any(b => b == "setVar:to:"),
+                        .Any(b => _NonUserVariables.ContainsKey(b)
+                        ),
                     SpriteSensing = blocks
                 .Any(b => b == "touching:" || b == "touching"),
-                    //SaredVariables = 
-                    //ListUse = 
+                    
+                    //Analysis
                     BasicOperators = blocks
                 .Any(b => _BasicOperators.ContainsKey(b)),
 
@@ -289,6 +327,7 @@ namespace HeraScratch.ObjectExtensions
             List<Variable> variables,
             List<ScratchList> lists,
             int deadCodeSum,
+            int objCount,
             bool general = false)
             where T : IValoration, new()
             where U : ISpriteValoration, new()
@@ -298,6 +337,7 @@ namespace HeraScratch.ObjectExtensions
             
             return new T()
             {
+                
                 generalValoration = general,
                 SpriteName = objName,
                 ScriptCount = scripts.Count,
@@ -319,14 +359,14 @@ namespace HeraScratch.ObjectExtensions
 
                 AdditionalInfo = new S()
                 {
+                    SpriteCount = objCount,
                     //General Variables
-                    EventsUse = blocks
-                        .Where(b => _EventBlocks.ContainsKey(b))
-                        .Distinct().Count() > 1,
+                    EventsUse = previousValorations
+                    .Where(val => val.HasEvents).Count() >1,
                     SharedVariables = variables.Count >0,
                     MessageUse = blocks
                     .Any(b => b == "whenIReceive")
-                    && blocks.Any(b => b == "broadcast"),
+                    && blocks.Any(b => b == "broadcast:"),
                     ListUse = lists.Count > 0,
 
                     //Particular Variables

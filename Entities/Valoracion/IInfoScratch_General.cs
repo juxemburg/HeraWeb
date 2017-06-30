@@ -6,7 +6,10 @@ namespace Entities.Valoracion
 {
     public class IInfoScratch_General : IInfoScratch
     {
+        
         public int Id { get; set; }
+
+        public int SpriteCount { get; set; }
         public int ResultadoScratchId { get; set; }
         public ResultadoScratch ResultadoScratch { get; set; }
         public bool EventsUse { get; set; }
@@ -30,6 +33,8 @@ namespace Entities.Valoracion
         public int BasicOperators { get; set; }
         public int MediumOperators { get; set; }
         public int AdvancedOperators { get; set; }
+
+        
 
     }
 }
