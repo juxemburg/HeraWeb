@@ -9,7 +9,7 @@ using System.Text;
 namespace HeraScratch.Objects
 {
     [DataContract(Name = "object")]
-    class ScratchObject : IHttpObject
+    partial class ScratchObject : IHttpObject
     {
         [DataMember(Name = "objName")]
         public string ObjName { get; set; }
@@ -25,6 +25,9 @@ namespace HeraScratch.Objects
 
         public List<List<object>> Scripts { get; set; }
         public List<string> Blocks { get; set; }
+
+        private int _deadCodeCount = 0;
+        public int DeadCodeCount { get => _deadCodeCount; }
 
         public List<string> ScriptsString { get; set; }
 
@@ -53,14 +56,19 @@ namespace HeraScratch.Objects
             Scripts = new List<List<object>>();
             Blocks = new List<string>();
             ScriptsString = new List<string>();
-            var index = 1;
             foreach (object[] item in RawScripts)
             {
                 var value = "";
-                Scripts.Add((List<object>)Do_deserializeScript(
-                    item, Blocks, 0,ref value));
-                ScriptsString.Add(value);
-                index++;
+                if (ScratchObjectExtensions
+                    .Get_ValidScript((object[])item[2]))
+                {
+                    Scripts.Add((List<object>)Do_deserializeScript(
+                        item, Blocks, 0, ref value));
+                    ScriptsString.Add(value);
+                }
+                else
+                    _deadCodeCount++;
+
             }
         }
 
@@ -100,7 +108,7 @@ namespace HeraScratch.Objects
                 {
                     stringScript += $"\n{spaces}";
                     var result = Do_deserializeScript((object[])item,
-                        blocks, depth++,ref stringScript);
+                        blocks, depth++, ref stringScript);
                     array.Add(result);
                 }
                 index++;
@@ -108,7 +116,7 @@ namespace HeraScratch.Objects
             return array;
         }
 
-        
+
 
     }
 }

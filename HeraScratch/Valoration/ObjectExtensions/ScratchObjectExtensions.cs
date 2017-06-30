@@ -120,7 +120,7 @@ namespace HeraScratch.ObjectExtensions
 
             return Get_singleValoration<T, U>(obj.Scripts,
                 obj.Blocks,
-                obj.ScriptsString, objectName, general);
+                obj.ScriptsString, objectName, obj.DeadCodeCount, general);
         }
         public static T GeneralEvaluation<T, U, S>(
             this ScratchObject obj, string objectName,
@@ -135,6 +135,7 @@ namespace HeraScratch.ObjectExtensions
              var blocks = new List<string>();
             var scripts = new List<List<object>>();
             var scriptList = new List<string>();
+            var deadCodeSums = 0;
             if (obj.RawScripts != null)
             {
                 blocks.AddRange(obj.Blocks);
@@ -143,6 +144,7 @@ namespace HeraScratch.ObjectExtensions
             }
             foreach (var child in obj.Children)
             {
+                deadCodeSums += child.DeadCodeCount;
                 if (child.Blocks != null)
                 {
                     blocks.AddRange(child.Blocks);
@@ -160,7 +162,7 @@ namespace HeraScratch.ObjectExtensions
             var lists = obj.Lists != null ? obj.Lists.ToList() : new List<ScratchList>();
             return Get_generalValoration<T, U, S>(scripts,
                 blocks,scriptList, objectName, previousValorations,
-                vars, lists,true);
+                vars, lists,deadCodeSums,true);
 
         }
 
@@ -177,25 +179,39 @@ namespace HeraScratch.ObjectExtensions
             return "unknown";
 
         }
+        
+        public static bool Get_ValidScript(object[] script)
+        {
+            try
+            {
+                if (script.Length < 0)
+                    return false;
+                if (script[0] is string)
+                    return _EventBlocks.ContainsKey(script[0].ToString());
+
+                return Get_ValidScript((object[])script[0]);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
 
         private static T Get_singleValoration<T, U>
             (List<List<object>> scripts, List<string> blocks,
             List<string> scriptList, string objName,
+            int deadCodeCount,
             bool general = false)
             where T : IValoration, new()
             where U : ISpriteValoration, new()
         {
-            var deadCode = scripts
-                .Where(o => o.Count > 0 &&
-                !_EventBlocks.ContainsKey(Get_firstBlock(o)))
-                .ToList();
             return new T()
             {
                 generalValoration = general,
                 SpriteName = objName,
                 ScriptCount = scripts.Count,
                 BlockCount = blocks.Count(),
-                DeadCodeCount = deadCode.Count,
+                DeadCodeCount = deadCodeCount,
 
                 BlockFrequency = blocks.GroupBy(b => b)
                 .Select(b => new Tuple<string, int>(
@@ -212,7 +228,7 @@ namespace HeraScratch.ObjectExtensions
 
                 AdditionalInfo = new U()
                 {
-                    NonUnusedBlocks = deadCode.Count == 0,
+                    NonUnusedBlocks = deadCodeCount == 0,
                     UserDefinedBlocks =
                     blocks.Any(b => b == "procDef"),
                     CloneUse =
@@ -267,23 +283,21 @@ namespace HeraScratch.ObjectExtensions
             List<U> previousValorations,
             List<Variable> variables,
             List<ScratchList> lists,
+            int deadCodeSum,
             bool general = false)
             where T : IValoration, new()
             where U : ISpriteValoration, new()
             where S : IGeneralValoration, new()
         {
-          
-            var deadCode = scripts
-                .Where(o => o.Count > 0 &&
-                !_EventBlocks.ContainsKey(Get_firstBlock(o)))
-                .ToList();
+
+            
             return new T()
             {
                 generalValoration = general,
                 SpriteName = objName,
                 ScriptCount = scripts.Count,
                 BlockCount = blocks.Count(),
-                DeadCodeCount = deadCode.Count,
+                DeadCodeCount = deadCodeSum,
 
                 BlockFrequency = blocks.GroupBy(b => b)
                 .Select(b => new Tuple<string, int>(
