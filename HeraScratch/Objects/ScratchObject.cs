@@ -60,7 +60,9 @@ namespace HeraScratch.Objects
             {
                 var value = "";
                 if (ScratchObjectExtensions
-                    .Get_ValidScript((object[])item[2]))
+                    .Get_ValidScript((object[])item[2])
+                    && ScratchObjectExtensions
+                    .Get_ScriptLength((object[])item[2]) > 1)
                 {
                     Scripts.Add((List<object>)Do_deserializeScript(
                         item, Blocks, 0, ref value));

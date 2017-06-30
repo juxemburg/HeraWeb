@@ -180,6 +180,11 @@ namespace HeraScratch.ObjectExtensions
 
         }
         
+        public static int Get_ScriptLength(object[] script)
+        {
+            return script.Length;
+        }
+
         public static bool Get_ValidScript(object[] script)
         {
             try
