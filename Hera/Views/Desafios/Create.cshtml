@@ -261,6 +261,9 @@
 </div> <!-- wizard container -->
 
 
+@section Modals {
+    <div id="div-loading" class="loading">Loading&#8230;</div>
+}
 
 @section Scripts {
     @Html.Partial("_ValidationScriptsPartial");
@@ -269,4 +272,5 @@
     <script>
         setFileHandler('input-solucion', 'span-filepath');
     </script>
+    <script src="~/js/Desafios/create.js"></script>
 }

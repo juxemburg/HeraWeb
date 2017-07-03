@@ -52,5 +52,20 @@ namespace HeraScratch
             }
         }
 
+        public async Task<T> GeneralEvaluate<T, U, S>(string proyectId)
+            where T : IValoration, new()
+            where U : ISpriteValoration, new()
+            where S : IGeneralValoration, new()
+        {
+            try
+            {
+                var result = await Evaluate<T, U, S>(proyectId);
+                return result.First(r => r.SpriteName == "General");
+            }
+            catch (EvaluationException)
+            {
+                throw;
+            }
+        }
     }
 }

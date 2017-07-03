@@ -34,8 +34,10 @@
     <Content Include="wwwroot\css\cards.css" />
     <Content Include="wwwroot\css\colors.css" />
     <Content Include="wwwroot\css\Estudiante\cursos.css" />
+    <Content Include="wwwroot\css\Loading\loading.css" />
     <Content Include="wwwroot\css\padding.css" />
     <Content Include="wwwroot\css\Theme\demo.css" />
+    <Content Include="wwwroot\css\Theme\loading.css" />
     <Content Include="wwwroot\css\Theme\material-kit.css" />
     <Content Include="wwwroot\css\Theme\material-kit.css.map" />
     <Content Include="wwwroot\css\ThemifyIcons\fonts\themify.eot" />
@@ -54,7 +56,10 @@
     <Content Include="wwwroot\js\Cursos\create.js" />
     <Content Include="wwwroot\js\Cursos\Details.js" />
 	<Content Include="wwwroot\js\Cursos\index.js" />
+	<Content Include="wwwroot\js\Desafios\create.js" />
 	<Content Include="wwwroot\js\FileManagement\fileManager.js" />
+	<Content Include="wwwroot\js\Loading\loading.js" />
+	<Content Include="wwwroot\js\Loading\loading}.js" />
 	<Content Include="wwwroot\js\Theme\material-kit.js" />
 	<Content Include="wwwroot\js\Theme\material.min.js" />
 	<Content Include="wwwroot\js\Theme\nouislider.min.js" />
@@ -89,7 +94,6 @@
     <ProjectReference Include="..\HeraScratch\HeraScratch.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\ControllersApi\Desafios\" />
     <Folder Include="Controllers\ControllersApi\PassiveControllers\" />
     <Folder Include="Files\" />
     <Folder Include="Views\Cursos\" />
@@ -98,6 +102,7 @@
     <Folder Include="Views\File\" />
     <Folder Include="Views\Profesor\" />
     <Folder Include="Views\Shared\Components\Navbar\" />
+    <Folder Include="Views\Shared\Default\" />
     <Folder Include="Views\Shared\Util\" />
   </ItemGroup>
 

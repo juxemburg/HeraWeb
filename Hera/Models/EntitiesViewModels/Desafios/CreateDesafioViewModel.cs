@@ -31,6 +31,7 @@ namespace Hera.Models.EntitiesViewModels
         [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
+        #region Valoration Attributes
         //General Valoration
         [Display(Name ="Más de un sprite tiene eventos")]
         public bool MultipleSpriteEvents { get; set; }
@@ -132,6 +133,7 @@ namespace Hera.Models.EntitiesViewModels
 
         [Display(Name= "Análisis")]
         public Desafio_Analisis Analisis { get; set; }
+#endregion
 
         public Desafio Map()
         {

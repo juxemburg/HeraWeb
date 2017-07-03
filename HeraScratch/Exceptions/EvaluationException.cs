@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HeraScratch.Exceptions
 {
-    class EvaluationException : Exception
+    public class EvaluationException : Exception
     {
         public EvaluationException()
         {

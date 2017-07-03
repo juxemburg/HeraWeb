@@ -4,8 +4,16 @@
   {
     "outputFileName": "wwwroot/css/theme.min.css",
     "inputFiles": [
+      "wwwroot/css/Theme/loading.css",
       "wwwroot/css/Theme/demo.css",
       "wwwroot/css/Theme/material-kit.css"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/css/loading.min.css",
+    "inputFiles": [
+      "wwwroot/css/Loading/loading.css"
     ]
   },
 
@@ -115,6 +123,17 @@
     "inputFiles": [
       "wwwroot/js/Wizard/jquery.bootstrap.wizard.js",
       "wwwroot/js/Wizard/paper-bootstrap-wizard.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/loading.min.js",
+    "inputFiles": [
+      "wwwroot/js/Loading/loading.js"
     ],
     "minify": {
       "enabled": true,
