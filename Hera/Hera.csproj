@@ -15,12 +15,16 @@
   <ItemGroup>
     <Compile Remove="Files\Temp\**" />
     <Compile Remove="Views\ProgresoDesafio\**" />
+    <Compile Remove="wwwroot\Files\**" />
     <Content Remove="Files\Temp\**" />
     <Content Remove="Views\ProgresoDesafio\**" />
+    <Content Remove="wwwroot\Files\**" />
     <EmbeddedResource Remove="Files\Temp\**" />
     <EmbeddedResource Remove="Views\ProgresoDesafio\**" />
+    <EmbeddedResource Remove="wwwroot\Files\**" />
     <None Remove="Files\Temp\**" />
     <None Remove="Views\ProgresoDesafio\**" />
+    <None Remove="wwwroot\Files\**" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="wwwroot\css\Autocomplete\easy-autocomplete.min.css" />
@@ -34,15 +38,28 @@
     <Content Include="wwwroot\css\Theme\demo.css" />
     <Content Include="wwwroot\css\Theme\material-kit.css" />
     <Content Include="wwwroot\css\Theme\material-kit.css.map" />
+    <Content Include="wwwroot\css\ThemifyIcons\fonts\themify.eot" />
+    <Content Include="wwwroot\css\ThemifyIcons\fonts\themify.svg" />
+    <Content Include="wwwroot\css\ThemifyIcons\fonts\themify.ttf" />
+    <Content Include="wwwroot\css\ThemifyIcons\fonts\themify.woff" />
+    <Content Include="wwwroot\css\ThemifyIcons\style\themify-icons-demo.css" />
+    <Content Include="wwwroot\css\ThemifyIcons\style\themify-icons.css" />
+    <Content Include="wwwroot\css\ThemifyIcons\themify-icons-demo.css" />
+    <Content Include="wwwroot\css\ThemifyIcons\themify-icons.css" />
+    <Content Include="wwwroot\css\Wizard\demo.css" />
+    <Content Include="wwwroot\css\Wizard\paper-bootstrap-wizard.css" />
     <Content Include="wwwroot\images\bg-login.jpg" />
     <Content Include="wwwroot\js\Autocomplete\autocomplete-client.js" />
     <Content Include="wwwroot\js\Autocomplete\jquery.easy-autocomplete.min.js" />
     <Content Include="wwwroot\js\Cursos\create.js" />
     <Content Include="wwwroot\js\Cursos\Details.js" />
 	<Content Include="wwwroot\js\Cursos\index.js" />
+	<Content Include="wwwroot\js\FileManagement\fileManager.js" />
 	<Content Include="wwwroot\js\Theme\material-kit.js" />
 	<Content Include="wwwroot\js\Theme\material.min.js" />
 	<Content Include="wwwroot\js\Theme\nouislider.min.js" />
+	<Content Include="wwwroot\js\Wizard\jquery.bootstrap.wizard.js" />
+	<Content Include="wwwroot\js\Wizard\paper-bootstrap-wizard.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
@@ -72,6 +89,7 @@
     <ProjectReference Include="..\HeraScratch\HeraScratch.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Controllers\ControllersApi\Desafios\" />
     <Folder Include="Controllers\ControllersApi\PassiveControllers\" />
     <Folder Include="Files\" />
     <Folder Include="Views\Cursos\" />
@@ -81,7 +99,6 @@
     <Folder Include="Views\Profesor\" />
     <Folder Include="Views\Shared\Components\Navbar\" />
     <Folder Include="Views\Shared\Util\" />
-    <Folder Include="wwwroot\Files\Temp\" />
   </ItemGroup>
 
 </Project>

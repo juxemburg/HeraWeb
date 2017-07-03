@@ -14,22 +14,96 @@ namespace Hera.Models.EntitiesViewModels
         [Required(ErrorMessage = "Este campo es obligatorio")]
         [Display(Name = "Nombre del Desafio")]
         public string Nombre { get; set; }
-
-        [Required(ErrorMessage = "Este campo es obligatorio")]
-        public int Dificultad { get; set; }
-
+        
         [Display(Name = "Url del escenario inicial")]
         [Required(ErrorMessage = "Este campo es obligatorio")]
         [Url(ErrorMessage = "Digite una url válida")]
-        public string EscenarioInicial { get; set; }
+        public string UrlEscenarioInicial { get; set; }
+
+        [Display(Name = "Id del Proyecto")]
+        [Required(ErrorMessage = "Este campo es obligatorio")]
+        public int IdSolucion { get; set; }
 
         [Display(Name = "Url de la solución")]
         [Required(ErrorMessage = "Este campo es obligatorio")]
-        [Url(ErrorMessage = "Digite una url válida")]
         public string Solucion { get; set; }
 
         [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
+
+        //General Valoration
+        [Display(Name ="Más de un sprite tiene eventos")]
+        public bool MultipleSpriteEvents { get; set; }
+
+        [Display(Name = "Uso, y creación, de variables")]
+        public bool VariableUse { get; set; }
+
+        [Display(Name ="Uso correcto de mensajes")]
+        public bool MessageUse { get; set; }
+
+        [Display(Name ="Uso y creación de listas")]
+        public bool ListUse { get; set; }
+
+        //Sprite Valoration
+        //Abstraction
+        [Display(Name ="Se usan todos los bloques")]
+        public bool NonUnusedBlocks { get; set; }
+
+        [Display(Name ="Creación de bloques propios")]
+        public bool UserDefinedBlocks { get; set; }
+
+        [Display(Name ="Uso de clones")]
+        public bool CloneUse { get; set; }
+
+        //Algorithm Thinking
+        [Display(Name ="Uso de secuencias")]
+        public bool SecuenceUse { get; set; }
+
+
+        //Problem Solving
+        [Display(Name ="usa más de un hilo por sprite")]
+        public bool MultipleThreads { get; set; }
+
+        //Sync
+        [Display(Name ="Posee, al menos, dos hilos que empiezan con bandera verde")]
+        public bool TwoGreenFlagThread { get; set; }
+
+        [Display(Name ="Usa más de un tipo de evento")]
+        public bool AdvancedEventUse { get; set; }
+
+        //Control
+        [Display(Name ="Uso de bloques simples")]
+        public bool UseSimpleBlocks { get; set; }
+
+        [Display(Name ="Uso de bloques complejos")]
+        public bool UseMediumBlocks { get; set; }
+
+        [Display(Name ="Uso de bloques anidados")]
+        public bool UseNestedControl { get; set; }
+
+        //Input
+        [Display(Name ="Uso de bloques de entrada")]
+        public bool BasicInputUse { get; set; }
+
+        [Display(Name ="Uso de variables no creadas")]
+        public bool NonCreatedVariableUse { get; set; }
+
+        [Display(Name ="Uso de sensores de sprite")]
+        public bool SpriteSensisng { get; set; }
+
+        //Analysis
+        [Display(Name ="Uso de operadores básicos")]
+        public bool BasicOperators { get; set; }
+
+        [Display(Name ="Uso de operadores complejos")]
+        public bool MediumOperators { get; set; }
+
+        [Display(Name ="Uso de operadores anidados")]
+        public bool NestedOperators { get; set; }
+
+
+
+        //
 
         [Display(Name = "Abstracción")]
         public Desafio_Abstraccion Abstraccion { get; set; }
@@ -64,9 +138,9 @@ namespace Hera.Models.EntitiesViewModels
             return new Desafio()
             {
                 Nombre = this.Nombre,
-                Dificultad = this.Dificultad,
+                Dificultad = 0,
                 Descripcion = this.Descripcion,
-                DirDesafioInicial = EscenarioInicial,
+                DirDesafioInicial = UrlEscenarioInicial,
                 DirSolucion = Solucion,
                 InfoDesafio = new InfoDesafio()
                 {

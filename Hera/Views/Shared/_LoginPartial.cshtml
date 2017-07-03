@@ -8,14 +8,25 @@
 {
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Bienvenido @UserManager.GetUserName(User)!</a>
-            </li>
-            <li>
-                <button type="submit" class="btn btn-simple navbar-btn navbar-link">
-                    Cerrar sesión
-                    <i class="material-icons">exit_to_app</i>
-                </button>
+            
+            <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <i class="material-icons">account_circle</i>
+                    <b class="caret"></b>
+                    <div class="ripple-container"></div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Bienvenido @UserManager.GetUserName(User)!</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="text-center">
+                        <button type="submit" class="btn btn-block btn-sm btn-danger">
+                            Cerrar sesión
+                            <i class="material-icons">exit_to_app</i>
+                        </button>
+                    </li>
+                </ul>
             </li>
         </ul>
     </form>
