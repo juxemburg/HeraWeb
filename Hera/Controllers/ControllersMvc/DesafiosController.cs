@@ -38,6 +38,7 @@ namespace Hera.Controllers.ControllersMvc
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateDesafioViewModel model)
         {
             if (ModelState.IsValid)
