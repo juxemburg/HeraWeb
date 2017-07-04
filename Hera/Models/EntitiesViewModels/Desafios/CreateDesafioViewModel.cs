@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Hera.Models.EntitiesViewModels
 {
-    public class CreateDesafioViewModel
+    public class CreateDesafioViewModel : IValidatableObject
     {
 
         [Required(ErrorMessage = "Este campo es obligatorio")]
@@ -158,6 +158,21 @@ namespace Hera.Models.EntitiesViewModels
             };
         }
 
-        
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if(!(MultipleSpriteEvents || VariableUse || MessageUse ||
+                ListUse || NonUnusedBlocks || UserDefinedBlocks || CloneUse
+                || SecuenceUse || MultipleThreads || TwoGreenFlagThread
+                || AdvancedEventUse || UseSimpleBlocks || UseMediumBlocks
+                || UseNestedControl || BasicInputUse || NonCreatedVariableUse
+                || SpriteSensisng  || BasicOperators || MediumOperators ||
+                NestedOperators))
+            {
+                yield return new ValidationResult(
+                    "No ha seleccionado ningún " +
+                    "criterio de evaluación para el desafío",
+                    new[] { "IdSolucion" });
+            }
+        }
     }
 }

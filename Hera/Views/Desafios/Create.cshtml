@@ -83,7 +83,7 @@
                         </div>
                         <div id="div-idSolucion" class="form-group label-floating col-sm-6">
                             <label asp-for="IdSolucion" class="control-label"></label>
-                            <input id="input-idSolucion" asp-for="IdSolucion" class="form-control" />
+                            <input id="input-idSolucion" asp-for="IdSolucion" class="form-control" disabled/>
                             <span class="form-control-feedback">
                                 <i class="material-icons">done</i>
                             </span>
@@ -93,8 +93,8 @@
                             <label>Sube la solución</label>
                             <label class="btn btn-success btn-file">
                                 Escoger archivo... 
+                                <input id="input-solucion" asp-for="Solucion" type="file" accept=".sb2" style="display: none;">
                             </label>
-                            <input id="input-solucion" asp-for="Solucion" type="file" accept=".sb2" style="display: none;">
                             <span id="span-filepath"></span>
                             <span asp-validation-for="Solucion" class="text-danger"></span>
                         </div>
