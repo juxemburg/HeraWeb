@@ -215,7 +215,8 @@ namespace Hera.Data
 
         public IQueryable<Desafio> GetAll_Desafios()
         {
-            return _context.Desafios;
+            return _context.Desafios
+                .Include(d => d.Profesor);
         }
         public IQueryable<Desafio> GetAll_Desafios(int cursoId)
         {

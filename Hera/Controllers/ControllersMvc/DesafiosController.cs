@@ -8,6 +8,7 @@ using Hera.Data;
 using Hera.Models.UtilityViewModels;
 using Entities.Desafios;
 using Hera.Models.EntitiesViewModels;
+using Hera.Services.UserServices;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -15,10 +16,13 @@ namespace Hera.Controllers.ControllersMvc
     public class DesafiosController : Controller
     {
         private IDataAccess _data;
+        private UserService _userService;
 
-        public DesafiosController(IDataAccess data)
+        public DesafiosController(IDataAccess data,
+            UserService userService)
         {
             _data = data;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -38,14 +42,14 @@ namespace Hera.Controllers.ControllersMvc
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateDesafioViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _data.AddDesafio(model.Map());
+                    var profId = await _userService.Get_ProfesorId(User.Claims);
+                    _data.AddDesafio(model.Map(profId));
                     await _data.SaveAllAsync();
                     return RedirectToAction("Index");
                 }

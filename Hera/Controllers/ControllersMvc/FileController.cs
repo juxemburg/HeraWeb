@@ -10,6 +10,7 @@ using Hera.Models.EntitiesViewModels;
 using Hera.Data;
 using Entities.Calificaciones;
 using Microsoft.AspNetCore.Authorization;
+using Hera.Services.UserServices;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -17,12 +18,14 @@ namespace Hera.Controllers.ControllersMvc
     {
         private FileManagerService _fileManager;
         private IDataAccess _data;
+        private UserService _userService;
 
         public FileController(FileManagerService service,
-            IDataAccess data)
+            IDataAccess data, UserService userService)
         {
             _data = data;
             _fileManager = service;
+            _userService = userService;
         }
 
 
@@ -30,29 +33,35 @@ namespace Hera.Controllers.ControllersMvc
 
         [HttpPost]
         [DisableFormValueModelBinding]
+        [Authorize(Roles ="Profesor")]
         public async Task<IActionResult> UploadDesafio()
         {
             string fileName
                 = "Files/Temp/" + _fileManager.GetFilePath() + ".sb2";
             FormValueProvider formModel;
+            var viewModel = new CreateDesafioViewModel();
             using (var stream = System.IO.File.Create(fileName))
             {
                 formModel = await Request.StreamFile(stream);
+                if(stream.Length >0)
+                {
+                    viewModel.DirArchivo = fileName;
+                }
             }
-            var viewModel = new CreateDesafioViewModel();
-
+            
             var bindingSuccessful = await TryUpdateModelAsync(viewModel, prefix: "",
                valueProvider: formModel);
 
-            if (!bindingSuccessful || !ModelState.IsValid)
+            if (!bindingSuccessful)
             {
                 _fileManager.DeleteFile(fileName);
                 return View("../Desafios/Create", viewModel);
             }
-            _data.AddDesafio(viewModel.Map());
+            var profesorId = await _userService.Get_ProfesorId(User.Claims);
+            _data.AddDesafio(viewModel.Map(profesorId));
             await _data.SaveAllAsync();
+            return RedirectToAction("Index","Desafios");
 
-            return RedirectToAction("Index", "Desafios");
         }
 
 

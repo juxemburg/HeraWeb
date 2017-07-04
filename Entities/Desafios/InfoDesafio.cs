@@ -8,23 +8,59 @@ namespace Entities.Desafios
     {
         public int Id { get; set; }
 
-        public Desafio_Abstraccion Abstraccion { get; set; }
+        #region Valoration Attributes
 
-        public Desafio_PensamientoAlgoritmico 
-            PensamientoAlgoritmico { get; set; }
+        //General Valoration
+        public bool MultipleSpriteEvents { get; set; }
+        
+        public bool VariableUse { get; set; }
+        
+        public bool MessageUse { get; set; }
+        
+        public bool ListUse { get; set; }
 
-        public Desafio_DescomposicionProblemas 
-            DescomposicionProblemas { get; set; }
+        //Sprite Valoration
+        //Abstraction
+        public bool NonUnusedBlocks { get; set; }
+        
+        public bool UserDefinedBlocks { get; set; }
+        
+        public bool CloneUse { get; set; }
 
-        public Desafio_Paralelismo Paralelismo { get; set; }
+        //Algorithm Thinking
+        public bool SecuenceUse { get; set; }
 
-        public Desafio_ControlFlujo ControlFlujo { get; set; }
 
-        public Desafio_Interaccion Interaccion { get; set; }
+        //Problem Solving
+        public bool MultipleThreads { get; set; }
 
-        public Desafio_Representacion Representacion { get; set; }
+        //Sync
+        public bool TwoGreenFlagThread { get; set; }
+        
+        public bool AdvancedEventUse { get; set; }
 
-        public Desafio_Analisis Analisis { get; set; }
+        //Control
+        public bool UseSimpleBlocks { get; set; }
+        
+        public bool UseMediumBlocks { get; set; }
+        
+        public bool UseNestedControl { get; set; }
+
+        //Input
+        public bool BasicInputUse { get; set; }
+        
+        public bool NonCreatedVariableUse { get; set; }
+        
+        public bool SpriteSensisng { get; set; }
+
+        //Analysis
+        public bool BasicOperators { get; set; }
+        
+        public bool MediumOperators { get; set; }
+        
+        public bool NestedOperators { get; set; }
+        
+        #endregion
 
         public int DesafioId { get; set; }
         public Desafio Desafio { get; set; }

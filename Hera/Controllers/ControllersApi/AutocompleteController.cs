@@ -29,7 +29,7 @@ namespace Hera.Controllers
                     Id= r.Id,
                     Nombre = r.Nombre,
                     Descripcion = r.Descripcion,
-                    Dificultad = r.Dificultad
+                    Dificultad = 0
                 }).ToListAsync();
 
             return Ok(res);

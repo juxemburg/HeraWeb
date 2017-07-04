@@ -8,6 +8,7 @@ using Entities.Cursos;
 
 using Hera.Models.UtilityViewModels;
 using Microsoft.EntityFrameworkCore;
+using Hera.Services.UserServices;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -15,10 +16,13 @@ namespace Hera.Controllers.ControllersMvc
     public class CursosController : Controller
     {
         private IDataAccess _data;
+        private UserService _userService;
 
-        public CursosController(IDataAccess data)
+        public CursosController(IDataAccess data,
+            UserService userService)
         {
             _data = data;
+            _userService = userService;
         }
 
         
@@ -62,8 +66,8 @@ namespace Hera.Controllers.ControllersMvc
             {
                 try
                 {
-                    var id = _data.Get_UserId(User.Claims);
-                    var profId = await _data.Find_ProfesorId(id);
+                    var profId = 
+                        await _userService.Get_ProfesorId(User.Claims);
                     var desafio = await _data.Find_Desafio(model.DesafioId.GetValueOrDefault());
                     if (desafio != null)
                     {

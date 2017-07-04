@@ -15,8 +15,11 @@
 <!--      Wizard container        -->
 <div class="wizard-container">
     <div class="card wizard-card .no-shadow-card" data-color="azure" id="wizard">
-        <form asp-action="Create" asp-antiforgery="true">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form method="post" enctype="multipart/form-data"
+              asp-action="UploadDesafio"
+              asp-controller="File">
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+            </div>
             <!--        You can switch " data-color="azure" "  with one of the next bright colors: "blue", "green", "orange", "red"           -->
             <div class="wizard-header text-center">
                 <h2 class="wizard-title">Crea tu desafío</h2>
@@ -93,12 +96,14 @@
                             <label>Sube la solución</label>
                             <label class="btn btn-success btn-file">
                                 Escoger archivo... 
-                                <input id="input-solucion" asp-for="Solucion" type="file" accept=".sb2" style="display: none;">
+                                <input id="input-solucion"  name="file" type="file" accept=".sb2" style="display: none;" required>
                             </label>
                             <span id="span-filepath"></span>
-                            <span asp-validation-for="Solucion" class="text-danger"></span>
+                            <span asp-validation-for="DirArchivo"
+                                  class="text-danger"></span>
                         </div>
                     </div>
+
                 </div>
                 <div class="tab-pane" id="description">
                     <div class="row">

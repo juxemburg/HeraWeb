@@ -28,7 +28,6 @@ namespace Hera.Models.EntitiesViewModels
             return new Desafio()
             {
                 Nombre = this.Nombre,
-                Dificultad = this.Dificultad,
                 Descripcion = this.Descripcion,
                 DirDesafioInicial = this.DirArchivo                               
             };

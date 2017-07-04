@@ -23,15 +23,15 @@ namespace Hera.Models.EntitiesViewModels
         [Display(Name = "Id del Proyecto")]
         [Required(ErrorMessage = "Este campo es obligatorio")]
         public int IdSolucion { get; set; }
-
-        [Display(Name = "Url de la solución")]
-        [Required(ErrorMessage = "Este campo es obligatorio")]
-        public string Solucion { get; set; }
+        
+        [Required(ErrorMessage ="Campo obligatorio")]
+        public string DirArchivo { get; set; }
 
         [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
         #region Valoration Attributes
+
         //General Valoration
         [Display(Name ="Más de un sprite tiene eventos")]
         public bool MultipleSpriteEvents { get; set; }
@@ -103,57 +103,41 @@ namespace Hera.Models.EntitiesViewModels
         public bool NestedOperators { get; set; }
 
 
+        
 
-        //
+        #endregion
 
-        [Display(Name = "Abstracción")]
-        public Desafio_Abstraccion Abstraccion { get; set; }
-
-        [Display(Name ="Pensamiento algorítmico")]
-        public Desafio_PensamientoAlgoritmico
-            PensamientoAlgoritmico
-        { get; set; }
-
-        [Display(Name ="Descomposición de problemas")]
-        public Desafio_DescomposicionProblemas
-            DescomposicionProblemas
-        { get; set; }
-
-        [Display(Name ="Paralelismo")]
-        public Desafio_Paralelismo Paralelismo { get; set; }
-
-        [Display(Name="Control de flujo")]
-        public Desafio_ControlFlujo ControlFlujo { get; set; }
-
-        [Display(Name ="Interacción")]
-        public Desafio_Interaccion Interaccion { get; set; }
-
-        [Display(Name ="Representación")]
-        public Desafio_Representacion Representacion { get; set; }
-
-        [Display(Name= "Análisis")]
-        public Desafio_Analisis Analisis { get; set; }
-#endregion
-
-        public Desafio Map()
+        public Desafio Map(int profesorId)
         {
             return new Desafio()
             {
                 Nombre = this.Nombre,
-                Dificultad = 0,
                 Descripcion = this.Descripcion,
                 DirDesafioInicial = UrlEscenarioInicial,
-                DirSolucion = Solucion,
+                DirSolucion = DirArchivo,
+                ProfesorId = profesorId,
                 InfoDesafio = new InfoDesafio()
                 {
-                    Abstraccion = this.Abstraccion,
-                    Analisis = this.Analisis,
-                    ControlFlujo = this.ControlFlujo,
-                    DescomposicionProblemas = this.DescomposicionProblemas,
-                    Interaccion = this.Interaccion,
-                    Paralelismo = this.Paralelismo,
-                    PensamientoAlgoritmico = this.PensamientoAlgoritmico,
-                    Representacion = this.Representacion
+                    MultipleSpriteEvents = MultipleSpriteEvents,
+                    VariableUse = VariableUse,
+                    MessageUse = MessageUse,
+                    ListUse = ListUse,
+                    NonUnusedBlocks = NonUnusedBlocks,
+                    UserDefinedBlocks = UserDefinedBlocks,
+                    CloneUse = CloneUse,
+                    SecuenceUse = SecuenceUse,
+                    MultipleThreads = MultipleThreads,
+                    TwoGreenFlagThread = TwoGreenFlagThread,
+                    AdvancedEventUse = AdvancedEventUse,
+                    UseSimpleBlocks = UseSimpleBlocks,
+                    UseMediumBlocks = UseMediumBlocks,
+                    UseNestedControl = UseNestedControl,
+                    BasicInputUse = BasicInputUse,
+                    NonCreatedVariableUse = NonCreatedVariableUse,
+                    SpriteSensisng = SpriteSensisng,
+                    BasicOperators = BasicOperators,
+                    MediumOperators = MediumOperators,
+                    NestedOperators = NestedOperators
                 }
             };
         }
