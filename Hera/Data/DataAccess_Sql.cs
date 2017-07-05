@@ -213,17 +213,31 @@ namespace Hera.Data
             return query;
         }
 
-        public IQueryable<Desafio> GetAll_Desafios()
+        public IQueryable<Desafio> GetAll_Desafios(int? cursoId = null,
+            int? profesorId = null, string searchString = "")
         {
-            return _context.Desafios
+            var query = Enumerable.Empty<Desafio>().AsQueryable();
+            query = _context.Desafios
+                .Include(d => d.InfoDesafio)
                 .Include(d => d.Profesor);
-        }
-        public IQueryable<Desafio> GetAll_Desafios(int cursoId)
-        {
-            var query = _context.Rel_Cursos_Desafios
-                .Where(rel => rel.CursoId == cursoId)
-                .Include(rel => rel.Desafio)                
-                .Select(rel => rel.Desafio);
+
+            if(!string.IsNullOrWhiteSpace(searchString))
+            {
+                query = query
+                    .Where(d => d.Nombre.Contains(searchString));
+            }
+
+            if (profesorId != null)
+                query = query
+                    .Where(d => d.ProfesorId == profesorId);
+            if(cursoId != null)
+            {
+                var ids = _context.Rel_Cursos_Desafios
+                    .Where(rel => rel.CursoId == cursoId)
+                    .Select(rel => rel.DesafioID);
+                query = query.
+                    Where(d => ids.Contains(d.Id));
+            }
             return query;
         }
         public IQueryable<Desafio> Autocomplete_Desafios(string queryString)

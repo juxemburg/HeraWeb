@@ -103,6 +103,7 @@
     <Folder Include="Views\Profesor\" />
     <Folder Include="Views\Shared\Components\Navbar\" />
     <Folder Include="Views\Shared\Default\" />
+    <Folder Include="Views\Shared\Desafios\" />
     <Folder Include="Views\Shared\Util\" />
   </ItemGroup>
 

@@ -1,0 +1,15 @@
+@model InfoDesafio
+
+<div class="row">
+    @foreach (var item in Model.ActiveProperties())
+    {
+        <div class="col-xs-6">
+            <p>
+                @item
+                <span>
+                    @await Html.PartialAsync("Util/_CompletadoPartial", true)
+                </span>
+            </p>
+        </div>
+    }
+</div>

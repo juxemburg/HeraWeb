@@ -39,8 +39,8 @@ namespace Hera.Data
         //Desafios
         void AddDesafio(Desafio model);
         void AddDesafio(int cursoId, Desafio model);
-        IQueryable<Desafio> GetAll_Desafios();
-        IQueryable<Desafio> GetAll_Desafios(int cursoId);
+        IQueryable<Desafio> GetAll_Desafios(int? cursoId = null,
+            int? profesorId = null, string searchString = "");
         IQueryable<Desafio> Autocomplete_Desafios(string queryString);
         Task<Desafio> Find_Desafio(int id);
         Task<bool> Exist_Desafio(int id);
