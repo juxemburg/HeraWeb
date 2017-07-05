@@ -1,4 +1,4 @@
-@model int
+﻿@model int
 
 <ul class="nav navbar-nav">
     @switch (Model)
@@ -20,6 +20,7 @@
                         <a asp-controller="Cursos"
                            asp-action="Create">
                             Crear curso
+                            <i class="material-icons">add_circle</i>
                         </a>
                     </li>
                 </ul>
@@ -32,13 +33,23 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li>
+                        <a asp-controller="Desafios"
+                           asp-action="index">Buscar desafíos
+                            <i class="material-icons">search</i>
+                        </a>
+                    </li>
+                    <li>
                         <a asp-controller="ProfesorDesafio"
-                           asp-action="index">Mis Desafios</a>
+                           asp-action="index">Mis Desafios
+                            <i class="material-icons">assignment</i>
+                        </a>
                     </li>
                     <li class="divider"></li>
                     <li>
                         <a asp-controller="Desafios"
-                           asp-action="Create">Crear desafio</a>
+                           asp-action="Create">Crear desafio
+                            <i class="material-icons">add_circle</i>
+                        </a>
                     </li>
                 </ul>
             </li>

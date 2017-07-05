@@ -4,7 +4,7 @@
     ViewData["Title"] = "Desafios";
 }
 
-<h2>Desafíos</h2>
+<h3>Tus Desafíos</h3>
 
 <div class="row">
     <div class="col-md-12 text-center">
@@ -36,9 +36,6 @@
                 Nombre
             </th>
             <th>
-                Autor
-            </th>
-            <th>
                 Descipción
             </th>
             <th>
@@ -57,9 +54,6 @@
                     <a asp-action="Details" asp-route-id="@item.Id">
                         @Html.DisplayFor(modelItem => item.Nombre)
                     </a>
-                </td>
-                <td>
-                    <p>@item.Profesor.NombreCompleto</p>
                 </td>
                 <td>
                     <p>

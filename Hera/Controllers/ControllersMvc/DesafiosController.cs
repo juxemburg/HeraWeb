@@ -51,7 +51,7 @@ namespace Hera.Controllers.ControllersMvc
                     var profId = await _userService.Get_ProfesorId(User.Claims);
                     _data.AddDesafio(model.Map(profId));
                     await _data.SaveAllAsync();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "ProfesorDesafio");
                 }
                 catch (Exception) { }
             }

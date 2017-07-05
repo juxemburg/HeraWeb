@@ -1,4 +1,4 @@
-@model PaginationViewModel<Curso>
+﻿@model PaginationViewModel<Curso>
 
 @{
 ViewData["Title"] = "Mis Cursos";
@@ -7,18 +7,23 @@ ViewData["Title"] = "Mis Cursos";
 <h2>Revisa tus Cursos</h2>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 text-center">
         <form asp-action="index" method="get" class="form-inline">
             <div class="form-group">
-                <label>B�squeda</label>
+                <label>Búsqueda</label>
                 <input name="searchString" type="text" class="form-control" />
             </div>
-            <button type="submit" class="btn btn-primary">Buscar</button>
+            <button type="submit" class="btn btn-xs btn-primary">
+                <i class="material-icons">search</i>
+            </button>
         </form>
     </div>
     <div class="col-md-12">
         <p>
-            <a class="btn btn-info" asp-action="Create" asp-controller="Cursos">Crear nuevo curso</a>
+            <a class="btn btn-info" asp-action="Create" asp-controller="Cursos">
+            Crear nuevo curso 
+                <i class="material-icons">add_circle</i>
+            </a>
         </p>
     </div>
 </div>
