@@ -1,6 +1,7 @@
 ﻿using Entities.Comparisons;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Entities.Desafios
@@ -145,28 +146,9 @@ namespace Entities.Desafios
 
             if (obj is InfoDesafio info)
             {
-                return (
-                    MultipleSpriteEvents == info.MultipleSpriteEvents &&
-                    VariableUse == info.VariableUse &&
-                    MessageUse == info.MessageUse &&
-                    ListUse == info.ListUse &&
-                    NonUnusedBlocks == info.NonUnusedBlocks &&
-                    UserDefinedBlocks == info.UserDefinedBlocks &&
-                    CloneUse == info.CloneUse &&
-                    SecuenceUse == info.SecuenceUse &&
-                    MultipleThreads == info.MultipleThreads &&
-                    TwoGreenFlagThread == info.TwoGreenFlagThread &&
-                    AdvancedEventUse == info.AdvancedEventUse &&
-                    UseSimpleBlocks == info.UseSimpleBlocks &&
-                    UseMediumBlocks == info.UseMediumBlocks &&
-                    UseNestedControl == info.UseNestedControl &&
-                    BasicInputUse == info.BasicInputUse &&
-                    NonCreatedVariableUse == info.NonCreatedVariableUse &&
-                    SpriteSensisng == info.SpriteSensisng &&
-                    BasicOperators == info.BasicOperators &&
-                    MediumOperators == info.MediumOperators &&
-                    NestedOperators == info.NestedOperators
-                    );
+                var otherProperties = info.ActiveProperties();
+                return this.ActiveProperties()
+                    .All(i => otherProperties.Contains(i));
             }
             return false;
         }
@@ -175,28 +157,9 @@ namespace Entities.Desafios
         {
             if (obj is InfoDesafio info)
             {
-                return (
-                    MultipleSpriteEvents == info.MultipleSpriteEvents ||
-                    VariableUse == info.VariableUse ||
-                    MessageUse == info.MessageUse ||
-                    ListUse == info.ListUse ||
-                    NonUnusedBlocks == info.NonUnusedBlocks ||
-                    UserDefinedBlocks == info.UserDefinedBlocks ||
-                    CloneUse == info.CloneUse ||
-                    SecuenceUse == info.SecuenceUse ||
-                    MultipleThreads == info.MultipleThreads ||
-                    TwoGreenFlagThread == info.TwoGreenFlagThread ||
-                    AdvancedEventUse == info.AdvancedEventUse ||
-                    UseSimpleBlocks == info.UseSimpleBlocks ||
-                    UseMediumBlocks == info.UseMediumBlocks ||
-                    UseNestedControl == info.UseNestedControl ||
-                    BasicInputUse == info.BasicInputUse ||
-                    NonCreatedVariableUse == info.NonCreatedVariableUse ||
-                    SpriteSensisng == info.SpriteSensisng ||
-                    BasicOperators == info.BasicOperators ||
-                    MediumOperators == info.MediumOperators ||
-                    NestedOperators == info.NestedOperators
-                    );
+                var otherProperties = info.ActiveProperties();
+                return this.ActiveProperties()
+                    .Any(i => otherProperties.Contains(i));
             }
             return false;
         }

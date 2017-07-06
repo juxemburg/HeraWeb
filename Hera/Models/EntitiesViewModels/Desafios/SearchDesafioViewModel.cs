@@ -10,6 +10,10 @@ namespace Hera.Models.EntitiesViewModels.Desafios
     public class SearchDesafioViewModel
     {
         public string SearchString { get; set; }
+
+        [Display(Name = "Tipo de búsqueda")]
+        public SearchMode SearchMode { get; set; }
+
         #region Valoration Attributes
 
         //General Valoration
@@ -84,6 +88,11 @@ namespace Hera.Models.EntitiesViewModels.Desafios
 
         #endregion
 
+        public bool EqualSearchModel
+        {
+            get => SearchMode == SearchMode.Equal;
+        }
+
         public InfoDesafio Map()
         {
             return new InfoDesafio()
@@ -110,5 +119,11 @@ namespace Hera.Models.EntitiesViewModels.Desafios
                 NestedOperators = NestedOperators
             };
         }
+    }
+
+    public enum SearchMode
+    {
+        Similar,
+        Equal
     }
 }

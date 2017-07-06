@@ -2,7 +2,7 @@
 
 <form asp-action="Index" method="get" class="form-inline">
     <div class="col-xs-12 text-center">
-        
+
         <div class="form-group form-group-lg label-floating">
             <label class="control-label">Búsqueda</label>
             <input asp-for="SearchString" class="form-control input-lg" />
@@ -12,7 +12,7 @@
         </button>
 
     </div>
-    <div class="col-md-12 form-horizontal">
+    <div class="col-xs-12 form-horizontal">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingOne">
@@ -25,6 +25,16 @@
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true">
                     <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group form-group-lg">
+                                    
+                                    <select class="form-control"
+                                            asp-for="SearchMode"
+                                            asp-items="Html.GetEnumSelectList<SearchMode>()"></select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="form-group col-sm-6 col-md-4 col-lg-3">
                                 <div class="checkbox">

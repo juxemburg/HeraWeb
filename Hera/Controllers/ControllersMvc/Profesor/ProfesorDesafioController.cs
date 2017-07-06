@@ -32,7 +32,8 @@ namespace Hera.Controllers.ControllersMvc.Profesor
         {
             var profId = await _usrService.Get_ProfesorId(User.Claims);
             var model = _data.GetAll_Desafios(null, profId,
-                searchModel.SearchString, searchModel.Map(), true);
+                searchModel.SearchString, searchModel.Map(),
+                searchModel.EqualSearchModel);
             
             return View(new PaginationViewModel<Desafio>(model, skip, take));
         }
