@@ -1,0 +1,16 @@
+@model IPaginable
+
+<div class="text-center">
+
+    <ul class="pagination">
+        @foreach (var item in Model.Pages)
+        {
+            <li class="@item.Item2">
+                <a asp-action="Index" asp-route-skip="@((item.Item1-1)*Model.Take)"
+                   asp-route-take="@Model.Take">
+                    @item.Item1
+                </a>
+            </li>
+        }
+    </ul>
+</div>

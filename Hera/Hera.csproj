@@ -13,16 +13,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Files\Temp\**" />
+    <Compile Remove="Files\**" />
     <Compile Remove="Views\ProgresoDesafio\**" />
     <Compile Remove="wwwroot\Files\**" />
-    <Content Remove="Files\Temp\**" />
+    <Content Remove="Files\**" />
     <Content Remove="Views\ProgresoDesafio\**" />
     <Content Remove="wwwroot\Files\**" />
-    <EmbeddedResource Remove="Files\Temp\**" />
+    <EmbeddedResource Remove="Files\**" />
     <EmbeddedResource Remove="Views\ProgresoDesafio\**" />
     <EmbeddedResource Remove="wwwroot\Files\**" />
-    <None Remove="Files\Temp\**" />
+    <None Remove="Files\**" />
     <None Remove="Views\ProgresoDesafio\**" />
     <None Remove="wwwroot\Files\**" />
   </ItemGroup>
@@ -98,7 +98,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\ControllersApi\PassiveControllers\" />
-    <Folder Include="Files\" />
     <Folder Include="Views\Cursos\" />
     <Folder Include="Views\Estudiante\" />
     <Folder Include="Views\Estudiante\" />
