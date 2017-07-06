@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hera.Models.UtilityViewModels
 {
-    public class PaginationViewModel<T> : IEnumerable<T>
+    public class PaginationViewModel<T> : IEnumerable<T>, IPaginable
         where T : class
     {
         public IEnumerable<T> Collection { get; set; }

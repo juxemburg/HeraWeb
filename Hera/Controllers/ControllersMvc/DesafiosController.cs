@@ -9,6 +9,7 @@ using Hera.Models.UtilityViewModels;
 using Entities.Desafios;
 using Hera.Models.EntitiesViewModels;
 using Hera.Services.UserServices;
+using Hera.Models.EntitiesViewModels.Desafios;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -26,13 +27,14 @@ namespace Hera.Controllers.ControllersMvc
         }
 
         [HttpGet]
-        public IActionResult Index(string searchString = "",
+        public IActionResult Index(SearchDesafioViewModel searchModel,
             int skip = 0, int take = 10)
         {
-            var model = (string.IsNullOrWhiteSpace(searchString)) ?
-                _data.GetAll_Desafios() :
-                _data.Autocomplete_Desafios(searchString);
-            return View(new PaginationViewModel<Desafio>(model, skip, take));
+            var searchString = searchModel.SearchString;
+            var model = _data.GetAll_Desafios(null,null,
+                searchString,searchModel.Map(),searchModel.EqualSearchModel);
+            return View(
+                new PaginationViewModel<Desafio>(model, skip, take));
         }
 
         [HttpGet]
@@ -57,9 +59,5 @@ namespace Hera.Controllers.ControllersMvc
             }
             return View(model);
         }
-
-
-        
-        
     }
 }

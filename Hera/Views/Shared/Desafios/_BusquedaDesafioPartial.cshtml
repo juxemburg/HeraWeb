@@ -1,6 +1,7 @@
 ﻿@model SearchDesafioViewModel
 
-<form asp-action="Index" method="get" class="form-inline">
+<form asp-action='@ViewData["Pagination-Action"]'
+      method="get" class="form-inline">
     <div class="col-xs-12 text-center">
 
         <div class="form-group form-group-lg label-floating">
