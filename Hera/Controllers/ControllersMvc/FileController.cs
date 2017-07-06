@@ -28,9 +28,6 @@ namespace Hera.Controllers.ControllersMvc
             _userService = userService;
         }
 
-
-
-
         [HttpPost]
         [DisableFormValueModelBinding]
         [Authorize(Roles ="Profesor")]
@@ -111,7 +108,7 @@ namespace Hera.Controllers.ControllersMvc
             var desafio = await _data.Find_Desafio(desafioId);
             if (desafio != null)
             {
-                return getFile(desafio.DirDesafioInicial,
+                return getFile(desafio.DirSolucion,
                     desafio.Nombre);
             }
             return null;

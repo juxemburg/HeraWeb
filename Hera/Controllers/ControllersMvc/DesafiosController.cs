@@ -14,6 +14,7 @@ using Hera.Models.EntitiesViewModels.Desafios;
 namespace Hera.Controllers.ControllersMvc
 {
     [Authorize(Roles = "Profesor")]
+    [Route("[controller]/[action]")]
     public class DesafiosController : Controller
     {
         private IDataAccess _data;
@@ -35,6 +36,16 @@ namespace Hera.Controllers.ControllersMvc
                 searchString,searchModel.Map(),searchModel.EqualSearchModel);
             return View(
                 new PaginationViewModel<Desafio>(model, skip, take));
+        }
+
+        [HttpGet("{desafioId}")]
+        public async Task<IActionResult> Details(int desafioId)
+        {
+            var model = await _data.Find_Desafio(desafioId);
+
+            if (model != null)
+                return View(model);
+            return NotFound();
         }
 
         [HttpGet]

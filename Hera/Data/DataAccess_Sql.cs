@@ -129,7 +129,10 @@ namespace Hera.Data
 
         public async Task<Desafio> Find_Desafio(int id)
         {
-            return await _context.Desafios.FindAsync(id);
+            return await _context.Desafios
+                .Include(d => d.InfoDesafio)
+                .Include(d => d.Profesor)
+                .FirstAsync(d => d.Id == id);
         }
 
         public async Task<Estudiante> Find_Estudiante(int id)

@@ -48,24 +48,19 @@
         </div>
     </nav>
     <div class="header"
-             style="height:100%; background-size: cover; background-position: top center; height: 200px">
+        style="height:100%; background-size: cover; 
+        background-position: top center; height: 200px">
     </div>
     <div class="wrapper">
         <div class="main main-raised">
-            <div class="profile-content">
-                <div class="container body-content">
+            <div class="profile-content padding-20">
+                <div class="body-content">
                     @RenderBody()
                 </div>
             </div>
         </div>
-        @*<hr />
-        <footer>
-            <p>&copy; 2017 - Hera</p>
-        </footer>*@
     </div>
     @RenderSection("Modals", false)
-
-
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

@@ -41,7 +41,9 @@
         {
             <tr>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">
+                    <a asp-action="Details" 
+                       asp-controller="Desafios"
+                       asp-route-id="@item.Id">
                         @Html.DisplayFor(modelItem => item.Nombre)
                     </a>
                 </td>
