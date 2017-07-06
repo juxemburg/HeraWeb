@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Entities.Comparisons;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Entities.Desafios
 {
-    public class InfoDesafio
+    public class InfoDesafio: ISimilar
     {
         public int Id { get; set; }
 
@@ -12,19 +13,19 @@ namespace Entities.Desafios
 
         //General Valoration
         public bool MultipleSpriteEvents { get; set; }
-        
+
         public bool VariableUse { get; set; }
-        
+
         public bool MessageUse { get; set; }
-        
+
         public bool ListUse { get; set; }
 
         //Sprite Valoration
         //Abstraction
         public bool NonUnusedBlocks { get; set; }
-        
+
         public bool UserDefinedBlocks { get; set; }
-        
+
         public bool CloneUse { get; set; }
 
         //Algorithm Thinking
@@ -36,30 +37,30 @@ namespace Entities.Desafios
 
         //Sync
         public bool TwoGreenFlagThread { get; set; }
-        
+
         public bool AdvancedEventUse { get; set; }
 
         //Control
         public bool UseSimpleBlocks { get; set; }
-        
+
         public bool UseMediumBlocks { get; set; }
-        
+
         public bool UseNestedControl { get; set; }
 
         //Input
         public bool BasicInputUse { get; set; }
-        
+
         public bool NonCreatedVariableUse { get; set; }
-        
+
         public bool SpriteSensisng { get; set; }
 
         //Analysis
         public bool BasicOperators { get; set; }
-        
+
         public bool MediumOperators { get; set; }
-        
+
         public bool NestedOperators { get; set; }
-        
+
         #endregion
 
         public int DesafioId { get; set; }
@@ -113,6 +114,91 @@ namespace Entities.Desafios
                 properties.Add("Uso de operadores anidados");
 
             return properties;
+        }
+
+        public bool IsFalse
+        {
+            get => (MultipleSpriteEvents == false &&
+                    VariableUse == false &&
+                    MessageUse == false &&
+                    ListUse == false &&
+                    NonUnusedBlocks == false &&
+                    UserDefinedBlocks == false &&
+                    CloneUse == false &&
+                    SecuenceUse == false &&
+                    MultipleThreads == false &&
+                    TwoGreenFlagThread == false &&
+                    AdvancedEventUse == false &&
+                    UseSimpleBlocks == false &&
+                    UseMediumBlocks == false &&
+                    UseNestedControl == false &&
+                    BasicInputUse == false &&
+                    NonCreatedVariableUse == false &&
+                    SpriteSensisng == false &&
+                    BasicOperators == false &&
+                    MediumOperators == false &&
+                    NestedOperators == false); 
+        }
+
+        public bool IsEqualTo(object obj)
+        {
+
+            if (obj is InfoDesafio info)
+            {
+                return (
+                    MultipleSpriteEvents == info.MultipleSpriteEvents &&
+                    VariableUse == info.VariableUse &&
+                    MessageUse == info.MessageUse &&
+                    ListUse == info.ListUse &&
+                    NonUnusedBlocks == info.NonUnusedBlocks &&
+                    UserDefinedBlocks == info.UserDefinedBlocks &&
+                    CloneUse == info.CloneUse &&
+                    SecuenceUse == info.SecuenceUse &&
+                    MultipleThreads == info.MultipleThreads &&
+                    TwoGreenFlagThread == info.TwoGreenFlagThread &&
+                    AdvancedEventUse == info.AdvancedEventUse &&
+                    UseSimpleBlocks == info.UseSimpleBlocks &&
+                    UseMediumBlocks == info.UseMediumBlocks &&
+                    UseNestedControl == info.UseNestedControl &&
+                    BasicInputUse == info.BasicInputUse &&
+                    NonCreatedVariableUse == info.NonCreatedVariableUse &&
+                    SpriteSensisng == info.SpriteSensisng &&
+                    BasicOperators == info.BasicOperators &&
+                    MediumOperators == info.MediumOperators &&
+                    NestedOperators == info.NestedOperators
+                    );
+            }
+            return false;
+        }
+
+        public bool IsSimilarTo(object obj)
+        {
+            if (obj is InfoDesafio info)
+            {
+                return (
+                    MultipleSpriteEvents == info.MultipleSpriteEvents ||
+                    VariableUse == info.VariableUse ||
+                    MessageUse == info.MessageUse ||
+                    ListUse == info.ListUse ||
+                    NonUnusedBlocks == info.NonUnusedBlocks ||
+                    UserDefinedBlocks == info.UserDefinedBlocks ||
+                    CloneUse == info.CloneUse ||
+                    SecuenceUse == info.SecuenceUse ||
+                    MultipleThreads == info.MultipleThreads ||
+                    TwoGreenFlagThread == info.TwoGreenFlagThread ||
+                    AdvancedEventUse == info.AdvancedEventUse ||
+                    UseSimpleBlocks == info.UseSimpleBlocks ||
+                    UseMediumBlocks == info.UseMediumBlocks ||
+                    UseNestedControl == info.UseNestedControl ||
+                    BasicInputUse == info.BasicInputUse ||
+                    NonCreatedVariableUse == info.NonCreatedVariableUse ||
+                    SpriteSensisng == info.SpriteSensisng ||
+                    BasicOperators == info.BasicOperators ||
+                    MediumOperators == info.MediumOperators ||
+                    NestedOperators == info.NestedOperators
+                    );
+            }
+            return false;
         }
     }
 }

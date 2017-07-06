@@ -26,6 +26,10 @@
     <None Remove="Views\ProgresoDesafio\**" />
     <None Remove="wwwroot\Files\**" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot/css\Theme\material-kit.css~RF2d55fec4.TMP" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="wwwroot\css\Autocomplete\easy-autocomplete.min.css" />
     <Content Include="wwwroot\css\Autocomplete\easy-autocomplete.themes.min.css" />
@@ -37,7 +41,6 @@
     <Content Include="wwwroot\css\Loading\loading.css" />
     <Content Include="wwwroot\css\padding.css" />
     <Content Include="wwwroot\css\Theme\demo.css" />
-    <Content Include="wwwroot\css\Theme\loading.css" />
     <Content Include="wwwroot\css\Theme\material-kit.css" />
     <Content Include="wwwroot\css\Theme\material-kit.css.map" />
     <Content Include="wwwroot\css\ThemifyIcons\fonts\themify.eot" />

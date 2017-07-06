@@ -102,9 +102,6 @@ namespace Hera.Models.EntitiesViewModels
         [Display(Name ="Uso de operadores anidados")]
         public bool NestedOperators { get; set; }
 
-
-        
-
         #endregion
 
         public Desafio Map(int profesorId)

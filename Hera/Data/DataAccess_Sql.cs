@@ -214,7 +214,8 @@ namespace Hera.Data
         }
 
         public IQueryable<Desafio> GetAll_Desafios(int? cursoId = null,
-            int? profesorId = null, string searchString = "")
+            int? profesorId = null, string searchString = "",
+            InfoDesafio similarInfo = null, bool equality = false)
         {
             var query = Enumerable.Empty<Desafio>().AsQueryable();
             query = _context.Desafios
@@ -225,6 +226,16 @@ namespace Hera.Data
             {
                 query = query
                     .Where(d => d.Nombre.Contains(searchString));
+            }
+
+            if(similarInfo != null && !similarInfo.IsFalse)
+            {
+                if(equality)
+                    query = query
+                        .Where(d => d.InfoDesafio.IsEqualTo(similarInfo));
+                else
+                    query = query
+                        .Where(d => d.InfoDesafio.IsSimilarTo(similarInfo));
             }
 
             if (profesorId != null)

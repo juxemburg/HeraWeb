@@ -7,25 +7,14 @@
 <h3>Tus Desafíos</h3>
 
 <div class="row">
-    <div class="col-md-12 text-center">
-        <form asp-action="Index" method="get" class="form-inline">
-            <div class="form-group label-floating">
-                <label class="control-label">Búsqueda</label>
-                <input name="searchString" type="text" class="form-control" />
-            </div>
-            <button class="btn btn-primary btn-xs " type="submit">
-                <i class="material-icons">search</i>
-            </button>
-        </form>
-    </div>
+    @Html.Partial("Desafios/_BusquedaDesafioPartial",
+    new SearchDesafioViewModel())
     <div class="col-md-12">
-        <p>
-            <a class="btn btn-icon btn-info" asp-action="Create"
-               asp-controller="Desafios">
-                Nuevo Desafío
-                <i class="material-icons">add_circle_outline</i>
-            </a>
-        </p>
+        <a class="btn btn-icon btn-info pull-right" asp-action="Create"
+           asp-controller="Desafios">
+            Nuevo Desafío
+            <i class="material-icons">add_circle_outline</i>
+        </a>
     </div>
 </div>
 

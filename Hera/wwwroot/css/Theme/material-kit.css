@@ -3014,14 +3014,8 @@ h2.title {
   color: #555555;
 }
 
-.panel {
-  border-radius: 2px;
-  border: 0;
-  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
-}
-.panel > .panel-heading, .panel.panel-default > .panel-heading {
-  background-color: #eeeeee;
-}
+
+
 .panel.panel-inverse > .panel-heading {
   background-color: #3f51b5;
 }
@@ -3040,14 +3034,38 @@ h2.title {
 .panel.panel-danger > .panel-heading {
   background-color: #f44336;
 }
+.panel {
+    border-radius: 4px;
+    border: 0;
+    box-shadow: none;
+}
+
+.panel-group .panel {
+    margin-bottom: 0;
+    border-radius: 4px;
+}
+
+.panel, .panel .panel-heading {
+    background-color: transparent;
+}
 
 [class*="panel-"] > .panel-heading {
   color: #ffffff;
   border: 0;
 }
 
+.panel .panel-heading {
+    border-bottom: 1px solid #ddd;
+    padding: 25px 10px 5px 0;
+}
+
 .panel-default > .panel-heading, .panel:not([class*="panel-"]) > .panel-heading {
   color: rgba(0,0,0, 0.87);
+}
+
+.panel .panel-heading .panel-title {
+    font-size: 15px;
+    font-weight: bolder;
 }
 
 .panel-footer {
