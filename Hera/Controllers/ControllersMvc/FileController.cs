@@ -103,6 +103,7 @@ namespace Hera.Controllers.ControllersMvc
                 new { idCurso = model.CursoId, idDesafio = model.DesafioId});
         }
 
+        [Authorize(Roles ="Profesor")]
         public async Task<FileResult> DownloadEscenario(int desafioId)
         {
             var desafio = await _data.Find_Desafio(desafioId);
