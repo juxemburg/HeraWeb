@@ -5,17 +5,24 @@
     ViewData["Pagination-Action"] = "Index";
 }
 
-<h3>Tus Desafíos</h3>
+<div class="row">
+    <h3>
+        Tus Desafíos
+        <a class="btn btn-icon btn-fab btn-fab-mini btn-info" asp-action="Create"
+           asp-controller="Desafios">
+
+            <i class="material-icons icon-lg">add</i>
+        </a>
+    </h3>
+    <hr />
+</div>
+
 
 <div class="row">
     @Html.Partial("Desafios/_BusquedaDesafioPartial",
     new SearchDesafioViewModel(), ViewData)
     <div class="col-xs-12">
-        <a class="btn btn-icon btn-info pull-right" asp-action="Create"
-           asp-controller="Desafios">
-            Nuevo Desafío
-            <i class="material-icons">add_circle_outline</i>
-        </a>
+        
     </div>
 </div>
 
@@ -28,10 +35,10 @@
             <th>
                 Descipción
             </th>
-            <th>
+            <th class="text-center">
                 Criterios de Evaluación
             </th>
-            <th>
+            <th class="text-center">
                 Acciones
             </th>
         </tr>
@@ -52,19 +59,19 @@
                         @item.Descripcion
                     </p>
                 </td>
-                <td>
-                    <button class="btn btn-info btn-block col-sm-6" 
+                <td class="text-center">
+                    <button class="btn btn-info btn-simple" 
                             data-toggle="modal" 
                             data-target="#modal-info-@item.Id">
-                        <i class="material-icons">info_outline</i>
+                        <i class="material-icons icon-xl">info_outline</i>
                     </button>
                 </td>
                 <td>
-                    <div class="col-xs-12">
-                        <a class="btn btn-sm btn-simple" asp-action="Edit">
+                    <div class="text-center" >
+                        <a class="btn btn-sm btn-info btn-round" asp-action="Edit">
                             <i class="material-icons">create</i>
                         </a>
-                        <a class="btn btn-sm btn-simple btn-danger" asp-action="Delete">
+                        <a class="btn btn-sm btn-round btn-danger" asp-action="Delete">
                             <i class="material-icons">delete_forever</i>
                         </a>
                     </div>
