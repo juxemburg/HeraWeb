@@ -2,80 +2,78 @@
 
 @{
     ViewData["Title"] = "Cursos";
+    ViewData["Pagination-Action"] = "Index";
 }
 
-<h2>Cursos</h2>
-
-<div class="row">
-    <div class="col-md-12">
-        <form asp-action="busqueda" method="get" class="form-inline">
-            <div class="form-group">
-                <label>Búsqueda</label>
-                <input name="searchString" type="text" class="form-control" />
-            </div>
-            <button type="submit" class="btn btn-primary">Buscar</button>
-        </form>
+<section>
+    <div class="container">
+        <h2><span class="title">Búsqueda</span> de Cursos</h2>
     </div>
-</div>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                Nombre
-            </th>
-            <th>
-                Descripcion
-            </th>
-            <th>
-                Profesor
-            </th>
-            <th>
-                Acciones
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Profesor.Nombres)
-                </td>
-                <td>
-                    <button id="@item.Id" type="button" class="btn-item btn btn-info" data-toggle="modal" data-target="#myModal">
-                        Matricular
+</section>
+<section class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <form asp-action="busqueda" method="get" class="form-inline">
+                    <div class="form-group form-group-lg label-floating">
+                        <label class="control-label">Búsqueda</label>
+                        <input name="searchString" type="text" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-fab btn-fab-mini">
+                        <i class="material-icons">search</i>
                     </button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                </form>
+            </div>
+        </div>
 
-<!-- Trigger the modal with a button -->
-
-
-
-
-<div class="text-center">
-    <ul class="pagination">
-        @foreach (var item in Model.Pages)
-        {
-            <li class="@item.Item2">
-                <a asp-action="Index" asp-route-skip="@((item.Item1-1)*Model.Take)"
-                   asp-route-take="@Model.Take">
-                    @item.Item1
-                </a>
-            </li>
-        }
-    </ul>
-</div>
+    </div>
+</section>
+<section class="section section-gray">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card">
+                        <div class="card-content">
+                            <h6 class="category text-success">
+                                <i class="fa fa-book"></i>
+                                Curso
+                            </h6>
+                            <h3 class="card-title">
+                                @item.Nombre
+                            </h3>
+                            <p class="card-description">
+                                <h4><span class="title">Profesor:</span> @item.Profesor.NombreCompleto</h4>
+                                @item.Descripcion
+                            </p>
+                            <div class="footer text-center">
+                                <button id="@item.Id" type="button" 
+                                        class="btn btn-info btn-round"
+                                        data-toggle="modal" data-target="#myModal">
+                                    Matricular
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="text-center">
+            <ul class="pagination">
+                @foreach (var item in Model.Pages)
+                {
+                    <li class="@item.Item2">
+                        <a asp-action="Index" asp-route-skip="@((item.Item1-1)*Model.Take)"
+                           asp-route-take="@Model.Take">
+                            @item.Item1
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</section>
 
 
 @section Modals {
@@ -87,21 +85,20 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <h3 class="modal-title"><span class="title">Matricula</span> éste curso</h3>
             </div>
             <div class="modal-body">
-                <form asp-action="AddEstudiante" asp-controller="Cursos">
-
-                    <input id="input-curso" type="hidden" name="CursoId" value="" />
-                    <label class="col-md-2 control-label"> Password </label>
-                    <div class="col-md-10">
-                        <input name="Password" class="form-control" />
+                <form class="form-inline"
+                      asp-action="AddEstudiante" asp-controller="Cursos">
+                    <div class="text-center">
+                        <input id="input-curso" type="hidden" name="CursoId" value="" />
+                        <div class="form-group form-group-lg label-floating">
+                            <label class="control-label"> Contraseña del curso </label>
+                            <input name="Password" class="form-control" />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-round">Matricular!</button>
                     </div>
-
-                    <div>
-                        <button type="submit" class="btn btn-default">Aceptar</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                    </div>
+                    
                 </form>
             </div>
         </div>

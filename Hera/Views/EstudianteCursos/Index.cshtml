@@ -1,55 +1,63 @@
 @model PaginationViewModel<Curso>
 
 @{
+    Layout = "_LayoutEmpty";
     ViewData["Title"] = "Mis Cursos";
+    ViewData["Pagination-Action"] = "Index";
 }
 @section Styles {
     <link href="~/css/Estudiante/cursos.css" rel="stylesheet" />
 }
 
-<h2>Mis Cursos</h2>
-<hr />
-<br />
-<div class="row">
-    @foreach (var item in Model)
-    {
-        <div class="col-lg-3 col-md-4 col-sm-6">
-            <div class="card margin-10">
-                <div class="header header-info"
-                     style="height: 100%;">
-                    <h3>
-                        <a asp-action="Details" 
-                           asp-controller="EstudianteCurso" 
-                           asp-route-idCurso="@item.Id">
-                            @item.Nombre
-                        </a>
-                    </h3>
-                    <h4>@item.Profesor.NombreCompleto</h4>
-                </div>
-                <div class="content">
-                    <p>@item.Descripcion</p>
-                </div>
-            </div>
-        </div>
-    }
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="text-center">
-            <ul class="pagination">
-                @foreach (var item in Model.Pages)
-                {
-                    <li class="@item.Item2">
-                        <a asp-action="Index" asp-route-skip="@((item.Item1-1)*Model.Take)"
-                           asp-route-take="@Model.Take">
-                            @item.Item1
-                        </a>
-                    </li>
-                }
-            </ul>
-        </div>
+<section>
+    
+</section>
+<section class=" section">
+    <div class="container">
+        <h2><span class="title">Mis</span> Cursos</h2>
     </div>
-</div>
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card">
+                        <div class="card-content content-success">
+                            <h5 class="category-social">
+                                <i class="fa fa-book"></i>
+                                Curso
+                            </h5>
+                            <h3 class="card-title"> 
+                                <a
+                                   asp-action="Details"
+                                   asp-controller="EstudianteCurso"
+                                   asp-route-idCurso="@item.Id">
+                                    @item.Nombre
+                                </a>
+                            </h3>
+                            <p class="card-description">
+                                <h4> <span class="title color-white">Profesor:</span> @item.Profesor.NombreCompleto</h4>
+                                @item.Descripcion
+                            </p>
+                            <div class="footer text-center">
+                                <a class="btn btn-white btn-round"
+                                   asp-action="Details"
+                                   asp-controller="EstudianteCurso"
+                                   asp-route-idCurso="@item.Id">
+                                    Ir al Curso
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @await Html.PartialAsync("Pagination/_PaginationPartial", Model, ViewData)
+    </div>
+</section>
+
+
+
 
 
 

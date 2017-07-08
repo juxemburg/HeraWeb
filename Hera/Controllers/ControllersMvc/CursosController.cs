@@ -101,12 +101,13 @@ namespace Hera.Controllers.ControllersMvc
                     if (curso.Password.Equals(model.Password)) {
                         _data.Add<Rel_CursoEstudiantes>(model.Map(model.CursoId,estudianteId));
                         await _data.SaveAllAsync();
+                        return RedirectToAction("Index", "EstudianteCursos");
                     }                    
                 }
                 catch (Exception) {
                 }
             }
-            return RedirectToAction("Index","EstudianteCursos");
+            return RedirectToAction("Busqueda","EstudianteCursos");
         }
         
         [HttpPost]
