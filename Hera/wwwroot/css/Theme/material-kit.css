@@ -3779,12 +3779,18 @@ h2.title {
 }
 
 /*Sections*/
-
 .section-gray {
     background: #E5E5E5;
 }
-
+.section-notifications {
+    position: relative;
+    top: 90px;
+}
 /*End Sections*/
+
+/*Notifications*/
+
+/*End Notifications*/
 
 @media (max-width: 991px) {
   .landing-page .header {
