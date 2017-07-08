@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Hera.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Hera.Services;
 
 namespace Hera.Controllers.ControllersApi.PassiveControllers
 {
@@ -17,12 +18,15 @@ namespace Hera.Controllers.ControllersApi.PassiveControllers
     {
         private ApplicationDbContext _context;
         private IDataAccess _data;
+        private FileManagerService _fmService;
 
         public DbActionsController(ApplicationDbContext context,
+            FileManagerService fmService,
             IDataAccess data)
         {
             _data = data;
             _context = context;
+            _fmService = fmService;
         }
 
         [HttpGet("DeleteCourseInfo")]
@@ -88,5 +92,21 @@ namespace Hera.Controllers.ControllersApi.PassiveControllers
                 return Ok(e.Message);
             }
         }
+
+
+        [HttpGet("DeleteAllFiles")]
+        public IActionResult DeleteAllFiles()
+        {
+            try
+            {
+                _fmService.DeleteAllFiles();
+                return Ok("deleted");
+            }
+            catch(Exception e)
+            {
+                return Ok(e.Message);
+            }
+        }
+        
     }
 }

@@ -8,9 +8,16 @@ namespace Hera.Services
 {
     public class FileManagerService
     {
+        private DirectoryInfo _directory;
+
+        public FileManagerService()
+        {
+            
+        }
+
         public void InitializePath()
         {
-            DirectoryInfo di = Directory.CreateDirectory("Files/Temp/");
+            _directory = Directory.CreateDirectory("Files/Temp/");
         }
 
         public string GetFilePath()
@@ -24,6 +31,18 @@ namespace Hera.Services
             {
                 File.Delete(filePath);
             }
+        }
+
+        public void DeleteAllFiles()
+        {
+            string[] filePaths = _directory.GetFiles()
+                .Select(f => f.FullName)
+                .ToArray();
+            foreach (var item in filePaths)
+            {
+                DeleteFile(item);
+            }
+
         }
     }
 }
