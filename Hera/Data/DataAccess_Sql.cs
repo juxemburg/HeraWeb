@@ -354,7 +354,10 @@ namespace Hera.Data
         public async Task<Calificacion> Find_Calificacion(
             int calificacionId)
         {
-            return await _context.Calificaciones.FindAsync(calificacionId);
+            
+            return await _context.Calificaciones
+                .Include(cal => cal.Resultados)
+                .FirstOrDefaultAsync(cal => cal.Id == calificacionId);
         }
 
         public async Task<Calificacion> Find_Calificacion(int calificacionId,

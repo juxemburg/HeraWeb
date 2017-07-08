@@ -1,0 +1,41 @@
+@model ResultadosScratchViewModel
+
+<section class="section section-gray">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                @await Html.PartialAsync("_ResultadoScratchPartial", Model.ResultadoGeneral)
+            </div>
+        </div>
+        <div class="title">
+            <h3>Objetos del proyecto</h3>
+        </div>
+        <div class="row">
+            @foreach (var item in Model.ScriptsResultados)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-4">
+                    @await Html.PartialAsync("_ResultadoScratchPartial", item)
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+
+
+@section Modals {
+    @await Html.PartialAsync("_Modal_ResultadoScratchPartial",
+    Model.ResultadoGeneral)
+    @Html.Partial("_ResultadoInfoGeneral",
+                Model.ResultadoGeneral)
+
+    @foreach (var item in Model.ScriptsResultados)
+    {
+        @if (!item.General)
+        {
+            @Html.Partial("_ResultadoInfoSprite",
+                item)
+        }
+        @await Html.PartialAsync("_Modal_ResultadoScratchPartial", item)
+    }
+}

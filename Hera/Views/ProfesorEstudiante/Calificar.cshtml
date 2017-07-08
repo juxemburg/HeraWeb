@@ -49,6 +49,18 @@
             @foreach (var item in Model.Registro.Calificaciones)
             {
                 @await Html.PartialAsync("_ResultadoScratchPartial", item.ResultadoGeneral);
+                <div class="sub-card">
+                    <a asp-action="EvaluacionCompleta"
+                       asp-controller="ProfesorEstudiante"
+                       asp-route-idCurso="@item.CursoId"
+                       asp-route-idEstudiante="@item.EstudianteId"
+                       asp-route-idDesafio="@item.DesafioId"
+                       asp-route-idCalificacion="@item.Id"
+                       class="btn btn-white btn-round btn-raised pull-right">
+                        Ver más
+                        <i class="material-icons">launch</i>
+                    </a>
+                </div>
             }
         </div>
     </div>
