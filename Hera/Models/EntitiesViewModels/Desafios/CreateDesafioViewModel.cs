@@ -23,7 +23,12 @@ namespace Hera.Models.EntitiesViewModels
         [Display(Name = "Id del Proyecto")]
         [Required(ErrorMessage = "Este campo es obligatorio")]
         public int IdSolucion { get; set; }
-        
+
+        [Display(Name="Url de la solución")]
+        [Required(ErrorMessage ="Campo obligatorio")]
+        [Url(ErrorMessage ="Digite una url válida")]
+        public string UrlSolucion { get; set; }
+
         [Required(ErrorMessage ="Campo obligatorio")]
         public string DirArchivo { get; set; }
 

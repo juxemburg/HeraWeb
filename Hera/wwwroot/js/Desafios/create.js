@@ -17,7 +17,7 @@
         });
     };
 
-    document.getElementById('UrlEscenarioInicial').onchange =
+    document.getElementById('UrlSolucion').onchange =
         (e) => {
             var target = e.target;
             var str = target.value;
