@@ -1,12 +1,19 @@
 ﻿@model ResultadoScratch
 
 
-<div class="card margin-10">
-    <div class="header header-primary padding-10"
-         style="height: 70px;">
-        <h3 class="txt-white">@Model.Nombre</h3>
-    </div>
-    <div class="content">
+<div class="card">
+    <div class="card-content">
+        <h6 class="category text-info">
+            <i class="material-icons">
+                info
+            </i>
+            Datos de la evaluación
+        </h6>
+        <h4>
+            <span class="card-title">
+                @Model.Nombre
+            </span>
+        </h4>
         <div class="row">
             <div class="col-sm-6">
                 <dl>
@@ -27,7 +34,9 @@
         <div class="row text-center">            
             <div class="col-sm-12 col-md-6">
                 <button class="btn btn-info btn-block col-sm-6" data-toggle="modal" data-target="#modal-info-@Model.Nombre">
-                    <i class="material-icons">info_outline</i>
+                    <i class="material-icons icon-lg">
+                        visibility
+                    </i>
                 </button>
             </div>
             <div class="col-sm-12 col-md-6">

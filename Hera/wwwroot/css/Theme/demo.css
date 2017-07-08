@@ -396,6 +396,10 @@
     color: #FFFFFF;
 }
 
+.material-icons.icon-md {    
+    font-size: 18px !important;
+}
+
 .material-icons.icon-lg {
     font-weight: 900;
     font-size: 24px !important;

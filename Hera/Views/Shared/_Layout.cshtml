@@ -39,7 +39,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Hera</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
+                    <strong>He</strong>ra
+                </a>
             </div>
             <div class="navbar-collapse collapse">
                 @await  Component.InvokeAsync("Navbar")
@@ -56,10 +58,8 @@
     <div class="wrapper">
         
         <div class="main main-raised">
-            <div class="profile-content padding-20">
-                <div class="body-content">
-                    @RenderBody()
-                </div>
+            <div class="body-content profile-content">
+                @RenderBody()
             </div>
         </div>
     </div>

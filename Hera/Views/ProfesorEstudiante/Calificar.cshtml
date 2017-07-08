@@ -8,58 +8,60 @@
     <link href="~/css/card-body.css" rel="stylesheet" />
 }
 
-<h2>Calificación del estudiante en el desafio: @Model.NombreDesafio</h2>
-
-<div class="row">
-
-</div>
-
-<div class="row">
-    <hr />
-    <div class="col-sm-8">
-        @foreach (var item in Model.Registro.Calificaciones)
-        {
-            <div>@item.TiempoFinal</div>
-            @await Html.PartialAsync("_ResultadoScratchPartial", item.ResultadoGeneral);
-        }
+<section>
+    <div class="container">
+        <h2>
+            <span class="title">Calificación</span> 
+            estudiante - @Model.NombreDesafio
+        </h2>
     </div>
-    <div class="col-sm-4">
-        <div class="card">
-            @if (!Model.Calificado)
-            {
-                <div class="header header-warning padding-10"
-                     style="height: 100%;">
-                    <h3>Califica éste estudiante:</h3>
-                </div>
-                <div class="content padding-50">
-                    @Html.Partial("_AddCalificacionCualitativa", Model.FormModel)
-                </div>
-            }
-            else
-            {
-                <div class="header header-success padding-10"
-                     style="height: 100%;">
-                    <h5 class="">
-                        Estudiante Calificado el:
-                        @Model.FormModel.FechaRegistro
-                        <span class="pull-right glyphicon glyphicon-ok"></span>
-                    </h5>
-                </div>
-                <div class="content padding-50">
-                    @Html.Partial("_EditCalificacionCualitativa", Model.FormModel)
-                </div>
+</section>
 
-            }
 
+<section class="section-gray section">
+    <div class="container-fluid">
+        <div class="col-sm-4 col-md-3">
+            <div class="card">
+                <div class="card-content">
+                    @if (!Model.Calificado)
+                    { 
+                        <h6 class="category text-warning">
+                            Calificación
+                            <i class="material-icons">priority_high</i>
+                        </h6>
+                        <hr/>
+                        @Html.Partial("_AddCalificacionCualitativa", Model.FormModel)
+                    }
+                    else
+                    {
+                        <h6 class="category text-success">
+                            Calificado el:
+                            @Model.FormModel.FechaRegistro
+                            <i class="material-icons">done</i>
+                        </h6>
+                        @Html.Partial("_EditCalificacionCualitativa", Model.FormModel)
+                        
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-9">
+            @foreach (var item in Model.Registro.Calificaciones)
+            {
+                @await Html.PartialAsync("_ResultadoScratchPartial", item.ResultadoGeneral);
+            }
         </div>
     </div>
+</section>
 
 
-</div>
 
 @section Modals {
     @foreach (var item in Model.Registro.Calificaciones)
     {
-        @await Html.PartialAsync("_Modal_ResultadoScratchPartial", item.ResultadoGeneral);
+        if (item.ResultadoGeneral != null)
+        {
+            //await Html.PartialAsync("_ResultadoInfoGeneral", item.ResultadoGeneral);
+        }
     }
 }

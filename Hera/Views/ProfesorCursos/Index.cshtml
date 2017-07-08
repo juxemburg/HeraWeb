@@ -4,66 +4,74 @@
     ViewData["Title"] = "Mis Cursos";
 }
 
-<h2>
-    Tus Cursos
-    <a class="btn btn-info btn-fab btn-fab-mini" asp-action="Create" asp-controller="Cursos">
-        <i class="material-icons icon-lg">add</i>
-    </a>
-</h2>
-
-<div class="row">
-    <div class="col-md-12 text-center">
-        <form asp-action="index" method="get" class="form-inline">
-            <div class="form-group">
-                <label>Búsqueda</label>
-                <input name="searchString" type="text" class="form-control" />
+<section>
+    <div class="container">
+        <h2>
+            <span class="title">Tus</span> Cursos
+            <a class="btn btn-info btn-fab btn-fab-mini" asp-action="Create" asp-controller="Cursos">
+                <i class="material-icons icon-lg">add</i>
+            </a>
+        </h2>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <form asp-action="index" method="get" class="form-inline">
+                    <div class="form-group label-floating">
+                        <label class="control-label">Búsqueda</label>
+                        <input name="searchString" type="text" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-xs btn-round btn-primary">
+                        <i class="material-icons">search</i>
+                    </button>
+                </form>
             </div>
-            <button type="submit" class="btn btn-xs btn-round btn-primary">
-                <i class="material-icons">search</i>
-            </button>
-        </form>
+        </div>
     </div>
-</div>
+</section>
 
-<table class="table table-striped table-condensed table-responsive">
-    <thead>
-        <tr>
-            <th>
-                Nombre
-            </th>
-            <th>
-                Descripcion
-            </th>
-            <th>
-                Acciones
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <a asp-action="Details" asp-controller="ProfesorCurso"
-                       asp-route-idCurso="@item.Id">
-                        @Html.DisplayFor(modelItem => item.Nombre)
-                    </a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descripcion)
-                </td>
-                <td>
-                    <a class="btn btn-info btn-sm btn-round" asp-action="Edit" asp-controller="Cursos">
-                        <i class="material-icons">edit</i>
-                    </a> 
-                    <a class="btn btn-danger btn-sm btn-round" asp-action="Edit" asp-controller="Cursos">
-                        <i class="material-icons">delete</i>
-                    </a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+<section>
+    <div class="container-fluid">
+        <table class="table table-striped table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Descripcion
+                    </th>
+                    <th>
+                        Acciones
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <a asp-action="Details" asp-controller="ProfesorCurso"
+                               asp-route-idCurso="@item.Id">
+                                @Html.DisplayFor(modelItem => item.Nombre)
+                            </a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Descripcion)
+                        </td>
+                        <td>
+                            <a class="btn btn-info btn-sm btn-round" asp-action="Edit" asp-controller="Cursos">
+                                <i class="material-icons">edit</i>
+                            </a>
+                            <a class="btn btn-danger btn-sm btn-round" asp-action="Edit" asp-controller="Cursos">
+                                <i class="material-icons">delete</i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
 
 <div class="text-center">
     <ul class="pagination">

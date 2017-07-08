@@ -5,47 +5,55 @@
     ViewData["Pagination-Action"] = "Index";
 }
 
-<h2>Desafíos</h2>
+<section>
+    <div class="container">
+        <h2><span class="title">Buscar</span> Desafíos</h2>
 
-<div class="row">
-    @Html.Partial("Desafios/_BusquedaDesafioPartial",
+        <div class="row">
+            @Html.Partial("Desafios/_BusquedaDesafioPartial",
     new SearchDesafioViewModel(), ViewData)
-</div>
+        </div>
+    </div>
+</section>
 
-<table class="table table-condensed">
-    <thead>
-        <tr>
-            <th>
-                Nombre
-            </th>
-            <th>
-                Autor
-            </th>
-            <th>
-                Descipción
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">
-                        @Html.DisplayFor(modelItem => item.Nombre)
-                    </a>
-                </td>
-                <td>
-                    <p>@item.Profesor.NombreCompleto</p>
-                </td>
-                <td>
-                    <p>
-                        @item.Descripcion
-                    </p>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<section>
+    <div class="container-fluid">
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Autor
+                    </th>
+                    <th>
+                        Descipción
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id">
+                                @Html.DisplayFor(modelItem => item.Nombre)
+                            </a>
+                        </td>
+                        <td>
+                            <p>@item.Profesor.NombreCompleto</p>
+                        </td>
+                        <td>
+                            <p>
+                                @item.Descripcion
+                            </p>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
 
 @await Html.PartialAsync("Pagination/_PaginationPartial", Model, ViewData)

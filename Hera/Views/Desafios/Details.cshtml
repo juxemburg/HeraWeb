@@ -3,47 +3,51 @@
     ViewData["Title"] = "Details";
 }
 
-<div class="row">
-    <div class="col-sm-6">
+<section>
+    <div class="container">
         <h2 class="title">@Model.Nombre</h2>
-        <h4> <strong>Autor:</strong> @Model.Profesor.NombreCompleto</h4>
-        <p>
-            <strong>Descripción:</strong>
-            @Model.Descripcion
-        </p>
-    </div>
-    <div class="col-sm-6">
-        <h3 class="title">Criterios de evaluación</h3>
-        <ul>
-            @foreach (var item in Model.InfoDesafio.ActiveProperties())
-            {
-                <li>@item</li>
-            }
-        </ul>
-        <div class="row margin-top-50">
+        <div class="row">
             <div class="col-sm-6">
-                <a href="@Model.DirDesafioInicial" target="_blank"
-                   class="btn btn-primary btn-block">
-                    Esenario
-                    <i class="material-icons">
-                    open_in_new
-                    </i>
-                </a>
+                <h4> <strong>Autor:</strong> @Model.Profesor.NombreCompleto</h4>
+                <p>
+                    <strong>Descripción:</strong>
+                    @Model.Descripcion
+                </p>
             </div>
             <div class="col-sm-6">
-                <a asp-action="DownloadEscenario"
-                   asp-controller="File"
-                   asp-route-desafioId="@Model.Id"
-                   class="btn btn-primary btn-simple btn-block" >
-                     Solución
-                    <i class="material-icons">
-                        file_download
-                    </i>
-                </a>
+                <h3 class="title">Criterios de evaluación</h3>
+                <ul>
+                    @foreach (var item in Model.InfoDesafio.ActiveProperties())
+                    {
+                        <li>@item</li>
+                    }
+                </ul>
+                <div class="row margin-top-50">
+                    <div class="col-sm-6">
+                        <a href="@Model.DirDesafioInicial" target="_blank"
+                           class="btn btn-primary btn-block">
+                            Esenario
+                            <i class="material-icons">
+                                open_in_new
+                            </i>
+                        </a>
+                    </div>
+                    <div class="col-sm-6">
+                        <a asp-action="DownloadEscenario"
+                           asp-controller="File"
+                           asp-route-desafioId="@Model.Id"
+                           class="btn btn-primary btn-simple btn-block">
+                            Solución
+                            <i class="material-icons">
+                                file_download
+                            </i>
+                        </a>
+                    </div>
+
+
+                </div>
             </div>
-            
-            
         </div>
     </div>
-</div>
+</section>
 

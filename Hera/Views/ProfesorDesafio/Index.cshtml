@@ -5,83 +5,93 @@
     ViewData["Pagination-Action"] = "Index";
 }
 
-<div class="row">
-    <h3>
-        Tus Desafíos
-        <a class="btn btn-icon btn-fab btn-fab-mini btn-info" asp-action="Create"
-           asp-controller="Desafios">
+<section>
+    <div class="container">
+        <div class="row">
+            <h2>
+                <span class="title">Tus</span> Desafíos
+                <a class="btn btn-icon btn-fab btn-fab-mini btn-info" asp-action="Create"
+                   asp-controller="Desafios">
 
-            <i class="material-icons icon-lg">add</i>
-        </a>
-    </h3>
-    <hr />
-</div>
-
-
-<div class="row">
-    @Html.Partial("Desafios/_BusquedaDesafioPartial",
-    new SearchDesafioViewModel(), ViewData)
-    <div class="col-xs-12">
-        
+                    <i class="material-icons icon-lg">add</i>
+                </a>
+            </h2>
+        </div>
     </div>
-</div>
+    <hr />
+</section>
 
-<table class="table table-condensed table-responsive">
-    <thead>
-        <tr>
-            <th>
-                Nombre
-            </th>
-            <th>
-                Descipción
-            </th>
-            <th class="text-center">
-                Criterios de Evaluación
-            </th>
-            <th class="text-center">
-                Acciones
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <a asp-action="Details" 
-                       asp-controller="Desafios"
-                       asp-route-id="@item.Id">
-                        @Html.DisplayFor(modelItem => item.Nombre)
-                    </a>
-                </td>
-                <td>
-                    <p>
-                        @item.Descripcion
-                    </p>
-                </td>
-                <td class="text-center">
-                    <button class="btn btn-info btn-simple" 
-                            data-toggle="modal" 
-                            data-target="#modal-info-@item.Id">
-                        <i class="material-icons icon-xl">info_outline</i>
-                    </button>
-                </td>
-                <td>
-                    <div class="text-center" >
-                        <a class="btn btn-sm btn-info btn-round" asp-action="Edit">
-                            <i class="material-icons">create</i>
-                        </a>
-                        <a class="btn btn-sm btn-round btn-danger" asp-action="Delete">
-                            <i class="material-icons">delete_forever</i>
-                        </a>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            @Html.Partial("Desafios/_BusquedaDesafioPartial",
+    new SearchDesafioViewModel(), ViewData)
+            <div class="col-xs-12">
 
-@await Html.PartialAsync("Pagination/_PaginationPartial", Model, ViewData)
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container-fluid">
+        <table class="table table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Descipción
+                    </th>
+                    <th class="text-center">
+                        Criterios de Evaluación
+                    </th>
+                    <th class="text-center">
+                        Acciones
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <a asp-action="Details"
+                               asp-controller="Desafios"
+                               asp-route-id="@item.Id">
+                                @Html.DisplayFor(modelItem => item.Nombre)
+                            </a>
+                        </td>
+                        <td>
+                            <p>
+                                @item.Descripcion
+                            </p>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-info btn-simple"
+                                    data-toggle="modal"
+                                    data-target="#modal-info-@item.Id">
+                                <i class="material-icons icon-xl">info_outline</i>
+                            </button>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <a class="btn btn-sm btn-info btn-round" asp-action="Edit">
+                                    <i class="material-icons">create</i>
+                                </a>
+                                <a class="btn btn-sm btn-round btn-danger" asp-action="Delete">
+                                    <i class="material-icons">delete_forever</i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @await Html.PartialAsync("Pagination/_PaginationPartial", Model, ViewData)
+    </div>
+</section>
 
 @section Modals {
     @foreach (var item in Model)

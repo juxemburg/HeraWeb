@@ -1,30 +1,29 @@
-@model CreateCalificacionCualitativaViewModel
+﻿@model CreateCalificacionCualitativaViewModel
 
 <form asp-action="Calificar" asp-controller="ProfesorEstudiante"
       class="form-horizontal">
     <div asp-validation-summary="All"></div>
     <div>
         <input asp-for="Id" type="hidden"/>
-
         <input asp-for="CursoId" type="hidden" />
         <input asp-for="EstudianteId" type="hidden" />
         <input asp-for="DesafioId" type="hidden" />
     </div>
 
-    <div class="form-inline">
-        <div class="form-group">
-            <label asp-for="Completada"></label>
-            <input asp-for="Completada" class="form-control" />
-            <span asp-validation-for="Completada"></span>
+    <div class="">
+        <div class="togglebutton">
+            <label>
+                <input asp-for="Completada" type="checkbox" />
+                <span asp-validation-for="Completada"></span>
+                @Html.DisplayNameFor(Model => Model.Completada)
+            </label>
         </div>
     </div>
     <div class="form-group">
-        <label asp-for="Descripcion" class="control-label"></label>
-        <div class="">
-            <textarea asp-for="Descripcion" rows="5" class="form-control">
+        <textarea asp-for="Descripcion" rows="5" class="form-control"
+                  placeholder="¿Por Qué?">
             </textarea>
-            <span asp-validation-for="Descripcion"></span>
-        </div>
+        <span asp-validation-for="Descripcion"></span>
     </div>
     <div class="text-center">
         <button type="submit" class="btn btn-success">Calificar</button>

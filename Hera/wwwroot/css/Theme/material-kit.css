@@ -2609,6 +2609,10 @@ h6, .h6 {
   font-size: 1em;
   text-transform: uppercase;
 }
+.alert b, .h6, h6 {
+    font-weight: 500;
+    text-transform: uppercase;
+}
 
 .title,
 .card-title,
@@ -2814,23 +2818,22 @@ h2.title {
 }
 
 .card {
-  display: inline-block;
-  position: relative;
-  width: 100%;
-  border-radius: 3px;
-  color: rgba(0,0,0, 0.87);
-  background: #fff;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 30px;
+    color: rgba(0,0,0,.87);
+    background: #fff;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+.card, .card .card-image {
+    position: relative;
+    border-radius: 6px;
 }
 .card .card-height-indicator {
   margin-top: 100%;
 }
 .card .card-content {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+    padding: 15px 30px;
 }
 .card .card-image {
   height: 60%;
@@ -2858,10 +2861,34 @@ h2.title {
   height: 30%;
   padding: 18px;
 }
+.card .footer .author {
+    color: #999;
+}
+.card .options {
+    float:right;
+}
+.card .footer .stats {
+    float: right;
+    line-height: 30px;
+    color: #999;
+}
 .card .card-footer {
   height: 10%;
   padding: 18px;
 }
+
+.card .footer .stats .material-icons {
+    position: relative;
+    top: 4px;
+    font-size: 18px;
+}
+
+.card .category .material-icons {
+    position: relative;
+    top: 6px;
+    line-height: 0;
+}
+
 .card .card-footer button, .card .card-footer a {
   margin: 0 !important;
   position: relative;
@@ -3739,6 +3766,14 @@ h2.title {
     padding: 12px 8px;
     vertical-align: middle;
 }
+
+/*Sections*/
+
+.section-gray {
+    background: #E5E5E5;
+}
+
+/*End Sections*/
 
 @media (max-width: 991px) {
   .landing-page .header {

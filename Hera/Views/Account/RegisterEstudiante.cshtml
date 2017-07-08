@@ -3,123 +3,128 @@
     ViewData["Title"] = "Registro Estudiante";
 }
 
-<h2>@ViewData["Title"].</h2>
+<section>
+    <div class="container">
+        <h2>@ViewData["Title"].</h2>
+        <form asp-controller="Account" asp-action="RegisterEstudiante"
+              asp-route-returnurl="@ViewData["ReturnUrl"]">
+            <h4>Bienvenido! Completa la siguiente información.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4>Datos de la cuenta</h4>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">email</i>
+                        </span>
+                        <input asp-for="Email" class="form-control" placeholder="Correo..." />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">lock</i>
+                        </span>
+                        <input asp-for="Password"
+                               class="form-control"
+                               placeholder="Contraseña..." />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class=" input-group">
+                        <span class="input-group-addon">
+                            <i class="material-icons">lock</i>
+                        </span>
+                        <input asp-for="ConfirmPassword" class="form-control" placeholder="Repite la contraseña..." />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row margin-top-30">
+                <div class="col-sm-12">
+                    <h4>
+                        <i class="material-icons">face</i>
+                        Datos personales
+                    </h4>
+                </div>
+                <div class=" form-group label-floating col-md-3 col-sm-6">
+                    <label class="control-label  " asp-for="Nombres"></label>
+                    <input asp-for="Nombres" class="form-control" />
+                    <span asp-validation-for="Nombres" class="text-danger"></span>
+                </div>
+                <div class=" form-group label-floating col-md-3 col-sm-6">
+                    <label class="control-label  " asp-for="Apellidos"></label>
+                    <input asp-for="Apellidos" class="form-control" />
+                    <span asp-validation-for="Apellidos" class="text-danger"></span>
+                </div>
+                <div class=" form-group label-floating col-md-3 col-sm-6">
+                    <label class="control-label  " asp-for="Edad"></label>
+                    <input asp-for="Edad" class="form-control" />
+                    <span asp-validation-for="Edad" class="text-danger"></span>
+                </div>
+                <div class=" form-group label-floating col-md-3 col-sm-6">
+                    <label class="control-label  " asp-for="Grado"></label>
+                    <input asp-for="Grado" class="form-control" />
+                    <span asp-validation-for="Grado" class="text-danger"></span>
+                </div>
+                <div class=" form-group label-floating col-md-3 col-sm-6">
+                    <label class="control-label  " asp-for="Genero"></label>
+                    <select asp-for="Genero"
+                            asp-items="EstudianteInfoHelper.EstudianteInfo_GeneroList"
+                            class="form-control"></select>
+                    <span asp-validation-for="Genero" class="text-danger"></span>
+                </div>
+                <div class=" form-group label-floating col-md-3 col-sm-6">
+                    <label class="control-label  " asp-for="MateriaFavorita"></label>
+                    <select asp-for="MateriaFavorita"
+                            asp-items="EstudianteInfoHelper.EstudianteInfo_MateriaFavoritaList"
+                            class="form-control"></select>
+                    <span asp-validation-for="MateriaFavorita" class="text-danger"></span>
+                </div>
+                <div class=" form-group label-floating col-md-3 col-sm-6">
+                    <label class="control-label  " asp-for="ActividadesPc"></label>
+                    <select asp-for="ActividadesPc"
+                            asp-items="EstudianteInfoHelper.EstudianteInfo_ActividadesList"
+                            class="form-control"></select>
+                    <span asp-validation-for="ActividadesPc" class="text-danger"></span>
+                </div>
+                <div class=" form-group label-floating col-md-3 col-sm-6">
+                    <label class="control-label" asp-for="FrecuenciaPc"></label>
+                    <select asp-for="FrecuenciaPc"
+                            asp-items="EstudianteInfoHelper.EstudianteInfo_UsoPcList"
+                            class="form-control"></select>
+                    <span asp-validation-for="FrecuenciaPc" class="text-danger"></span>
+                </div>
+                <div class=" form-group col-md-3 col-sm-6">
+                    <label class="control-label  " asp-for="ManejoComputador"></label>
+                    <input asp-for="ManejoComputador" class="form-control" />
+                    <span asp-validation-for="ManejoComputador" class="text-danger"></span>
+                </div>
+                <div class=" form-group col-md-3 col-sm-6">
+                    <label class="control-label  " asp-for="ConocimientoComputador"></label>
+                    <input asp-for="ConocimientoComputador" class="form-control" />
+                    <span asp-validation-for="ConocimientoComputador" class="text-danger"></span>
+                </div>
+            </div>
 
-<form asp-controller="Account" asp-action="RegisterEstudiante"
-      asp-route-returnurl="@ViewData["ReturnUrl"]">
-    <h4>Bienvenido! Completa la siguiente información.</h4>
-    <hr />
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="row">
-        <div class="col-sm-12">
-            <h4>Datos de la cuenta</h4>
-        </div>
-        <div class="col-sm-12 col-md-4">
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <i class="material-icons">email</i>
-                </span>
-                <input asp-for="Email" class="form-control" placeholder="Correo..." />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4">
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <i class="material-icons">lock</i>
-                </span>
-                <input asp-for="Password"
-                       class="form-control"
-                       placeholder="Contraseña..." />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-4">
-            <div class=" input-group">
-                <span class="input-group-addon">
-                    <i class="material-icons">lock</i>
-                </span>
-                <input asp-for="ConfirmPassword" class="form-control" placeholder="Repite la contraseña..." />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-        </div>
-    </div>
-    <div class="row margin-top-30">
-        <div class="col-sm-12">
-            <h4>
-                <i class="material-icons">face</i>
-                Datos personales
-            </h4>
-        </div>
-        <div class=" form-group label-floating col-md-3 col-sm-6">
-            <label class="control-label  " asp-for="Nombres"></label>
-            <input asp-for="Nombres" class="form-control" />
-            <span asp-validation-for="Nombres" class="text-danger"></span>
-        </div>
-        <div class=" form-group label-floating col-md-3 col-sm-6">
-            <label class="control-label  " asp-for="Apellidos"></label>
-            <input asp-for="Apellidos" class="form-control" />
-            <span asp-validation-for="Apellidos" class="text-danger"></span>
-        </div>
-        <div class=" form-group label-floating col-md-3 col-sm-6">
-            <label class="control-label  " asp-for="Edad"></label>
-            <input asp-for="Edad" class="form-control" />
-            <span asp-validation-for="Edad" class="text-danger"></span>
-        </div>
-        <div class=" form-group label-floating col-md-3 col-sm-6">
-            <label class="control-label  " asp-for="Grado"></label>
-            <input asp-for="Grado" class="form-control" />
-            <span asp-validation-for="Grado" class="text-danger"></span>
-        </div>
-        <div class=" form-group label-floating col-md-3 col-sm-6">
-            <label class="control-label  " asp-for="Genero"></label>
-            <select asp-for="Genero"
-                    asp-items="EstudianteInfoHelper.EstudianteInfo_GeneroList"
-                    class="form-control"></select>
-            <span asp-validation-for="Genero" class="text-danger"></span>
-        </div>
-        <div class=" form-group label-floating col-md-3 col-sm-6">
-            <label class="control-label  " asp-for="MateriaFavorita"></label>
-            <select asp-for="MateriaFavorita"
-                    asp-items="EstudianteInfoHelper.EstudianteInfo_MateriaFavoritaList"
-                    class="form-control"></select>
-            <span asp-validation-for="MateriaFavorita" class="text-danger"></span>
-        </div>
-        <div class=" form-group label-floating col-md-3 col-sm-6">
-            <label class="control-label  " asp-for="ActividadesPc"></label>
-            <select asp-for="ActividadesPc"
-                    asp-items="EstudianteInfoHelper.EstudianteInfo_ActividadesList"
-                    class="form-control"></select>
-            <span asp-validation-for="ActividadesPc" class="text-danger"></span>
-        </div>
-        <div class=" form-group label-floating col-md-3 col-sm-6">
-            <label class="control-label" asp-for="FrecuenciaPc"></label>
-            <select asp-for="FrecuenciaPc"
-                    asp-items="EstudianteInfoHelper.EstudianteInfo_UsoPcList"
-                    class="form-control"></select>
-            <span asp-validation-for="FrecuenciaPc" class="text-danger"></span>
-        </div>
-        <div class=" form-group col-md-3 col-sm-6">
-            <label class="control-label  " asp-for="ManejoComputador"></label>
-            <input asp-for="ManejoComputador" class="form-control" />
-            <span asp-validation-for="ManejoComputador" class="text-danger"></span>
-        </div>
-        <div class=" form-group col-md-3 col-sm-6">
-            <label class="control-label  " asp-for="ConocimientoComputador"></label>
-            <input asp-for="ConocimientoComputador" class="form-control" />
-            <span asp-validation-for="ConocimientoComputador" class="text-danger"></span>
-        </div>
-    </div>
+            <div class="row">
 
-    <div class="col-sm-12">
-
-        <div class="form-group text-center">
-            <div class="col-md-12">
-                <button type="submit" class="btn btn-info">Regístrate!</button>
+                <div class="form-group text-center">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary btn-round">
+                            Regístrate!
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
-</form>
+</section>
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }

@@ -14,168 +14,214 @@
     </environment>
 }
 
-<h2>Información del curso
-    <a asp-action="Edit"
-       asp-controller="Curso"
-       class="btn btn-sm btn-info btn-fab btn-fab-mini">
-        <i class="material-icons icon-lg">edit</i>
-    </a>
-    </h2>
-
-<div class="row">
-    <hr />
-    <div class="col-md-6">
-        <h3>Información Básica</h3>
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Curso.Nombre)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Curso.Nombre)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Curso.Descripcion)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Curso.Descripcion)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Curso.Password)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Curso.Password)
-            </dd>
-            <dt>
-                Desafío inicial
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Curso.Desafio.Nombre)
-            </dd>
-        </dl>
+<section>
+    <div class="container">
+        <h2 class="title">
+            Información del curso
+            <a asp-action="Edit"
+               asp-controller="Curso"
+               class="btn btn-sm btn-info btn-fab btn-fab-mini">
+                <i class="material-icons icon-lg">edit</i>
+            </a>
+        </h2>
     </div>
+</section>
+<section class="section-gray">
+    <div class="container padding-30">
+        <div class="row">
+            <div class="col-sm-6 col-md-5 col-lg-4">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="text-info category">
+                            <i class="material-icons">info</i>
+                            Información básica
+                        </h4>
+                        <div>
+                            <dl class="">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Curso.Nombre)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Curso.Nombre)
+                                </dd>
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Curso.Descripcion)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Curso.Descripcion)
+                                </dd>
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Curso.Password)
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Curso.Password)
+                                </dd>
+                                <dt>
+                                    Desafío inicial
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Curso.Desafio.Nombre)
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="footer">
+                            <div class="stats">
+                                <i class="material-icons">favorite</i> 342 ·
+                                <i class="material-icons">chat_bubble</i> 45
+                            </div>
+                        </div>
+                    </div>
 
-</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                
+                
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container-fluid">
+        <h2 class="section-title">Progreso de tus estudiantes</h2>
+        <div class="row">
+            <div class="col-md-2 text-center">
+                <h4 class="title">Acciones</h4>
 
-<div class="row margin-top-40 padding-20">
-    <h3>Progreso de tus estudiantes</h3>
-    <div class="col-sm-10">
-
-        <table class="table table-responsive table-hover">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>
-                        <a asp-controller="ProfesorCurso" asp-action="Progres" asp-route-idDesafio="@Model.Curso.DesafioId">
-                            @Model.Curso.Desafio.Nombre
-                        </a>
-                    </th>
-                    @foreach (var item in Model.Curso.Desafios)
-                    {
-                        <th>
-                            <a asp-controller="ProfesorCurso" asp-action="Progres" asp-route-idDesafio="@item.DesafioID">
-                                @item.Desafio.Nombre
-                            </a>
-                        </th>
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Curso.Estudiantes)
-                {
-                    <tr>
-                        <td>
-                            <strong>
-                                <a asp-action="Estudiante" asp-route-idCurso="@Model.Curso.Id" asp-route-idEstudiante="@item.EstudianteId">
-                                    @item.Estudiante.NombreCompleto
+                <span type="button" class=" btn-tooltip" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Agregar Desafío">
+                    <button class="btn btn-sm btn-info btn-round" data-toggle="modal" data-target="#myModal">
+                        <i class="material-icons icon-lg">add</i>
+                    </button>
+                </span>
+                <span type="button" class=" btn-tooltip" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Agregar Desafío">
+                    <button class="btn btn-sm btn-danger btn-round" data-toggle="modal" data-target="#myModal">
+                        <i class="material-icons icon-lg">remove</i>
+                    </button>
+                </span>
+                <hr />
+            </div>
+            <div class="col-md-10">
+                <table class="table table-responsive table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Estudiantes\Desafíos
+                            </th>
+                            <th>
+                                <a asp-controller="ProfesorCurso" asp-action="Progres" asp-route-idDesafio="@Model.Curso.DesafioId">
+                                    @Model.Curso.Desafio.Nombre
                                 </a>
-                            </strong>
-                        </td>
-                        @if (Model.RegistrosCurso.ContainsKey(
-                new Tuple<int, int>(Model.Curso.DesafioId, item.EstudianteId)))
+                            </th>
+                            @foreach (var item in Model.Curso.Desafios)
+                            {
+                                <th>
+                                    <a asp-controller="ProfesorCurso" asp-action="Progres" asp-route-idDesafio="@item.DesafioID">
+                                        @item.Desafio.Nombre
+                                    </a>
+                                </th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Curso.Estudiantes)
                         {
-                            var reg = Model.RegistrosCurso[
-                        new Tuple<int, int>(Model.Curso.DesafioId, item.EstudianteId)];
-                            <td>
-                                <a class="btn btn-warning btn-xs"
-                                   asp-action="Calificar"
-                                   asp-controller="ProfesorEstudiante"
-                                   asp-route-idCurso="@Model.Curso.Id"
-                                   asp-route-idEstudiante="@item.EstudianteId"
-                                   asp-route-idDesafio="@Model.Curso.DesafioId">
-                                    @if (reg.First().CalificacionCualitativa != null
-                        && reg.First().CalificacionCualitativa.Completada)
+                            <tr>
+                                <td>
+                                    <strong>
+                                        <a asp-action="Estudiante" asp-route-idCurso="@Model.Curso.Id" asp-route-idEstudiante="@item.EstudianteId">
+                                            @item.Estudiante.NombreCompleto
+                                        </a>
+                                    </strong>
+                                </td>
+                                @if (Model.RegistrosCurso.ContainsKey(
+new Tuple<int, int>(Model.Curso.DesafioId, item.EstudianteId)))
+                                {
+                                    var reg = Model.RegistrosCurso[
+                                new Tuple<int, int>(Model.Curso.DesafioId, item.EstudianteId)];
+                                    <td>
+                                        <a class="btn btn-warning btn-xs"
+                                           asp-action="Calificar"
+                                           asp-controller="ProfesorEstudiante"
+                                           asp-route-idCurso="@Model.Curso.Id"
+                                           asp-route-idEstudiante="@item.EstudianteId"
+                                           asp-route-idDesafio="@Model.Curso.DesafioId">
+                                            @if (reg.First().CalificacionCualitativa != null
+&& reg.First().CalificacionCualitativa.Completada)
+                                            {
+                                                <i class="material-icons">done</i>
+                                            }
+                                            else
+                                            {
+                                                <i class="material-icons">priority_high</i>
+                                            }
+                                        </a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @foreach (var desafio in Model.Curso.Desafios)
+                                {
+                                    if (Model.RegistrosCurso.ContainsKey(
+                                        new Tuple<int, int>(desafio.DesafioID, item.EstudianteId)))
                                     {
-                                        <i class="material-icons">done</i>
+                                        var reg = Model.RegistrosCurso[
+                                        new Tuple<int, int>(desafio.DesafioID, item.EstudianteId)];
+                                        <td>
+                                            <a class="btn btn-warning btn-xs"
+                                               asp-action="Calificar"
+                                               asp-controller="ProfesorEstudiante"
+                                               asp-route-idCurso="@Model.Curso.Id"
+                                               asp-route-idEstudiante="@item.EstudianteId"
+                                               asp-route-idDesafio="@desafio.DesafioID">
+                                                @if (reg.First().CalificacionCualitativa != null
+&& reg.First().CalificacionCualitativa.Completada)
+                                                {
+                                                    <i class="material-icons">done</i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="material-icons">priority_high</i>
+                                                }
+                                            </a>
+
+                                        </td>
                                     }
                                     else
                                     {
-                                        <i class="material-icons">priority_high</i>
+                                        <td></td>
                                     }
-                                </a>
-                            </td>
+                                }
+                            </tr>
                         }
-                        else
-                        {
+                    </tbody>
+                    <tfoot>
+                        <tr>
                             <td></td>
-                        }
-                        @foreach (var desafio in Model.Curso.Desafios)
-                        {
-                            if (Model.RegistrosCurso.ContainsKey(
-                                new Tuple<int, int>(desafio.DesafioID, item.EstudianteId)))
-                            {
-                                var reg = Model.RegistrosCurso[
-                                new Tuple<int, int>(desafio.DesafioID, item.EstudianteId)];
-                                <td>
-                                    <a class="btn btn-warning btn-xs"
-                                       asp-action="Calificar"
-                                       asp-controller="ProfesorEstudiante"
-                                       asp-route-idCurso="@Model.Curso.Id"
-                                       asp-route-idEstudiante="@item.EstudianteId"
-                                       asp-route-idDesafio="@desafio.DesafioID">
-                                        @if (reg.First().CalificacionCualitativa != null
-                            && reg.First().CalificacionCualitativa.Completada)
-                                        {
-                                            <i class="material-icons">done</i>
-                                        }
-                                        else
-                                        {
-                                            <i class="material-icons">priority_high</i>
-                                        }
-                                    </a>
-
-                                </td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
-                        }
-                    </tr>
-                }
-            </tbody>
-        </table>
+                            <td colspan="4">
+                                <p>
+                                    <strong>Nota: </strong>
+                                    Pendientes
+                                    <i class="material-icons icon-md">
+                                        priority_high
+                                    </i>
+                                    -
+                                    Calificados
+                                    <i class="material-icons icon-md">
+                                        done
+                                    </i>
+                                </p>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-2 margin-top-10">
-        <span type="button" class=" btn-tooltip" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Agregar Desafío">
-            <button class="btn btn-sm btn-info btn-fab btn-fab-mini" data-toggle="modal" data-target="#myModal">
-                <i class="material-icons icon-lg">add</i>
-            </button>
-        </span>
-        
-        <h3 class="title">
-            Leyenda
-        </h3>
-        <p>
-            <i class="material-icons">priority_high</i>
-            Pendientes
-        </p>
-        <p>
-            <i class="material-icons">done</i>
-            Calificados
-        </p>
+</section>
 
-    </div>
-</div>
+
 
 
 

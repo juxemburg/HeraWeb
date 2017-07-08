@@ -3,68 +3,71 @@
     ViewData["Title"] = "Registro Profesor";
 }
 
-<h2 class="title">@ViewData["Title"]</h2>
 
-<div class="row">
-    <form asp-controller="Account" asp-action="RegisterProfesor"
-          asp-route-returnurl="@ViewData["ReturnUrl"]">
-        <div class="col-sm-12">
-            <h4>Bienvenido! Por favor, regálanos algunos de tus datos:</h4>
-        </div>
-        <hr />
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="col-sm-6">
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <i class="material-icons">email</i>
-                </span>
-                <input asp-for="Email" class="form-control" placeholder="Correo..."/>
-                <span asp-validation-for="Email" class="text-danger"></span>
+
+<div class="container">
+    <h2 class="title">@ViewData["Title"]</h2>
+    <div class="row">
+        <form asp-controller="Account" asp-action="RegisterProfesor"
+              asp-route-returnurl="@ViewData["ReturnUrl"]">
+            <div class="col-sm-12">
+                <h4>Bienvenido! Por favor, regálanos algunos de tus datos:</h4>
+            </div>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="col-sm-6">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="material-icons">email</i>
+                    </span>
+                    <input asp-for="Email" class="form-control" placeholder="Correo..." />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="material-icons">lock</i>
+                    </span>
+                    <input asp-for="Password"
+                           class="form-control"
+                           placeholder="Contraseña..." />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="material-icons">lock</i>
+                    </span>
+                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Repite la contraseña..." />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
 
             </div>
+            <div class="col-sm-6">
+                <div class="form-group label-floating">
+                    <label class="control-label col-md-2 " asp-for="Nombres"></label>
+                    <input asp-for="Nombres" class="form-control" />
+                    <span asp-validation-for="Nombres" class="text-danger"></span>
+                </div>
 
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <i class="material-icons">lock</i>
-                </span>
-                <input asp-for="Password" 
-                       class="form-control" 
-                       placeholder="Contraseña..."/>
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <i class="material-icons">lock</i>
-                </span>
-                <input asp-for="ConfirmPassword" class="form-control" placeholder="Repite la contraseña..."/>
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
+                <div class="form-group label-floating">
+                    <label class="control-label col-md-2 " asp-for="Apellidos"></label>
+                    <input asp-for="Apellidos" class="form-control" />
+                    <span asp-validation-for="Apellidos" class="text-danger"></span>
+                </div>
 
-        </div>
-        <div class="col-sm-6">
-            <div class="form-group label-floating">
-                <label class="control-label col-md-2 " asp-for="Nombres"></label>
-                <input asp-for="Nombres" class="form-control" />
-                <span asp-validation-for="Nombres" class="text-danger"></span>
+                <div class="form-group label-floating">
+                    <label class="control-label col-md-2 " asp-for="Edad"></label>
+                    <input asp-for="Edad" class="form-control" />
+                    <span asp-validation-for="Edad" class="text-danger"></span>
+                </div>
             </div>
 
-            <div class="form-group label-floating">
-                <label class="control-label col-md-2 " asp-for="Apellidos"></label>
-                <input asp-for="Apellidos" class="form-control" />
-                <span asp-validation-for="Apellidos" class="text-danger"></span>
+            <div class="col-sm-12 text-center">
+                <button type="submit" class="btn btn-primary btn-round">Regístrate!</button>
             </div>
-
-            <div class="form-group label-floating">
-                <label class="control-label col-md-2 " asp-for="Edad"></label>
-                <input asp-for="Edad" class="form-control" />
-                <span asp-validation-for="Edad" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="col-sm-12 text-center">
-            <button type="submit" class="btn btn-primary btn-round">Regístrate!</button>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
 @section Scripts {
