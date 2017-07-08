@@ -101,6 +101,7 @@ namespace Hera.Data
             int calificacionId);
         Task<ResultadoScratch> Find_ResultadoScratchGeneral(
             int calificacionId);
+        void Add_InfoScratch(IInfoScratch info);
 
         //Validacion
         Task<bool> Exist_Profesor_Curso(int profesorId,

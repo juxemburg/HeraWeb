@@ -76,7 +76,7 @@ namespace Hera.Services.ScratchServices
         }
         public ResultadoScratch Map(int calId)
         {
-            return new ResultadoScratch()
+            var res =  new ResultadoScratch()
             {
                 CalificacionId = calId,
                 General = generalValoration,
@@ -95,6 +95,14 @@ namespace Hera.Services.ScratchServices
                     };
                 }).ToList()
             };
+            if (generalValoration)
+                res.IInfoScratch_General = (IInfoScratch_General)
+                ((GeneralInfo)AdditionalInfo).Map();
+            else
+                res.IInfoScratch_Sprite = (IInfoScratch_Sprite)
+                ((SpriteInfo)AdditionalInfo).Map();
+
+            return res;
         }
     }
 }

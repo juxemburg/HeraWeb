@@ -66,8 +66,7 @@
                         </div>
                         <div class="footer">
                             <div class="stats">
-                                <i class="material-icons">favorite</i> 342 ·
-                                <i class="material-icons">chat_bubble</i> 45
+                                <i class="material-icons">favorite</i> 342
                             </div>
                         </div>
                     </div>
@@ -93,14 +92,15 @@
                         <i class="material-icons icon-lg">add</i>
                     </button>
                 </span>
-                <span type="button" class=" btn-tooltip" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Agregar Desafío">
-                    <button class="btn btn-sm btn-danger btn-round" data-toggle="modal" data-target="#myModal">
+                <span type="button" class=" btn-tooltip" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Remover Desafío">
+                    <button class="btn btn-sm btn-danger btn-round" data-toggle="modal" data-target="#myModal2">
                         <i class="material-icons icon-lg">remove</i>
                     </button>
                 </span>
                 <hr />
             </div>
             <div class="col-md-10">
+                <h4 class="title">Tabla estudiantes-desafíos</h4>
                 <table class="table table-responsive table-hover">
                     <thead>
                         <tr>
@@ -235,40 +235,36 @@ new Tuple<int, int>(Model.Curso.DesafioId, item.EstudianteId)))
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Añadir Desafío</h4>
-                    <a class="btn btn-info" asp-action="Create" asp-controller="Desafios" target="_blank">
-                        Crear nuevo desafío
-                    </a>
+                    <h4 class="modal-title">Añadir Desafío
+                        <a class="btn btn-info btn-sm pull-right" asp-action="Create" asp-controller="Desafios" target="_blank">
+                            Crear nuevo desafío
+                            <i class="material-icons icon-lg">add</i>
+                        </a>
+                    </h4>
+                    
                 </div>
                 <div class="modal-body">
-                    <form method="post" asp-action="AddDesafio" asp-controller="Cursos" class="form-horizontal">
-                        <input id="input-desafioId" type="hidden" name="DesafioId" value="" />
-                        <input name="Id" value="@Model.Curso.Id" type="hidden" />
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Nombre</label>
-                            <div class="col-sm-10">
-                                <input id="input-desafioNombre" name="Nombre" class="form-control" />
-                            </div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <form method="post" asp-action="AddDesafio" asp-controller="Cursos" class="form-horizontal">
+                                <input id="input-desafioId" type="hidden" name="DesafioId" value="" />
+                                <input name="Id" value="@Model.Curso.Id" type="hidden" />
+                                <div class="form-group form-group-lg label-floating col-sm-12">
+                                    <label class="control-label">Nombre</label>
+                                    <input id="input-desafioNombre" name="Nombre" class="form-control" />
+                                </div>
+                                <div class="form-group  col-sm-6">
+                                    <input id="input-desafioDescripcion" type="text" name="Descripcion" class="form-control" placeholder="Descripción del desafío" disabled />
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <input id="input-desafioDificultad" type="number" name="Dificultad" class="form-control" disabled placeholder="Dificultad" />
+                                </div>
+                                <div class="text-center col-sm-12">
+                                    <input class="btn btn-primary btn-round" type="submit" value="¡Agregar!" />
+                                </div>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Descripción</label>
-                            <div class="col-sm-10">
-                                <input id="input-desafioDescripcion" type="text" name="Descripcion" class="form-control" disabled />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Dificultad</label>
-                            <div class="col-sm-10">
-                                <input id="input-desafioDificultad" type="number" name="Dificultad" class="form-control" disabled />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input class="btn btn-info" type="submit" value="Agregar éste desafío" />
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
 

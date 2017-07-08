@@ -59,9 +59,7 @@
 @section Modals {
     @foreach (var item in Model.Registro.Calificaciones)
     {
-        if (item.ResultadoGeneral != null)
-        {
-            //await Html.PartialAsync("_ResultadoInfoGeneral", item.ResultadoGeneral);
-        }
+        @await Html.PartialAsync("_ResultadoInfoGeneral", item.ResultadoGeneral);
+        @await Html.PartialAsync("_Modal_ResultadoScratchPartial", item.ResultadoGeneral)
     }
 }

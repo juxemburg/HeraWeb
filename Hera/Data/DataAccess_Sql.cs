@@ -299,9 +299,11 @@ namespace Hera.Data
                 && reg.EstudianteId == estudianteId
                 && reg.DesafioId == desafioId)
                 .Include(reg => reg.Desafio)
-                .Include(reg => reg.Calificaciones)
                 .Include("Calificaciones.Resultados")
-                .Include("Calificaciones.Resultados.Bloques");
+                .Include("Calificaciones.Resultados.Bloques")
+                .Include("Calificaciones.Resultados.IInfoScratch_General")
+                .Include("Calificaciones.Resultados.IInfoScratch_Sprite");
+
             return await query.FirstOrDefaultAsync();
         }
 
@@ -388,6 +390,11 @@ namespace Hera.Data
         public void Add_ResultadoScratch(ResultadoScratch resultado)
         {
             Add<ResultadoScratch>(resultado);
+            if (resultado.General)
+                Add_InfoScratch(resultado.IInfoScratch_General);
+            else
+                Add_InfoScratch(resultado.IInfoScratch_Sprite);
+
             foreach (var bloque in resultado.Bloques)
             {
                 Add<BloqueScratch>(bloque);
@@ -417,9 +424,18 @@ namespace Hera.Data
             return await _context
                 .ResultadosScratch
                 .Include(res => res.Bloques)
+                .Include(res => res.IInfoScratch_General)
+                .Include(res => res.IInfoScratch_Sprite)
                 .FirstOrDefaultAsync(res =>
                 res.CalificacionId == calificacionId &&
                 res.General);
+        }
+        public void Add_InfoScratch(IInfoScratch info)
+        {
+            if (info is IInfoScratch_General generalInfo)
+                Add<IInfoScratch_General>(generalInfo);
+            if (info is IInfoScratch_Sprite spriteInfo)
+                Add(spriteInfo);
         }
 
 
