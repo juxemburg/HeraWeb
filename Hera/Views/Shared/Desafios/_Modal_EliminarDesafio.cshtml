@@ -1,0 +1,38 @@
+﻿@model Desafio
+
+<div class="modal fade" id="modal-delete-@Model.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <div class="modal-title" id="myModalLabel">
+                    <h2>
+                        <span class="title">Eliminar</span>
+                        Desafío
+                    </h2>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    ¿Está seguro que desea eliminar el desafío?
+                    <form asp-action="Delete"
+                          asp-controller="Desafios"
+                          asp-route-id="@Model.Id"
+                          asp-antiforgery="true">
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary btn-round">
+                                Eliminar
+                                <i class="material-icons icon-lg">
+                                    delete
+                                </i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

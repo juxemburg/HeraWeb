@@ -80,9 +80,11 @@
                                 <a class="btn btn-sm btn-info btn-round" asp-action="Edit">
                                     <i class="material-icons">create</i>
                                 </a>
-                                <a class="btn btn-sm btn-round btn-danger" asp-action="Delete">
+                                <button class="btn btn-sm btn-round btn-danger"
+                                        data-toggle="modal"
+                                        data-target="#modal-delete-@item.Id">
                                     <i class="material-icons">delete_forever</i>
-                                </a>
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -116,5 +118,6 @@
                 </div>
             </div>
         </div>
+        @await Html.PartialAsync("Desafios/_Modal_EliminarDesafio", item)
     }
 }

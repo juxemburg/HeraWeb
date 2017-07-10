@@ -70,5 +70,19 @@ namespace Hera.Controllers.ControllersMvc
             }
             return View(model);
         }
+
+        [HttpPost("{id}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var profId = await _userService.Get_ProfesorId(User.Claims);
+            if(await _data.Exist_DesafioP(id, profId))
+            {
+                await _data.Delete_Desafio(id);
+                var res = await _data.SaveAllAsync();
+                return RedirectToAction("Index", "ProfesorDesafio");
+            }
+            return NotFound();
+        }
     }
 }

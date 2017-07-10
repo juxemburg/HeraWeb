@@ -46,6 +46,8 @@ namespace Hera.Data
         Task<Desafio> Find_Desafio(int id);
         Task<bool> Exist_Desafio(int id);
         Task<bool> Exist_Desafio(int idDesafio, int idCurso);
+        Task<bool> Exist_DesafioP(int id, int idProfesor);
+        Task Delete_Desafio(int id);
 
         //Cursos
         void AddCurso(Curso model);

@@ -96,21 +96,21 @@ namespace Hera.Data
                 .HasOne(e => e.Desafio)
                 .WithOne(e2 => e2.InfoDesafio)
                 .HasForeignKey<InfoDesafio>(e => e.DesafioId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<IInfoScratch_General>()
                 .HasOne(e => e.ResultadoScratch)
                 .WithOne(e2 => e2.IInfoScratch_General)
                 .HasForeignKey<IInfoScratch_General>
                 (e => e.ResultadoScratchId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<IInfoScratch_Sprite>()
                 .HasOne(e => e.ResultadoScratch)
                 .WithOne(e2 => e2.IInfoScratch_Sprite)
                 .HasForeignKey<IInfoScratch_Sprite>
                 (e => e.ResultadoScratchId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             // Customize the ASP.NET Identity model and override the defaults if needed.

@@ -10,15 +10,19 @@ using System.Security.Claims;
 using System.Data.SqlClient;
 using Entities.Calificaciones;
 using Entities.Valoracion;
+using Hera.Services;
 
 namespace Hera.Data
 {
     public class DataAccess_Sql : IDataAccess
     {
         private ApplicationDbContext _context;
+        private FileManagerService _fmService;
 
-        public DataAccess_Sql(ApplicationDbContext context)
+        public DataAccess_Sql(ApplicationDbContext context,
+            FileManagerService fmService)
         {
+            _fmService = fmService;
             _context = context;
         }
 
@@ -39,6 +43,10 @@ namespace Hera.Data
         public void Edit<T>(T entity) where T : class
         {
             _context.Entry<T>(entity).State = EntityState.Modified;
+        }
+        public void Delete<T>(T entity) where T : class
+        {
+            _context.Entry<T>(entity).State = EntityState.Deleted;
         }
 
         public void AddCurso(Curso model)
@@ -80,14 +88,11 @@ namespace Hera.Data
             Add<Profesor>(model);
         }
 
-        public void Delete<T>(T entity) where T : class
+        
+        public async Task<bool> Exist_Desafio(int idDesafio)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> Exist_Desafio(int id)
-        {
-            return (await _context.Desafios.FindAsync(id)) != null;
+            return await _context.Desafios
+                .AnyAsync(d => d.Id == idDesafio);
         }
         public async Task<bool> Exist_Desafio(int idDesafio, int idCurso)
         {
@@ -96,6 +101,21 @@ namespace Hera.Data
                 .AnyAsync(des => (des.CursoId == idCurso &&
                 des.DesafioID == idDesafio) ||
                 des.Curso.DesafioId == idDesafio);
+        }
+        public async Task<bool> Exist_DesafioP(int id, int idProfesor)
+        {
+            return await _context.Desafios
+                .AnyAsync(d => d.Id == id && d.ProfesorId == idProfesor);
+        }
+        public async Task Delete_Desafio(int id)
+        {
+            var desafio = await Find_Desafio(id);
+            if(desafio != null)
+            {
+                _fmService.DeleteFile(desafio.DirSolucion);
+                Delete<Desafio>(desafio);
+            }
+                
         }
 
         public async Task<Curso> Find_Curso(int id)

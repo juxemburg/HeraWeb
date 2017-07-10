@@ -94,7 +94,7 @@ namespace Hera.Controllers.ControllersApi.PassiveControllers
         }
 
 
-        [HttpGet("DeleteAllFiles")]
+        [HttpGet("DeleteAllFilesgen V")]
         public IActionResult DeleteAllFiles()
         {
             try
