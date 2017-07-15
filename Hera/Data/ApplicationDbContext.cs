@@ -32,6 +32,7 @@ namespace Hera.Data
         public DbSet<BloqueScratch> BloquesScratch { get; set; }
         public DbSet<IInfoScratch_Sprite> InfoSprites { get; set; }
         public DbSet<IInfoScratch_General> InfoGenerales { get; set; }
+        public DbSet<Rel_Rating> Ratings { get; set; }
 
 
 
@@ -111,6 +112,10 @@ namespace Hera.Data
                 .HasForeignKey<IInfoScratch_Sprite>
                 (e => e.ResultadoScratchId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Rel_Rating>()
+                .HasKey(entity =>
+                new { entity.ProfesorId ,entity.DesafioId });
 
 
             // Customize the ASP.NET Identity model and override the defaults if needed.

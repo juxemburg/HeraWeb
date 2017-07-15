@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Hera.Data;
 using Microsoft.EntityFrameworkCore;
+using Hera.Services;
 
 namespace Hera.Controllers
 {
@@ -14,10 +15,13 @@ namespace Hera.Controllers
     public class AutocompleteController : Controller
     {
         private IDataAccess _data;
+        private NotificationSerivce _notificationService;
 
-        public AutocompleteController(IDataAccess data)
+        public AutocompleteController(IDataAccess data,
+            NotificationSerivce notificationService)
         {
             _data = data;
+            _notificationService = notificationService;
         }
 
         [HttpGet("Desafios/{search}")]
@@ -33,6 +37,12 @@ namespace Hera.Controllers
                 }).ToListAsync();
 
             return Ok(res);
+        }
+
+        [HttpGet("Message")]
+        public async Task<IActionResult> Message()
+        {
+            return Ok(_notificationService.Message());
         }
     }
 }

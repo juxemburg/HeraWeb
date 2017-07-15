@@ -2,6 +2,7 @@
 using Entities.Usuarios;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Entities.Desafios
@@ -20,5 +21,27 @@ namespace Entities.Desafios
         public InfoDesafio InfoDesafio { get; set; }
         public virtual List<RegistroCalificacion> Calificaciones { get; set; }
 
+        public virtual List<Rel_Rating> Ratings { get; set; }
+        public virtual List<Rel_DesafiosCursos> Cursos { get; set; }
+
+        public float AverageRating
+        {
+            get
+            {
+                if (Ratings == null || Ratings.Count == 0)
+                    return 0f;
+                return (float)Ratings.Average(r => r.Rating);
+            }
+        }
+        public int RatingCount
+        {
+            get
+            {
+                if (Ratings == null)
+                    return 0;
+                return Ratings.Count;
+            }
+        }
+        public int Popularity { get => (Cursos == null) ? 0 : Cursos.Count; }
     }
 }

@@ -60,6 +60,7 @@ namespace Hera
             {
                 config.Password.RequireNonAlphanumeric = false;
             });
+            services.AddScoped<NotificationSerivce>();
             services.AddScoped<IDataAccess, DataAccess_Sql>();
             services.AddScoped<DesafioService>();
             services.AddTransient<DbSeeder>();

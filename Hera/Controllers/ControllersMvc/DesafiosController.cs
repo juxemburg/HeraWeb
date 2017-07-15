@@ -44,7 +44,7 @@ namespace Hera.Controllers.ControllersMvc
             var model = await _data.Find_Desafio(desafioId);
 
             if (model != null)
-                return View(model);
+                return View(new DesafioDetailsViewModel(model));
             return NotFound();
         }
 

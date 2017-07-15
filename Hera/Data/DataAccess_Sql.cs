@@ -152,6 +152,8 @@ namespace Hera.Data
             return await _context.Desafios
                 .Include(d => d.InfoDesafio)
                 .Include(d => d.Profesor)
+                .Include(d => d.Ratings)
+                .Include(d => d.Cursos)
                 .FirstAsync(d => d.Id == id);
         }
 

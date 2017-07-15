@@ -1,4 +1,4 @@
-﻿@model Desafio
+﻿@model DesafioDetailsViewModel
 @{
     ViewData["Title"] = "Details";
 }
@@ -12,6 +12,10 @@
                 <p>
                     <strong>Descripción:</strong>
                     @Model.Descripcion
+                </p>
+                <p>
+                    <strong>Usado en: </strong>
+                    @Model.Popularidad desafío(s)
                 </p>
             </div>
             <div class="col-sm-6">
