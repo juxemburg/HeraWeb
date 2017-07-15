@@ -1,0 +1,21 @@
+@model float
+@{ 
+    var iconSize = ViewData["rating-size"];
+
+    if (Model <= 0)
+    {
+        <i class="material-icons @iconSize">star_border</i>
+    }
+    else
+    {
+        if (Model < 1)
+        {
+            <i class="material-icons @iconSize">star_half</i>
+        }
+        else
+        {
+            <i class="material-icons @iconSize">star</i>
+        }
+
+    }
+}

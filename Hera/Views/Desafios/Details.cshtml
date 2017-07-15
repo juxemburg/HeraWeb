@@ -1,6 +1,7 @@
 ﻿@model DesafioDetailsViewModel
 @{
     ViewData["Title"] = "Details";
+    ViewData["rating-size"] = "icon-xxl";
 }
 
 <section>
@@ -16,6 +17,10 @@
                 <p>
                     <strong>Usado en: </strong>
                     @Model.Popularidad desafío(s)
+                </p>
+                <p>
+                    <strong>Calificación:</strong>
+                    @Html.Partial("Rating/_RatingPartial", Model.Valoracion, ViewData);
                 </p>
             </div>
             <div class="col-sm-6">

@@ -1,0 +1,12 @@
+@model RatingViewModel
+
+@{
+    var iconSize = ViewData["rating-size"];
+}
+<div class="text-warning">
+    @for (float i = 0; i < 5; i++)
+    {
+        @Html.Partial("Rating/_StarPartial", Model.Average - i, ViewData);
+    }
+    <span class="title rating-text @iconSize">(@Model.ReviewCount)</span>
+</div>

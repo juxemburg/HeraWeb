@@ -1,8 +1,9 @@
-﻿@model PaginationViewModel<Desafio>
+﻿@model PaginationViewModel<DesafioDetailsViewModel>
 
 @{
     ViewData["Title"] = "Desafios";
     ViewData["Pagination-Action"] = "Index";
+    ViewData["rating-size"] = "icon-md";
 }
 
 <section>
@@ -18,7 +19,7 @@
 
 <section>
     <div class="container-fluid">
-        <table class="table table-condensed">
+        <table class="table table-condensed table-responsive">
             <thead>
                 <tr>
                     <th>
@@ -30,6 +31,8 @@
                     <th>
                         Descipción
                     </th>
+                    <th>Popularidad</th>
+                    <th>Valoración</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,6 +51,13 @@
                             <p>
                                 @item.Descripcion
                             </p>
+                        </td>
+                        <td>
+                            <i class="material-icons icon-lg">person</i>
+                            <span class="rating-text icon-md">@item.Popularidad</span>
+                        </td>
+                        <td>
+                            @Html.Partial("Rating/_RatingPartial", item.Valoracion, ViewData)
                         </td>
                     </tr>
                 }

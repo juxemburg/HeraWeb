@@ -10,6 +10,7 @@ using Entities.Desafios;
 using Hera.Models.EntitiesViewModels;
 using Hera.Services.UserServices;
 using Hera.Models.EntitiesViewModels.Desafios;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -33,9 +34,13 @@ namespace Hera.Controllers.ControllersMvc
         {
             var searchString = searchModel.SearchString;
             var model = _data.GetAll_Desafios(null,null,
-                searchString,searchModel.Map(),searchModel.EqualSearchModel);
-            return View(
-                new PaginationViewModel<Desafio>(model, skip, take));
+                searchString,searchModel.Map(),searchModel.EqualSearchModel)
+                .AsNoTracking()
+                .Select(m =>
+                new DesafioDetailsViewModel(m))
+                .ToList();
+            return View(new PaginationViewModel<DesafioDetailsViewModel>(
+                model, skip, take));
         }
 
         [HttpGet("{desafioId}")]

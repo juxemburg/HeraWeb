@@ -1,8 +1,9 @@
-﻿@model PaginationViewModel<Desafio>
+﻿@model PaginationViewModel<DesafioDetailsViewModel>
 
 @{
     ViewData["Title"] = "Desafios";
     ViewData["Pagination-Action"] = "Index";
+    ViewData["rating-size"] = "icon-md";
 }
 
 <section>
@@ -44,6 +45,8 @@
                     <th>
                         Descipción
                     </th>
+                    <th>Popularidad</th>
+                    <th>Valoración</th>
                     <th class="text-center">
                         Criterios de Evaluación
                     </th>
@@ -67,6 +70,13 @@
                             <p>
                                 @item.Descripcion
                             </p>
+                        </td>
+                        <td>
+                            <i class="material-icons icon-lg">person</i>
+                            <span class="rating-text icon-md">@item.Popularidad</span>
+                        </td>
+                        <td>
+                            @Html.Partial("Rating/_RatingPartial", item.Valoracion, ViewData)
                         </td>
                         <td class="text-center">
                             <button class="btn btn-info btn-simple"
@@ -118,6 +128,6 @@
                 </div>
             </div>
         </div>
-        @await Html.PartialAsync("Desafios/_Modal_EliminarDesafio", item)
+        @await Html.PartialAsync("Desafios/_Modal_EliminarDesafio", item.Map())
     }
 }

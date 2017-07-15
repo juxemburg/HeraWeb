@@ -74,3 +74,19 @@ pre.prettyprint {
     margin-bottom: 60px;
 }
 
+.rating-text {
+    position:relative;
+}
+.rating-text.icon-md {
+    top: -4px;
+}
+.rating-text.icon-xl {
+    top:-12px;
+}
+.rating-text.icon-xxl {
+    top: -15px;
+    font-size:20px;
+}
+.table {
+    display:block !important;
+}

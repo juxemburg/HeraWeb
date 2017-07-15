@@ -9,6 +9,7 @@ using Hera.Services.UserServices;
 using Hera.Models.UtilityViewModels;
 using Entities.Desafios;
 using Hera.Models.EntitiesViewModels.Desafios;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hera.Controllers.ControllersMvc.Profesor
 {
@@ -33,9 +34,14 @@ namespace Hera.Controllers.ControllersMvc.Profesor
             var profId = await _usrService.Get_ProfesorId(User.Claims);
             var model = _data.GetAll_Desafios(null, profId,
                 searchModel.SearchString, searchModel.Map(),
-                searchModel.EqualSearchModel);
+                searchModel.EqualSearchModel)
+                .AsNoTracking()
+                .Select(m => 
+                new DesafioDetailsViewModel(m))
+                .ToList();
             
-            return View(new PaginationViewModel<Desafio>(model, skip, take));
+            return View(new PaginationViewModel<DesafioDetailsViewModel>(
+                model, skip, take));
         }
 
         [HttpGet("{idDesafio}")]

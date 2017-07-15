@@ -401,11 +401,13 @@
 }
 
 .material-icons.icon-lg {
-    font-weight: 900;
     font-size: 24px !important;
 }
 
 .material-icons.icon-xl {
-    font-weight: 900;
     font-size: 36px !important;
+}
+
+.material-icons.icon-xxl {
+    font-size: 46px !important;
 }

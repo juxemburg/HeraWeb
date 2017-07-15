@@ -245,7 +245,9 @@ namespace Hera.Data
             var query = Enumerable.Empty<Desafio>().AsQueryable();
             query = _context.Desafios
                 .Include(d => d.InfoDesafio)
-                .Include(d => d.Profesor);
+                .Include(d => d.Profesor)
+                .Include(d => d.Ratings)
+                .Include(d => d.Cursos);
 
             if(!string.IsNullOrWhiteSpace(searchString))
             {

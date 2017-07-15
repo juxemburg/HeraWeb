@@ -46,5 +46,21 @@ namespace Hera.Models.EntitiesViewModels.Desafios
             this.Calificaciones = desafio.Calificaciones;
         }
 
+        public Desafio Map()
+        {
+            return new Desafio()
+            {
+                Id = this.Id,
+                Nombre = Nombre,
+                Descripcion = Descripcion,
+                DirDesafioInicial = DirDesafioInicial,
+                DirSolucion = DirSolucion,
+                Calificaciones = Calificaciones,
+                InfoDesafio = InfoDesafio,
+                Profesor = Profesor,
+                ProfesorId = Profesor.Id
+            };
+        }
+
     }
 }
