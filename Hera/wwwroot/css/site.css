@@ -87,6 +87,10 @@ pre.prettyprint {
     top: -15px;
     font-size:20px;
 }
-.table {
-    display:block !important;
+
+@media screen and (max-width: 767px)
+{
+    .table-responsive {
+        display: block !important;
+    }
 }
