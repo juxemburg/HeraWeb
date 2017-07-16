@@ -14,3 +14,20 @@
 
 @Html.Partial("Evaluacion/_EvaluacionScratchPartial", Model)
 
+
+@section Modals {
+
+    @await Html.PartialAsync("_ResultadoInfoGeneral", Model.ResultadoGeneral)
+    @await Html.PartialAsync("_Modal_ResultadoScratchPartial", Model.ResultadoGeneral)
+
+    @foreach (var item in Model.ScriptsResultados)
+    {
+        @if (!item.General)
+        {
+            @await Html.PartialAsync("_ResultadoInfoSprite", item)
+        }
+        @await Html.PartialAsync("_Modal_ResultadoScratchPartial", item)
+    }
+}
+
+

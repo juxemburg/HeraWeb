@@ -9,9 +9,10 @@ using Entities.Usuarios;
 namespace Hera.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170716171640_V4_9")]
+    partial class V4_9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -594,7 +595,7 @@ namespace Hera.Migrations
                     b.HasOne("Entities.Calificaciones.RegistroCalificacion", "RegistroCalificacion")
                         .WithMany("Calificaciones")
                         .HasForeignKey("CursoId", "EstudianteId", "DesafioId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("Entities.Calificaciones.CalificacionCualitativa", b =>

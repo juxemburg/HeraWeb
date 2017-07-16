@@ -402,6 +402,9 @@ namespace Hera.Data
             
             return await _context.Calificaciones
                 .Include(cal => cal.Resultados)
+                .Include("Resultados.Bloques")
+                .Include("Resultados.IInfoScratch_General")
+                .Include("Resultados.IInfoScratch_Sprite")
                 .FirstOrDefaultAsync(cal => cal.Id == calificacionId);
         }
 
@@ -412,6 +415,10 @@ namespace Hera.Data
                 .Where(cal => cal.EstudianteId == estudianteId &&
                 cal.Id == calificacionId && cal.DesafioId == desafioId &&
                 cal.CursoId == cursoId)
+                .Include(cal => cal.Resultados)
+                .Include("Resultados.Bloques")
+                .Include("Resultados.IInfoScratch_General")
+                .Include("Resultados.IInfoScratch_Sprite")
                 .FirstOrDefaultAsync();
             return model;
         }

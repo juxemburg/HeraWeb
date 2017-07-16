@@ -98,7 +98,7 @@ namespace Hera.Data
                 .WithMany(e2 => e2.Calificaciones)
                 .HasForeignKey(entity =>
                 new { entity.CursoId, entity.EstudianteId, entity.DesafioId })
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Calificacion>()
                 .HasMany(e => e.Resultados)
