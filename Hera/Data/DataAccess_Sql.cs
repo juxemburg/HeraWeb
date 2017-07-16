@@ -117,6 +117,20 @@ namespace Hera.Data
             }
                 
         }
+        public async Task Delete_Desafio(int cursoId, int desafioId)
+        {
+            var rel = await Find_Rel_DesafiosCursos(desafioId, cursoId);
+            if(rel != null)
+            {
+                Delete<Rel_DesafiosCursos>(rel);
+                var calificaciones = 
+                    GetAll_RegistroCalificacion(cursoId, null, desafioId);
+                foreach (var calificacion in calificaciones)
+                {
+                    Delete<RegistroCalificacion>(calificacion);
+                }
+            }
+        }
 
         public async Task<Curso> Find_Curso(int id)
         {
@@ -145,6 +159,13 @@ namespace Hera.Data
                 .FirstOrDefaultAsync(rel => rel.CursoId == idCurso &&
                 rel.EstudianteId == idEstudiante);
                 
+        }
+        public async Task<Rel_DesafiosCursos> Find_Rel_DesafiosCursos
+            (int desafioId, int cursoId)
+        {
+            return await _context.Rel_Cursos_Desafios
+                .FirstAsync(r => r.CursoId == cursoId &&
+                r.DesafioID == desafioId);
         }
 
         public async Task<Desafio> Find_Desafio(int id)

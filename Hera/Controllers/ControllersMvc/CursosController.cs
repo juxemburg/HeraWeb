@@ -134,6 +134,23 @@ namespace Hera.Controllers.ControllersMvc
             return RedirectToAction("Details","ProfesorCurso", new { idCurso = model.Id });
         }
 
+        [HttpPost]
+        [Authorize(Roles ="Profesor")]
+        public async Task<IActionResult> RemoveDesafio(int desafioId,
+            int cursoId)
+        {
+            try
+            {
+                if(await _data.Exist_Desafio(desafioId, cursoId))
+                {
+                    await _data.Delete_Desafio(cursoId, desafioId);
+                    await _data.SaveAllAsync();
+                }
+            }
+            catch (Exception) { }
+            return RedirectToAction("Details", "ProfesorCurso", new { idCurso = cursoId });
+        }
+
 
     }
 }

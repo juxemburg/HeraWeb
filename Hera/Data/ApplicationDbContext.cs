@@ -62,7 +62,7 @@ namespace Hera.Data
                 .HasKey(entity => 
                 new { entity.DesafioID, entity.CursoId });
 
-            //FK_RegistroCalificacion -> Rel_CrusoEstudiantes
+            //Registro Calificacion
             builder.Entity<RegistroCalificacion>()
                 .HasOne(e => e.Rel_CursoEstudiantes)
                 .WithMany(rel => rel.Registros)
@@ -75,7 +75,7 @@ namespace Hera.Data
                 .WithMany(e => e.Calificaciones)
                 .HasForeignKey(e => e.DesafioId)
                 .OnDelete(DeleteBehavior.SetNull);
-
+            
             builder.Entity<RegistroCalificacion>()
                 .HasKey(entity =>
                 new { entity.CursoId, entity.EstudianteId, entity.DesafioId });
@@ -85,14 +85,43 @@ namespace Hera.Data
                 .WithOne(e2 => e2.RegistroCalificacion)
                 .HasForeignKey<CalificacionCualitativa>(entity =>
                 new { entity.CursoId, entity.EstudianteId, entity.DesafioId })
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Entity<RegistroCalificacion>()
+                .HasMany(e => e.Calificaciones)
+                .WithOne(e2 => e2.RegistroCalificacion)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            //Calificacion
             builder.Entity<Calificacion>()
                 .HasOne(e => e.RegistroCalificacion)
                 .WithMany(e2 => e2.Calificaciones)
                 .HasForeignKey(entity =>
                 new { entity.CursoId, entity.EstudianteId, entity.DesafioId })
                 .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Calificacion>()
+                .HasMany(e => e.Resultados)
+                .WithOne(e2 => e2.Calificacion)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<ResultadoScratch>()
+                .HasMany(e => e.Bloques)
+                .WithOne(e2 => e2.ResultadoScratch)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<ResultadoScratch>()
+                .HasOne(e => e.IInfoScratch_General)
+                .WithOne(e2 => e2.ResultadoScratch)
+                .HasForeignKey<ResultadoScratch>(e => e.IInfoScratch_GeneralId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<ResultadoScratch>()
+                .HasOne(e => e.IInfoScratch_Sprite)
+                .WithOne(e2 => e2.ResultadoScratch)
+                .HasForeignKey<ResultadoScratch>(e => e.IInfoScratch_SpriteId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.Entity<InfoDesafio>()
                 .HasOne(e => e.Desafio)
                 .WithOne(e2 => e2.InfoDesafio)
