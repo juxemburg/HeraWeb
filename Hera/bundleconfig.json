@@ -16,6 +16,12 @@
       "wwwroot/css/Loading/loading.css"
     ]
   },
+  {
+    "outputFileName": "wwwroot/css/rating.min.css",
+    "inputFiles": [
+      "wwwroot/css/Rating/rating.css"
+    ]
+  },
 
   {
     "outputFileName": "wwwroot/css/site.min.css",
@@ -85,6 +91,19 @@
     "outputFileName": "wwwroot/js/site.min.js",
     "inputFiles": [
       "wwwroot/js/site.js"
+    ],
+    // Optionally specify minification options
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    // Optionally generate .map file
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/rating.min.js",
+    "inputFiles": [
+      "wwwroot/js/Rating/rating.js"
     ],
     // Optionally specify minification options
     "minify": {

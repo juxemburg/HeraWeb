@@ -3,7 +3,10 @@
     ViewData["Title"] = "Details";
     ViewData["rating-size"] = "icon-xxl";
 }
-
+@section Styles
+{
+    <link href="~/css/rating.min.css" rel="stylesheet" />
+}
 <section>
     <div class="container">
         <h2 class="title">@Model.Nombre</h2>
@@ -21,6 +24,12 @@
                 <p>
                     <strong>Calificación:</strong>
                     @Html.Partial("Rating/_RatingPartial", Model.Valoracion, ViewData);
+
+                    <button class="btn btn-primary btn-small btn-round"
+                            data-toggle="modal"
+                            data-target="#modal-rate">
+                        Califica éste desafío
+                    </button>
                 </p>
             </div>
             <div class="col-sm-6">
@@ -60,3 +69,57 @@
     </div>
 </section>
 
+@section Modals {
+<div class="modal fade" id="modal-rate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 id="myModalLabel">
+                    <span class="title">Calificar</span>
+                    Desafío
+                </h3>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <form asp-action="Rate"
+                          asp-route-desafioId="@Model.Id">
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-sm-5">Calificación del desafío:</label>
+                                <div class="col-sm-7">
+                                    <ul id="star-input" class="c-rating"></ul>
+                                </div>
+                            </div>
+                            <input id="Rate" type="number" name="Rate" value=""  hidden/>
+                            
+                            <div class="form-group col-sm-12 text-center">
+                                <button type="submit" class="btn btn-primary btn-round">Calificar</button>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+@section Scripts{
+    <script src="~/js/rating.min.js"></script>
+    <script>
+        var starElement = document.getElementById('star-input');
+        var currentRating = 0;
+        var maxRating = 5;
+        var inputElement = document.getElementById('Rate');
+        var myRating = rating(starElement, currentRating, maxRating,
+            (rating) => {
+                inputElement.value = rating;
+            });
+    </script>
+    
+}

@@ -11,6 +11,7 @@ using Hera.Models.EntitiesViewModels;
 using Hera.Services.UserServices;
 using Hera.Models.EntitiesViewModels.Desafios;
 using Microsoft.EntityFrameworkCore;
+using Hera.Models.EntitiesViewModels.Ratings;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -33,8 +34,8 @@ namespace Hera.Controllers.ControllersMvc
             int skip = 0, int take = 10)
         {
             var searchString = searchModel.SearchString;
-            var model = _data.GetAll_Desafios(null,null,
-                searchString,searchModel.Map(),searchModel.EqualSearchModel)
+            var model = _data.GetAll_Desafios(null, null,
+                searchString, searchModel.Map(), searchModel.EqualSearchModel)
                 .AsNoTracking()
                 .Select(m =>
                 new DesafioDetailsViewModel(m))
@@ -76,12 +77,33 @@ namespace Hera.Controllers.ControllersMvc
             return View(model);
         }
 
+
+        [HttpPost("{desafioId}")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Profesor")]
+        public async Task<IActionResult> Rate(int desafioId,
+            RateViewModel model)
+        {
+            var idProfesor = await _userService.Get_ProfesorId(User.Claims);
+            var value = await _data.Exist_Desafio(desafioId);
+            if (!value)
+                return NotFound();
+            if (ModelState.IsValid)
+            {
+                await _data.Calificar_Desafio(desafioId, idProfesor,
+                        model.Rate);
+                await _data.SaveAllAsync();
+            }
+            return RedirectToAction("Details",
+                new { desafioId = desafioId });
+        }
+
         [HttpPost("{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
             var profId = await _userService.Get_ProfesorId(User.Claims);
-            if(await _data.Exist_DesafioP(id, profId))
+            if (await _data.Exist_DesafioP(id, profId))
             {
                 await _data.Delete_Desafio(id);
                 var res = await _data.SaveAllAsync();

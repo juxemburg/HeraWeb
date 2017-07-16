@@ -50,6 +50,7 @@ namespace Hera.Data
         Task<bool> Exist_DesafioP(int id, int idProfesor);
         Task Delete_Desafio(int id);
         Task Delete_Desafio(int cursoId, int desafioId);
+        Task Calificar_Desafio(int desafioId, int profesorId, int calificacion);
 
         //Cursos
         void AddCurso(Curso model);
@@ -66,6 +67,8 @@ namespace Hera.Data
         Task<Rel_CursoEstudiantes> Find_Rel_CursoEstudiantes(int idCurso,
             int idEstudiante);
 
+        //Rel_Desafio_Profesor
+        Task<Rel_Rating> Find_Rel_Rating(int desafioId, int profesorId);
 
         //RegistroCalificacion
         Task<RegistroCalificacion> Find_RegistroCalificacion(

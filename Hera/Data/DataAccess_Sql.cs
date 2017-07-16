@@ -178,6 +178,36 @@ namespace Hera.Data
                 .FirstAsync(d => d.Id == id);
         }
 
+        public async Task Calificar_Desafio(int desafioId, int profesorId,
+            int calificacion)
+        {
+            var rating = await Find_Rel_Rating(desafioId,
+                profesorId);
+            if(rating != null)
+            {
+                rating.Rating = calificacion;
+                Edit<Rel_Rating>(rating);
+            }
+            else
+            {
+                rating = new Rel_Rating()
+                {
+                    DesafioId = desafioId,
+                    ProfesorId = profesorId,
+                    Rating = calificacion
+                };
+                Add<Rel_Rating>(rating);
+            }
+        }
+
+        public async Task<Rel_Rating> Find_Rel_Rating(int desafioId,
+            int profesorId)
+        {
+            return await _context.Ratings
+                .FirstOrDefaultAsync(r => r.DesafioId == desafioId
+                && r.ProfesorId == profesorId);
+        }
+
         public async Task<Estudiante> Find_Estudiante(int id)
         {
             return await _context.Estudiantes.FindAsync(id);
