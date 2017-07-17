@@ -15,13 +15,10 @@ namespace Hera.Controllers
     public class AutocompleteController : Controller
     {
         private IDataAccess _data;
-        private NotificationSerivce _notificationService;
 
-        public AutocompleteController(IDataAccess data,
-            NotificationSerivce notificationService)
+        public AutocompleteController(IDataAccess data)
         {
             _data = data;
-            _notificationService = notificationService;
         }
 
         [HttpGet("Desafios/{search}")]
@@ -39,10 +36,6 @@ namespace Hera.Controllers
             return Ok(res);
         }
 
-        [HttpGet("Message")]
-        public async Task<IActionResult> Message()
-        {
-            return Ok(_notificationService.Message());
-        }
+        
     }
 }

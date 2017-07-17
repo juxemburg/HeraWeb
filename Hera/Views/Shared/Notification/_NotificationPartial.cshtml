@@ -1,0 +1,56 @@
+﻿
+@if (ViewData["success-alerts"] != null)
+{
+    var alterts = (IEnumerable<string>)ViewData["success-alerts"];
+    foreach (var item in alterts)
+    {
+        <div class="alert alert-success">
+            <div class="container-fluid">
+                <div class="alert-icon">
+                    <i class="material-icons">check</i>
+                </div>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                </button>
+                <b>Éxito:</b> @item
+            </div>
+        </div>
+    }
+}
+@if (ViewData["warning-alerts"] != null)
+{
+    var alterts = (IEnumerable<string>)ViewData["warning-alerts"];
+    foreach (var item in alterts)
+    {
+        <div class="alert alert-warning">
+            <div class="container-fluid">
+                <div class="alert-icon">
+                    <i class="material-icons">warning</i>
+                </div>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                </button>
+                <b>Alerta:</b> @item
+            </div>
+        </div>
+    }
+}
+@if (ViewData["error-alerts"] != null)
+{
+    var alterts = (IEnumerable<string>)ViewData["error-alerts"];
+    foreach (var item in alterts)
+    {
+        <div class="alert alert-danger">
+            <div class="container-fluid">
+                <div class="alert-icon">
+                    <i class="material-icons">error_outline</i>
+                </div>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                </button>
+                <b>Error:</b> @item
+            </div>
+        </div>
+    }
+}
+

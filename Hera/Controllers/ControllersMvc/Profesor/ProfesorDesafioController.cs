@@ -39,7 +39,7 @@ namespace Hera.Controllers.ControllersMvc.Profesor
                 .Select(m => 
                 new DesafioDetailsViewModel(m))
                 .ToList();
-            
+            this.GetAlerts();
             return View(new PaginationViewModel<DesafioDetailsViewModel>(
                 model, skip, take));
         }

@@ -111,6 +111,7 @@
     <Folder Include="Views\Shared\Default\" />
     <Folder Include="Views\Shared\Desafios\" />
     <Folder Include="Views\Shared\Evaluacion\" />
+    <Folder Include="Views\Shared\Notification\" />
     <Folder Include="Views\Shared\Rating\" />
     <Folder Include="Views\Shared\Util\" />
   </ItemGroup>

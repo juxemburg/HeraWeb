@@ -11,6 +11,7 @@ using Hera.Data;
 using Entities.Calificaciones;
 using Microsoft.AspNetCore.Authorization;
 using Hera.Services.UserServices;
+using Hera.Controllers;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -26,11 +27,12 @@ namespace Hera.Controllers.ControllersMvc
             _data = data;
             _fileManager = service;
             _userService = userService;
+
         }
 
         [HttpPost]
         [DisableFormValueModelBinding]
-        [Authorize(Roles ="Profesor")]
+        [Authorize(Roles = "Profesor")]
         public async Task<IActionResult> UploadDesafio()
         {
             string fileName
@@ -40,12 +42,12 @@ namespace Hera.Controllers.ControllersMvc
             using (var stream = System.IO.File.Create(fileName))
             {
                 formModel = await Request.StreamFile(stream);
-                if(stream.Length >0)
+                if (stream.Length > 0)
                 {
                     viewModel.DirArchivo = fileName;
                 }
             }
-            
+
             var bindingSuccessful = await TryUpdateModelAsync(viewModel, prefix: "",
                valueProvider: formModel);
 
@@ -57,7 +59,9 @@ namespace Hera.Controllers.ControllersMvc
             var profesorId = await _userService.Get_ProfesorId(User.Claims);
             _data.AddDesafio(viewModel.Map(profesorId));
             await _data.SaveAllAsync();
-            return RedirectToAction("Index","ProfesorDesafio");
+            this.SetAlerts("success-alerts",
+                "El desafío se creó exitosamente");
+            return RedirectToAction("Index", "ProfesorDesafio");
 
         }
 
@@ -67,7 +71,7 @@ namespace Hera.Controllers.ControllersMvc
         [DisableFormValueModelBinding]
         public async Task<IActionResult> UploadResultado()
         {
-            
+
             string fileName
                 = "Files/Temp/" + _fileManager.GetFilePath() + ".sb2";
             FormValueProvider formModel;
@@ -89,21 +93,21 @@ namespace Hera.Controllers.ControllersMvc
             var model = await _data.Find_RegistroCalificacion(
                 viewModel.CursoId, viewModel.EstudianteId,
                 viewModel.DesafioId);
-            if(model != null && model.Iniciada)
+            if (model != null && model.Iniciada)
             {
                 var cal = model.CalificacionPendiente;
                 cal.TerminarCalificacion(fileName);
                 _data.Edit<Calificacion>(cal);
                 await _data.SaveAllAsync();
             }
-            
-            
+
+
 
             return RedirectToAction("Desafio", "EstudianteCurso",
-                new { idCurso = model.CursoId, idDesafio = model.DesafioId});
+                new { idCurso = model.CursoId, idDesafio = model.DesafioId });
         }
 
-        [Authorize(Roles ="Profesor")]
+        [Authorize(Roles = "Profesor")]
         public async Task<FileResult> DownloadEscenario(int desafioId)
         {
             var desafio = await _data.Find_Desafio(desafioId);
@@ -115,15 +119,15 @@ namespace Hera.Controllers.ControllersMvc
             return null;
         }
 
-        [Authorize(Roles ="Estudiante, Profesor")]
+        [Authorize(Roles = "Estudiante, Profesor")]
         public async Task<FileResult> DownloadResultado(int estudianteId,
             int cursoId, int desafioId, int idCalificacion)
         {
             var calificacion = await _data.Find_Calificacion(idCalificacion,
                 estudianteId, cursoId, desafioId);
-            if(calificacion != null)
+            if (calificacion != null)
             {
-                var fileName = 
+                var fileName =
                     $"calificacion_{desafioId}_{cursoId}_{estudianteId}";
                 return getFile(calificacion.DirArchivo, fileName);
             }
@@ -132,7 +136,7 @@ namespace Hera.Controllers.ControllersMvc
 
         private FileResult getFile(string filePath, string fileName,
             string ext = "sb2")
-        {   
+        {
             byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
             return File(fileBytes, "application/x-msdownload",
                 $"{fileName}.{ext}");

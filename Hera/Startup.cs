@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Hera.Services.DesafiosServices;
 using Hera.Services.MessageServices;
 using Hera.Services.UserServices;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Hera
 {
@@ -33,7 +34,7 @@ namespace Hera
 
             if (_env.IsDevelopment())
             {
-                
+
                 builder.AddUserSecrets<Startup>();
             }
 
@@ -47,7 +48,7 @@ namespace Hera
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration
                 .GetConnectionString("HERAdb")));
@@ -73,7 +74,8 @@ namespace Hera
                 opt.Filters.Add(new RequireHttpsAttribute());
 
             });
-
+            services.AddSingleton<ITempDataProvider,
+                CookieTempDataProvider>();
             // Add application services.
             services.AddScoped<UserService>();
             services.AddTransient<IEmailSender, AuthMessageSender>();
