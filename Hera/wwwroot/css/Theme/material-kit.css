@@ -2534,7 +2534,7 @@ legend {
 }
 
 .progress {
-  height: 4px;
+  height: 10px;
   border-radius: 0;
   box-shadow: none;
   background: #DDDDDD;

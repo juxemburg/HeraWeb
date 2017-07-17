@@ -1,0 +1,11 @@
+@model float
+
+@{
+    var value = Math.Min(1, Model)*100;
+ }
+<div class="progress progress-line-success">
+    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="90"
+         aria-valuemin="0" aria-valuemax="100" style="width: @value%;">
+        
+    </div>
+</div>
