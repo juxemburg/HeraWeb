@@ -108,7 +108,7 @@ namespace Hera.Models.EntitiesViewModels
         public bool NestedOperators { get; set; }
 
         #endregion
-
+        
         public Desafio Map(int profesorId)
         {
             return new Desafio()

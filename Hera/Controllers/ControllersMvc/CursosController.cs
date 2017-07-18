@@ -127,7 +127,9 @@ namespace Hera.Controllers.ControllersMvc
                         _data.AddDesafio(desafio);
 
                     _data.AddDesafio(model.Id, desafio);
-                    await _data.SaveAllAsync();
+                    var res = await _data.SaveAllAsync();
+                    if(res)
+                        this.SetAlerts("success-alerts", "El desafío se agregó exitosamente");
                 }
                 catch (Exception) { }
             }
@@ -144,7 +146,9 @@ namespace Hera.Controllers.ControllersMvc
                 if(await _data.Exist_Desafio(desafioId, cursoId))
                 {
                     await _data.Delete_Desafio(cursoId, desafioId);
-                    await _data.SaveAllAsync();
+                    var res = await _data.SaveAllAsync();
+                    if(res)
+                        this.SetAlerts("success-alerts", "El desafío se removió exitosamente");
                 }
             }
             catch (Exception) { }

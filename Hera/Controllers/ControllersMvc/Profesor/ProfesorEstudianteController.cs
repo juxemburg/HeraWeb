@@ -42,6 +42,7 @@ namespace Hera.Controllers.ControllersMvc.Profesor
             {
                 return NotFound();
             }
+            
             var resultModel = new CalificacionCualitativaViewModel(
                 model,
                 desafio.Nombre);

@@ -1,0 +1,157 @@
+﻿@model ResultadoScratch
+@{
+    var info = Model.IInfoScratch_General;
+}
+
+<div class="row">
+    <h4><span class="title">Variables</span> Generales</h4>
+    <div class="col-sm-6">
+        <dl class="">
+            <dt>Más de un sprite tiene eventos</dt>
+            <dd>@Html.Partial("Util/_CompletadoPartial", info.EventsUse)</dd>
+
+            <dt>Uso correcto de mensasjes</dt>
+            <dd>@Html.Partial("Util/_CompletadoPartial", info.MessageUse)</dd>
+        </dl>
+    </div>
+    <div class="col-sm-6">
+        <dl class="">
+            <dt>Uso, y creación, de variables compartidas: </dt>
+            <dd>@Html.Partial("Util/_CompletadoPartial", info.SharedVariables)</dd>
+
+            <dt>Uso, y creación, de listas:</dt>
+            <dd>@Html.Partial("Util/_CompletadoPartial", info.ListUse)</dd>
+        </dl>
+    </div>
+</div>
+<div class="row">
+    <hr />
+    <div class="col-sm-6">
+        <h4>Abstracción y reconocimiento de patrones</h4>
+        <dl class="">
+            <dt>Se usan todos los bloques</dt>
+            <dd>
+                @info.NonUnusedBlocks / @info.SpriteCount
+                @Html.Partial("ProgressBar/Success", (float)info.NonUnusedBlocks / info.SpriteCount)
+            </dd>
+
+            <dt>Creación de bloques propios</dt>
+            <dd>
+                @info.UserDefinedBlocks / @info.SpriteCount
+                @Html.Partial("ProgressBar/Success", (float)info.UserDefinedBlocks / info.SpriteCount)
+            </dd>
+
+            <dt>Uso de clones</dt>
+            <dd>
+                @info.CloneUse / @info.SpriteCount
+                @Html.Partial("ProgressBar/Success", (float)info.CloneUse / info.SpriteCount)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-sm-6">
+        <h4>Control de flujo</h4>
+        <dl class="">
+            <dt>Uso de bloques simples</dt>
+            <dd>
+                @info.UseSimpleBlocks/ @info.SpriteCount
+                @Html.Partial("ProgressBar/Success", (float)info.UseSimpleBlocks / info.SpriteCount)
+            </dd>
+
+            <dt>Uso de bloques complejos</dt>
+            <dd>
+                @info.UseMediumBlocks/ @info.SpriteCount
+                @Html.Partial("ProgressBar/Success", (float)info.UseMediumBlocks / info.SpriteCount)
+            </dd>
+
+            <dt>Uso de bloques anidados</dt>
+            <dd>
+                @info.UseNestedControl/ @info.SpriteCount
+                @Html.Partial("ProgressBar/Success", (float)info.UseNestedControl / info.SpriteCount)
+            </dd>
+        </dl>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <h4>Recolección de información</h4>
+        <dl class="">
+            <dt>Uso de bloques de entrada de datos</dt>
+            <dd>
+                @info.BasicInputUse/ @info.SpriteCount
+                @Html.Partial("ProgressBar/Success", (float)info.BasicInputUse / info.SpriteCount)
+            </dd>
+
+            <dt>Uso de variables no creadas</dt>
+            <dd>
+                @info.VariableUse/ @info.SpriteCount
+                @Html.Partial("ProgressBar/Success", (float)info.VariableUse / info.SpriteCount)
+            </dd>
+
+            <dt>Uso de sensores de sprite</dt>
+            <dd>
+                @info.SpriteSensing/ @info.SpriteCount
+                @Html.Partial("ProgressBar/Success", (float)info.SpriteSensing / info.SpriteCount)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-sm-6">
+        <h4>Análisis de información</h4>
+        <dl class="">
+            <dt>Operadores lógicos básicos</dt>
+            <dd>
+                @info.BasicOperators/ @info.SpriteCount
+                @Html.Partial("ProgressBar/Success", (float)info.BasicOperators / info.SpriteCount)
+            </dd>
+
+            <dt>Operadores lógicos complejos</dt>
+            <dd>
+                @info.VariableUse/ @info.SpriteCount
+                @Html.Partial("ProgressBar/Success", (float)info.VariableUse / info.SpriteCount)
+            </dd>
+
+            <dt>Operadores lógicos anidados</dt>
+            <dd>
+                @info.AdvancedOperators/ @info.SpriteCount
+                @Html.Partial("ProgressBar/Success", (float)info.AdvancedOperators / info.SpriteCount)
+            </dd>
+        </dl>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <h4>Descomposición de Prolemas</h4>
+        <dl class="">
+            <dt>Dos hilos por sprite</dt>
+            <dd>
+                @info.MultipleThreads/ @info.SpriteCount
+                @Html.Partial("ProgressBar/Success", (float)info.MultipleThreads / info.SpriteCount)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-sm-6">
+        <h4>Paralelismo y sincronización</h4>
+        <dl class="">
+            <dt>Dos hilos inciando con bandera verde</dt>
+            <dd>
+                @info.TwoGreenFlagTrhead/ @info.SpriteCount
+                @Html.Partial("ProgressBar/Success", (float)info.TwoGreenFlagTrhead / info.SpriteCount)
+            </dd>
+
+            <dt>Usa más de un tipo de evento</dt>
+            <dd>
+                @info.AdvancedEventUse/ @info.SpriteCount
+                @Html.Partial("ProgressBar/Success", (float)info.AdvancedEventUse / info.SpriteCount)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-sm-6">
+        <h4>Pensamiento algorítmico</h4>
+        <dl class="">
+            <dt>Uso de Secuencias</dt>
+            <dd>
+                @info.SecuenceUse/ @info.SpriteCount
+                @Html.Partial("ProgressBar/Success", (float)info.SecuenceUse / info.SpriteCount)
+            </dd>
+        </dl>
+    </div>
+</div>

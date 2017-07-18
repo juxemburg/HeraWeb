@@ -44,9 +44,9 @@ namespace Hera.Controllers.ControllersMvc.Profesor
                 new Tuple<int,int>(reg.Key.DesafioId, reg.Key.EstudianteId)
                 , reg => reg.ToList());
 
-            
-            
-            
+
+
+            this.GetAlerts();
             return View(new ProfesorCursoViewModel(model, registros));
         }
 

@@ -30,18 +30,24 @@ namespace Hera.Controllers.ControllersMvc
         }
 
         [HttpGet]
-        public IActionResult Index(SearchDesafioViewModel searchModel,
+        public async Task<IActionResult> Index(SearchDesafioViewModel searchModel,
             int skip = 0, int take = 10)
         {
             var searchString = searchModel.SearchString;
             var model = _data.GetAll_Desafios(null, null,
                 searchString, searchModel.Map(), searchModel.EqualSearchModel)
-                .AsNoTracking()
-                .Select(m =>
+                .AsNoTracking();
+            var profId = await _userService.Get_ProfesorId(User.Claims);
+            if (profId > 0)
+            {
+                model = model.Where(d => d.ProfesorId != profId);
+            }
+
+            var list = model.Select(m =>
                 new DesafioDetailsViewModel(m))
                 .ToList();
             return View(new PaginationViewModel<DesafioDetailsViewModel>(
-                model, skip, take));
+                list, skip, take));
         }
 
         [HttpGet("{desafioId}")]

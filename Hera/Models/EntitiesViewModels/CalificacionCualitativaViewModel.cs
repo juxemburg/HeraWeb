@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Entities.Calificaciones;
 using Entities.Cursos;
+using Hera.Models.EntitiesViewModels.Evaluacion;
 
 namespace Hera.Models.EntitiesViewModels
 {
@@ -40,5 +41,6 @@ namespace Hera.Models.EntitiesViewModels
         public string NombreDesafio { get; set; }
         public bool Calificado { get; set; }
         public CreateCalificacionCualitativaViewModel FormModel { get; set; }
+        public EvaluacionViewModel Model { get; set; }
     }
 }

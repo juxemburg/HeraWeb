@@ -20,13 +20,13 @@ namespace Hera.Services.UserServices
         public async Task<int> Get_EstudianteId(IEnumerable<Claim> claims)
         {
             var id = _data.Get_UserId(claims);
-            return await _data.Find_EstudianteId(id);
+            return (id == -1) ? -1 : await _data.Find_EstudianteId(id);
         }
 
         public async Task<int> Get_ProfesorId(IEnumerable<Claim> claims)
         {
             var id = _data.Get_UserId(claims);
-            return await _data.Find_ProfesorId(id);
+            return (id == -1) ? -1 : await _data.Find_ProfesorId(id);
         }
     }
 }

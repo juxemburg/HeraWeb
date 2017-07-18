@@ -28,12 +28,19 @@ namespace Hera.Data
 
         public int Get_UserId(IEnumerable<Claim> claims)
         {
-            var res = claims
+            try
+            {
+                var res = claims
                 .Where(c => c.Type.Equals("UsuarioId"))
                 .Select(c => c.Value)
                 .FirstOrDefault();
-            int id = Convert.ToInt32(res);
-            return id;
+                int id = Convert.ToInt32(res);
+                return id;
+            }
+            catch(Exception)
+            {
+                return -1;
+            }
         }
 
         public void Add<T>(T entity) where T : class
