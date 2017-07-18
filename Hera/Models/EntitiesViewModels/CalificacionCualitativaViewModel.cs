@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Entities.Calificaciones;
 using Entities.Cursos;
 using Hera.Models.EntitiesViewModels.Evaluacion;
+using Entities.Desafios;
 
 namespace Hera.Models.EntitiesViewModels
 {
@@ -30,14 +31,20 @@ namespace Hera.Models.EntitiesViewModels
         }
         public CalificacionCualitativaViewModel(
             RegistroCalificacion registro,
-            string nombreDesafio,
+            Desafio desafio,
             CreateCalificacionCualitativaViewModel formModel)
-            :this(registro, nombreDesafio)
+            : this(registro, desafio.Nombre)
         {
-            this.FormModel = formModel;            
+            Calificaciones = registro
+                .Calificaciones
+                .Select(cal =>
+                new CalificacionViewModel(cal, desafio.InfoDesafio))
+                .ToList();
+            this.FormModel = formModel;
         }
 
         public RegistroCalificacion Registro { get; set; }
+        public List<CalificacionViewModel> Calificaciones { get; set; }
         public string NombreDesafio { get; set; }
         public bool Calificado { get; set; }
         public CreateCalificacionCualitativaViewModel FormModel { get; set; }

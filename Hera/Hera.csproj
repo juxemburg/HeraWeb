@@ -102,6 +102,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\ControllersApi\PassiveControllers\" />
+    <Folder Include="Evaluacion\EntitiesViewModels\Models\" />
+    <Folder Include="Evaluacion\EntitiesViewModels\Models\" />
     <Folder Include="Views\Cursos\" />
     <Folder Include="Views\Estudiante\" />
     <Folder Include="Views\Estudiante\" />

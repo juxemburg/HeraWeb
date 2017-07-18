@@ -9,13 +9,17 @@ namespace Entities.Valoracion
         
         public int Id { get; set; }
 
-        public int SpriteCount { get; set; }
+        
         public int ResultadoScratchId { get; set; }
         public ResultadoScratch ResultadoScratch { get; set; }
+
+        public int SpriteCount { get; set; }
+
         public bool EventsUse { get; set; }
         public bool MessageUse { get; set; }
         public bool SharedVariables { get; set; }
         public bool ListUse { get; set; }
+
         public int NonUnusedBlocks { get; set; }
         public int UserDefinedBlocks { get; set; }
         public int CloneUse { get; set; }
@@ -33,6 +37,7 @@ namespace Entities.Valoracion
         public int BasicOperators { get; set; }
         public int MediumOperators { get; set; }
         public int AdvancedOperators { get; set; }
+
 
         
 

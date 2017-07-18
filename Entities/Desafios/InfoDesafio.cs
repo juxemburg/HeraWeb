@@ -117,6 +117,8 @@ namespace Entities.Desafios
             return properties;
         }
 
+       
+
         public bool IsFalse
         {
             get => (MultipleSpriteEvents == false &&
