@@ -14,13 +14,18 @@ namespace Hera.Models.EntitiesViewModels
 
         public CalificacionCualitativaViewModel(
             RegistroCalificacion registro,
-            string nombreDesafio)
+            Desafio desafio)
         {
             this.Registro = registro;
             this.Registro.Calificaciones = registro.Calificaciones
                 .Where(cal => cal.ResultadoGeneral != null)
                 .ToList();
-            this.NombreDesafio = nombreDesafio;
+            Calificaciones = registro
+                .Calificaciones
+                .Select(cal =>
+                new CalificacionViewModel(cal, desafio.InfoDesafio))
+                .ToList();
+            this.NombreDesafio = desafio.Nombre;
             this.Calificado = false;
             this.FormModel = new CreateCalificacionCualitativaViewModel()
             {
@@ -33,13 +38,8 @@ namespace Hera.Models.EntitiesViewModels
             RegistroCalificacion registro,
             Desafio desafio,
             CreateCalificacionCualitativaViewModel formModel)
-            : this(registro, desafio.Nombre)
+            : this(registro, desafio)
         {
-            Calificaciones = registro
-                .Calificaciones
-                .Select(cal =>
-                new CalificacionViewModel(cal, desafio.InfoDesafio))
-                .ToList();
             this.FormModel = formModel;
         }
 

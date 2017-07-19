@@ -1,22 +1,24 @@
 ﻿
-@model ResultadoScratch
+@model CalificacionViewModel
 @{
-    var info = Model.IInfoScratch_General;
+    
+    var info = Model.Calificacion.ResultadoGeneral.IInfoScratch_General;
+    var resultadoGeneral = Model.Calificacion.ResultadoGeneral;
 }
 
 
-<div class="modal fade" id="modal-info-@Model.Nombre" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-info-@resultadoGeneral.Nombre" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <div class="row">
-                    <div class="col-sm-7 col-sm-offset-3">
+                    <div class="col-sm-7 col-sm-offset-4 col-xs-8 col-xs-offset-2">
                         <ul class="nav nav-pills nav-pills-info" role="tablist">
                             <li class="active">
                                 <a href="#dashboard" role="tab" data-toggle="tab">
                                     <i class="material-icons">dashboard</i>
-                                    Restultados Generales
+                                    General
                                 </a>
                             </li>
                             <li>
@@ -33,11 +35,10 @@
                 
                 <div class="tab-content">
                     <div id="dashboard" class="tab-pane fade in active">
-                        @Html.Partial("Evaluacion/_EvaluacionGeneral", Model)
+                        @Html.Partial("Evaluacion/_EvaluacionGeneral", resultadoGeneral)
                     </div>
                     <div id="valoration" class="tab-pane fade">
-                        <h3>Menu 1</h3>
-                        <p>Some content in menu 1.</p>
+                        @Html.Partial("Evaluacion/_EvaluacionGeneral", resultadoGeneral)
                     </div>
                 </div>
 

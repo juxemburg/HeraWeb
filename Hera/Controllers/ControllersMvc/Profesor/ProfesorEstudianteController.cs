@@ -45,7 +45,7 @@ namespace Hera.Controllers.ControllersMvc.Profesor
             
             var resultModel = new CalificacionCualitativaViewModel(
                 model,
-                desafio.Nombre);
+                desafio);
 
             var formModel = await _data
                 .Find_CalificacionCualitativa(idEstudiante,
