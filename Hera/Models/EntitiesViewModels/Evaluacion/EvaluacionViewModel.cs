@@ -47,7 +47,7 @@ namespace Hera.Models.EntitiesViewModels.Evaluacion
             this.ListUse = infoGeneral.ListUse;
 
             Func<int, bool, float> trans = (n, value) => {
-                return (value) ? (float)(n / this.SpriteCount* 100) : -1f;
+                return (value) ? (n / (float)SpriteCount) : -1f;
             };
 
             this.NonUnusedBlocks = trans(infoGeneral.NonUnusedBlocks,

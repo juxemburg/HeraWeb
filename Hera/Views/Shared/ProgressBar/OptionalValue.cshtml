@@ -1,0 +1,9 @@
+@model PropertyViewModel
+
+@if (Model.Visible)
+{
+    <dt>@Model.Name (@Model.Value %)</dt>
+    <dd>
+        @Html.Partial("ProgressBar/Success", Model.Value)
+    </dd>
+}

@@ -38,7 +38,7 @@
                         @Html.Partial("Evaluacion/_EvaluacionGeneral", resultadoGeneral)
                     </div>
                     <div id="valoration" class="tab-pane fade">
-                        @Html.Partial("Evaluacion/_EvaluacionGeneral", resultadoGeneral)
+                        @Html.Partial("Evaluacion/_EvaluacionFiltradaPartial", Model.Evaluacion)
                     </div>
                 </div>
 
@@ -46,7 +46,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Cerrar</button>
             </div>
-
         </div>
     </div>
 </div>
