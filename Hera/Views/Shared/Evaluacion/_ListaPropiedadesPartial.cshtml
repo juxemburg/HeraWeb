@@ -1,0 +1,19 @@
+@model Dictionary<string, List<PropertyViewModel>>
+
+@foreach (var key in Model.Keys)
+{
+    if (Model[key].Any(e => e.Visible))
+    {
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>@key</h4>
+                <dl>
+                    @foreach (var subitem in Model[key])
+                    {
+                        @Html.Partial("ProgressBar/OptionalValue", subitem)
+                    }
+                </dl>
+            </div>
+        </div>
+    }
+}

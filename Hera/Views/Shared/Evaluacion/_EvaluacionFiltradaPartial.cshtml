@@ -1,7 +1,50 @@
 ﻿@model EvaluacionViewModel
 @{
     var info = Model;
+    var modelList = new Dictionary<string, List<PropertyViewModel>>()
+    {
+        ["Abstracción y reconocimiento de patrones"] = new List<PropertyViewModel>()
+        {
+            new PropertyViewModel("Se usan todos los bloques",info.NonUnusedBlocks),
+            new PropertyViewModel("Creación de bloques propios", info.UserDefinedBlocks),
+            new PropertyViewModel("Uso de Clones", info.CloneUse)
+        },
+        ["Control de flujo"] = new List<PropertyViewModel>()
+        {
+           new PropertyViewModel("Uso de bloques simples", info.UseSimpleBlocks),
+           new PropertyViewModel("Uso de bloques complejos", info.UseMediumBlocks),
+           new PropertyViewModel("Se usan todos los bloques", info.UseNestedControl)
+        },
+        ["Recolección de información"] = new List<PropertyViewModel>()
+        {
+           new PropertyViewModel("Uso de bloques de entrada de datos", info.BasicInputUse),
+           new PropertyViewModel("Uso de variables no creadas", info.VariableUse),
+           new PropertyViewModel("Uso de sensores de sprite", info.SpriteSensing)
+        },
+        ["Análisis de información"] = new List<PropertyViewModel>()
+        {
+           new PropertyViewModel("Operadores lógicos básicos ", info.BasicOperators),
+           new PropertyViewModel("Operadores lógicos complejos", info.MediumOperators),
+           new PropertyViewModel("Operadores lógicos anidados", info.AdvancedOperators)
+        },
+        ["Paralelismo y sincronización"] = new List<PropertyViewModel>()
+        {
+           new PropertyViewModel("Dos hilos iniciando con bandera verde", info.TwoGreenFlagTrhead),
+           new PropertyViewModel("Usa más de un tipo de evento", info.AdvancedEventUse)
+        },
+        ["Descomposición de problemas"] = new List<PropertyViewModel>()
+        {
+           new PropertyViewModel("Dos hilos por sprite", info.MultipleThreads)
+        },
+        ["Pensamiento algorítmico"] = new List<PropertyViewModel>()
+        {
+           new PropertyViewModel("Uso de secuencias", info.SecuenceUse)
+        }
+
+
+    };
 }
+
 <div class="row">
     <h4><span class="title">Variables</span> Generales</h4>
     <div class="col-sm-6">
@@ -23,64 +66,4 @@
         </dl>
     </div>
 </div>
-<div class="row">
-    <hr />
-    <div class="col-sm-6">
-        <h4>Abstracción y reconocimiento de patrones</h4>
-        <dl class="">
-            @Html.Partial("ProgressBar/OptionalValue",new PropertyViewModel("Se usan todos los bloques",info.NonUnusedBlocks))
-            @Html.Partial("ProgressBar/OptionalValue", new PropertyViewModel("Creación de bloques propios", info.UserDefinedBlocks))
-            @Html.Partial("ProgressBar/OptionalValue", new PropertyViewModel("Uso de Clones", info.CloneUse))
-        </dl>
-    </div>
-    <div class="col-sm-6">
-        <h4>Control de flujo</h4>
-        <dl class="">
-            @Html.Partial("ProgressBar/OptionalValue", new PropertyViewModel("Uso de bloques simples", info.UseSimpleBlocks))
-            @Html.Partial("ProgressBar/OptionalValue", new PropertyViewModel("Uso de bloques complejos", info.UseMediumBlocks))
-            @Html.Partial("ProgressBar/OptionalValue", new PropertyViewModel("Se usan todos los bloques", info.UseNestedControl))
-        </dl>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-6">
-        <h4>Recolección de información</h4>
-        <dl class="">
-            @Html.Partial("ProgressBar/OptionalValue", new PropertyViewModel("Uso de bloques de entrada de datos", info.BasicInputUse))
-            @Html.Partial("ProgressBar/OptionalValue", new PropertyViewModel("Uso de variables no creadas", info.VariableUse))
-            @Html.Partial("ProgressBar/OptionalValue", new PropertyViewModel("Uso de sensores de sprite", info.SpriteSensing))
-        </dl>
-    </div>
-    <div class="col-sm-6">
-        <h4>Análisis de información</h4>
-        <dl class="">
-            @Html.Partial("ProgressBar/OptionalValue", new PropertyViewModel("Operadores lógicos básicos ", info.BasicOperators))
-            
-            @Html.Partial("ProgressBar/OptionalValue", new PropertyViewModel("Operadores lógicos complejos", info.MediumOperators))
-            @Html.Partial("ProgressBar/OptionalValue", new PropertyViewModel("Operadores lógicos anidados", info.AdvancedOperators))
-        </dl>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-6">
-        <h4>Paralelismo y sincronización</h4>
-        <dl class="">
-            @Html.Partial("ProgressBar/OptionalValue", new PropertyViewModel("Dos hilos iniciando con bandera verde", info.TwoGreenFlagTrhead))
-            @Html.Partial("ProgressBar/OptionalValue", new PropertyViewModel("Usa más de un tipo de evento", info.AdvancedEventUse))
-        </dl>
-    </div>
-    <div class="col-sm-6">
-        <div>
-            <h4>Descomposición de Prolemas</h4>
-            <dl class="">
-                @Html.Partial("ProgressBar/OptionalValue", new PropertyViewModel("Dos hilos por sprite", info.MultipleThreads))
-            </dl>
-        </div>
-        <div>
-            <h4>Pensamiento algorítmico</h4>
-            <dl class="">
-                @Html.Partial("ProgressBar/OptionalValue", new PropertyViewModel("Uso de secuencias", info.SecuenceUse))
-            </dl>
-        </div>
-    </div>
-</div>
+@await Html.PartialAsync("Evaluacion/_ListaPropiedadesPartial", modelList)

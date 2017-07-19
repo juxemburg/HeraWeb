@@ -34,6 +34,8 @@ namespace Hera.Models.EntitiesViewModels.Evaluacion
         public float MediumOperators { get; set; }
         public float AdvancedOperators { get; set; }
 
+        
+
         public EvaluacionViewModel(ResultadoScratch resultadoGeneral,
             InfoDesafio infoDesafio)
         {
@@ -87,6 +89,6 @@ namespace Hera.Models.EntitiesViewModels.Evaluacion
 
         }
 
-
+        
     }
 }
