@@ -19,9 +19,6 @@ namespace HeraScratch.Test
             {
                 Console.WriteLine($"=============item name " +
                     $"{item.SpriteName}");
-                Console.WriteLine($"dead code {item.DeadCodeCount}");
-                Console.WriteLine($"script count: " +
-                    $"{item.DuplicateScriptCount}");
                 Console.WriteLine(item.AdditionalInfo.Info);
 
                 

@@ -158,15 +158,19 @@ namespace HeraScratch.ObjectExtensions
             if (obj.Children == null)
                 return new T();
 
-             var blocks = new List<string>();
+            var blocks = new List<string>();
             var scripts = new List<List<object>>();
             var scriptList = new List<string>();
+            var messagesRecieved = new List<string>();
+            var messagesSent = new List<string>();
             var deadCodeSums = 0;
             if (obj.RawScripts != null)
             {
                 blocks.AddRange(obj.Blocks);
                 scripts.AddRange(obj.Scripts);
                 scriptList.AddRange(obj.ScriptsString);
+                messagesRecieved.AddRange(obj.MessagesRecieved);
+                messagesSent.AddRange(obj.MessagesSent);
             }
             foreach (var child in obj.Children)
             {
@@ -183,12 +187,23 @@ namespace HeraScratch.ObjectExtensions
                 {
                     scriptList.AddRange(child.ScriptsString);
                 }
+                if(child.MessagesRecieved != null)
+                {
+                    messagesRecieved.AddRange(child.MessagesRecieved);
+                }
+                if(child.MessagesSent != null)
+                {
+                    messagesSent.AddRange(child.MessagesSent);
+                }
             }
-            var vars = obj.Variables != null ? obj.Variables.ToList():  new List<Variable>();
-            var lists = obj.Lists != null ? obj.Lists.ToList() : new List<ScratchList>();
+            var vars = obj.Variables != null ? obj.Variables.ToList():
+                new List<Variable>();
+            var lists = obj.Lists != null ? obj.Lists.ToList() :
+                new List<ScratchList>();
             return Get_generalValoration<T, U, S>(scripts,
                 blocks,scriptList, objectName, previousValorations,
-                vars, lists,deadCodeSums,obj.Children.Count(),true);
+                vars, lists,deadCodeSums,obj.Children.Count(),
+                messagesRecieved, messagesSent,true);
 
         }
 
@@ -328,6 +343,8 @@ namespace HeraScratch.ObjectExtensions
             List<ScratchList> lists,
             int deadCodeSum,
             int objCount,
+            List<string> messagesRecieved,
+            List<string> messagesSent,
             bool general = false)
             where T : IValoration, new()
             where U : ISpriteValoration, new()
@@ -364,9 +381,10 @@ namespace HeraScratch.ObjectExtensions
                     EventsUse = previousValorations
                     .Where(val => val.HasEvents).Count() >1,
                     SharedVariables = variables.Count >0,
-                    MessageUse = blocks
-                    .Any(b => b == "whenIReceive")
-                    && blocks.Any(b => b == "broadcast:"),
+                    MessageUse = messagesRecieved
+                    .All(m => messagesSent.Contains(m))
+                    && blocks.Any(b => b.Equals("broadcast:"))
+                    && blocks.Any(b => b.Equals("whenIReceive")),
                     ListUse = lists.Count > 0,
 
                     //Particular Variables
