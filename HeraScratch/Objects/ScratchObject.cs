@@ -112,10 +112,10 @@ namespace HeraScratch.Objects
                 if(script[0] is string block
                     && this.IsOperatorBlock(block))
                 {
-                    var sub = (script[1] is string) ? (string)script[1]
-                        : (string)script[2];
-                    if (this.IsOperatorBlock(sub))
-                        NestedOperator = true;
+                    var s1 = Get_firstBlock(script[1]);
+                    var s2 = Get_firstBlock(script[2]);
+                    NestedOperator = this.IsOperatorBlock(s1) ||
+                        this.IsOperatorBlock(s2);
                 }
             }
             catch (Exception) { }
@@ -129,8 +129,8 @@ namespace HeraScratch.Objects
                 if (script[0] is string block
                 && this.IsControlBlock(block))
                 {
-                    var s1 = Get_firstBlock((object[])script[1]);
-                    var s2 = Get_firstBlock((object[])script[2]);
+                    var s1 = Get_firstBlock(script[1]);
+                    var s2 = Get_firstBlock(script[2]);
                     NestedControl = this.IsControlBlock(s1) ||
                         this.IsControlBlock(s2);
                 }
@@ -187,17 +187,21 @@ namespace HeraScratch.Objects
             return array;
         }
 
-        private static string Get_firstBlock(object[] script)
+        private static string Get_firstBlock(object obj)
         {
-            if (script.Length <= 0)
-                return "";
-            if (script[0] is string name)
-                return name;
-            else
+            if(obj is object[] script)
             {
-                return (script[0] is object[] subScript) ? 
-                    Get_firstBlock(subScript) : "";
+                if (script.Length <= 0)
+                    return "";
+                if (script[0] is string name)
+                    return name;
+                else
+                {
+                    return (script[0] is object[] subScript) ?
+                        Get_firstBlock(subScript) : "";
+                }
             }
+            return "";
         }
 
 

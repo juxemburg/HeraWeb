@@ -36,6 +36,7 @@ namespace HeraScratch
                     !string.IsNullOrWhiteSpace(child.ObjName))
                     .Select(child => 
                     child.Evaluate<T,U,S>(child.ObjName));
+                list = list.Append(result.Evaluate<T, U, S>("Stage"));
                 var previousList =
                     list.Select(item => (U)item.AdditionalInfo)
                     .ToList();

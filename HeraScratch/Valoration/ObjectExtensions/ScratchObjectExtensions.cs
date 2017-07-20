@@ -44,17 +44,11 @@ namespace HeraScratch.ObjectExtensions
                 ["<"] = "<",
                 ["="] = "=",
                 [">"] = ">",
-                ["randomFrom:to:"] = "randomFrom:to:"
-            };
-
-        private static Dictionary<string, string> _AdvancedOperators
-            = new Dictionary<string, string>()
-            {
+                ["randomFrom:to:"] = "randomFrom:to:",
                 ["&"] = "&",
                 ["|"] = "|",
                 ["not"] = "not"
             };
-
         private static Dictionary<string, string> _SensingBlocks
             = new Dictionary<string, string>()
             {
@@ -103,7 +97,6 @@ namespace HeraScratch.ObjectExtensions
                 ["doForever"] = "whenClicked",
                 ["doRepeat"] = "doRepeat"
             };
-
         private static Dictionary<string, string> _reservedBlocks
             = new Dictionary<string, string>()
             {
@@ -148,8 +141,7 @@ namespace HeraScratch.ObjectExtensions
             string name)
         {
             return _BasicOperators.ContainsKey(name) ||
-                _MediumOperators.ContainsKey(name) ||
-                _AdvancedOperators.ContainsKey(name);
+                _MediumOperators.ContainsKey(name);
         }
 
         public static bool IsReservedBlock(string name)
@@ -164,12 +156,14 @@ namespace HeraScratch.ObjectExtensions
         {
             if (obj.RawScripts == null)
             {
-                return new T();
+                return (T)ValorationHelper
+                    .Get_DefaultSingle<T, U>(objectName);
             }
 
             return Get_singleValoration<T, U>(obj.Scripts,
                 obj.Blocks,
-                obj.ScriptsString, objectName, obj.DeadCodeCount, general);
+                obj.ScriptsString, objectName, obj.DeadCodeCount,
+                obj.NestedControl, obj.NestedOperator, general);
         }
         public static T GeneralEvaluation<T, U, S>(
             this ScratchObject obj, string objectName,
@@ -179,7 +173,8 @@ namespace HeraScratch.ObjectExtensions
             where S : IGeneralValoration, new()
         {
             if (obj.Children == null)
-                return new T();
+                return (T)ValorationHelper
+                    .Get_DefaultSingle<T, U>(objectName);
 
             var blocks = new List<string>();
             var scripts = new List<List<object>>();
@@ -225,7 +220,7 @@ namespace HeraScratch.ObjectExtensions
                 new List<ScratchList>();
             return Get_generalValoration<T, U, S>(scripts,
                 blocks,scriptList, objectName, previousValorations,
-                vars, lists,deadCodeSums,obj.Children.Count(),
+                vars, lists,deadCodeSums, previousValorations.Count,
                 messagesRecieved, messagesSent,true);
 
         }
@@ -270,6 +265,8 @@ namespace HeraScratch.ObjectExtensions
             (List<List<object>> scripts, List<string> blocks,
             List<string> scriptList, string objName,
             int deadCodeCount,
+            bool nestedControl,
+            bool nestedOperator,
             bool general = false)
             where T : IValoration, new()
             where U : ISpriteValoration, new()
@@ -331,7 +328,7 @@ namespace HeraScratch.ObjectExtensions
                     blocks.Any(b => _BasicControlBlocks.ContainsKey(b)),
                     UseMediumBlocks =
                     blocks.Any(b => _MediumControlBlocks.ContainsKey(b)),
-                    //UseNestedControl = 
+                    UseNestedControl = nestedControl,
 
                     //Input
                     BasicInputUse = blocks
@@ -348,9 +345,7 @@ namespace HeraScratch.ObjectExtensions
 
                     MediumOperators = blocks
                 .Any(b => _MediumOperators.ContainsKey(b)),
-
-                    AdvancedOperators = blocks
-                .Any(b => _AdvancedOperators.ContainsKey(b))
+                    AdvancedOperators = nestedOperator
                 }
 
 
@@ -374,10 +369,10 @@ namespace HeraScratch.ObjectExtensions
             where S : IGeneralValoration, new()
         {
 
-            
+
             return new T()
             {
-                
+
                 generalValoration = general,
                 SpriteName = objName,
                 ScriptCount = scripts.Count,
@@ -402,8 +397,8 @@ namespace HeraScratch.ObjectExtensions
                     SpriteCount = objCount,
                     //General Variables
                     EventsUse = previousValorations
-                    .Where(val => val.HasEvents).Count() >1,
-                    SharedVariables = variables.Count >0,
+                    .Where(val => val.HasEvents).Count() > 1,
+                    SharedVariables = variables.Count > 0,
                     MessageUse = messagesRecieved
                     .All(m => messagesSent.Contains(m))
                     && blocks.Any(b => b.Equals("broadcast:"))
@@ -426,17 +421,18 @@ namespace HeraScratch.ObjectExtensions
                     ,
                     MultipleThreads = previousValorations
                     .Where(val => val.MultipleThreads).Count(),
-                    //EventsUse=
+
                     TwoGreenFlagTrhead = previousValorations
                     .Where(val => val.TwoGreenFlagTrhead).Count(),
-                    //MessageUse = 
+
                     AdvancedEventUse = previousValorations
                     .Where(val => val.AdvancedEventUse).Count(),
                     UseSimpleBlocks = previousValorations
                     .Where(val => val.UseSimpleBlocks).Count(),
                     UseMediumBlocks = previousValorations
                     .Where(val => val.UseMediumBlocks).Count(),
-                    //UseNestedControl = 
+                    UseNestedControl = previousValorations
+                    .Where(val => val.UseNestedControl).Count(),
                     BasicInputUse = previousValorations
                     .Where(val => val.BasicInputUse).Count(),
 
@@ -444,8 +440,7 @@ namespace HeraScratch.ObjectExtensions
                     .Where(val => val.VariableUse).Count(),
                     SpriteSensing = previousValorations
                     .Where(val => val.SpriteSensing).Count(),
-                    //SaredVariables = 
-                    //ListUse = 
+
                     BasicOperators = previousValorations
                     .Where(val => val.BasicOperators).Count(),
 

@@ -22,4 +22,23 @@ namespace HeraScratch.Valoration
 
         
     }
+
+    public static class ValorationHelper
+    {
+        public static IValoration Get_DefaultSingle<T,U>(
+            string name = "Stage")
+            where T : IValoration, new()
+            where U : ISpriteValoration, new()
+        {
+            return new T()
+            {
+                SpriteName = name,
+                generalValoration = false,
+                BlockFrequency = new List<Tuple<string, int>>(),
+                DuplicatedScripts = new List<Tuple<string, string>>(),
+                DeadScripts = new List<Tuple<string, string>>(),
+                AdditionalInfo = new U() { }
+            };
+        }
+    }
 }
