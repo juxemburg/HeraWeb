@@ -34,6 +34,9 @@ namespace HeraScratch.Objects
         public List<string> MessagesSent { get; set; }
         public List<string> MessagesRecieved { get; set; }
 
+        public bool NestedControl { get; set; }
+        public bool NestedOperator { get; set; }
+
         [DataMember(Name = "variables")]
         public IEnumerable<Variable> Variables { get; set; }
         
@@ -100,6 +103,42 @@ namespace HeraScratch.Objects
                 }
             }
         }
+        private void IsNestedOperator(object[] script)
+        {
+            if (NestedOperator)
+                return;
+            try
+            {
+                if(script[0] is string block
+                    && this.IsOperatorBlock(block))
+                {
+                    var sub = (script[1] is string) ? (string)script[1]
+                        : (string)script[2];
+                    if (this.IsOperatorBlock(sub))
+                        NestedOperator = true;
+                }
+            }
+            catch (Exception) { }
+        }
+        private void IsNestedControl(object[] script)
+        {
+            if (NestedControl)
+                return;
+            try
+            {
+                if (script[0] is string block
+                && this.IsControlBlock(block))
+                {
+                    var s1 = Get_firstBlock((object[])script[1]);
+                    var s2 = Get_firstBlock((object[])script[2]);
+                    NestedControl = this.IsControlBlock(s1) ||
+                        this.IsControlBlock(s2);
+                }
+            }
+            catch (Exception e)
+            { }
+            return;
+        }
 
         private IEnumerable<object> Do_deserializeScript(object[] script,
             List<string> blocks, int depth, ref string stringScript)
@@ -136,6 +175,8 @@ namespace HeraScratch.Objects
                 if (item is object[] objectArray)
                 {
                     IsMessageBlock(objectArray);
+                    IsNestedControl(objectArray);
+                    IsNestedOperator(objectArray);
                     stringScript += $"\n{spaces}";
                     var result = Do_deserializeScript(objectArray,
                         blocks, depth++, ref stringScript);
@@ -144,6 +185,19 @@ namespace HeraScratch.Objects
                 index++;
             }
             return array;
+        }
+
+        private static string Get_firstBlock(object[] script)
+        {
+            if (script.Length <= 0)
+                return "";
+            if (script[0] is string name)
+                return name;
+            else
+            {
+                return (script[0] is object[] subScript) ? 
+                    Get_firstBlock(subScript) : "";
+            }
         }
 
 

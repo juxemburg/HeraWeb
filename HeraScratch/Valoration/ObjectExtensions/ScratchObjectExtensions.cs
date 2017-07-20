@@ -93,6 +93,16 @@ namespace HeraScratch.ObjectExtensions
                 ["doUntil"] = "doUntil",
                 ["doIfElse"] = "doIfElse"
             };
+        private static Dictionary<string, string> _ControlBlocks
+            = new Dictionary<string, string>()
+            {
+                ["doWaitUntil"] = "doWaitUntil",
+                ["doUntil"] = "doUntil",
+                ["doIfElse"] = "doIfElse",
+                ["doIf"] = "doIf",
+                ["doForever"] = "whenClicked",
+                ["doRepeat"] = "doRepeat"
+            };
 
         private static Dictionary<string, string> _reservedBlocks
             = new Dictionary<string, string>()
@@ -128,6 +138,19 @@ namespace HeraScratch.ObjectExtensions
                 { "down arrow",""}
 
             };
+
+        public static bool IsControlBlock(this ScratchObject _this,
+            string name)
+        {
+            return _ControlBlocks.ContainsKey(name);
+        }
+        public static bool IsOperatorBlock(this ScratchObject _this,
+            string name)
+        {
+            return _BasicOperators.ContainsKey(name) ||
+                _MediumOperators.ContainsKey(name) ||
+                _AdvancedOperators.ContainsKey(name);
+        }
 
         public static bool IsReservedBlock(string name)
         {
