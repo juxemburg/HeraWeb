@@ -31,9 +31,12 @@ namespace HeraScratch.Objects
 
         public List<string> ScriptsString { get; set; }
 
+        public List<string> MessagesSent { get; set; }
+        public List<string> MessagesRecieved { get; set; }
+
         [DataMember(Name = "variables")]
         public IEnumerable<Variable> Variables { get; set; }
-
+        
         [DataMember(Name = "lists")]
         public IEnumerable<ScratchList> Lists { get; set; }
 
@@ -56,6 +59,8 @@ namespace HeraScratch.Objects
             Scripts = new List<List<object>>();
             Blocks = new List<string>();
             ScriptsString = new List<string>();
+            MessagesSent = new List<string>();
+            MessagesRecieved = new List<string>();
             foreach (object[] item in RawScripts)
             {
                 var value = "";
@@ -74,6 +79,28 @@ namespace HeraScratch.Objects
             }
         }
 
+        private void IsMessageBlock(object[] script)
+        {
+            if(script[0] is string block &&
+                block.Equals("broadcast:"))
+            {
+                if(script[1] is string message && 
+                    !MessagesSent.Contains(message))
+                {
+                    MessagesSent.Add(message);
+                }
+            }
+            if (script[0] is string block2 &&
+                block2.Equals("whenIReceive"))
+            {
+                if (script[1] is string message && 
+                    !MessagesRecieved.Contains(message))
+                {
+                    MessagesRecieved.Add(message);
+                }
+            }
+        }
+
         private IEnumerable<object> Do_deserializeScript(object[] script,
             List<string> blocks, int depth, ref string stringScript)
         {
@@ -82,7 +109,7 @@ namespace HeraScratch.Objects
             var spaces = "";
             for (int i = 0; i < depth; i++)
             {
-                spaces += "    ";
+                spaces += "____";
             }
             foreach (var item in script)
             {
@@ -106,10 +133,11 @@ namespace HeraScratch.Objects
                     stringScript += $" {item.ToString()}";
                     continue;
                 }
-                if (typeof(object[]) == item.GetType())
+                if (item is object[] objectArray)
                 {
+                    IsMessageBlock(objectArray);
                     stringScript += $"\n{spaces}";
-                    var result = Do_deserializeScript((object[])item,
+                    var result = Do_deserializeScript(objectArray,
                         blocks, depth++, ref stringScript);
                     array.Add(result);
                 }
