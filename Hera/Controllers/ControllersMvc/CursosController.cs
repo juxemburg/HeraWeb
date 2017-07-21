@@ -74,7 +74,11 @@ namespace Hera.Controllers.ControllersMvc
                         _data.Add<Curso>(model.Map(profId, desafio));
                         var res = await _data.SaveAllAsync();
                         if (res)
-                            return RedirectToAction("Cursos","Profesor");
+                        {
+                            this.SetAlerts("success-alerts", "El curso se creó exitosamente");
+                            return RedirectToAction("Cursos", "Profesor");
+                        }
+                            
                     }
                 }
                 catch (Exception e)

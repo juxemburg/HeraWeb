@@ -18,16 +18,16 @@
 
 @section Modals {
 
-    @await Html.PartialAsync("_ResultadoInfoGeneral", Model.ResultadoGeneral)
-    @await Html.PartialAsync("_Modal_ResultadoScratchPartial", Model.ResultadoGeneral)
+    @await Html.PartialAsync("Evaluacion/_Modal_ResultadoGeneralSimple", Model.ResultadoGeneral)
+    @await Html.PartialAsync("Evaluacion/_Modal_ResultadoBloquesPartial", Model.ResultadoGeneral)
 
     @foreach (var item in Model.ScriptsResultados)
     {
         @if (!item.General)
         {
-            @await Html.PartialAsync("_ResultadoInfoSprite", item)
+            @await Html.PartialAsync("Evaluacion/_Modal_ResultadoInfoSprite", item)
         }
-        @await Html.PartialAsync("_Modal_ResultadoScratchPartial", item)
+        @await Html.PartialAsync("Evaluacion/_Modal_ResultadoBloquesPartial", item)
     }
 }
 
