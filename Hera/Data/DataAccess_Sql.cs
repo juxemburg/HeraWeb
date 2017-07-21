@@ -271,24 +271,27 @@ namespace Hera.Data
                 .Where(c => c.ProfesorId == profId)
                 .Include(c => c.Profesor);
         }
-        public IQueryable<Curso> GetAll_CursosEstudiante(int idEst)
+        public IQueryable<Curso> GetAll_CursosEstudiante(int idEst,
+            string courseName = "",
+            bool inverse= false)
         {
+            var query = Enumerable.Empty<Curso>().AsQueryable();
             var ids = _context.Rel_Cursos_Estudiantes
                 .Where(rel => rel.EstudianteId == idEst)
                 .Select(rel => rel.CursoId);
-
-            var query = _context.Cursos
-                .Where(cur => ids.Contains(cur.Id))
+            
+            query = _context.Cursos
+                .Where(cur => ids.Contains(cur.Id) != inverse)
                 .Include(cur => cur.Profesor);
+            if(!string.IsNullOrWhiteSpace(courseName))
+                query = query.Where(c => c.Nombre.Contains(courseName));
+
             return query;
 
         }
-        public IQueryable<Curso> Autocomplete_Cursos(string queryString)
-        {
-            return Autocomplete_Cursos(queryString, null);
-        }
+        
         public IQueryable<Curso> Autocomplete_Cursos(string queryString,
-            int? profId)
+            int? profId = null)
         {
             var query = (profId == null) ? GetAll_Cursos() :
                 GetAll_Cursos(profId.GetValueOrDefault());

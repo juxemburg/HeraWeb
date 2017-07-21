@@ -84,24 +84,28 @@ namespace HeraScratch.Objects
 
         private void IsMessageBlock(object[] script)
         {
-            if(script[0] is string block &&
+            try
+            {
+                if (script[0] is string block &&
                 block.Equals("broadcast:"))
-            {
-                if(script[1] is string message && 
-                    !MessagesSent.Contains(message))
                 {
-                    MessagesSent.Add(message);
+                    if (script[1] is string message &&
+                        !MessagesSent.Contains(message))
+                    {
+                        MessagesSent.Add(message);
+                    }
+                }
+                if (script[0] is string block2 &&
+                    block2.Equals("whenIReceive"))
+                {
+                    if (script[1] is string message &&
+                        !MessagesRecieved.Contains(message))
+                    {
+                        MessagesRecieved.Add(message);
+                    }
                 }
             }
-            if (script[0] is string block2 &&
-                block2.Equals("whenIReceive"))
-            {
-                if (script[1] is string message && 
-                    !MessagesRecieved.Contains(message))
-                {
-                    MessagesRecieved.Add(message);
-                }
-            }
+            catch (Exception) { }
         }
         private void IsNestedOperator(object[] script)
         {

@@ -1,4 +1,5 @@
-﻿using Entities.Desafios;
+﻿using Entities.Colors;
+using Entities.Desafios;
 using Entities.Usuarios;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ namespace Entities.Cursos
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
-
+        public Color Color { get; set; }
+        public String ColorName { get => ColorHelper.Get_ColorName(Color); }
         public int ProfesorId { get; set; }
         public Profesor Profesor { get; set; }
 

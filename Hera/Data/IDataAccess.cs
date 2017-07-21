@@ -54,12 +54,14 @@ namespace Hera.Data
 
         //Cursos
         void AddCurso(Curso model);
-        IQueryable<Curso> Autocomplete_Cursos(string queryString);
+        
         IQueryable<Curso> Autocomplete_Cursos(string queryString,
-            int? prodId);
+            int? prodId = null);
         IQueryable<Curso> GetAll_Cursos();
         IQueryable<Curso> GetAll_Cursos(int profId);
-        IQueryable<Curso> GetAll_CursosEstudiante(int idEst);
+        IQueryable<Curso> GetAll_CursosEstudiante(int idEst,
+            string courseName = "",
+            bool inverse = false);
         Task<Curso> Find_Curso(int id);
         Task<Curso> Find_Curso_Public(int id);
 

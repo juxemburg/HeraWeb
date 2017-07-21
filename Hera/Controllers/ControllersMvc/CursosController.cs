@@ -9,6 +9,7 @@ using Entities.Cursos;
 using Hera.Models.UtilityViewModels;
 using Microsoft.EntityFrameworkCore;
 using Hera.Services.UserServices;
+using Hera.Services.UtilServices;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -17,10 +18,13 @@ namespace Hera.Controllers.ControllersMvc
     {
         private IDataAccess _data;
         private UserService _userService;
+        private ColorService _clrService;
 
         public CursosController(IDataAccess data,
-            UserService userService)
+            UserService userService,
+            ColorService clrService)
         {
+            _clrService = clrService;
             _data = data;
             _userService = userService;
         }
@@ -71,7 +75,8 @@ namespace Hera.Controllers.ControllersMvc
                     var desafio = await _data.Find_Desafio(model.DesafioId.GetValueOrDefault());
                     if (desafio != null)
                     {
-                        _data.Add<Curso>(model.Map(profId, desafio));
+                        _data.Add<Curso>(model.Map(profId, desafio,
+                            _clrService.RandomColor));
                         var res = await _data.SaveAllAsync();
                         if (res)
                         {
@@ -102,11 +107,14 @@ namespace Hera.Controllers.ControllersMvc
                 try
                 {
                     var curso = await _data.Find_Curso(model.CursoId);
-                    if (curso.Password.Equals(model.Password)) {
-                        _data.Add<Rel_CursoEstudiantes>(model.Map(model.CursoId,estudianteId));
+                    if (curso.Password.Equals(model.Password))
+                    {
+                        _data.Add<Rel_CursoEstudiantes>(model.Map(model.CursoId, estudianteId));
                         await _data.SaveAllAsync();
                         return RedirectToAction("Index", "EstudianteCursos");
-                    }                    
+                    }
+                    else
+                        this.SetAlerts("error-alerts", "Lo sentimos, la contraseña es inválida");
                 }
                 catch (Exception) {
                 }

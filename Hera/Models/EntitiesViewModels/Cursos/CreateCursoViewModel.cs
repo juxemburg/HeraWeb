@@ -1,4 +1,5 @@
-﻿using Entities.Cursos;
+﻿using Entities.Colors;
+using Entities.Cursos;
 using Entities.Desafios;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,8 @@ namespace Hera.Models.EntitiesViewModels
 
         
 
-        public Curso Map(int ProfesorId,Desafio desafioInicial)
+        public Curso Map(int ProfesorId,Desafio desafioInicial,
+            Color color = Color.Lightblue)
         {
             return new Curso()
             {
@@ -38,7 +40,8 @@ namespace Hera.Models.EntitiesViewModels
                 ProfesorId = ProfesorId,
                 Password = this.Password,
                 DesafioId = desafioInicial.Id,
-                Desafio = desafioInicial
+                Desafio = desafioInicial,
+                Color = color
             };
         }
         

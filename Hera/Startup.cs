@@ -17,6 +17,7 @@ using Hera.Services.DesafiosServices;
 using Hera.Services.MessageServices;
 using Hera.Services.UserServices;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Hera.Services.UtilServices;
 
 namespace Hera
 {
@@ -53,6 +54,7 @@ namespace Hera
                 options.UseSqlServer(Configuration
                 .GetConnectionString("HERAdb")));
             services.AddSingleton<FileManagerService>();
+            services.AddSingleton<ColorService>();
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();

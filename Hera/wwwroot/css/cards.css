@@ -1,1 +1,30 @@
-﻿
+﻿.card .content-blue {
+    background: linear-gradient(60deg,#2196f3,#0069c0);
+}
+.card .content-lightblue {
+    background: linear-gradient(60deg,#03a9f4,#007ac1);
+}
+.card .content-cyan {
+    background: linear-gradient(60deg,#00bcd4,#008ba3);
+}
+.card .content-teal {
+    background: linear-gradient(60deg,#009688,#00675b);
+}
+.card .content-indigo {
+    background: linear-gradient(60deg,#3f51b5,#002984);
+}
+.card .content-green {
+    background: linear-gradient(60deg,#4caf50,#087f23);
+}
+.card .content-lime {
+    background: linear-gradient(60deg,#cddc39,#99aa00);
+}
+.card .content-yellow {
+    background: linear-gradient(60deg,#ffc107,#c79100);
+}
+.card .content-orange {
+    background: linear-gradient(60deg,#ff5722,#c41c00);
+}
+.card .content-red {
+    background: linear-gradient(60deg,#f44336,#ba000d);
+}

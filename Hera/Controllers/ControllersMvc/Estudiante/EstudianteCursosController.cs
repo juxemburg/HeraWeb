@@ -9,6 +9,7 @@ using Hera.Models.UtilityViewModels;
 using Entities.Cursos;
 using Microsoft.EntityFrameworkCore;
 using Entities.Calificaciones;
+using Hera.Services.UserServices;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -18,20 +19,23 @@ namespace Hera.Controllers.ControllersMvc
     public class EstudianteCursosController : Controller
     {
         private IDataAccess _data;
+        private UserService _usrService;
 
-        public EstudianteCursosController(IDataAccess data)
+        public EstudianteCursosController(IDataAccess data,
+            UserService usrService)
         {
+            _usrService = usrService;
             _data = data;
         }
 
         [HttpGet]        
-        public IActionResult Busqueda(string searchString = "",
+        public async Task<IActionResult> Busqueda(string searchString = "",
             int skip = 0, int take = 10)
         {
-            var model = (string.IsNullOrWhiteSpace(searchString))
-                ? _data.GetAll_Cursos() :
-                _data.Autocomplete_Cursos(searchString);
-
+            var estId = await _usrService.Get_EstudianteId(User.Claims);
+            var model = _data.GetAll_CursosEstudiante(estId, 
+                searchString, true);
+            this.GetAlerts();
             return View(new PaginationViewModel<Curso>(model, skip, take));
         }
 
@@ -40,11 +44,10 @@ namespace Hera.Controllers.ControllersMvc
         public async Task<IActionResult> Index(string searchString = "",
             int skip = 0, int take = 10)
         {
-            var estudianteId
-                = await _data.Find_EstudianteId(
-                    _data.Get_UserId(User.Claims));
-            var model = _data.GetAll_CursosEstudiante(estudianteId);
-
+            var estudianteId = await _usrService.Get_EstudianteId(User.Claims);
+            var model = _data.GetAll_CursosEstudiante(estudianteId,
+                searchString);
+            this.GetAlerts();
             return View(new PaginationViewModel<Curso>
                 (await model.ToListAsync(), 0, 10));
         }
