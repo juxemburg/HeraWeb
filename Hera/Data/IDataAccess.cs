@@ -64,10 +64,12 @@ namespace Hera.Data
         Task<Curso> Find_Curso(int id);
         Task<Curso> Find_Curso_Public(int id);
         Task ChangeStarterDesafio(int cursoId, int oldId, int newId);
+        Task Delete_Curso(int id);
 
         //Rel_Cursos_Estudiantes
         Task<Rel_CursoEstudiantes> Find_Rel_CursoEstudiantes(int idCurso,
             int idEstudiante);
+
 
         //Rel_Desafio_Profesor
         Task<Rel_Rating> Find_Rel_Rating(int desafioId, int profesorId);
@@ -79,6 +81,8 @@ namespace Hera.Data
         IQueryable<RegistroCalificacion> GetAll_RegistroCalificacion(
             int? cursoId = null, int? estudianteId = null,
             int? desafioId = null);
+        Task Delete_RegistroCalificacion(int cursoId, int estId,
+            int desafioId);
 
 
         //Calificacion

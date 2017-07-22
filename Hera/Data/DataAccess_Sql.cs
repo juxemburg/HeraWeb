@@ -58,10 +58,10 @@ namespace Hera.Data
 
         public void AddCurso(Curso model)
         {
-            _context.Entry<Curso>(model).State = EntityState.Added;
-            if (model.Desafio != null)
+            Add<Curso>(model);
+            foreach (var item in model.Desafios)
             {
-                _context.Entry<Desafio>(model.Desafio).State = EntityState.Added;
+                Add<Rel_DesafiosCursos>(item);
             }
 
         }
@@ -163,12 +163,19 @@ namespace Hera.Data
                 .ThenInclude(c => c.Desafio)
                 .Include(c => c.Estudiantes)
                 .ThenInclude(rel => rel.Estudiante)
+                .Include("Estudiantes.Registros")
                 .FirstOrDefaultAsync();
         }
         public async Task<Curso> Find_Curso_Public(int id)
         {
             return await _context.Cursos.FindAsync(id);
         }
+        public async Task Delete_Curso(int id)
+        {
+            var curso = await Find_Curso(id);
+            Delete(curso);
+        }
+
         public async Task<Rel_CursoEstudiantes> Find_Rel_CursoEstudiantes(int idCurso,
             int idEstudiante)
         {
@@ -435,6 +442,13 @@ namespace Hera.Data
                     reg.DesafioId == desafioId.GetValueOrDefault());
 
             return query;
+        }
+        public async Task Delete_RegistroCalificacion(int cursoId, int estId,
+            int desafioId)
+        {
+            var model = await Find_RegistroCalificacion(cursoId, estId,
+                desafioId);
+            Delete(model);
         }
 
         public void AddCalificacion(Calificacion calificacion)

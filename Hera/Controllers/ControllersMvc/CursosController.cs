@@ -74,7 +74,7 @@ namespace Hera.Controllers.ControllersMvc
                     var desafio = await _data.Find_Desafio(model.DesafioId.GetValueOrDefault());
                     if (desafio != null)
                     {
-                        _data.Add<Curso>(model.Map(profId, desafio,
+                        _data.AddCurso(model.Map(profId, desafio,
                             _clrService.RandomColor));
                         var res = await _data.SaveAllAsync();
                         if (res)
@@ -101,8 +101,7 @@ namespace Hera.Controllers.ControllersMvc
             var profId = await _userService.Get_ProfesorId(User.Claims);
             if (await _data.Exist_Profesor_Curso(profId, id))
             {
-                var curso = await _data.Find_Curso(id);
-                _data.Delete<Curso>(curso);
+                await _data.Delete_Curso(id);
                 var res = await _data.SaveAllAsync();
                 if (res)
                     this.SetAlerts("success-alerts",
@@ -117,6 +116,7 @@ namespace Hera.Controllers.ControllersMvc
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> AddEstudiante(
             AddEstudianteViewModel model)
         {

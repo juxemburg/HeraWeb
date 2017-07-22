@@ -102,7 +102,7 @@ namespace Hera.Data
                 .WithMany(rel => rel.Registros)
                 .HasForeignKey(entity =>
                 new { entity.CursoId, entity.EstudianteId })
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<RegistroCalificacion>()
                 .HasOne(e => e.Desafio)
