@@ -2827,6 +2827,7 @@ h2.title {
 }
 .sub-card {
     margin-top: -30px;
+    padding-bottom: 80px;
 }
 .card .header .title, .card [class*=header-], .card [class*=header-] .card-title, .card [class*=header-] .card-title a, .card [class*=header-] .icon i, .card [class*=content-], .card [class*=content-] .card-title, .card [class*=content-] .card-title a, .card [class*=content-] .icon i {
     color: #FFF;

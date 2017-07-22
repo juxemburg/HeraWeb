@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Hera.Models.EntitiesViewModels.EstudianteCurso;
 using Hera.Services.DesafiosServices;
 using Hera.Services.UserServices;
+using HeraScratch.Exceptions;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -82,6 +83,7 @@ namespace Hera.Controllers.ControllersMvc
                 if (!res)
                     return BadRequest();
             }
+            this.GetAlerts();
             return View(new CalificacionDesafioViewModel(model));
         }
         
@@ -115,26 +117,33 @@ namespace Hera.Controllers.ControllersMvc
             var model = await _data.Find_RegistroCalificacion(
                 idCurso, estId,idDesafio);
 
-            if (model != null && model.Iniciada)
+            try
             {
-                var cal = model.CalificacionPendiente;
-                cal.TerminarCalificacion(projId);
-                var res = await _evaluator.Get_Evaluation(projId);
+                if (model != null && model.Iniciada)
+                {
+                    var cal = model.CalificacionPendiente;
+                    cal.TerminarCalificacion(projId);
+                    var res = await _evaluator.Get_Evaluation(projId);
 
-                var resultados = res.Select(val => val.Map(cal.Id))
-                    .ToList();
-                
-                _data.AddRange_ResultadoScratch(resultados);                
-                _data.Edit<Calificacion>(cal);
-                var result = await _data.SaveAllAsync();
-                if(result)
-                    return RedirectToAction("DesafioCompletado",
-                    new
-                    {
-                        idCurso = idCurso,
-                        idDesafio = idDesafio,
-                        idCalificacion = cal.Id
-                    });
+                    var resultados = res.Select(val => val.Map(cal.Id))
+                        .ToList();
+
+                    _data.AddRange_ResultadoScratch(resultados);
+                    _data.Edit<Calificacion>(cal);
+                    var result = await _data.SaveAllAsync();
+                    if (result)
+                        return RedirectToAction("DesafioCompletado",
+                        new
+                        {
+                            idCurso = idCurso,
+                            idDesafio = idDesafio,
+                            idCalificacion = cal.Id
+                        });
+                }
+            }
+            catch (EvaluationException)
+            {
+                this.SetAlerts("error-alerts", "id de desafío no válido");
             }
             return RedirectToAction("Desafio",
                 new

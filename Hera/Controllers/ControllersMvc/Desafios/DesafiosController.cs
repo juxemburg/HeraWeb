@@ -119,7 +119,7 @@ namespace Hera.Controllers.ControllersMvc
                 else
                     this.SetAlerts("error-alerts",
                         "El desafío no se puede eliminar," +
-                        "revisa que no esté siendo usado previamente");
+                        " revisa que no esté siendo usado previamente");
 
                 return RedirectToAction("Index", "ProfesorDesafio");
             }

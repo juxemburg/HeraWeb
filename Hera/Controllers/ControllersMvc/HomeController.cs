@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Hera.Services;
 using Hera.Models.EntitiesViewModels.EstudianteDesafio;
+using HeraScratch.Exceptions;
 
 namespace Hera.Controllers
 {
@@ -34,10 +35,19 @@ namespace Hera.Controllers
         {
             if(!string.IsNullOrWhiteSpace(idProyecto))
             {
-                var model= (await _evaluator
+                try
+                {
+                    var model = (await _evaluator
                     .Get_Evaluation(idProyecto))
                     .Select(val => val.Map());
-                return View(new ResultadosScratchViewModel(model));
+                    return View(new ResultadosScratchViewModel(model));
+                }
+                catch (EvaluationException)
+                {
+                    ModelState.AddModelError("idProyecto", "Id inváido.");
+                    return View("Index");
+                }
+                
             }
             return RedirectToAction("Index");
         }

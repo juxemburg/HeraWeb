@@ -115,7 +115,7 @@ namespace Hera.Data
         public async Task Delete_Desafio(int id)
         {
             var desafio = await Find_Desafio(id);
-            if(desafio != null)
+            if(desafio != null && desafio.Popularity == 0)
             {
                 _fmService.DeleteFile(desafio.DirSolucion);
                 Delete<Desafio>(desafio);

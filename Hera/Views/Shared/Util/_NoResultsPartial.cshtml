@@ -1,11 +1,14 @@
-
+@{ 
+    var text = (ViewData["NoResults-Text"] == null) ? "Sin Registros :("
+        : ViewData["NoResults-Text"];
+}
 <div class="row">
     <div class="col-xs-12 text-center padding-40">
         <p class="text-muted icon-text">
             <i class="material-icons icon-xl">find_in_page</i>
-            Sin registros :(
+            @text
         </p>
-        @if(ViewData["NoResults-Action"] != null)
+        @if (ViewData["NoResults-Action"] != null)
         {
             <a class="btn btn-round btn-white icon-text"
                asp-action='@ViewData["NoResults-Action"]'

@@ -4,6 +4,10 @@
     Layout = "_LayoutEmpty";
     ViewData["Title"] = "Mis Cursos";
     ViewData["Pagination-Action"] = "Index";
+    ViewData["NoResults-Action"] = "Busqueda";
+    ViewData["NoResults-Controller"] = "EstudianteCursos";
+    ViewData["NoResults-ActionText"] = "Matricula un curso";
+    ViewData["NoResults-Text"] = "Parece que no tienes cursos  :(";
 }
 @section Styles {
     <link href="~/css/Estudiante/cursos.css" rel="stylesheet" />
@@ -16,44 +20,52 @@
     <div class="container-fluid">
         <h2><span class="title">Mis</span> Cursos</h2>
     </div>
-    <div class="container-fluid">
-        <div class="row">
-            @foreach (var item in Model)
-            {
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="card">
-                        <div class="card-content content-@item.ColorName">
-                            <h5 class="category-social">
-                                <i class="fa fa-book"></i>
-                                Curso
-                            </h5>
-                            <h3 class="card-title"> 
-                                <a
-                                   asp-action="Details"
-                                   asp-controller="EstudianteCurso"
-                                   asp-route-idCurso="@item.Id">
-                                    @item.Nombre
-                                </a>
-                            </h3>
-                            <p class="card-description">
-                                <h4> <span class="title color-white">Profesor:</span> @item.Profesor.NombreCompleto</h4>
-                                @item.Descripcion
-                            </p>
-                            <div class="footer text-center">
-                                <a class="btn btn-white btn-round"
-                                   asp-action="Details"
-                                   asp-controller="EstudianteCurso"
-                                   asp-route-idCurso="@item.Id">
-                                    Ir al Curso
-                                </a>
+    @if (Model.Count > 0)
+    {
+        <div class="container-fluid">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card">
+                            <div class="card-content content-@item.ColorName">
+                                <h5 class="category-social">
+                                    <i class="fa fa-book"></i>
+                                    Curso
+                                </h5>
+                                <h3 class="card-title">
+                                    <a asp-action="Details"
+                                       asp-controller="EstudianteCurso"
+                                       asp-route-idCurso="@item.Id">
+                                        @item.Nombre
+                                    </a>
+                                </h3>
+                                <p class="card-description">
+                                    <h4> <span class="title color-white">Profesor:</span> @item.Profesor.NombreCompleto</h4>
+                                    @item.Descripcion
+                                </p>
+                                <div class="footer text-center">
+                                    <a class="btn btn-white btn-round"
+                                       asp-action="Details"
+                                       asp-controller="EstudianteCurso"
+                                       asp-route-idCurso="@item.Id">
+                                        Ir al Curso
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
+            @await Html.PartialAsync("Pagination/_PaginationPartial", Model, ViewData)
         </div>
-        @await Html.PartialAsync("Pagination/_PaginationPartial",Model, ViewData)
-    </div>
+
+    }
+    else
+    {
+        @Html.Partial("Util/_NoResultsPartial")
+
+    }
 </section>
 
 

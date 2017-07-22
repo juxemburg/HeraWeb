@@ -28,52 +28,59 @@
 
     </div>
 </section>
-<section class="section section-gray">
-    <div class="container-fluid">
-        <div class="row">
-            @foreach (var item in Model)
-            {
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="card">
-                        <div class="card-content">
-                            <h6 class="category text-success">
-                                <i class="fa fa-book"></i>
-                                Curso
-                            </h6>
-                            <h3 class="card-title">
-                                @item.Nombre
-                            </h3>
-                            <p class="card-description">
-                                <h4><span class="title">Profesor:</span> @item.Profesor.NombreCompleto</h4>
-                                @item.Descripcion
-                            </p>
-                            <div class="footer text-center">
-                                <button id="@item.Id" type="button" 
-                                        class="btn btn-info btn-round btn-item"
-                                        data-toggle="modal" data-target="#myModal">
-                                    Matricular
-                                </button>
+@if (Model.Count > 0)
+{
+    <section class="section section-gray">
+        <div class="container-fluid">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card">
+                            <div class="card-content">
+                                <h6 class="category text-success">
+                                    <i class="fa fa-book"></i>
+                                    Curso
+                                </h6>
+                                <h3 class="card-title">
+                                    @item.Nombre
+                                </h3>
+                                <p class="card-description">
+                                    <h4><span class="title">Profesor:</span> @item.Profesor.NombreCompleto</h4>
+                                    @item.Descripcion
+                                </p>
+                                <div class="footer text-center">
+                                    <button id="@item.Id" type="button"
+                                            class="btn btn-info btn-round btn-item"
+                                            data-toggle="modal" data-target="#myModal">
+                                        Matricular
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
-        </div>
-        <div class="text-center">
-            <ul class="pagination">
-                @foreach (var item in Model.Pages)
-                {
-                    <li class="@item.Item2">
-                        <a asp-action="Index" asp-route-skip="@((item.Item1-1)*Model.Take)"
-                           asp-route-take="@Model.Take">
-                            @item.Item1
-                        </a>
-                    </li>
                 }
-            </ul>
+            </div>
+            <div class="text-center">
+                <ul class="pagination">
+                    @foreach (var item in Model.Pages)
+                {
+                        <li class="@item.Item2">
+                            <a asp-action="Index" asp-route-skip="@((item.Item1-1)*Model.Take)"
+                               asp-route-take="@Model.Take">
+                                @item.Item1
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+}
+else
+{
+    @await Html.PartialAsync("Util/_NoResultsSectionPartial");
+}
 
 
 @section Modals {
