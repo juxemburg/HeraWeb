@@ -33,6 +33,7 @@ namespace Hera.Controllers.ControllersMvc
                 ? _data.GetAll_Cursos(profId) :
                 _data.Autocomplete_Cursos(searchString, profId);
 
+            this.GetAlerts();
             return View(new PaginationViewModel<Curso>(model, skip, take));
         }
 

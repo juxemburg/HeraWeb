@@ -54,13 +54,47 @@ namespace Hera.Data
             //builder.Entity<BloqueScratch>()
             //    .HasKey(e => new { e.ResultadoScratchId, e.Nombre, e.Id });
 
+            builder.Entity<Curso>()
+                .HasMany(c => c.Desafios)
+                .WithOne(rel => rel.Curso)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Curso>()
+                .HasMany(c => c.Estudiantes)
+                .WithOne(rel => rel.Curso)
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.Entity<Rel_CursoEstudiantes>()
                 .HasKey(entity => 
                 new { entity.CursoId, entity.EstudianteId });
+            builder.Entity<Rel_CursoEstudiantes>()
+                .HasMany(rel => rel.Registros)
+                .WithOne(reg => reg.Rel_CursoEstudiantes)
+                .OnDelete(DeleteBehavior.Cascade);
+            //builder.Entity<Rel_CursoEstudiantes>()
+            //    .HasOne(e => e.Curso)
+            //    .WithMany(e2 => e2.Estudiantes)
+            //    .HasForeignKey(e => e.CursoId)
+            //    .OnDelete(DeleteBehavior.SetNull);
+            //builder.Entity<Rel_CursoEstudiantes>()
+            //    .HasOne(e => e.Estudiante)
+            //    .WithMany(e2 => e2.Cursos)
+            //    .HasForeignKey(e => e.EstudianteId)
+            //    .OnDelete(DeleteBehavior.SetNull);
 
             builder.Entity<Rel_DesafiosCursos>()
                 .HasKey(entity => 
                 new { entity.DesafioID, entity.CursoId });
+            //builder.Entity<Rel_DesafiosCursos>()
+            //    .HasOne(e => e.Desafio)
+            //    .WithMany(e2 => e2.Cursos)
+            //    .HasForeignKey(e => e.DesafioID)
+            //    .OnDelete(DeleteBehavior.SetNull);
+            //builder.Entity<Rel_DesafiosCursos>()
+            //    .HasOne(e => e.Curso)
+            //    .WithMany(e2 => e2.Desafios)
+            //    .HasForeignKey(e => e.CursoId)
+            //    .OnDelete(DeleteBehavior.SetNull);
 
             //Registro Calificacion
             builder.Entity<RegistroCalificacion>()

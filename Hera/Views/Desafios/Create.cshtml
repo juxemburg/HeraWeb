@@ -13,282 +13,287 @@
 
 
 <!--      Wizard container        -->
-<div class="wizard-container">
-    <div class="card wizard-card .no-shadow-card" data-color="azure" id="wizard">
-        <form method="post" enctype="multipart/form-data"
-              asp-action="UploadDesafio"
-              asp-controller="File">
-            
-            <!--        You can switch " data-color="azure" "  with one of the next bright colors: "blue", "green", "orange", "red"           -->
-            <div class="wizard-header text-center">
-                <h2 class="wizard-title"><span class="title">Crea</span> tu desafío</h2>
-                <p class="category">Por favor sigue los siguientes pasos...</p>
-            </div>
-            <div class="wizard-navigation">
-                <div class="progress-with-circle">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" style="width: 21%;"></div>
-                </div>
-                <ul>
-                    <li>
-                        <a href="#details" data-toggle="tab">
-                            <div class="icon-circle">
-                                <i class="ti-briefcase"></i>
-                            </div>
-                            datos
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#captain" data-toggle="tab">
-                            <div class="icon-circle">
-                                <i class="ti-briefcase"></i>
-                            </div>
-                            Solución
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#description" data-toggle="tab">
-                            <div class="icon-circle">
-                                <i class="material-icons">assesment</i>
-                            </div>
-                            evaluación
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="tab-content">
-                <hr />
-                <div class="tab-pane" id="details">
-                    <div class="col-sm-6">
-                        <div asp-validation-summary="All" class="text-danger">
-                        </div>
-                        <h5 class="info-text text-center">Llena unos datos básicos</h5>
-                    </div>
-                    <div class="row">
-                        <div class="form-group label-floating  col-sm-12 ">
-                            <label asp-for="Nombre" class="control-label"></label>
-                            <input asp-for="Nombre" class="form-control" />
-                            <span asp-validation-for="Nombre" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <textarea rows="6" asp-for="Descripcion"
-                                      class="form-control" placeholder="Escribe aquí tu descripción del desafío">
-                                            </textarea>
-                            <span asp-validation-for="Descripcion" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="captain">
-                    <h5 class="info-text">Ahora, regálanos la los proyectos del desafío</h5>
-                    <div class="row">
-                        <div class="form-group label-floating col-sm-6">
-                            <label asp-for="UrlEscenarioInicial" class="control-label"></label>
-                            <input asp-for="UrlEscenarioInicial" class="form-control" />
-                            <span asp-validation-for="UrlEscenarioInicial" class="text-danger"></span>
-                        </div>
-                        <div class="form-group label-floating col-sm-6">
-                            <label asp-for="UrlSolucion" 
-                                   class="control-label"></label>
-                            <input asp-for="UrlSolucion" class="form-control" />
-                            <span asp-validation-for="UrlSolucion"
-                                  class="text-danger"></span>
-                        </div>
-                        <div id="div-idSolucion" class="form-group label-floating col-sm-6">
-                            <label asp-for="IdSolucion" class="control-label"></label>
-                            <input id="input-idSolucion" asp-for="IdSolucion" class="form-control" disabled/>
-                            <span class="form-control-feedback">
-                                <i class="material-icons">done</i>
-                            </span>
-                            <span asp-validation-for="IdSolucion" class="text-danger"></span>
-                        </div>
-                        <div class="form-group form-file-upload is-empty is-fileinput col-sm-6">
-                            <input name="file" type="file" id="inputFile2" accept=".sb2" multiple="" required>
-                            <div class="input-group">
-                                <input type="text" readonly="" class="form-control" placeholder="Archivo de solución...">
-                                <span class="input-group-btn input-group-s">
-                                    <button type="button" class="btn btn-just-icon btn-primary">
-                                        <i class="material-icons">attach_file</i>
-                                    </button>
-                                </span>
-                                <span asp-validation-for="DirArchivo"
-                                      class="text-danger"></span>
-                            </div>
-                            <span class="material-input"></span>
-                        </div>
-                        @*<div class="form-group col-sm-6">
-                            <label>Sube la solución</label>
-                            <label class="btn btn-success btn-file">
-                                Escoger archivo... 
-                                <input id="input-solucion"  name="file" type="file" accept=".sb2" style="display: none;" required>
-                            </label>
-                            <span id="span-filepath"></span>
-                            <span asp-validation-for="DirArchivo"
-                                  class="text-danger"></span>
-                        </div>*@
-                    </div>
+<section>
+    <div class="container">
+        <div class="wizard-container">
+            <div class="card wizard-card .no-shadow-card" data-color="azure" id="wizard">
+                <form method="post" enctype="multipart/form-data"
+                      asp-action="UploadDesafio"
+                      asp-controller="File">
 
-                </div>
-                <div class="tab-pane" id="description">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="title text-center">
-                                Valores generales
-                            </div>
-                            <div class="togglebutton col-sm-6">
-                                <label>
-                                    <input type="checkbox" asp-for="MultipleSpriteEvents" />
-                                    @Html.DisplayNameFor(Model => Model.MultipleSpriteEvents)
-                                </label>
-                            </div>
-                            <div class="togglebutton col-sm-6">
-                                <label>
-                                    <input type="checkbox" asp-for="VariableUse" />
-                                    @Html.DisplayNameFor(Model => Model.VariableUse)
-                                </label>
-                            </div>                            
-                            <div class="togglebutton col-sm-6">
-                                <label>
-                                    <input type="checkbox" asp-for="MessageUse" />
-                                    @Html.DisplayNameFor(Model => Model.MessageUse)
-                                </label>
-                            </div>
-                            <div class="togglebutton col-sm-6">
-                                <label>
-                                    <input type="checkbox" asp-for="ListUse" />
-                                    @Html.DisplayNameFor(Model => Model.ListUse)
-                                </label>
-                            </div>
-                            <hr />
+                    <!--        You can switch " data-color="azure" "  with one of the next bright colors: "blue", "green", "orange", "red"           -->
+                    <div class="wizard-header text-center">
+                        <h2 class="wizard-title"><span class="title">Crea</span> tu desafío</h2>
+                        <p class="category">Por favor sigue los siguientes pasos...</p>
+                    </div>
+                    <div class="wizard-navigation">
+                        <div class="progress-with-circle">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" style="width: 21%;"></div>
                         </div>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="title">Abstracción</div>
-                            <div class="togglebutton">
-                                <label>
-                                    <input type="checkbox" asp-for="NonUnusedBlocks" />
-                                    @Html.DisplayNameFor(Model => Model.NonUnusedBlocks)
-                                </label>
+                        <ul>
+                            <li>
+                                <a href="#details" data-toggle="tab">
+                                    <div class="icon-circle">
+                                        <i class="ti-briefcase"></i>
+                                    </div>
+                                    datos
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#captain" data-toggle="tab">
+                                    <div class="icon-circle">
+                                        <i class="ti-briefcase"></i>
+                                    </div>
+                                    Solución
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#description" data-toggle="tab">
+                                    <div class="icon-circle">
+                                        <i class="material-icons">assesment</i>
+                                    </div>
+                                    evaluación
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <hr />
+                        <div class="tab-pane" id="details">
+                            <div class="col-sm-6">
+                                <div asp-validation-summary="All" class="text-danger">
+                                </div>
+                                <h5 class="info-text text-center">Llena unos datos básicos</h5>
                             </div>
-                            <div class="togglebutton">
-                                <label>
-                                    <input type="checkbox" asp-for="UserDefinedBlocks" />
-                                    @Html.DisplayNameFor(Model => Model.UserDefinedBlocks)
-                                </label>
-                            </div>
-                            <div class="togglebutton">
-                                <label>
-                                    <input type="checkbox" asp-for="CloneUse" />
-                                    @Html.DisplayNameFor(Model => Model.CloneUse)
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="title">Mecanísmos de Entrada e interacción</div>
-                            <div class="togglebutton">
-                                <label>
-                                    <input type="checkbox" asp-for="BasicInputUse" />
-                                    @Html.DisplayNameFor(Model => Model.BasicInputUse)
-                                </label>
-                            </div>
-                            <div class="togglebutton">
-                                <label>
-                                    <input type="checkbox" asp-for="NonCreatedVariableUse" />
-                                    @Html.DisplayNameFor(Model => Model.NonCreatedVariableUse)
-                                </label>
-                            </div>
-                            <div class="togglebutton">
-                                <label>
-                                    <input type="checkbox" asp-for="SpriteSensisng" />
-                                    @Html.DisplayNameFor(Model => Model.SpriteSensisng)
-                                </label>
+                            <div class="row">
+                                <div class="form-group label-floating  col-sm-12 ">
+                                    <label asp-for="Nombre" class="control-label"></label>
+                                    <input asp-for="Nombre" class="form-control" />
+                                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <textarea rows="6" asp-for="Descripcion"
+                                              class="form-control" placeholder="Escribe aquí tu descripción del desafío">
+                                            </textarea>
+                                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="title">Uso de variables</div>
-                            <div class="togglebutton">
-                                <label>
-                                    <input type="checkbox" asp-for="BasicOperators" />
-                                    @Html.DisplayNameFor(Model => Model.BasicOperators)
-                                </label>
+                        <div class="tab-pane" id="captain">
+                            <h5 class="info-text">Ahora, regálanos la los proyectos del desafío</h5>
+                            <div class="row">
+                                <div class="form-group label-floating col-sm-6">
+                                    <label asp-for="UrlEscenarioInicial" class="control-label"></label>
+                                    <input asp-for="UrlEscenarioInicial" class="form-control" />
+                                    <span asp-validation-for="UrlEscenarioInicial" class="text-danger"></span>
+                                </div>
+                                <div class="form-group label-floating col-sm-6">
+                                    <label asp-for="UrlSolucion"
+                                           class="control-label"></label>
+                                    <input asp-for="UrlSolucion" class="form-control" />
+                                    <span asp-validation-for="UrlSolucion"
+                                          class="text-danger"></span>
+                                </div>
+                                <div id="div-idSolucion" class="form-group label-floating col-sm-6">
+                                    <label asp-for="IdSolucion" class="control-label"></label>
+                                    <input id="input-idSolucion" asp-for="IdSolucion" class="form-control" disabled />
+                                    <span class="form-control-feedback">
+                                        <i class="material-icons">done</i>
+                                    </span>
+                                    <span asp-validation-for="IdSolucion" class="text-danger"></span>
+                                </div>
+                                <div class="form-group form-file-upload is-empty is-fileinput col-sm-6">
+                                    <input name="file" type="file" id="inputFile2" accept=".sb2" multiple="" required>
+                                    <div class="input-group">
+                                        <input type="text" readonly="" class="form-control" placeholder="Archivo de solución...">
+                                        <span class="input-group-btn input-group-s">
+                                            <button type="button" class="btn btn-just-icon btn-primary">
+                                                <i class="material-icons">attach_file</i>
+                                            </button>
+                                        </span>
+                                        <span asp-validation-for="DirArchivo"
+                                              class="text-danger"></span>
+                                    </div>
+                                    <span class="material-input"></span>
+                                </div>
+                                @*<div class="form-group col-sm-6">
+                                    <label>Sube la solución</label>
+                                    <label class="btn btn-success btn-file">
+                                        Escoger archivo...
+                                        <input id="input-solucion"  name="file" type="file" accept=".sb2" style="display: none;" required>
+                                    </label>
+                                    <span id="span-filepath"></span>
+                                    <span asp-validation-for="DirArchivo"
+                                          class="text-danger"></span>
+                                </div>*@
                             </div>
-                            <div class="togglebutton">
-                                <label>
-                                    <input type="checkbox" asp-for="MediumOperators" />
-                                    @Html.DisplayNameFor(Model => Model.MediumOperators)
-                                </label>
-                            </div>
-                            <div class="togglebutton">
-                                <label>
-                                    <input type="checkbox" asp-for="NestedOperators" />
-                                    @Html.DisplayNameFor(Model => Model.NestedOperators)
-                                </label>
-                            </div>
+
                         </div>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="title">Control de Flujo</div>
-                            <div class="togglebutton">
-                                <label>
-                                    <input type="checkbox" asp-for="UseSimpleBlocks" />
-                                    @Html.DisplayNameFor(Model => Model.UseSimpleBlocks)
-                                </label>
-                            </div>
-                            <div class="togglebutton">
-                                <label>
-                                    <input type="checkbox" asp-for="UseMediumBlocks" />
-                                    @Html.DisplayNameFor(Model => Model.UseMediumBlocks)
-                                </label>
-                            </div>
-                            <div class="togglebutton">
-                                <label>
-                                    <input type="checkbox" asp-for="UseNestedControl" />
-                                    @Html.DisplayNameFor(Model => Model.UseNestedControl)
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="title">Pensamiento algorítmico y resolución de problemas</div>
-                            <div class="togglebutton">
-                                <label>
-                                    <input type="checkbox" asp-for="SecuenceUse" />
-                                    @Html.DisplayNameFor(Model => Model.SecuenceUse)
-                                </label>
-                            </div>
-                            <div class="togglebutton">
-                                <label>
-                                    <input type="checkbox" asp-for="MultipleThreads" />
-                                    @Html.DisplayNameFor(Model => Model.MultipleThreads)
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <div class="title">Paralelismo y sincronización</div>
-                            <div class="togglebutton">
-                                <label>
-                                    <input type="checkbox" asp-for="TwoGreenFlagThread" />
-                                    @Html.DisplayNameFor(Model => Model.TwoGreenFlagThread)
-                                </label>
-                            </div>
-                            <div class="togglebutton">
-                                <label>
-                                    <input type="checkbox" asp-for="AdvancedEventUse" />
-                                    @Html.DisplayNameFor(Model => Model.AdvancedEventUse)
-                                </label>
+                        <div class="tab-pane" id="description">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="title text-center">
+                                        Valores generales
+                                    </div>
+                                    <div class="togglebutton col-sm-6">
+                                        <label>
+                                            <input type="checkbox" asp-for="MultipleSpriteEvents" />
+                                            @Html.DisplayNameFor(Model => Model.MultipleSpriteEvents)
+                                        </label>
+                                    </div>
+                                    <div class="togglebutton col-sm-6">
+                                        <label>
+                                            <input type="checkbox" asp-for="VariableUse" />
+                                            @Html.DisplayNameFor(Model => Model.VariableUse)
+                                        </label>
+                                    </div>
+                                    <div class="togglebutton col-sm-6">
+                                        <label>
+                                            <input type="checkbox" asp-for="MessageUse" />
+                                            @Html.DisplayNameFor(Model => Model.MessageUse)
+                                        </label>
+                                    </div>
+                                    <div class="togglebutton col-sm-6">
+                                        <label>
+                                            <input type="checkbox" asp-for="ListUse" />
+                                            @Html.DisplayNameFor(Model => Model.ListUse)
+                                        </label>
+                                    </div>
+                                    <hr />
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="title">Abstracción</div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" asp-for="NonUnusedBlocks" />
+                                            @Html.DisplayNameFor(Model => Model.NonUnusedBlocks)
+                                        </label>
+                                    </div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" asp-for="UserDefinedBlocks" />
+                                            @Html.DisplayNameFor(Model => Model.UserDefinedBlocks)
+                                        </label>
+                                    </div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" asp-for="CloneUse" />
+                                            @Html.DisplayNameFor(Model => Model.CloneUse)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="title">Mecanísmos de Entrada e interacción</div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" asp-for="BasicInputUse" />
+                                            @Html.DisplayNameFor(Model => Model.BasicInputUse)
+                                        </label>
+                                    </div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" asp-for="NonCreatedVariableUse" />
+                                            @Html.DisplayNameFor(Model => Model.NonCreatedVariableUse)
+                                        </label>
+                                    </div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" asp-for="SpriteSensisng" />
+                                            @Html.DisplayNameFor(Model => Model.SpriteSensisng)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="title">Uso de variables</div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" asp-for="BasicOperators" />
+                                            @Html.DisplayNameFor(Model => Model.BasicOperators)
+                                        </label>
+                                    </div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" asp-for="MediumOperators" />
+                                            @Html.DisplayNameFor(Model => Model.MediumOperators)
+                                        </label>
+                                    </div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" asp-for="NestedOperators" />
+                                            @Html.DisplayNameFor(Model => Model.NestedOperators)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="title">Control de Flujo</div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" asp-for="UseSimpleBlocks" />
+                                            @Html.DisplayNameFor(Model => Model.UseSimpleBlocks)
+                                        </label>
+                                    </div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" asp-for="UseMediumBlocks" />
+                                            @Html.DisplayNameFor(Model => Model.UseMediumBlocks)
+                                        </label>
+                                    </div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" asp-for="UseNestedControl" />
+                                            @Html.DisplayNameFor(Model => Model.UseNestedControl)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="title">Pensamiento algorítmico y resolución de problemas</div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" asp-for="SecuenceUse" />
+                                            @Html.DisplayNameFor(Model => Model.SecuenceUse)
+                                        </label>
+                                    </div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" asp-for="MultipleThreads" />
+                                            @Html.DisplayNameFor(Model => Model.MultipleThreads)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="title">Paralelismo y sincronización</div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" asp-for="TwoGreenFlagThread" />
+                                            @Html.DisplayNameFor(Model => Model.TwoGreenFlagThread)
+                                        </label>
+                                    </div>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" asp-for="AdvancedEventUse" />
+                                            @Html.DisplayNameFor(Model => Model.AdvancedEventUse)
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="wizard-footer">
+                        <div class="pull-right">
+                            <input type='button' class='btn btn-next btn-fill btn-primary btn-wd' name='next' value='Siguiente' />
+                            <input type='submit' class='btn btn-finish btn-fill btn-primary btn-wd' name='finish' value='Crear Desafío!' />
+                        </div>
+                        <div class="pull-left">
+                            <input type='button' class='btn btn-previous btn-default btn-wd' name='previous' value='Atrás' />
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
             </div>
-            <div class="wizard-footer">
-                <div class="pull-right">
-                    <input type='button' class='btn btn-next btn-fill btn-primary btn-wd' name='next' value='Siguiente' />
-                    <input type='submit' class='btn btn-finish btn-fill btn-primary btn-wd' name='finish' value='Crear Desafío!' />
-                </div>
-                <div class="pull-left">
-                    <input type='button' class='btn btn-previous btn-default btn-wd' name='previous' value='Atrás' />
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </form>
+        </div>
     </div>
-</div> <!-- wizard container -->
+</section>
+ <!-- wizard container -->
 
 
 @section Modals {

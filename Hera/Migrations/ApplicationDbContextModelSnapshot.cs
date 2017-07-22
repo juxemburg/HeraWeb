@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Hera.Data;
-using Entities.Colors;
-using Entities.Usuarios;
 
 namespace Hera.Migrations
 {

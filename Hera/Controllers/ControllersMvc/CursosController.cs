@@ -14,7 +14,7 @@ using Hera.Models.EntitiesViewModels.ProfesorCursos;
 
 namespace Hera.Controllers.ControllersMvc
 {
-
+    [Authorize(Roles = "Profesor")]
     public class CursosController : Controller
     {
         private IDataAccess _data;
@@ -54,7 +54,6 @@ namespace Hera.Controllers.ControllersMvc
         }
 
         [HttpGet]
-        [Authorize(Roles ="Profesor")]
         public IActionResult Create()
         {
             return View();
@@ -62,7 +61,6 @@ namespace Hera.Controllers.ControllersMvc
 
         
         [HttpPost]
-        [Authorize(Roles = "Profesor")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateCursoViewModel model)
         {
@@ -97,7 +95,28 @@ namespace Hera.Controllers.ControllersMvc
         }
 
         [HttpPost]
-        [Authorize(Roles = "Estudiante")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var profId = await _userService.Get_ProfesorId(User.Claims);
+            if (await _data.Exist_Profesor_Curso(profId, id))
+            {
+                var curso = await _data.Find_Curso(id);
+                _data.Delete<Curso>(curso);
+                var res = await _data.SaveAllAsync();
+                if (res)
+                    this.SetAlerts("success-alerts",
+                        "El curso se eliminó exitosamente");
+            }
+            else
+                this.SetAlerts("error-alerts",
+                    "El curso no se pudo eliminar");
+
+            return RedirectToAction("Index", "ProfesorCursos");
+
+        }
+
+        [HttpPost]
         public async Task<IActionResult> AddEstudiante(
             AddEstudianteViewModel model)
         {
@@ -124,7 +143,6 @@ namespace Hera.Controllers.ControllersMvc
         }
         
         [HttpPost]
-        [Authorize(Roles = "Profesor")]
         public async Task<IActionResult> AddDesafio(AddDesafioViewModel model)
         {
             if (ModelState.IsValid)
@@ -152,7 +170,6 @@ namespace Hera.Controllers.ControllersMvc
         }
 
         [HttpPost]
-        [Authorize(Roles ="Profesor")]
         public async Task<IActionResult> RemoveDesafio(int desafioId,
             int cursoId)
         {
@@ -172,7 +189,6 @@ namespace Hera.Controllers.ControllersMvc
         }
 
         [HttpPost]
-        [Authorize(Roles ="Profesor")]
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> ChangeStarter(
             ChangeStarterViewModel model)
