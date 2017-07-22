@@ -113,6 +113,14 @@ namespace Hera.Controllers.ControllersMvc
             {
                 await _data.Delete_Desafio(id);
                 var res = await _data.SaveAllAsync();
+                if (res)
+                    this.SetAlerts("success-alerts",
+                        "El desafío se eliminó exitosamente");
+                else
+                    this.SetAlerts("error-alerts",
+                        "El desafío no se puede eliminar," +
+                        "revisa que no esté siendo usado previamente");
+
                 return RedirectToAction("Index", "ProfesorDesafio");
             }
             return NotFound();

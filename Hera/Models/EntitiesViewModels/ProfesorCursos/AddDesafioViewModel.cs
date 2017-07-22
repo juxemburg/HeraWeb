@@ -9,7 +9,7 @@ namespace Hera.Models.EntitiesViewModels
 {
     public class AddDesafioViewModel
     {
-        public int? DesafioId { get; set; }
+        public int DesafioId { get; set; }
 
         public int Id { get; set; }
 

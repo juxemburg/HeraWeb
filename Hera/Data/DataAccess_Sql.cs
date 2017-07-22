@@ -136,6 +136,23 @@ namespace Hera.Data
                 }
             }
         }
+        public async Task ChangeStarterDesafio(int cursoId, int oldId,
+            int newId)
+        {
+            if(await Exist_Desafio(oldId,cursoId)
+                && await Exist_Desafio(newId,cursoId))
+            {
+                var curso = await Find_Curso(cursoId);
+                var desafioNew = curso.Desafios
+                    .First(d => d.DesafioID == newId);
+                var desafioOld = curso.Desafios
+                    .First(d => d.DesafioID == oldId);
+                desafioNew.Initial = true;
+                desafioOld.Initial = false;
+                Edit<Rel_DesafiosCursos>(desafioOld);
+                Edit<Rel_DesafiosCursos>(desafioNew);
+            }
+        }
 
         public async Task<Curso> Find_Curso(int id)
         {

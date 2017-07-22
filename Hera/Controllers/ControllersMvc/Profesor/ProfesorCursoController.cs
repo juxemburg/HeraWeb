@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Hera.Models.EntitiesViewModels;
 using Microsoft.EntityFrameworkCore;
 using Hera.Models.EntitiesViewModels.ProfesorCursos;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Hera.Controllers.ControllersMvc.Profesor
 {
@@ -43,8 +44,16 @@ namespace Hera.Controllers.ControllersMvc.Profesor
                 .ToDictionaryAsync(reg => 
                 new Tuple<int,int>(reg.Key.DesafioId, reg.Key.EstudianteId)
                 , reg => reg.ToList());
-
-
+            model.Desafios = model.Desafios
+                .OrderByDescending(d => d.Initial)
+                .ToList();
+            ViewData["select-desafios"] =
+                model.Desafios.Select(d =>
+                new SelectListItem()
+                {
+                    Value = d.DesafioID.ToString(),
+                    Text = d.Desafio.Nombre
+                });
 
             this.GetAlerts();
             return View(new ProfesorCursoViewModel(model, registros));

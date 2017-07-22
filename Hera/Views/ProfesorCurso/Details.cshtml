@@ -93,6 +93,11 @@
                         <i class="material-icons icon-lg">add</i>
                     </button>
                 </span>
+                <span type="button" class=" btn-tooltip" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Cambiar Desafío Inicial">
+                    <button class="btn btn-sm btn-warning btn-round" data-toggle="modal" data-target="#modal-change-starter">
+                        <i class="material-icons icon-lg">sync</i>
+                    </button>
+                </span>
                 <hr />
             </div>
             <div class="col-md-10">
@@ -108,10 +113,19 @@
                                 <th>
                                     <a asp-controller="ProfesorCurso" asp-action="Progres" asp-route-idDesafio="@item.DesafioID">
                                         @item.Desafio.Nombre
+                                        @if (item.Initial)
+                                        {
+                                            <i class="material-icons text-warning">stars</i>
+                                        }
                                     </a>
-                                    <button class="btn btn-sm btn-simple btn-danger " data-toggle="modal" data-target="#modal-remove-@item.DesafioID">
-                                        <i class="material-icons icon-lg">remove_circle_outline</i>
-                                    </button>
+                                    @if (!item.Initial)
+                                    {
+                                        <button class="btn btn-sm btn-simple btn-danger " data-toggle="modal" data-target="#modal-remove-@item.DesafioID">
+                                            <i class="material-icons icon-lg">remove_circle_outline</i>
+                                        </button>
+                                    }
+                                    
+                                    
                                 </th>
                             }
                         </tr>
@@ -242,12 +256,51 @@
 
         </div>
     </div>
+    <div id="modal-change-starter" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">
+                        <span class="title">Escoge</span> el nuevo desafío inicial
+                    </h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <form method="post" 
+                                  asp-action="ChangeStarter" 
+                                  asp-controller="Cursos"
+                                  asp-antiforgery="true"
+                                  class="form-horizontal">
+                                <input id="input-desafioId" type="hidden" name="DesafioId" value="" />
+                                <input name="CursoId" value="@Model.Curso.Id" type="hidden" />
+                                <input name="OldStarterId" value="@Model.Curso.Desafio.Id" type="hidden" />
+                                
+                                <div class="form-group ">
+                                    <select name="NewStarterId"
+                                            asp-items='@(IEnumerable<SelectListItem>)ViewData["select-desafios"]'
+                                            class="form-control">
+                                    </select>
+                                </div>
+                                
+                                <div class="text-center col-sm-12">
+                                    <input class="btn btn-primary btn-round" type="submit" value="¡Cambiar!" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
     @foreach (var item in Model.Curso.Desafios)
     {
-        <p>@item.DesafioID</p>
         <div id="modal-remove-@item.DesafioID" class="modal fade" role="dialog">
             <div class="modal-dialog">
-                <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -277,7 +330,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     }

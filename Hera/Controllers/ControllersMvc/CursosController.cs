@@ -10,6 +10,7 @@ using Hera.Models.UtilityViewModels;
 using Microsoft.EntityFrameworkCore;
 using Hera.Services.UserServices;
 using Hera.Services.UtilServices;
+using Hera.Models.EntitiesViewModels.ProfesorCursos;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -130,18 +131,20 @@ namespace Hera.Controllers.ControllersMvc
             {
                 try
                 {
-                    var desafio = (model.DesafioId != null) ?
-                    await _data.Find_Desafio(
-                        model.DesafioId.GetValueOrDefault()) :
-                    model.Map();
-
-                    if (model.DesafioId == null)
-                        _data.AddDesafio(desafio);
-
-                    _data.AddDesafio(model.Id, desafio);
-                    var res = await _data.SaveAllAsync();
-                    if(res)
-                        this.SetAlerts("success-alerts", "El desafío se agregó exitosamente");
+                    if (!(await
+                        _data.Exist_Desafio(model.DesafioId, model.Id)))
+                    {
+                        var desafio =
+                        await _data.Find_Desafio(model.DesafioId);
+                        _data.AddDesafio(model.Id, desafio);
+                        var res = await _data.SaveAllAsync();
+                        if (res)
+                            this.SetAlerts("success-alerts",
+                                "El desafío se agregó exitosamente");
+                    }
+                    else
+                        this.SetAlerts("error-alerts",
+                            "El desafío ya se encuntra en el curso!");
                 }
                 catch (Exception) { }
             }
@@ -164,9 +167,30 @@ namespace Hera.Controllers.ControllersMvc
                 }
             }
             catch (Exception) { }
-            return RedirectToAction("Details", "ProfesorCurso", new { idCurso = cursoId });
+            return RedirectToAction("Details", "ProfesorCurso",
+                new { idCurso = cursoId });
         }
 
-
+        [HttpPost]
+        [Authorize(Roles ="Profesor")]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> ChangeStarter(
+            ChangeStarterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _data.ChangeStarterDesafio(model.CursoId,
+                    model.OldStarterId, model.NewStarterId);
+                var res = await _data.SaveAllAsync();
+                if (res)
+                    this.SetAlerts("success-alerts", "Desafío inicial " +
+                        "cambiado exitosamente");
+            }
+            else
+                this.SetAlerts("error-alerts", "No es posible" +
+                    " cambiar el desafío");
+            return RedirectToAction("Details",
+                "ProfesorCurso", new { idCurso = model.CursoId });
+        }
     }
 }

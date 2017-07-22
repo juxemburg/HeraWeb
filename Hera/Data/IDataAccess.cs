@@ -53,8 +53,7 @@ namespace Hera.Data
         Task Calificar_Desafio(int desafioId, int profesorId, int calificacion);
 
         //Cursos
-        void AddCurso(Curso model);
-        
+        void AddCurso(Curso model);        
         IQueryable<Curso> Autocomplete_Cursos(string queryString,
             int? prodId = null);
         IQueryable<Curso> GetAll_Cursos();
@@ -64,6 +63,7 @@ namespace Hera.Data
             bool inverse = false);
         Task<Curso> Find_Curso(int id);
         Task<Curso> Find_Curso_Public(int id);
+        Task ChangeStarterDesafio(int cursoId, int oldId, int newId);
 
         //Rel_Cursos_Estudiantes
         Task<Rel_CursoEstudiantes> Find_Rel_CursoEstudiantes(int idCurso,
