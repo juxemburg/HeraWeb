@@ -39,8 +39,15 @@ namespace Hera.Models.EntitiesViewModels
                 Descripcion = this.Descripcion,
                 ProfesorId = ProfesorId,
                 Password = this.Password,
-                DesafioId = desafioInicial.Id,
-                Desafio = desafioInicial,
+                Desafios = new List<Rel_DesafiosCursos>()
+                {
+                    new Rel_DesafiosCursos()
+                    {
+                        Initial = true,
+                        DesafioID = desafioInicial.Id,
+                        Desafio = desafioInicial
+                    }
+                },
                 Color = color
             };
         }

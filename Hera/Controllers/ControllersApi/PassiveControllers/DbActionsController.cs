@@ -8,6 +8,7 @@ using Hera.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Hera.Services;
+using Entities.Desafios;
 
 namespace Hera.Controllers.ControllersApi.PassiveControllers
 {
@@ -65,6 +66,33 @@ namespace Hera.Controllers.ControllersApi.PassiveControllers
             }
         }
 
+        [HttpGet("SetInitialDesafio")]
+        public async Task<IActionResult> SetInitialDesafio()
+        {
+            var random = new Random();
+            try
+            {
+                var cursos = _data.GetAll_Cursos();
+                foreach (var curso in cursos)
+                {
+                    var rel = curso.Desafios;
+                    if (rel.All(r => !r.Initial) && rel.Count > 0)
+                    {
+                        var rDesafio = rel[random.Next(rel.Count)];
+                        rDesafio.Initial = true;
+                        _data.Edit(rDesafio);
+                    }
+                }
+                await _data.SaveAllAsync();
+                return Ok("Edited");
+            }
+            catch (Exception e)
+            {
+
+                return Ok(e.Message);
+            }
+        }
+
         [HttpGet("DeleteValorationInfo")]
         public async Task<IActionResult> DeleteValorationInfo()
         {
@@ -94,7 +122,7 @@ namespace Hera.Controllers.ControllersApi.PassiveControllers
         }
 
 
-        [HttpGet("DeleteAllFilesgen V")]
+        [HttpGet("DeleteAllFiles")]
         public IActionResult DeleteAllFiles()
         {
             try

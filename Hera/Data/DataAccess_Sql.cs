@@ -104,10 +104,8 @@ namespace Hera.Data
         public async Task<bool> Exist_Desafio(int idDesafio, int idCurso)
         {
             return await _context.Rel_Cursos_Desafios
-                .Include(rel => rel.Curso)
-                .AnyAsync(des => (des.CursoId == idCurso &&
-                des.DesafioID == idDesafio) ||
-                des.Curso.DesafioId == idDesafio);
+                .AnyAsync(des => des.CursoId == idCurso &&
+                des.DesafioID == idDesafio);
         }
         public async Task<bool> Exist_DesafioP(int id, int idProfesor)
         {
@@ -143,7 +141,6 @@ namespace Hera.Data
         {
             return await _context.Cursos
                 .Where(c => c.Id == id)
-                .Include(c => c.Desafio)
                 .Include(c => c.Profesor)
                 .Include(c => c.Desafios)
                 .ThenInclude(c => c.Desafio)
@@ -160,7 +157,8 @@ namespace Hera.Data
         {
             return await _context.Rel_Cursos_Estudiantes
                 .Include("Curso")
-                .Include("Curso.Desafio")
+                .Include("Curso.Desafios")
+                .Include("Curso.Desafios.Desafio")
                 .Include("Curso.Profesor")
                 .Include(cur => cur.Registros)
                 .FirstOrDefaultAsync(rel => rel.CursoId == idCurso &&
@@ -263,6 +261,7 @@ namespace Hera.Data
         public IQueryable<Curso> GetAll_Cursos()
         {
             return _context.Cursos
+                .Include(c => c.Desafios)
                 .Include(c => c.Profesor);
         }
         public IQueryable<Curso> GetAll_Cursos(int profId)

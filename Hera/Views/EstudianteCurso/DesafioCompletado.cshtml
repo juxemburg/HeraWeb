@@ -22,8 +22,8 @@
 
 @section Modals
 {
-    @await Html.PartialAsync("_ResultadoInfoGeneral",Model.Resultado)
-    @await Html.PartialAsync("_Modal_ResultadoScratchPartial", Model.Resultado)
+    @await Html.PartialAsync("Evaluacion/_Modal_ResultadoGeneralSimple", Model.Resultado)
+    @await Html.PartialAsync("Evaluacion/_Modal_ResultadoBloquesPartial", Model.Resultado)
 }
 
 

@@ -64,10 +64,16 @@ namespace Hera.Data
                 var curso = new Curso()
                 {
                     Nombre = "Curso " + i,
-                    Desafio = new Desafio()
+                    Desafios = new List<Rel_DesafiosCursos>()
                     {
-                        Nombre = "Desafio " + i,
-                        DirDesafioInicial = "/dir/dir/dir"
+                      new Rel_DesafiosCursos()
+                      {
+                          Desafio =    new Desafio()
+                          {
+                              Nombre = "Desafio " + i,
+                              DirDesafioInicial = "/dir/dir/dir"
+                          }
+                      }
                     },
                     Password = "pass",
                     ProfesorId = 1,

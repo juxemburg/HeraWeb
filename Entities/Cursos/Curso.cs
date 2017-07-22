@@ -20,26 +20,24 @@ namespace Entities.Cursos
 
         public string Password { get; set; }
 
-        public int DesafioId { get; set; }
-        public Desafio Desafio { get; set; }
+        
+        public Desafio Desafio
+        {
+            get => Desafios.FirstOrDefault(d => d.Initial).Desafio;
+        }
 
         public virtual List<Rel_CursoEstudiantes> Estudiantes { get; set; }
         public virtual List<Rel_DesafiosCursos> Desafios { get; set; }
 
         public bool ContieneEstudiante(int estId)
         {
-            var query = Estudiantes
-                .Where(rel => rel.EstudianteId == estId)
-                .FirstOrDefault();
-            return query != null;                
+            return Estudiantes
+                .Any(rel => rel.EstudianteId == estId);
         }
 
         public bool ContieneDesafio(int desafioId)
         {
-            var query = Desafios
-                .Where(rel => rel.DesafioID == desafioId)
-                .FirstOrDefault();
-            return (query != null || Desafio.Id == desafioId);
+            return Desafios.Any(rel => rel.DesafioID == desafioId);
         }
 
         

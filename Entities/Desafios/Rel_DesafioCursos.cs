@@ -7,6 +7,8 @@ namespace Entities.Desafios
 {
     public class Rel_DesafiosCursos
     {
+        public bool Initial { get; set; }
+
         public int DesafioID { get; set; }
         public Desafio Desafio { get; set; }
 

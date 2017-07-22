@@ -16,7 +16,7 @@
 
 <section>
     <div class="container">
-        <h2>
+        <h2 class="">
             <span class="title">Curso</span>
             @Model.Curso.Nombre
             <a asp-action="Edit"
@@ -103,11 +103,6 @@
                             <th>
                                 Estudiantes\Desafíos
                             </th>
-                            <th>
-                                <a asp-controller="ProfesorCurso" asp-action="Progres" asp-route-idDesafio="@Model.Curso.DesafioId">
-                                    @Model.Curso.Desafio.Nombre
-                                </a>
-                            </th>
                             @foreach (var item in Model.Curso.Desafios)
                             {
                                 <th>
@@ -132,34 +127,6 @@
                                         </a>
                                     </strong>
                                 </td>
-                                @if (Model.RegistrosCurso.ContainsKey(
-new Tuple<int, int>(Model.Curso.DesafioId, item.EstudianteId)))
-                                {
-                                    var reg = Model.RegistrosCurso[
-                                new Tuple<int, int>(Model.Curso.DesafioId, item.EstudianteId)];
-                                    <td>
-                                        <a class="btn btn-warning btn-xs"
-                                           asp-action="Calificar"
-                                           asp-controller="ProfesorEstudiante"
-                                           asp-route-idCurso="@Model.Curso.Id"
-                                           asp-route-idEstudiante="@item.EstudianteId"
-                                           asp-route-idDesafio="@Model.Curso.DesafioId">
-                                            @if (reg.First().CalificacionCualitativa != null
-&& reg.First().CalificacionCualitativa.Completada)
-                                            {
-                                                <i class="material-icons">done</i>
-                                            }
-                                            else
-                                            {
-                                                <i class="material-icons">priority_high</i>
-                                            }
-                                        </a>
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
                                 @foreach (var desafio in Model.Curso.Desafios)
                                 {
                                     if (Model.RegistrosCurso.ContainsKey(
@@ -168,23 +135,29 @@ new Tuple<int, int>(Model.Curso.DesafioId, item.EstudianteId)))
                                         var reg = Model.RegistrosCurso[
                                         new Tuple<int, int>(desafio.DesafioID, item.EstudianteId)];
                                         <td>
+                                           @if (reg.First().CalificacionCualitativa != null
+              && reg.First().CalificacionCualitativa.Completada)
+                                           {
+                                            <a class="btn btn-success btn-xs"
+                                               asp-action="Calificar"
+                                               asp-controller="ProfesorEstudiante"
+                                               asp-route-idCurso="@Model.Curso.Id"
+                                               asp-route-idEstudiante="@item.EstudianteId"
+                                               asp-route-idDesafio="@desafio.DesafioID">
+                                                <i class="material-icons">done</i>
+                                            </a>
+                                           }
+                                           else
+                                           {
                                             <a class="btn btn-warning btn-xs"
                                                asp-action="Calificar"
                                                asp-controller="ProfesorEstudiante"
                                                asp-route-idCurso="@Model.Curso.Id"
                                                asp-route-idEstudiante="@item.EstudianteId"
                                                asp-route-idDesafio="@desafio.DesafioID">
-                                                @if (reg.First().CalificacionCualitativa != null
-&& reg.First().CalificacionCualitativa.Completada)
-                                                {
-                                                    <i class="material-icons">done</i>
-                                                }
-                                                else
-                                                {
-                                                    <i class="material-icons">priority_high</i>
-                                                }
+                                                <i class="material-icons">priority_high</i>
                                             </a>
-
+                                           }
                                         </td>
                                     }
                                     else

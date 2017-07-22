@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Hera.Models.EntitiesViewModels.EstudianteCurso;
 using Hera.Services.DesafiosServices;
+using Hera.Services.UserServices;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -22,11 +23,14 @@ namespace Hera.Controllers.ControllersMvc
         private IDataAccess _data;
         private ScratchService _evaluator;
         private DesafioService _desafioService;
+        private UserService _usrService;
 
         public EstudianteCursoController(IDataAccess data,
             ScratchService scratchService,
-            DesafioService desafioService)
+            DesafioService desafioService,
+            UserService usrService)
         {
+            _usrService = usrService;
             _desafioService = desafioService;
             _evaluator = scratchService;
             _data = data;
@@ -36,9 +40,7 @@ namespace Hera.Controllers.ControllersMvc
         [Route("/Estudiante/Curso/{idCurso:int}")]
         public async Task<IActionResult> Details(int idCurso)
         {
-            var estId
-                = await _data.Find_EstudianteId(
-                    _data.Get_UserId(User.Claims));
+            var estId = await _usrService.Get_EstudianteId(User.Claims);
             
             if (await _data.Exist_Estudiante_Curso(estId, idCurso))
             {
