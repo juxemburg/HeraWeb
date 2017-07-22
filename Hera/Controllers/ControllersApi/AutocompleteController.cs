@@ -30,7 +30,7 @@ namespace Hera.Controllers
                     Id= r.Id,
                     Nombre = r.Nombre,
                     Descripcion = r.Descripcion,
-                    Dificultad = 0
+                    Autor = r.Profesor.NombreCompleto
                 }).ToListAsync();
 
             return Ok(res);

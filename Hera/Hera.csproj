@@ -56,6 +56,7 @@
     <Content Include="wwwroot\css\Wizard\demo.css" />
     <Content Include="wwwroot\css\Wizard\paper-bootstrap-wizard.css" />
     <Content Include="wwwroot\images\bg-login.jpg" />
+    <Content Include="wwwroot\images\Ellipsis.svg" />
     <Content Include="wwwroot\images\stars.svg" />
     <Content Include="wwwroot\js\Autocomplete\autocomplete-client.js" />
     <Content Include="wwwroot\js\Autocomplete\jquery.easy-autocomplete.min.js" />

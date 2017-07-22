@@ -365,7 +365,8 @@ namespace Hera.Data
         public IQueryable<Desafio> Autocomplete_Desafios(string queryString)
         {
             return GetAll_Desafios()
-                .Where(d => d.Nombre.Contains(queryString));
+                .Where(d => d.Nombre.Contains(queryString))
+                .Include(d => d.Profesor);
         }
 
         public IQueryable<Estudiante> GetAll_Estudiante()

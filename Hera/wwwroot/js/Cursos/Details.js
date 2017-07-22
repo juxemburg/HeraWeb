@@ -5,7 +5,9 @@ loadAutocomplete('input-desafioNombre',
 
         $("#input-desafioId").val(value.id);
         $("#input-desafioDescripcion").val(value.descripcion);
-        $("#input-desafioDificultad").val(value.dificultad);
+        $("#input-desafioAutor").val(value.autor);
+        $("#div-lnk-desafio").show();
+        $("#lnk-desafio").attr("href", "/Desafios/Details/" + value.id);
     });
 
 
