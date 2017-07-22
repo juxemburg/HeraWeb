@@ -74,18 +74,30 @@ pre.prettyprint {
     margin-bottom: 60px;
 }
 
-.rating-text {
+.rating-text, .icon-text .material-icons {
     position:relative;
+}
+.icon-text icon-md {
+    top: 4px;
 }
 .rating-text.icon-md {
     top: -4px;
 }
+.icon-text .icon-lg {
+    top: -3px;
+}
 .rating-text.icon-xl {
-    top:-12px;
+    top: -12px;
+}
+.icon-text .icon-xl {
+    top:12px;
 }
 .rating-text.icon-xxl {
     top: -15px;
     font-size:20px;
+}
+.icon-text .icon-xxl {
+    top: 15px;
 }
 
 @media screen and (max-width: 767px)

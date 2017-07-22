@@ -131,6 +131,15 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if(Model.Curso.Estudiantes.Count <= 0)
+                        {
+                            <tr>
+                                <td colspan="@(Model.Curso.Desafios.Count+1)">
+                                    @Html.Partial("_NoStudentsPartial");
+                                </td>
+                            </tr>
+
+                        }
                         @foreach (var item in Model.Curso.Estudiantes)
                         {
                             <tr>

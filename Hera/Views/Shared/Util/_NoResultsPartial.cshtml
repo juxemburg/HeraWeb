@@ -1,17 +1,17 @@
 
 <div class="row">
     <div class="col-xs-12 text-center padding-40">
-        <p class="text-muted">
+        <p class="text-muted icon-text">
             <i class="material-icons icon-xl">find_in_page</i>
             Sin registros :(
         </p>
         @if(ViewData["NoResults-Action"] != null)
         {
-            <a class="btn btn-round btn-white"
+            <a class="btn btn-round btn-white icon-text"
                asp-action='@ViewData["NoResults-Action"]'
                asp-controller='@ViewData["NoResults-Controller"]'>
                 @ViewData["NoResults-ActionText"].ToString()
-                <i class="material-icons">priority_high</i>
+                <i class="material-icons icon-lg">priority_high</i>
             </a>
 
         }
