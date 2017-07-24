@@ -11,10 +11,13 @@ using System.Data.SqlClient;
 using Entities.Calificaciones;
 using Entities.Valoracion;
 using Hera.Services;
+using Hera.Services.NotificationServices;
+using Entities.Notifications;
+using Hera.Services.NotificationServices.NotificationBuilders;
 
 namespace Hera.Data
 {
-    public class DataAccess_Sql : IDataAccess
+    public partial class DataAccess_Sql : IDataAccess
     {
         private ApplicationDbContext _context;
         private FileManagerService _fmService;
@@ -37,7 +40,7 @@ namespace Hera.Data
                 int id = Convert.ToInt32(res);
                 return id;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return -1;
             }
@@ -95,7 +98,7 @@ namespace Hera.Data
             Add<Profesor>(model);
         }
 
-        
+
         public async Task<bool> Exist_Desafio(int idDesafio)
         {
             return await _context.Desafios
@@ -115,20 +118,20 @@ namespace Hera.Data
         public async Task Delete_Desafio(int id)
         {
             var desafio = await Find_Desafio(id);
-            if(desafio != null && desafio.Popularity == 0)
+            if (desafio != null && desafio.Popularity == 0)
             {
                 _fmService.DeleteFile(desafio.DirSolucion);
                 Delete<Desafio>(desafio);
             }
-                
+
         }
         public async Task Delete_Desafio(int cursoId, int desafioId)
         {
             var rel = await Find_Rel_DesafiosCursos(desafioId, cursoId);
-            if(rel != null)
+            if (rel != null)
             {
                 Delete<Rel_DesafiosCursos>(rel);
-                var calificaciones = 
+                var calificaciones =
                     GetAll_RegistroCalificacion(cursoId, null, desafioId);
                 foreach (var calificacion in calificaciones)
                 {
@@ -139,8 +142,8 @@ namespace Hera.Data
         public async Task ChangeStarterDesafio(int cursoId, int oldId,
             int newId)
         {
-            if(await Exist_Desafio(oldId,cursoId)
-                && await Exist_Desafio(newId,cursoId))
+            if (await Exist_Desafio(oldId, cursoId)
+                && await Exist_Desafio(newId, cursoId))
             {
                 var curso = await Find_Curso(cursoId);
                 var desafioNew = curso.Desafios
@@ -187,7 +190,7 @@ namespace Hera.Data
                 .Include(cur => cur.Registros)
                 .FirstOrDefaultAsync(rel => rel.CursoId == idCurso &&
                 rel.EstudianteId == idEstudiante);
-                
+
         }
         public async Task<Rel_DesafiosCursos> Find_Rel_DesafiosCursos
             (int desafioId, int cursoId)
@@ -212,7 +215,7 @@ namespace Hera.Data
         {
             var rating = await Find_Rel_Rating(desafioId,
                 profesorId);
-            if(rating != null)
+            if (rating != null)
             {
                 rating.Rating = calificacion;
                 Edit<Rel_Rating>(rating);
@@ -296,23 +299,23 @@ namespace Hera.Data
         }
         public IQueryable<Curso> GetAll_CursosEstudiante(int idEst,
             string courseName = "",
-            bool inverse= false)
+            bool inverse = false)
         {
             var query = Enumerable.Empty<Curso>().AsQueryable();
             var ids = _context.Rel_Cursos_Estudiantes
                 .Where(rel => rel.EstudianteId == idEst)
                 .Select(rel => rel.CursoId);
-            
+
             query = _context.Cursos
                 .Where(cur => ids.Contains(cur.Id) != inverse)
                 .Include(cur => cur.Profesor);
-            if(!string.IsNullOrWhiteSpace(courseName))
+            if (!string.IsNullOrWhiteSpace(courseName))
                 query = query.Where(c => c.Nombre.Contains(courseName));
 
             return query;
 
         }
-        
+
         public IQueryable<Curso> Autocomplete_Cursos(string queryString,
             int? profId = null)
         {
@@ -333,15 +336,15 @@ namespace Hera.Data
                 .Include(d => d.Ratings)
                 .Include(d => d.Cursos);
 
-            if(!string.IsNullOrWhiteSpace(searchString))
+            if (!string.IsNullOrWhiteSpace(searchString))
             {
                 query = query
                     .Where(d => d.Nombre.Contains(searchString));
             }
 
-            if(similarInfo != null && !similarInfo.IsFalse)
+            if (similarInfo != null && !similarInfo.IsFalse)
             {
-                if(equality)
+                if (equality)
                     query = query
                         .Where(d => d.InfoDesafio.IsEqualTo(similarInfo));
                 else
@@ -352,7 +355,7 @@ namespace Hera.Data
             if (profesorId != null)
                 query = query
                     .Where(d => d.ProfesorId == profesorId);
-            if(cursoId != null)
+            if (cursoId != null)
             {
                 var ids = _context.Rel_Cursos_Desafios
                     .Where(rel => rel.CursoId == cursoId)
@@ -397,8 +400,8 @@ namespace Hera.Data
         {
             var query = Enumerable
                 .Empty<RegistroCalificacion>().AsQueryable();
-            
-            if(profesorId != null 
+
+            if (profesorId != null
                 && !(await Exist_Profesor_Curso(profesorId.Value, cursoId)))
             {
                 return null;
@@ -466,11 +469,28 @@ namespace Hera.Data
                 Edit<Calificacion>(model);
             }
         }
+        public void Do_TerminarCalificacion(Curso curso,
+            Calificacion calificacion,
+            List<ResultadoScratch> resultados, string projId)
+        {
+            
+            calificacion.TerminarCalificacion(projId);
+            AddRange_ResultadoScratch(resultados);
+            Edit<Calificacion>(calificacion);
+            Do_PushNotification(
+                NotificationType.Notification_NuevaCalificacion,
+                curso.ProfesorId,
+                new Dictionary<string, string>()
+                {
+                    ["IdCurso"] = $"{curso.Id}",
+                    ["NombreCurso"] = curso.Nombre
+                });
+        }
 
         public async Task<Calificacion> Find_Calificacion(
             int calificacionId)
         {
-            
+
             return await _context.Calificaciones
                 .Include(cal => cal.Resultados)
                 .Include("Resultados.Bloques")
@@ -494,7 +514,7 @@ namespace Hera.Data
             return model;
         }
 
-        public async Task<CalificacionCualitativa> 
+        public async Task<CalificacionCualitativa>
             Find_CalificacionCualitativa(int calificacionId)
         {
             return await _context.CalificacionesCualitativas
@@ -569,10 +589,10 @@ namespace Hera.Data
         public async Task<bool> Exist_Profesor_Curso(int profesorId,
             int cursoId)
         {
-            return  await _context.Cursos
+            return await _context.Cursos
                 .AnyAsync(cur => cur.Id == cursoId
                 && cur.ProfesorId == profesorId);
-                
+
         }
 
         public async Task<bool> Exist_Estudiante_Curso(int estudianteId,
@@ -584,15 +604,10 @@ namespace Hera.Data
 
         }
 
-
-
-
-
-
         public IQueryable<Estudiante> Find_Estudiantes_Finalizaron(int desafioId, int cursoId)
         {
             var consulta = _context.RegistroCalificaiones
-                .Where(y => y.DesafioId == desafioId && 
+                .Where(y => y.DesafioId == desafioId &&
                 y.CursoId == cursoId)
                 .Select(e => e.EstudianteId);
             var query = _context.Estudiantes
@@ -609,12 +624,49 @@ namespace Hera.Data
                 .Select(rel => rel.Estudiante);
 
             var estSi = Find_Estudiantes_Finalizaron(desafioId, cursoId);
-            var query =  est
+            var query = est
                 .Where(e => !estSi.Contains(e));
             return query.AsQueryable();
-            
 
-            
+
+
+        }
+
+        //Notifications
+
+        public void Do_PushNotification(NotificationType type,
+            int userId,
+            Dictionary<string, string> values)
+        {
+            var not = NotificationBuilder.CreateNotification(type,
+                userId, values);
+            Add_Notification(not);
+        }
+        public void Add_Notification(Notification model)
+        {
+            Add<Notification>(model);
+        }
+
+        public void Edit_Notification(Notification model)
+        {
+            Edit<Notification>(model);
+        }
+
+        public async Task<Notification> Find_Notification(int id)
+        {
+            var model = await _context.Notifications
+                .FirstOrDefaultAsync(n => n.Id == id);
+
+            return model;
+        }
+        public async Task<Notification> Find_Notification
+            (int userId, string key)
+        {
+            var model = await _context.Notifications
+                .FirstOrDefaultAsync(n => n.UsuarioId == userId &&
+                n.Key.Equals(key) && n.Unread);
+
+            return model;
         }
     }
 }

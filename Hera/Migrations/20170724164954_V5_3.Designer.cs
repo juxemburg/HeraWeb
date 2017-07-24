@@ -10,9 +10,10 @@ using Entities.Usuarios;
 namespace Hera.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170724164954_V5_3")]
+    partial class V5_3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -231,6 +232,8 @@ namespace Hera.Migrations
 
                     b.Property<string>("Action");
 
+                    b.Property<string>("Controller");
+
                     b.Property<DateTime>("Date");
 
                     b.Property<string>("Key");
@@ -244,6 +247,24 @@ namespace Hera.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("Entities.Notifications.RouteValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("NotificationId");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NotificationId");
+
+                    b.ToTable("RouteValues");
                 });
 
             modelBuilder.Entity("Entities.Usuarios.ApplicationUser", b =>
@@ -701,6 +722,14 @@ namespace Hera.Migrations
                     b.HasOne("Entities.Usuarios.Profesor", "Profesor")
                         .WithMany("Ratings")
                         .HasForeignKey("ProfesorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Entities.Notifications.RouteValue", b =>
+                {
+                    b.HasOne("Entities.Notifications.Notification", "Notification")
+                        .WithMany("RouteValues")
+                        .HasForeignKey("NotificationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

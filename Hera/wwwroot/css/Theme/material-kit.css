@@ -755,6 +755,32 @@ a .material-icons, a:hover .material-icons, a:focus .material-icons {
   color: #555555;
 }
 
+/*Navbar-Notifications*/
+.navbar .notification {
+    position: absolute;
+    top: 5px;
+    border: 1px solid #FFF;
+    left: 30px;
+    font-size: 11px;
+    font-weight:700;
+    background: #F44336;
+    color: #FFFFFF;
+    min-width: 20px;
+    padding: 0px 5px;
+    height: 20px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 19px;
+    vertical-align: middle;
+    display: block;
+}
+.hidden-md {
+    display: none !important;
+}
+
+
+/*end-navbarNotifications*/
+
 .btn-group,
 .btn-group-vertical {
   position: relative;

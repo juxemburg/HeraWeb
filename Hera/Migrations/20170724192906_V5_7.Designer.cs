@@ -10,9 +10,10 @@ using Entities.Usuarios;
 namespace Hera.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170724192906_V5_7")]
+    partial class V5_7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -232,6 +233,8 @@ namespace Hera.Migrations
                     b.Property<string>("Action");
 
                     b.Property<DateTime>("Date");
+
+                    b.Property<int>("InnerCount");
 
                     b.Property<string>("Key");
 

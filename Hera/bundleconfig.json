@@ -158,5 +158,16 @@
       "renameLocals": true
     },
     "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/notifications.min.js",
+    "inputFiles": [
+      "wwwroot/js/Notifications/notification-manager.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
   }
 ]

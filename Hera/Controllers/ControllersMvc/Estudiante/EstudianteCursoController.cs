@@ -59,9 +59,7 @@ namespace Hera.Controllers.ControllersMvc
         public async Task<IActionResult> Desafio(int idCurso,
             int idDesafio)
         {
-            var estId
-                = await _data.Find_EstudianteId(
-                    _data.Get_UserId(User.Claims));
+            var estId = await _usrService.Get_EstudianteId(User.Claims);
             var curso = await _data.Find_Curso(idCurso);
             if (curso == null || !curso.ContieneEstudiante(estId)
                 || !curso.ContieneDesafio(idDesafio))
@@ -110,9 +108,7 @@ namespace Hera.Controllers.ControllersMvc
         public async Task<IActionResult> CalificarDesafio(
             int idCurso, int idDesafio, string projId)
         {
-            var estId
-                = await _data.Find_EstudianteId(
-                    _data.Get_UserId(User.Claims));
+            var estId = await _usrService.Get_EstudianteId(User.Claims);
 
             var model = await _data.Find_RegistroCalificacion(
                 idCurso, estId,idDesafio);
@@ -122,14 +118,14 @@ namespace Hera.Controllers.ControllersMvc
                 if (model != null && model.Iniciada)
                 {
                     var cal = model.CalificacionPendiente;
-                    cal.TerminarCalificacion(projId);
                     var res = await _evaluator.Get_Evaluation(projId);
-
+                    var curso = await _data.Find_Curso(idCurso);
                     var resultados = res.Select(val => val.Map(cal.Id))
                         .ToList();
 
-                    _data.AddRange_ResultadoScratch(resultados);
-                    _data.Edit<Calificacion>(cal);
+                    _data.Do_TerminarCalificacion(curso, cal, resultados,
+                        projId);
+                    
                     var result = await _data.SaveAllAsync();
                     if (result)
                         return RedirectToAction("DesafioCompletado",
@@ -158,9 +154,9 @@ namespace Hera.Controllers.ControllersMvc
         public async Task<IActionResult> DesafioCompletado(int idCurso,
             int idDesafio, int idCalificacion)
         {
-            var idEstudiante
-                = await _data.Find_EstudianteId(
-                    _data.Get_UserId(User.Claims));
+            var idEstudiante = 
+                await _usrService.Get_EstudianteId(User.Claims);
+
             if(await _data.Exist_Estudiante_Curso(idEstudiante, idCurso))
             {
                 var desafio = await _desafioService
@@ -180,9 +176,7 @@ namespace Hera.Controllers.ControllersMvc
         public async Task<IActionResult> IniciarDesafio(
             int idCurso, int idDesafio)
         {
-            var estId
-                = await _data.Find_EstudianteId(
-                    _data.Get_UserId(User.Claims));
+            var estId = await _usrService.Get_EstudianteId(User.Claims);
 
             var model = new Calificacion()
             {

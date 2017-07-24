@@ -1,8 +1,10 @@
 ﻿using Entities.Calificaciones;
 using Entities.Cursos;
 using Entities.Desafios;
+using Entities.Notifications;
 using Entities.Usuarios;
 using Entities.Valoracion;
+using Hera.Services.NotificationServices.NotificationBuilders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,6 +93,8 @@ namespace Hera.Data
             int estudianteId, int cursoId, int desafioId);
         void AddCalificacion(Calificacion calificacion);
         void EditFinalizarCalificacion(int calificacionId);
+        void Do_TerminarCalificacion(Curso curso, Calificacion calificacion,
+            List<ResultadoScratch> resultados, string projId);
 
         //Calificacion Cualitativa
         Task<CalificacionCualitativa> Find_CalificacionCualitativa
@@ -115,12 +119,22 @@ namespace Hera.Data
         Task<ResultadoScratch> Find_ResultadoScratchGeneral(
             int calificacionId);
         void Add_InfoScratch(IInfoScratch info);
+        
 
         //Validacion
         Task<bool> Exist_Profesor_Curso(int profesorId,
             int cursoId);
         Task<bool> Exist_Estudiante_Curso(int estudianteId,
             int cursoId);
+
+        //Notifications
+        void Do_PushNotification(NotificationType type,
+            int userId,
+            Dictionary<string, string> values);
+        void Add_Notification(Notification model);
+        void Edit_Notification(Notification model);
+        Task<Notification> Find_Notification(int id);
+        Task<Notification> Find_Notification(int userId, string key);
 
     }
 }

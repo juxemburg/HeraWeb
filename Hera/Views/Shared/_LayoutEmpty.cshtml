@@ -33,6 +33,9 @@
                     </div>
                 </div>
             </nav>
+            <section class="section-notifications">
+                @await Html.PartialAsync("Notification/_AlertsPartial", ViewData)
+            </section>
         </div>
         @RenderBody()
     </div>

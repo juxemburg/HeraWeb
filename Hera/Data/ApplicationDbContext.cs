@@ -12,6 +12,7 @@ using Hera.Models.EntitiesViewModels;
 using Entities.Calificaciones;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Entities.Valoracion;
+using Entities.Notifications;
 
 namespace Hera.Data
 {
@@ -33,7 +34,7 @@ namespace Hera.Data
         public DbSet<IInfoScratch_Sprite> InfoSprites { get; set; }
         public DbSet<IInfoScratch_General> InfoGenerales { get; set; }
         public DbSet<Rel_Rating> Ratings { get; set; }
-
+        public DbSet<Notification> Notifications { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -44,6 +45,7 @@ namespace Hera.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
             builder.Entity<ApplicationUser>()
                 .HasAlternateKey(e => e.UsuarioId);
 
@@ -179,7 +181,7 @@ namespace Hera.Data
             builder.Entity<Rel_Rating>()
                 .HasKey(entity =>
                 new { entity.ProfesorId ,entity.DesafioId });
-
+            
 
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
