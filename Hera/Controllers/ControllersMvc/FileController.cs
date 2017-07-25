@@ -56,7 +56,7 @@ namespace Hera.Controllers.ControllersMvc
                 _fileManager.DeleteFile(fileName);
                 return View("../Desafios/Create", viewModel);
             }
-            var profesorId = await _userService.Get_ProfesorId(User.Claims);
+            var profesorId =  _userService.Get_ProfesorId(User.Claims);
             _data.AddDesafio(viewModel.Map(profesorId));
             await _data.SaveAllAsync();
             this.SetAlerts("success-alerts",

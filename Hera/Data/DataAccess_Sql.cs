@@ -34,9 +34,10 @@ namespace Hera.Data
             try
             {
                 var res = claims
-                .Where(c => c.Type.Equals("UsuarioId"))
-                .Select(c => c.Value)
-                .FirstOrDefault();
+                    .FirstOrDefault(c => c.Type.Equals("UsuarioId"))
+                    .Value;
+
+
                 int id = Convert.ToInt32(res);
                 return id;
             }
@@ -242,7 +243,8 @@ namespace Hera.Data
 
         public async Task<Estudiante> Find_Estudiante(int id)
         {
-            return await _context.Estudiantes.FindAsync(id);
+            return await _context.Estudiantes
+                .FirstAsync(e => e.UsuarioId.Equals(id));
         }
 
         public async Task<Rel_CursoEstudiantes> Find_Estudiante(int idEstudiante,
@@ -263,6 +265,25 @@ namespace Hera.Data
 
             return query;
         }
+
+        public void Do_MatricularEstudiante(Curso curso,
+            Estudiante estudiante,
+            Rel_CursoEstudiantes model, string password)
+        {
+            if (curso.Password.Equals(password))
+            {
+                Add<Rel_CursoEstudiantes>(model);
+                Do_PushNotification(NotificationType.Notification_NuevoEstudiante,
+                    curso.Profesor.Id,
+                    new Dictionary<string, string>()
+                    {
+                        ["IdCurso"] = $"{curso.Id}",
+                        ["NombreCurso"] = curso.Nombre,
+                        ["NombreEstudiante"] = estudiante.NombreCompleto
+                    });
+            }
+        }
+
         public async Task<Profesor> Find_Profesor(int id)
         {
             return await _context.Profesores.FindAsync(id);
@@ -473,13 +494,13 @@ namespace Hera.Data
             Calificacion calificacion,
             List<ResultadoScratch> resultados, string projId)
         {
-            
+
             calificacion.TerminarCalificacion(projId);
             AddRange_ResultadoScratch(resultados);
             Edit<Calificacion>(calificacion);
             Do_PushNotification(
                 NotificationType.Notification_NuevaCalificacion,
-                curso.ProfesorId,
+                curso.Profesor.Id,
                 new Dictionary<string, string>()
                 {
                     ["IdCurso"] = $"{curso.Id}",
@@ -667,6 +688,13 @@ namespace Hera.Data
                 n.Key.Equals(key) && n.Unread);
 
             return model;
+        }
+        public IQueryable<Notification> GetAll_Notifications(int userId,
+            bool unread = true)
+        {
+            return _context.Notifications
+                .Where(c => c.UsuarioId.Equals(userId) &&
+                c.Unread == unread);
         }
     }
 }

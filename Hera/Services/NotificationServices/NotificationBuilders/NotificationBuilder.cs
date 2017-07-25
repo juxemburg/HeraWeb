@@ -27,7 +27,25 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                         Date = DateTime.Now,
                         Action = $"/Profesor/Curso/{idCurso}",
                         Message = $"tu curso {values["NombreCurso"]} tiene" +
-                            $"{1} calificación pendiente",
+                            $"1 calificación pendiente",
+                        Unread = true
+                    };
+
+                },
+                [NotificationType.Notification_NuevoEstudiante]
+                = (userId, values) =>
+                {
+                    var idCurso = Convert.ToInt32(values["IdCurso"]);
+                    var key = $"NuevoEstudiante-{idCurso}";
+
+                    return new Notification()
+                    {
+                        Key = key,
+                        UsuarioId = userId,
+                        Date = DateTime.Now,
+                        Action = $"/Profesor/Curso/{idCurso}",
+                        Message = $"{values["NombreEstudiante"]} se ha matriculado en tu" +
+                            $"curso ${values["NombreCurso"]}!",
                         Unread = true
                     };
 

@@ -31,7 +31,7 @@ namespace Hera.Controllers.ControllersMvc.Profesor
             SearchDesafioViewModel searchModel,
             int skip = 0, int take = 10)
         {
-            var profId = await _usrService.Get_ProfesorId(User.Claims);
+            var profId = _usrService.Get_ProfesorId(User.Claims);
             var model = _data.GetAll_Desafios(null, profId,
                 searchModel.SearchString, searchModel.Map(),
                 searchModel.EqualSearchModel)

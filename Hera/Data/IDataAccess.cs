@@ -30,6 +30,8 @@ namespace Hera.Data
         Task<Estudiante> Find_Estudiante(int id);
         Task<Rel_CursoEstudiantes> Find_Estudiante(int idEstudiante,
             int idCurso, int idProfesor);
+        void Do_MatricularEstudiante(Curso curso, Estudiante estudiante,
+           Rel_CursoEstudiantes model, string password);
 
         //Profesores
         void AddProfesor(Profesor model);
@@ -67,6 +69,7 @@ namespace Hera.Data
         Task<Curso> Find_Curso_Public(int id);
         Task ChangeStarterDesafio(int cursoId, int oldId, int newId);
         Task Delete_Curso(int id);
+        
 
         //Rel_Cursos_Estudiantes
         Task<Rel_CursoEstudiantes> Find_Rel_CursoEstudiantes(int idCurso,
@@ -135,6 +138,8 @@ namespace Hera.Data
         void Edit_Notification(Notification model);
         Task<Notification> Find_Notification(int id);
         Task<Notification> Find_Notification(int userId, string key);
+        IQueryable<Notification> GetAll_Notifications(int userId,
+            bool unread = true);
 
     }
 }

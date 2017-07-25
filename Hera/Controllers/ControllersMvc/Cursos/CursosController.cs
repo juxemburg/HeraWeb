@@ -69,8 +69,7 @@ namespace Hera.Controllers.ControllersMvc
             {
                 try
                 {
-                    var profId = 
-                        await _userService.Get_ProfesorId(User.Claims);
+                    var profId = _userService.Get_ProfesorId(User.Claims);
                     var desafio = await _data.Find_Desafio(model.DesafioId.GetValueOrDefault());
                     if (desafio != null)
                     {
@@ -98,7 +97,7 @@ namespace Hera.Controllers.ControllersMvc
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var profId = await _userService.Get_ProfesorId(User.Claims);
+            var profId = _userService.Get_ProfesorId(User.Claims);
             if (await _data.Exist_Profesor_Curso(profId, id))
             {
                 await _data.Delete_Curso(id);
@@ -123,18 +122,18 @@ namespace Hera.Controllers.ControllersMvc
             if (ModelState.IsValid)
             {
                 var id = _data.Get_UserId(User.Claims);
-                var estudianteId = await _data.Find_EstudianteId(id);
                 try
                 {
                     var curso = await _data.Find_Curso(model.CursoId);
-                    if (curso.Password.Equals(model.Password))
-                    {
-                        _data.Add<Rel_CursoEstudiantes>(model.Map(model.CursoId, estudianteId));
-                        await _data.SaveAllAsync();
+                    var estudiante = await _data.Find_Estudiante(id);
+                    _data.Do_MatricularEstudiante(curso, estudiante,
+                        model.Map(curso.Id, estudiante.Id), model.Password);
+
+                    if (await _data.SaveAllAsync())
                         return RedirectToAction("Index", "EstudianteCursos");
-                    }
                     else
-                        this.SetAlerts("error-alerts", "Lo sentimos, la contraseña es inválida");
+                        this.SetAlerts("error-alerts",
+                            "Lo sentimos, la contraseña es inválida");
                 }
                 catch (Exception) {
                 }

@@ -37,7 +37,7 @@ namespace Hera.Controllers.ControllersMvc
             var model = _data.GetAll_Desafios(null, null,
                 searchString, searchModel.Map(), searchModel.EqualSearchModel)
                 .AsNoTracking();
-            var profId = await _userService.Get_ProfesorId(User.Claims);
+            var profId = _userService.Get_ProfesorId(User.Claims);
             if (profId > 0)
             {
                 model = model.Where(d => d.ProfesorId != profId);
@@ -73,7 +73,7 @@ namespace Hera.Controllers.ControllersMvc
             {
                 try
                 {
-                    var profId = await _userService.Get_ProfesorId(User.Claims);
+                    var profId = _userService.Get_ProfesorId(User.Claims);
                     _data.AddDesafio(model.Map(profId));
                     await _data.SaveAllAsync();
                     return RedirectToAction("Index", "ProfesorDesafio");
@@ -90,7 +90,7 @@ namespace Hera.Controllers.ControllersMvc
         public async Task<IActionResult> Rate(int desafioId,
             RateViewModel model)
         {
-            var idProfesor = await _userService.Get_ProfesorId(User.Claims);
+            var idProfesor = _userService.Get_ProfesorId(User.Claims);
             var value = await _data.Exist_Desafio(desafioId);
             if (!value)
                 return NotFound();
@@ -108,7 +108,7 @@ namespace Hera.Controllers.ControllersMvc
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var profId = await _userService.Get_ProfesorId(User.Claims);
+            var profId = _userService.Get_ProfesorId(User.Claims);
             if (await _data.Exist_DesafioP(id, profId))
             {
                 await _data.Delete_Desafio(id);

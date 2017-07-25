@@ -32,7 +32,7 @@ namespace Hera.Controllers.ControllersMvc
         public async Task<IActionResult> Busqueda(string searchString = "",
             int skip = 0, int take = 10)
         {
-            var estId = await _usrService.Get_EstudianteId(User.Claims);
+            var estId =  _usrService.Get_EstudianteId(User.Claims);
             var model = _data.GetAll_CursosEstudiante(estId, 
                 searchString, true);
             this.GetAlerts();
@@ -44,7 +44,7 @@ namespace Hera.Controllers.ControllersMvc
         public async Task<IActionResult> Index(string searchString = "",
             int skip = 0, int take = 10)
         {
-            var estudianteId = await _usrService.Get_EstudianteId(User.Claims);
+            var estudianteId = _usrService.Get_EstudianteId(User.Claims);
             var model = _data.GetAll_CursosEstudiante(estudianteId,
                 searchString);
             this.GetAlerts();

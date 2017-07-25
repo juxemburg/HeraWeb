@@ -41,7 +41,7 @@ namespace Hera.Controllers.ControllersMvc
         [Route("/Estudiante/Curso/{idCurso:int}")]
         public async Task<IActionResult> Details(int idCurso)
         {
-            var estId = await _usrService.Get_EstudianteId(User.Claims);
+            var estId = _usrService.Get_EstudianteId(User.Claims);
             
             if (await _data.Exist_Estudiante_Curso(estId, idCurso))
             {
@@ -59,7 +59,7 @@ namespace Hera.Controllers.ControllersMvc
         public async Task<IActionResult> Desafio(int idCurso,
             int idDesafio)
         {
-            var estId = await _usrService.Get_EstudianteId(User.Claims);
+            var estId =  _usrService.Get_EstudianteId(User.Claims);
             var curso = await _data.Find_Curso(idCurso);
             if (curso == null || !curso.ContieneEstudiante(estId)
                 || !curso.ContieneDesafio(idDesafio))
@@ -108,7 +108,7 @@ namespace Hera.Controllers.ControllersMvc
         public async Task<IActionResult> CalificarDesafio(
             int idCurso, int idDesafio, string projId)
         {
-            var estId = await _usrService.Get_EstudianteId(User.Claims);
+            var estId = _usrService.Get_EstudianteId(User.Claims);
 
             var model = await _data.Find_RegistroCalificacion(
                 idCurso, estId,idDesafio);
@@ -154,8 +154,7 @@ namespace Hera.Controllers.ControllersMvc
         public async Task<IActionResult> DesafioCompletado(int idCurso,
             int idDesafio, int idCalificacion)
         {
-            var idEstudiante = 
-                await _usrService.Get_EstudianteId(User.Claims);
+            var idEstudiante = _usrService.Get_EstudianteId(User.Claims);
 
             if(await _data.Exist_Estudiante_Curso(idEstudiante, idCurso))
             {
@@ -176,7 +175,7 @@ namespace Hera.Controllers.ControllersMvc
         public async Task<IActionResult> IniciarDesafio(
             int idCurso, int idDesafio)
         {
-            var estId = await _usrService.Get_EstudianteId(User.Claims);
+            var estId = _usrService.Get_EstudianteId(User.Claims);
 
             var model = new Calificacion()
             {
