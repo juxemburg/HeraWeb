@@ -14,5 +14,6 @@ namespace Entities.Notifications
         public string Action { get; set; }
         public string Message { get; set; }
         public bool Unread { get; set; }
+        public NotificationType Type { get; set; }
     }
 }

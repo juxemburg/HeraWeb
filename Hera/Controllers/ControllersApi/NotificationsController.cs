@@ -38,7 +38,18 @@ namespace Hera.Controllers.ControllersApi
                 });
             }
             return BadRequest();
+        }
 
+        [HttpPost("Resume")]
+        public async Task<IActionResult> Get_NotificationsResume()
+        {
+            var userId = _usrService.Get_Id(User.Claims);
+            if(userId >0)
+            {
+                var model = await _ns.GetResumedNotifications(userId);
+                return Ok(model);
+            }
+            return BadRequest();
         }
     }
 }

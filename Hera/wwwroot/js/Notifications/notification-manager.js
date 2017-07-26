@@ -43,14 +43,25 @@ function getLoadNotificationsHandler() {
     
     return () => {
         fStartLoad(true);
-        $.post("/api/Notifications/Count", (data) => {
-            alert(data);
+        $.post("/api/Notifications/Resume", (data) => {
             fStartLoad(false);
+            for (var i in data) {
+                ul.appendChild(createNotificationli(data[i]));
+            }
         });
 
     };
 }
 
+function createNotificationli(notification) {
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.setAttribute('href', '' + notification.action);
+    a.appendChild(document.createTextNode(notification.message));
+    li.appendChild(a);
+
+    return li;
+}
 
 function getLoadingli() {
     var li = document.createElement('li');
