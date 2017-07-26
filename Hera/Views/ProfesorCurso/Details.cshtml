@@ -230,38 +230,39 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Añadir Desafío
-                        <a class="btn btn-info btn-sm pull-right" asp-action="Create" asp-controller="Desafios" target="_blank">
-                            Crear nuevo desafío
+                    <h3 class="modal-title"> <span class="title">Agrega </span> un desafío al curso
+                        <a class="btn btn-info btn-fab btn-fab-mini" asp-action="Create" asp-controller="Desafios" target="_blank">
                             <i class="material-icons icon-lg">add</i>
                         </a>
-                    </h4>
+                    </h3>
                     
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row">
-                            <form  class="form-horizontal" 
+                            <form  class="" 
                                   method="post" 
                                   asp-action="AddDesafio" asp-controller="Cursos" >
                                 <input id="input-desafioId" type="hidden" name="DesafioId" value="" />
                                 <input name="Id" value="@Model.Curso.Id" type="hidden" />
-                                <div class="form-group label-floating col-sm-6">
-                                    <label class="control-label">Nombre</label>
-                                    <input id="input-desafioNombre" name="Nombre" class="form-control" />
+                                <div class="form-group label-floating col-sm-6 col-md-4 col-lg-4">
+                                    <input id="input-desafioNombre" name="Nombre" class="form-control" placeholder="Nombre desafío"/>
                                 </div>
-                                <div class="form-group label-floating col-sm-6 col-md-4 col-lg-3 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-group label-floating col-sm-6 col-md-4 col-lg-4 ">
                                     <input id="input-desafioAutor" class="form-control" placeholder="Autor Desafío
                                " Disabled />
                                 </div>
 
-                                <div class="form-group label-floating col-sm-6 col-md-4 col-lg-3 col-sm-6 col-md-4 col-lg-3">
+                                <div class="form-group label-floating col-sm-6 col-md-4 col-lg-4">
                                     <input id="input-desafioDescripcion" class="form-control" Disabled placeholder="Descripción del desafío" />
                                 </div>
-                                <div id="div-lnk-desafio" class="form-group col-sm-6 col-md-4 col-lg-3 text-center" style="display:none">
+                                <div id="div-lnk-desafio" class="form-group col-sm-6 col-md-4 col-lg-4 text-center" style="display:none">
                                     <a id="lnk-desafio" href="" target="_blank" class="btn btn-sm btn-round btn-primary">
                                         Ver desafío <i class="material-icons icon-lg">open_in_new</i>
                                     </a>
+                                </div>
+                                <div id="btn-agregarDesafio" class="col-xs-12 text-center" style="display:none">
+                                    <button class="btn btn-primary btn-round" type="submit">Agregar!</button>
                                 </div>
                             </form>
                         </div>
