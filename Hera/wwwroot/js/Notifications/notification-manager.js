@@ -14,8 +14,10 @@ function LoadEvents() {
             icon.innerText = 'notifications_active';
             elem.innerText = count;
         }
-        else
+        else {
+            icon.innerText = 'notifications_none';
             $(elem).hide();
+        }
     };
     var chkNotifications = () => {
         $.post("/api/Notifications/Count", (data) => {
@@ -23,31 +25,39 @@ function LoadEvents() {
         });
     };
     var loaded = false;
-    var loadNotifications = getLoadNotificationsHandler();
+    var loadNotifications =
+        getLoadNotificationsHandler(activateNotifications);
     btn.onclick = () => {
-        loadNotifications(); 
+        loadNotifications();
     };
 
     chkNotifications();
     setInterval(chkNotifications, 15000);
-    
+
 }
 
-function getLoadNotificationsHandler() {
+function getLoadNotificationsHandler(activateNotifications) {
     var ul = document.getElementById('ul-notifications');
     var fStartLoad = (start) => {
         $(ul).empty();
         if (start)
             ul.appendChild(getLoadingli());
     };
-    
+
     return () => {
         fStartLoad(true);
         $.post("/api/Notifications/Resume", (data) => {
             fStartLoad(false);
-            for (var i in data) {
-                ul.appendChild(createNotificationli(data[i]));
+            activateNotifications(0);
+            if (data.lenght > 0) {
+                for (var i in data) {
+                    ul.appendChild(createNotificationli(data[i]));
+                }
             }
+            else {
+                ul.appendChild(createNotNotificationli());
+            }
+            
         });
 
     };
@@ -60,6 +70,18 @@ function createNotificationli(notification) {
     a.appendChild(document.createTextNode(notification.message + '(' + notification.count + ')'));
     li.appendChild(a);
 
+    return li;
+}
+function createNotNotificationli() {
+    var li = document.createElement('li');
+    var p = document.createElement('p');
+    p.appendChild(document.createTextNode('Sin notificaciones '));
+    p.setAttribute('class', 'text-center');
+    var i = document.createElement('i');
+    i.setAttribute('class', 'material-icons');
+    i.innerHTML = 'sentiment_very_dissatisfied';
+    p.appendChild(i);
+    li.appendChild(p);
     return li;
 }
 

@@ -140,6 +140,7 @@ namespace Hera.Data
         Task<Notification> Find_Notification(int userId, string key);
         IQueryable<Notification> GetAll_Notifications(int userId,
             bool unread = true);
+        Task Do_MarkAsRead(IEnumerable<Notification> notifications);
 
     }
 }

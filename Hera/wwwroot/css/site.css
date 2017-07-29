@@ -100,6 +100,13 @@ pre.prettyprint {
     top: 15px;
 }
 
+#ul-notifications {
+    padding:10px 20px;
+}
+#ul-notifications p {
+    color: #333;
+}
+
 @media screen and (max-width: 767px)
 {
     .table-responsive {

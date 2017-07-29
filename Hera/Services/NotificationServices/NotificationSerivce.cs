@@ -24,8 +24,7 @@ namespace Hera.Services
 
         public async Task<int> Get_UnreadNotificationsCount(int userId)
         {
-            var notifications = await Get_notifications(userId).
-                ToListAsync();
+            var notifications = (await Get_notifications(userId)).ToList();
             return notifications.Count;
         }
 
@@ -34,19 +33,28 @@ namespace Hera.Services
         public async Task<IEnumerable<NotificationViewModel>>
             GetResumedNotifications(int userId)
         {
-            var notifications = await
-                Get_notifications(userId)
+            var data = await
+                Get_notifications(userId, true, true);
+            var notifications = data
                 .GroupBy(n => n.Type)
-                .ToDictionaryAsync(g => g.Key,
+                .ToDictionary(g => g.Key,
                 g => g.ToList());
             return NotificationBuilder.ResumeNotifications(notifications);
 
         }
 
-        private IQueryable<Notification> Get_notifications(int userId,
-            bool unread = true)
+        private async Task<IEnumerable<Notification>> Get_notifications(
+            int userId, bool unread = true, bool markAsRead = false,
+            int take = 100)
         {
-            return _data.GetAll_Notifications(userId, true);
+            var notifications = await _data
+                .GetAll_Notifications(userId, unread)
+                .Take(100)
+                .ToListAsync();
+            if(markAsRead)
+                _data.Do_MarkAsRead(notifications).Wait();
+
+            return notifications;
         }
 
 

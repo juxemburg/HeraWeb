@@ -696,5 +696,15 @@ namespace Hera.Data
                 .Where(c => c.UsuarioId.Equals(userId) &&
                 c.Unread == unread);
         }
+        public async Task Do_MarkAsRead(
+            IEnumerable<Notification> notifications)
+        {
+            foreach (var item in notifications)
+            {
+                item.Unread = false;
+                Edit<Notification>(item);
+            }
+            await SaveAllAsync();
+        }
     }
 }
