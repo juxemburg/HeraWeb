@@ -9,7 +9,8 @@ namespace Hera.Models.NotificationViewModels
     {
         public string Message { get; set; }
         public string Action { get; set; }
-
+        public int Count { get; set; }
+        public DateTime Date { get; set; }
 
     }
 }

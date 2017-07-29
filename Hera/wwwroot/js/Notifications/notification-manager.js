@@ -57,7 +57,7 @@ function createNotificationli(notification) {
     var li = document.createElement('li');
     var a = document.createElement('a');
     a.setAttribute('href', '' + notification.action);
-    a.appendChild(document.createTextNode(notification.message));
+    a.appendChild(document.createTextNode(notification.message + '(' + notification.count + ')'));
     li.appendChild(a);
 
     return li;

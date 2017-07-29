@@ -29,7 +29,8 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                         Action = $"/Profesor/Curso/{idCurso}",
                         Message = $"tu curso {values["NombreCurso"]} tiene" +
                             $"1 calificación pendiente",
-                        Unread = true
+                        Unread = true,
+                        Type = NotificationType.Notification_NuevaCalificacion
                     };
 
                 },
@@ -47,7 +48,8 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                         Action = $"/Profesor/Curso/{idCurso}",
                         Message = $"{values["NombreEstudiante"]} se ha matriculado en tu" +
                             $"curso {values["NombreCurso"]}!",
-                        Unread = true
+                        Unread = true,
+                        Type = NotificationType.Notification_NuevoEstudiante
                     };
 
                 }
@@ -63,14 +65,18 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                     {
                         Action = data.First().Action,
                         Message = $"¡Tienes {data.Count} nuevas " +
-                        $"calificaciones en tu curso!"
+                        $"calificaciones en tu curso!",
+                        Count = data.Count,
+                        Date = data.Min(e => e.Date)
                     },
                 [NotificationType.Notification_NuevoEstudiante] = 
                 (data) => new NotificationViewModel()
                 {
                     Action = data.First().Action,
                     Message = $"¡Tienes {data.Count} nuevos " +
-                        $"estudiantes en tu curso!"
+                        $"estudiantes en tu curso!",
+                    Count = data.Count,
+                    Date = data.Min(e => e.Date)
                 }
             };
 
