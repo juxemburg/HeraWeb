@@ -694,7 +694,8 @@ namespace Hera.Data
         {
             return _context.Notifications
                 .Where(c => c.UsuarioId.Equals(userId) &&
-                c.Unread == unread);
+                c.Unread == unread)
+                .OrderByDescending(c => c.Date);
         }
         public async Task Do_MarkAsRead(
             IEnumerable<Notification> notifications)

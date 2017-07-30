@@ -16,10 +16,10 @@ namespace Hera.Controllers.ControllersApi
     public class NotificationsController : Controller
     {
         private UserService _usrService;
-        private NotificationSerivce _ns;
+        private NotificationService _ns;
 
         public NotificationsController(UserService usrService,
-            NotificationSerivce ns)
+            NotificationService ns)
         {
             _usrService = usrService;
             _ns = ns;

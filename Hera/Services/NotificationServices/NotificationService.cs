@@ -8,26 +8,46 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hera.Services
 {
-    public class NotificationSerivce
+    public class NotificationService
     {
         private IDataAccess _data;
 
-        public NotificationSerivce(IDataAccess data)
+        public NotificationService(IDataAccess data)
         {
             _data = data;
         }
 
         public async Task<int> Get_UnreadNotificationsCount(int userId)
         {
-            var notifications = (await Get_notifications(userId)).ToList();
+            var notifications = (await Get_notifications(userId))
+                .ToList();
+            
             return notifications.Count;
         }
 
+        public async Task<IEnumerable<NotificationDateViewModel>>
+            Get_Notifications(int userId,
+            int skip, int take)
+        {
+            var notifications =
+                (await Get_notifications(userId, false, false, skip, take))
+                .GroupBy(n => n.Date.Date)
+                .Select(n =>
+                new NotificationDateViewModel()
+                {
+                    Resumed = String.Format("{0:D}", n.Key, new CultureInfo("es-ES")),
+                    Notifications = n.ToList()
+                });
+
+            return notifications;
+
+        }
         
 
         public async Task<IEnumerable<NotificationViewModel>>
@@ -45,10 +65,11 @@ namespace Hera.Services
 
         private async Task<IEnumerable<Notification>> Get_notifications(
             int userId, bool unread = true, bool markAsRead = false,
-            int take = 100)
+            int skip = 0, int take = 100)
         {
             var notifications = await _data
                 .GetAll_Notifications(userId, unread)
+                .Skip(skip)
                 .Take(100)
                 .ToListAsync();
             if(markAsRead)

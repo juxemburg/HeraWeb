@@ -49,14 +49,10 @@ function getLoadNotificationsHandler(activateNotifications) {
         $.post("/api/Notifications/Resume", (data) => {
             fStartLoad(false);
             activateNotifications(0);
-            if (data.lenght > 0) {
-                for (var i in data) {
-                    ul.appendChild(createNotificationli(data[i]));
-                }
+            for (var i in data) {
+                ul.appendChild(createNotificationli(data[i]));
             }
-            else {
-                ul.appendChild(createNotNotificationli());
-            }
+            ul.appendChild(createNotNotificationli());
             
         });
 
@@ -74,13 +70,15 @@ function createNotificationli(notification) {
 }
 function createNotNotificationli() {
     var li = document.createElement('li');
-    var p = document.createElement('p');
-    p.appendChild(document.createTextNode('Sin notificaciones '));
+    var p = document.createElement('a');
+    
     p.setAttribute('class', 'text-center');
+    p.setAttribute('href','/Notifications')
     var i = document.createElement('i');
     i.setAttribute('class', 'material-icons');
-    i.innerHTML = 'sentiment_very_dissatisfied';
+    i.innerHTML = 'notifications';
     p.appendChild(i);
+    p.appendChild(document.createTextNode('Todas las notificaciones'));
     li.appendChild(p);
     return li;
 }
@@ -96,7 +94,3 @@ function getLoadingli() {
 }
 
 
-
-
-//initialCount += 5;
-//elem.innerText = "" + initialCount;

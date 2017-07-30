@@ -1,0 +1,13 @@
+@model IEnumerable<Notification>
+
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>
+            <b >@String.Format("{0:t}", item.Date)</b> 
+            <a href="@item.Action" class="">
+            
+            @item.Message </a>
+        </li>
+    }
+</ul>

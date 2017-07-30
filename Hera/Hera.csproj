@@ -104,12 +104,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\ControllersApi\PassiveControllers\" />
+    <Folder Include="Controllers\ControllersMvc\Notifications\" />
     <Folder Include="Evaluacion\EntitiesViewModels\Models\" />
     <Folder Include="Evaluacion\EntitiesViewModels\Models\" />
+    <Folder Include="Models\EntitiesViewModels\Notifications\" />
+    <Folder Include="Notifications\ControllersMvc\Controllers\" />
     <Folder Include="Views\Cursos\" />
     <Folder Include="Views\Estudiante\" />
     <Folder Include="Views\Estudiante\" />
     <Folder Include="Views\File\" />
+    <Folder Include="Views\Notifications\" />
     <Folder Include="Views\Profesor\" />
     <Folder Include="Views\Shared\Components\Navbar\" />
     <Folder Include="Views\Shared\Default\" />
