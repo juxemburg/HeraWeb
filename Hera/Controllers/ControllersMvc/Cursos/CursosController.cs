@@ -179,7 +179,8 @@ namespace Hera.Controllers.ControllersMvc
                     await _data.Delete_Desafio(cursoId, desafioId);
                     var res = await _data.SaveAllAsync();
                     if(res)
-                        this.SetAlerts("success-alerts", "El desafío se removió exitosamente");
+                        this.SetAlerts("success-alerts",
+                            "El desafío se removió exitosamente");
                 }
             }
             catch (Exception) { }

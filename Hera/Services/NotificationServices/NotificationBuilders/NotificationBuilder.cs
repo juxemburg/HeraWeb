@@ -27,8 +27,9 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                         UsuarioId = userId,
                         Date = DateTime.Now,
                         Action = $"/Profesor/Curso/{idCurso}",
-                        Message = $"tu curso {values["NombreCurso"]} tiene" +
-                            $"1 calificación pendiente",
+                        Message = $"{values["NombreEstudiante"]} " +
+                        "ha realizado una nueva calificación en " +
+                        $"el curso {values["NombreCurso"]}",
                         Unread = true,
                         Type = NotificationType.Notification_NuevaCalificacion
                     };

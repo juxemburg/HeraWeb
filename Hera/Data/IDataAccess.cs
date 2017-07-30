@@ -96,7 +96,9 @@ namespace Hera.Data
             int estudianteId, int cursoId, int desafioId);
         void AddCalificacion(Calificacion calificacion);
         void EditFinalizarCalificacion(int calificacionId);
-        void Do_TerminarCalificacion(Curso curso, Calificacion calificacion,
+        void Do_TerminarCalificacion(Curso curso,
+            Estudiante estudiante,
+            Calificacion calificacion,
             List<ResultadoScratch> resultados, string projId);
 
         //Calificacion Cualitativa

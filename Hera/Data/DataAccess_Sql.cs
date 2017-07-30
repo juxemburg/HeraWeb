@@ -491,6 +491,7 @@ namespace Hera.Data
             }
         }
         public void Do_TerminarCalificacion(Curso curso,
+            Estudiante estudiante,
             Calificacion calificacion,
             List<ResultadoScratch> resultados, string projId)
         {
@@ -504,7 +505,8 @@ namespace Hera.Data
                 new Dictionary<string, string>()
                 {
                     ["IdCurso"] = $"{curso.Id}",
-                    ["NombreCurso"] = curso.Nombre
+                    ["NombreCurso"] = curso.Nombre,
+                    ["NombreEstudiante"] = estudiante.NombreCompleto
                 });
         }
 

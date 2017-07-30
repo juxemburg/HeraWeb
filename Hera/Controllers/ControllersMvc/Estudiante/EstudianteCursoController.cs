@@ -17,7 +17,7 @@ using HeraScratch.Exceptions;
 
 namespace Hera.Controllers.ControllersMvc
 {
-    [Authorize(Roles ="Estudiante")]
+    [Authorize(Roles = "Estudiante")]
     [Route("/Estudiante/Curso/{idCurso:int}/[action]")]
     public class EstudianteCursoController : Controller
     {
@@ -42,16 +42,16 @@ namespace Hera.Controllers.ControllersMvc
         public async Task<IActionResult> Details(int idCurso)
         {
             var estId = _usrService.Get_EstudianteId(User.Claims);
-            
+
             if (await _data.Exist_Estudiante_Curso(estId, idCurso))
             {
                 var model = await _desafioService.Get_RelEstudianteCurso(
                     idCurso, estId);
                 return View(model);
             }
-                
 
-            
+
+
             return NotFound();
         }
 
@@ -59,7 +59,7 @@ namespace Hera.Controllers.ControllersMvc
         public async Task<IActionResult> Desafio(int idCurso,
             int idDesafio)
         {
-            var estId =  _usrService.Get_EstudianteId(User.Claims);
+            var estId = _usrService.Get_EstudianteId(User.Claims);
             var curso = await _data.Find_Curso(idCurso);
             if (curso == null || !curso.ContieneEstudiante(estId)
                 || !curso.ContieneDesafio(idDesafio))
@@ -84,7 +84,7 @@ namespace Hera.Controllers.ControllersMvc
             this.GetAlerts();
             return View(new CalificacionDesafioViewModel(model));
         }
-        
+
 
         //[HttpGet]
         //[Route("/Estudiante/Curso/{idCurso:int}/Desafio/" +
@@ -111,21 +111,23 @@ namespace Hera.Controllers.ControllersMvc
             var estId = _usrService.Get_EstudianteId(User.Claims);
 
             var model = await _data.Find_RegistroCalificacion(
-                idCurso, estId,idDesafio);
+                idCurso, estId, idDesafio);
 
             try
             {
                 if (model != null && model.Iniciada)
                 {
+
                     var cal = model.CalificacionPendiente;
                     var res = await _evaluator.Get_Evaluation(projId);
+                    var est = await _data.Find_Estudiante(estId);
                     var curso = await _data.Find_Curso(idCurso);
                     var resultados = res.Select(val => val.Map(cal.Id))
                         .ToList();
 
-                    _data.Do_TerminarCalificacion(curso, cal, resultados,
-                        projId);
-                    
+                    _data.Do_TerminarCalificacion(curso,
+                        est, cal, resultados, projId);
+
                     var result = await _data.SaveAllAsync();
                     if (result)
                         return RedirectToAction("DesafioCompletado",
@@ -156,7 +158,7 @@ namespace Hera.Controllers.ControllersMvc
         {
             var idEstudiante = _usrService.Get_EstudianteId(User.Claims);
 
-            if(await _data.Exist_Estudiante_Curso(idEstudiante, idCurso))
+            if (await _data.Exist_Estudiante_Curso(idEstudiante, idCurso))
             {
                 var desafio = await _desafioService
                     .Get_SiguienteDesafio(idCurso, idEstudiante);
@@ -189,9 +191,9 @@ namespace Hera.Controllers.ControllersMvc
             if (!res)
                 return BadRequest();
 
-            
+
             return RedirectToAction("Desafio"
-                , new { idDesafio = idDesafio, idCurso = idCurso});
+                , new { idDesafio = idDesafio, idCurso = idCurso });
 
         }
     }
