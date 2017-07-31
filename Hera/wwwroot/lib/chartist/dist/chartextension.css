@@ -1,0 +1,31 @@
+﻿.ct-series-a .ct-slice-pie, .ct-series-a .ct-area, .ct-legend-a {
+    fill: #00bcd4;
+}
+.ct-series-b .ct-slice-pie, .ct-series-b .ct-area, .ct-legend-b {
+    fill: #f44336;
+}
+.ct-series-c .ct-slice-pie, .ct-series-c .ct-area, .ct-legend-c {
+    fill: #ff9800;
+
+}
+.ct-legend {
+    display: block;
+    position: relative;
+}
+.ct-label {
+    fill: rgba(0, 0, 0, 0.8);
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 1.2em;
+    font-weight:600;
+    line-height: 1;
+}
+.ct-label.ct-legend-label {
+    font-size:0.9em;
+}
+.ct-inner-label .ct-label {
+    fill: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.7);
+}
+.label-lg .ct-label {
+    font-size: 2.1em;
+}

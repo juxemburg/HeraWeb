@@ -17,6 +17,16 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/lib/chartist/chartist.min.css",
+    "inputFiles": [
+      "wwwroot/lib/chartist/dist/chartist.css",
+      "wwwroot/lib/chartist/dist/chartextension.css"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  },
+  {
     "outputFileName": "wwwroot/css/rating.min.css",
     "inputFiles": [
       "wwwroot/css/Rating/rating.css"
@@ -53,7 +63,6 @@
   },
   {
     "outputFileName": "wwwroot/css/wizard.min.css",
-    // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
       "wwwroot/css/Wizard/paper-bootstrap-wizard.css",
       "wwwroot/css/Wizard/demo.css"
@@ -61,14 +70,12 @@
   },
   {
     "outputFileName": "wwwroot/css/estudiante.min.css",
-    // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
       "wwwroot/css/Estudiante/cursos.css"
     ]
   },
   {
     "outputFileName": "wwwroot/css/autocomplete.min.css",
-    // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
       "wwwroot/css/Autocomplete/easy-autocomplete.min.css",
       "wwwroot/css/Autocomplete/easy-autocomplete.themes.min.css"
@@ -99,6 +106,18 @@
     },
     // Optionally generate .map file
     "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/lib/chartist/chartist.min.js",
+    "inputFiles": [
+      "wwwroot/lib/chartist/dist/chartist.js",
+      "wwwroot/lib/chartist/dist/chartextension.js"
+
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
   },
   {
     "outputFileName": "wwwroot/js/rating.min.js",

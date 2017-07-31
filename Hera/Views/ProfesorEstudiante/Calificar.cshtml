@@ -9,11 +9,20 @@
 }
 
 <section>
-    <div class="container">
+    <div class="container-fluid">
         <h2>
             <span class="title">Calificación</span> 
             estudiante - @Model.NombreDesafio
         </h2>
+        <div>
+            <a asp-action="Details" 
+               asp-controller="ProfesorCurso"
+               asp-route-idCurso="@Model.Registro.CursoId"
+               class="btn btn-primary btn-round">
+                <i class="material-icons">arrow_back</i>
+                Ver curso
+            </a>
+        </div>
     </div>
 </section>
 
