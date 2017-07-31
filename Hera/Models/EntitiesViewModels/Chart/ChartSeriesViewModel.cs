@@ -11,4 +11,12 @@ namespace Hera.Models.EntitiesViewModels.Chart
         public string Label { get; set; }
         public string Name { get; set; }
     }
+
+    public static class ChartUtil
+    {
+        public static double Percentage(int amount, int total)
+        {
+            return Math.Round((amount / (float)total * 100), 2);
+        }
+    }
 }

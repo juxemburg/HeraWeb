@@ -40,13 +40,13 @@ namespace Hera.Models.EntitiesViewModels.ProfesorCursos
                 NumNinos = new ChartSeriesViewModel()
                 {
                     Data = numM,
-                    Label= $"{numM/Curso.Estudiantes.Count}%",
+                    Label= $"{ChartUtil.Percentage(numM,Curso.Estudiantes.Count)}%",
                     Name="Masculino"
                 },
                 NumNinas = new ChartSeriesViewModel()
                 {
                     Data = numF,
-                    Label = $"{numF / Curso.Estudiantes.Count}%",
+                    Label = $"{ChartUtil.Percentage(numF,Curso.Estudiantes.Count)}%",
                     Name = "Femenino"
                 }
 
