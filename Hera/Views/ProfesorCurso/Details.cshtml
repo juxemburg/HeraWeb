@@ -31,7 +31,7 @@
 <section class="section section-gray">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-5 col-sm-offset-0 col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-0">
+            <div class="col-sm-3 col-md-3 col-lg-2 ">
                 <div class="card">
                     <div class="card-content">
                         <h4 class="text-info category">
@@ -66,30 +66,40 @@
                                 </dd>
                             </dl>
                         </div>
-                        <div class="footer">
-                            <div class="stats">
-                                <i class="material-icons">favorite</i> 342
-                            </div>
-                        </div>
                     </div>
-
                 </div>
             </div>
-            <div class="col-sm-7 col-md-6 col-lg-4">
+            <div class="col-sm-9 col-md-9 col-lg-offset-1 col-lg-9">
+                <div class="card card-chart">
+                    <div class="card card-header" data-background-color="blue">
+                        <div id="roundedLineChart" 
+                             class="ct-chart ct-chart-white ct-double-octave">
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h4 class=""><span class="card-title">Actividad</span> del curso</h4>
+                        <p class="category">durante la última semana</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-4">
                 <div class="card">
                     <div class="card-content">
                         <h4 class="text-danger category">
                             <i class="material-icons">pie_chart</i>
                             Distribución por sexo
                         </h4>
-                        <div class="ct-chart ct-perfect-fourth ct-inner-label"></div>
+                        <div id="sex-chart"
+                             class="ct-chart ct-perfect-fifth ct-inner-label">
+                        </div>
                     </div>
                     <div class="card-footer">
                         <div id="ct-chart-1" class="ct-legend"></div>
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
 </section>
@@ -375,7 +385,7 @@
         <script src="~/js/cursos.min.js"></script>
     </environment>
     <script>
-        new Chartist.Pie('.ct-chart', {
+        new Chartist.Pie('#sex-chart', {
             labels: ["@info.NumNinos.Label","@info.NumNinas.Label"],
             series: [@info.NumNinos.Data, @info.NumNinas.Data]
         }, {
@@ -386,24 +396,24 @@
         new CtExtension("#ct-chart-1")
             .Legend(["@info.NumNinos.Name", "@info.NumNinas.Name"]);
 
-        dataDailySalesChart = {
-            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-            series: [
-                [12, 17, 7, 17, 23, 18, 38]
-            ]
-        };
+        var data = '@info.ActividadCursoJson';
 
-        optionsDailySalesChart = {
+        dataRoundedLineChart = JSON.parse(data.replace(/&quot;/g,'"'));
+
+        optionsRoundedLineChart = {
             lineSmooth: Chartist.Interpolation.cardinal({
-                tension: 0
+                tension: 10
             }),
+            axisX: {
+                showGrid: false,
+            },
             low: 0,
-            high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+            high: 4, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
             chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
-        };
+            showPoint: false
+        }
 
-        var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
+        var RoundedLineChart = new Chartist.Line('#roundedLineChart', dataRoundedLineChart, optionsRoundedLineChart);
 
-        
     </script>
 }

@@ -22,10 +22,21 @@
 .ct-label.ct-legend-label {
     font-size:0.9em;
 }
-.ct-inner-label .ct-label {
+.ct-inner-label .ct-label, .ct-chart-white  .ct-label{
     fill: rgba(255, 255, 255, 0.8);
     color: rgba(255, 255, 255, 0.7);
 }
 .label-lg .ct-label {
     font-size: 2.1em;
+}
+
+.ct-chart-white .ct-bar {
+    fill: rgba(255, 255, 255, 1);
+
+}
+.ct-chart-white .ct-grid {
+    stroke: rgba(255, 255, 255, 0.5);
+}
+.ct-chart-white .ct-line {
+    stroke: rgba(255, 255, 255, 0.8);
 }

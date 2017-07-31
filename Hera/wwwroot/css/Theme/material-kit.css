@@ -2869,11 +2869,36 @@ h2.title {
 .card .card-content {
     padding: 15px 30px;
 }
+.card-chart .card-header {
+    padding: 0;
+    min-height: 180px;
+}
 .card .content-success, .card .header-success {
     background: linear-gradient(60deg,#66bb6a,#388e3c);
 }
 .card .content-info, .card .header-info {
     background: linear-gradient(60deg,#26c6da,#0097a7);
+}
+.card [data-background-color] {
+    width:96%;
+    box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    margin: -10px 2%;
+    border-radius: 3px;
+    padding: 15px;
+    background-color: #999999;
+    position: relative;
+}
+.card [data-background-color="orange"] {
+    background: linear-gradient(60deg, #ffa726, #fb8c00);
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
+}
+.card [data-background-color="rose"] {
+    background: linear-gradient(60deg, #ec407a, #d81b60);
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(233, 30, 99, 0.4);
+}
+.card [data-background-color="blue"] {
+    background: linear-gradient(60deg, #26c6da, #00acc1);
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(0, 188, 212, 0.4);
 }
 
 .card .card-image {

@@ -34,21 +34,30 @@ namespace Hera.Models.EntitiesViewModels.ProfesorCursos
                     rel.Estudiante.Genero ==
                     Entities.Usuarios.Genero.Femenino)
                     .Count();
+
             this.Info = new InfoCursoViewModel()
             {
-                
+
                 NumNinos = new ChartSeriesViewModel()
                 {
                     Data = numM,
-                    Label= $"{ChartUtil.Percentage(numM,Curso.Estudiantes.Count)}%",
-                    Name="Masculino"
+                    Label = $"{ChartUtil.Percentage(numM, Curso.Estudiantes.Count)}%",
+                    Name = "Masculino"
                 },
                 NumNinas = new ChartSeriesViewModel()
                 {
                     Data = numF,
-                    Label = $"{ChartUtil.Percentage(numF,Curso.Estudiantes.Count)}%",
+                    Label = $"{ChartUtil.Percentage(numF, Curso.Estudiantes.Count)}%",
                     Name = "Femenino"
-                }
+                },
+                ActividadCurso = registroCurso.Values
+                .SelectMany(e =>
+                e.SelectMany(e2 => e2.Calificaciones))
+                .Where(cal => cal.Tiempoinicio > DateTime.Now.AddDays(-7))
+                .GroupBy(cal => cal.Tiempoinicio.Date)
+                .OrderByDescending(grp => grp.Key)
+                .ToDictionary(grp => String.Format("{0:d}", grp.Key), 
+                grp => grp.Count())
 
             };
         }
