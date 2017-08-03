@@ -21,8 +21,15 @@ namespace Hera.Models.EntitiesViewModels.Chart
 
         public static int GetChartMax(IEnumerable<int> collection)
         {
-            var max = collection.Max();
-            return (int)(max + ((float)max * 0.1f) + 1);
+            try
+            {
+                var max = collection.Max();
+                return (int)(max + ((float)max * 0.1f) + 1);
+            }
+            catch(InvalidOperationException)
+            {
+                return 4;
+            }
         }
     }
 }
