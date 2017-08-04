@@ -17,7 +17,7 @@ namespace HeraScratch.Test
                 .Evaluate<ValorationTest, SpriteInfo, GeneralInfo>("167997841");
             foreach (var item in res)
             {
-                Console.WriteLine($"=============item name " +
+                Console.WriteLine("=============item name " +
                     $"{item.SpriteName}");
                 Console.WriteLine(item.AdditionalInfo.Info);
 

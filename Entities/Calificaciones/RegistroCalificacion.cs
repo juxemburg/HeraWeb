@@ -1,9 +1,7 @@
 ﻿using Entities.Cursos;
 using Entities.Desafios;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Entities.Calificaciones
 {
@@ -23,12 +21,8 @@ namespace Entities.Calificaciones
         {
             get
             {
-                return (Calificaciones != null) ?
-                Calificaciones
-                    .Where(cal => cal.EnCurso)
-                    .Count() > 0
-                    : true;
-                
+                return (Calificaciones == null) || Calificaciones
+                           .Any(cal => cal.EnCurso);
             }
         }
 

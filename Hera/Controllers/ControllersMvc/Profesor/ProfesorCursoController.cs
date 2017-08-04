@@ -51,7 +51,7 @@ namespace Hera.Controllers.ControllersMvc.Profesor
                 model.Desafios.Select(d =>
                 new SelectListItem()
                 {
-                    Value = d.DesafioID.ToString(),
+                    Value = d.DesafioId.ToString(),
                     Text = d.Desafio.Nombre
                 });
 

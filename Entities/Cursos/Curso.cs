@@ -4,7 +4,6 @@ using Entities.Usuarios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Entities.Cursos
 {
@@ -37,7 +36,7 @@ namespace Entities.Cursos
 
         public bool ContieneDesafio(int desafioId)
         {
-            return Desafios.Any(rel => rel.DesafioID == desafioId);
+            return Desafios.Any(rel => rel.DesafioId == desafioId);
         }
 
         

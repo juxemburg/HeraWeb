@@ -133,7 +133,7 @@
                             @foreach (var item in Model.Curso.Desafios)
                             {
                             <th>
-                                <a asp-controller="ProfesorCurso" asp-action="Progres" asp-route-idDesafio="@item.DesafioID">
+                                <a asp-controller="ProfesorCurso" asp-action="Progres" asp-route-idDesafio="@item.DesafioId">
                                     @item.Desafio.Nombre
                                     @if (item.Initial)
                                         {
@@ -142,7 +142,7 @@
                                 </a>
                                 @if (!item.Initial)
                                     {
-                                    <button class="btn btn-sm btn-simple btn-danger " data-toggle="modal" data-target="#modal-remove-@item.DesafioID">
+                                    <button class="btn btn-sm btn-simple btn-danger " data-toggle="modal" data-target="#modal-remove-@item.DesafioId">
                                         <i class="material-icons icon-lg">remove_circle_outline</i>
                                     </button>
                                     }
@@ -175,10 +175,10 @@
                             @foreach (var desafio in Model.Curso.Desafios)
                                 {
                                     if (Model.RegistrosCurso.ContainsKey(
-                                        new Tuple<int, int>(desafio.DesafioID, item.EstudianteId)))
+                                        new Tuple<int, int>(desafio.DesafioId, item.EstudianteId)))
                                     {
                                         var reg = Model.RegistrosCurso[
-                                        new Tuple<int, int>(desafio.DesafioID, item.EstudianteId)];
+                                        new Tuple<int, int>(desafio.DesafioId, item.EstudianteId)];
                                 <td>
                                     @if (reg.First().CalificacionCualitativa != null
               && reg.First().CalificacionCualitativa.Completada)
@@ -188,7 +188,7 @@
                                                asp-controller="ProfesorEstudiante"
                                                asp-route-idCurso="@Model.Curso.Id"
                                                asp-route-idEstudiante="@item.EstudianteId"
-                                               asp-route-idDesafio="@desafio.DesafioID">
+                                               asp-route-idDesafio="@desafio.DesafioId">
                                                 <i class="material-icons">done</i>
                                             </a>
                                            }
@@ -199,7 +199,7 @@
                                                asp-controller="ProfesorEstudiante"
                                                asp-route-idCurso="@Model.Curso.Id"
                                                asp-route-idEstudiante="@item.EstudianteId"
-                                               asp-route-idDesafio="@desafio.DesafioID">
+                                               asp-route-idDesafio="@desafio.DesafioId">
                                                 <i class="material-icons">priority_high</i>
                                             </a>
                                            }
@@ -337,7 +337,7 @@
     </div>
     @foreach (var item in Model.Curso.Desafios)
     {
-        <div id="modal-remove-@item.DesafioID" class="modal fade" role="dialog">
+        <div id="modal-remove-@item.DesafioId" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -352,7 +352,7 @@
                             <div class="row">
                                 <form asp-action="RemoveDesafio"
                                       asp-controller="Cursos"
-                                      asp-route-desafioId="@item.DesafioID"
+                                      asp-route-desafioId="@item.DesafioId"
                                       asp-route-cursoId="@Model.Curso.Id"
                                       asp-antiforgery="true"
                                       class="form-horizontal">

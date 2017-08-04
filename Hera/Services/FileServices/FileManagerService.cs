@@ -1,16 +1,14 @@
 ﻿using Hera.Data;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Hera.Services
 {
     public class FileManagerService
     {
         private DirectoryInfo _directory;
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
         public FileManagerService(ApplicationDbContext context)
         {

@@ -44,7 +44,7 @@ namespace Hera.Models.EntitiesViewModels
                     new Rel_DesafiosCursos()
                     {
                         Initial = true,
-                        DesafioID = desafioInicial.Id,
+                        DesafioId = desafioInicial.Id,
                         Desafio = desafioInicial
                     }
                 },

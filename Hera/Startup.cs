@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -18,7 +15,6 @@ using Hera.Services.MessageServices;
 using Hera.Services.UserServices;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Hera.Services.UtilServices;
-using Hera.Services.NotificationServices;
 
 namespace Hera
 {

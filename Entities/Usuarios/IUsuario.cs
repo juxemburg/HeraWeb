@@ -1,8 +1,4 @@
-﻿using Entities.Notifications;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace Entities.Usuarios
 {
     public abstract class IUsuario

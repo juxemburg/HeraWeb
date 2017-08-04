@@ -86,7 +86,7 @@ namespace Hera.Data
 
             builder.Entity<Rel_DesafiosCursos>()
                 .HasKey(entity => 
-                new { entity.DesafioID, entity.CursoId });
+                new { DesafioID = entity.DesafioId, entity.CursoId });
             //builder.Entity<Rel_DesafiosCursos>()
             //    .HasOne(e => e.Desafio)
             //    .WithMany(e2 => e2.Cursos)

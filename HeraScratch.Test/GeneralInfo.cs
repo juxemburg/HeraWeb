@@ -1,7 +1,4 @@
 ﻿using HeraScratch.Valoration;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HeraScratch.Test
 {
@@ -37,7 +34,7 @@ namespace HeraScratch.Test
                 $"Events used: {EventsUse}\n" +
                 $"Messages Used: {MessageUse}\n" +
                 $"List Used: {ListUse}\n" +
-                $"====================================\n" +
+                "====================================\n" +
                 $"Non unusedBlocks: {NonUnusedBlocks}\n" +
                 $"user Defined Blocks: {UserDefinedBlocks}\n" +
                 $"Clone use: {CloneUse}\n" +

@@ -1,15 +1,11 @@
 ﻿using Entities.Cursos;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Entities.Desafios
 {
     public class Rel_DesafiosCursos
     {
         public bool Initial { get; set; }
 
-        public int DesafioID { get; set; }
+        public int DesafioId { get; set; }
         public Desafio Desafio { get; set; }
 
         public int CursoId { get; set; }

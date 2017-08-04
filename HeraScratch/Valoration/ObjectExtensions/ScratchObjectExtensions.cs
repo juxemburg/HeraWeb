@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
 using HeraScratch.Valoration;
 using HeraScratch.Objects;
-using System.Text.RegularExpressions;
 
 namespace HeraScratch.ObjectExtensions
 {

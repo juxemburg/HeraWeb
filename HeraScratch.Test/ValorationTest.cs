@@ -1,11 +1,10 @@
 ﻿using HeraScratch.Valoration;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace HeraScratch.Test
 {
-    class ValorationTest : IValoration
+    internal class ValorationTest : IValoration
     {
         public bool generalValoration { get; set; }
         public string SpriteName { get; set; }

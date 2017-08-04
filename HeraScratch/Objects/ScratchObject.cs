@@ -4,12 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace HeraScratch.Objects
 {
     [DataContract(Name = "object")]
-    partial class ScratchObject : IHttpObject
+    class ScratchObject : IHttpObject
     {
         [DataMember(Name = "objName")]
         public string ObjName { get; set; }
@@ -141,7 +140,6 @@ namespace HeraScratch.Objects
             }
             catch (Exception e)
             { }
-            return;
         }
 
         private IEnumerable<object> Do_deserializeScript(object[] script,
@@ -158,22 +156,21 @@ namespace HeraScratch.Objects
             {
                 if (item == null)
                     continue;
-                if (typeof(string) == item.GetType()
+                if (item is string stringItem
                     && index == 0
                     && (Variables == null ||
                     !ScratchObjectExtensions
                     .IsReservedBlock(item.ToString()) ||
                     !Variables.Any(var => var.Name.Equals(item))))
                 {
-                    stringScript += item.ToString();
+                    stringScript += stringItem;
                     array.Add(item);
-                    blocks.Add(item.ToString());
+                    blocks.Add(stringItem);
                     continue;
                 }
-                if (item != null &&
-                    typeof(string) == item.GetType())
+                if (item != null && item is string itemString)
                 {
-                    stringScript += $" {item.ToString()}";
+                    stringScript += $" {itemString}";
                     continue;
                 }
                 if (item is object[] objectArray)

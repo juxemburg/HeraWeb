@@ -1,7 +1,7 @@
 @model Rel_DesafiosCursos
 
 <p>gjhgjhgjhgjhgj</p>
-<div id="modal-remove-@Model.DesafioID" class="modal fade" role="dialog">
+<div id="modal-remove-@Model.DesafioId" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
@@ -21,7 +21,7 @@
                     <div class="row">
                         <form asp-action="RemoveDesafio"
                               asp-controller="Cursos"
-                              asp-route-desafioId="@Model.DesafioID"
+                              asp-route-desafioId="@Model.DesafioId"
                               asp-antiforgery="true"
                               class="form-horizontal">
                             <div>

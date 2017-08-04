@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Hera.Data;
 using Microsoft.EntityFrameworkCore;
-using Hera.Services;
 
 namespace Hera.Controllers
 {
@@ -27,9 +23,9 @@ namespace Hera.Controllers
             var res = await _data.Autocomplete_Desafios(search)
                 .Select(r => new
                 {
-                    Id= r.Id,
-                    Nombre = r.Nombre,
-                    Descripcion = r.Descripcion,
+                    r.Id,
+                    r.Nombre,
+                    r.Descripcion,
                     Autor = r.Profesor.NombreCompleto
                 }).ToListAsync();
 

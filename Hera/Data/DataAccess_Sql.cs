@@ -109,7 +109,7 @@ namespace Hera.Data
         {
             return await _context.Rel_Cursos_Desafios
                 .AnyAsync(des => des.CursoId == idCurso &&
-                des.DesafioID == idDesafio);
+                des.DesafioId == idDesafio);
         }
         public async Task<bool> Exist_DesafioP(int id, int idProfesor)
         {
@@ -148,9 +148,9 @@ namespace Hera.Data
             {
                 var curso = await Find_Curso(cursoId);
                 var desafioNew = curso.Desafios
-                    .First(d => d.DesafioID == newId);
+                    .First(d => d.DesafioId == newId);
                 var desafioOld = curso.Desafios
-                    .First(d => d.DesafioID == oldId);
+                    .First(d => d.DesafioId == oldId);
                 desafioNew.Initial = true;
                 desafioOld.Initial = false;
                 Edit<Rel_DesafiosCursos>(desafioOld);
@@ -198,7 +198,7 @@ namespace Hera.Data
         {
             return await _context.Rel_Cursos_Desafios
                 .FirstAsync(r => r.CursoId == cursoId &&
-                r.DesafioID == desafioId);
+                r.DesafioId == desafioId);
         }
 
         public async Task<Desafio> Find_Desafio(int id)
@@ -380,7 +380,7 @@ namespace Hera.Data
             {
                 var ids = _context.Rel_Cursos_Desafios
                     .Where(rel => rel.CursoId == cursoId)
-                    .Select(rel => rel.DesafioID);
+                    .Select(rel => rel.DesafioId);
                 query = query.
                     Where(d => ids.Contains(d.Id));
             }

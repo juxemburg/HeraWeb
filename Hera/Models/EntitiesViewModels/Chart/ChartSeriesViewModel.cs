@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Hera.Models.EntitiesViewModels.Chart
 {
@@ -24,7 +23,7 @@ namespace Hera.Models.EntitiesViewModels.Chart
             try
             {
                 var max = collection.Max();
-                return (int)(max + ((float)max * 0.1f) + 1);
+                return (int)(max + (max * 0.1f) + 1);
             }
             catch(InvalidOperationException)
             {
