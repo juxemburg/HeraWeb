@@ -10,7 +10,7 @@ namespace Hera.Models.UtilityViewModels
         public string Id { get; set; }
         public string Class { get; set; }
 
-        public List<ChartSeriesViewModel> Models { get; set; }
+        public List<SingleValueSeriesViewModel> Models { get; set; }
 
         //options
         public bool ShowLabel { get; set; }

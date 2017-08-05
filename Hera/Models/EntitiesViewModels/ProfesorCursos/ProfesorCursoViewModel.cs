@@ -30,32 +30,41 @@ namespace Hera.Models.EntitiesViewModels.ProfesorCursos
                 Curso.Estudiantes
                     .Count(rel => 
                     rel.Estudiante.Genero == Genero.Femenino);
+            var grpActividad = registroCurso.Values
+                .SelectMany(e =>
+                    e.SelectMany(e2 => e2.Calificaciones))
+                .Where(cal => cal.Tiempoinicio > DateTime.Now.AddDays(-7))
+                .GroupBy(cal => cal.Tiempoinicio.Date)
+                .OrderBy(grp => grp.Key);
 
             Info = new InfoCursoViewModel()
             {
-                DistSexo = new List<ChartSeriesViewModel>()
+                DistSexo = new List<SingleValueSeriesViewModel>()
                 {
-                    new ChartSeriesViewModel()
+                    new SingleValueSeriesViewModel()
                     {
                         Data = numM,
                         Label = $"{ChartUtil.Percentage(numM, Curso.Estudiantes.Count)}%",
                         Name = "Masculino"
                     },
-                    new ChartSeriesViewModel()
+                    new SingleValueSeriesViewModel()
                     {
                         Data = numF,
                         Label = $"{ChartUtil.Percentage(numF, Curso.Estudiantes.Count)}%",
                         Name = "Femenino"
                     }
                 },
-                ActividadCurso = registroCurso.Values
-                .SelectMany(e =>
-                e.SelectMany(e2 => e2.Calificaciones))
-                .Where(cal => cal.Tiempoinicio > DateTime.Now.AddDays(-7))
-                .GroupBy(cal => cal.Tiempoinicio.Date)
-                .OrderByDescending(grp => grp.Key)
-                .ToDictionary(grp => String.Format("{0:d}", grp.Key), 
-                grp => grp.Count())
+                ActividadCurso = new Dictionary<string, MultiValueSeriesViewModel>()
+                {
+                    ["Número de Calificaciones"] = new MultiValueSeriesViewModel()
+                    {
+                        Data = grpActividad
+                            .Select(grp => (float)grp.Count()),
+                        Labels = grpActividad
+                        .Select(grp => string.Format("{0:d}", grp.Key)),
+                        Name= "Número de Calificaciones"
+                    }
+                }
 
             };
         }

@@ -4,6 +4,7 @@
     ViewData["Title"] = "Details";
     var info = Model.Info;
     var sexChart = info.GetDistribucionSexo("ct-chart ct-perfect-fifth ct-inner-label", "inside", 10);
+    var activityChart = info.GetActividadCurso("ct-chart ct-chart-white ct-double-octave");
 }
 
 @section Styles {
@@ -73,9 +74,7 @@
             <div class="col-sm-9 col-md-9 col-lg-offset-1 col-lg-9">
                 <div class="card card-chart">
                     <div class="card card-header" data-background-color="blue">
-                        <div id="roundedLineChart" 
-                             class="ct-chart ct-chart-white ct-double-octave">
-                        </div>
+                        @await Html.PartialAsync("Charts/_RoundLinePartial", activityChart)
                     </div>
                     <div class="card-content">
                         <h4 class=""><span class="card-title">Actividad</span> del curso</h4>
@@ -102,29 +101,7 @@
         </div>
     </div>
 </section>
-<script>
-    window.addEventListener("load",() => {
 
-        var data = '@info.ActividadCursoJson';
-
-        dataRoundedLineChart = JSON.parse(data.replace(/&quot;/g, '"'));
-
-        optionsRoundedLineChart = {
-            lineSmooth: Chartist.Interpolation.cardinal({
-                tension: 10
-            }),
-            axisX: {
-                showGrid: true,
-            },
-            low: 0,
-            high: @info.ActividadCursoMax,
-            chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
-            showPoint: false
-        }
-
-        var RoundedLineChart = new Chartist.Line('#roundedLineChart', dataRoundedLineChart, optionsRoundedLineChart);
-    });
-</script>
 <section>
     <div class="container-fluid">
         <h2 class="section-title">Progreso de tus estudiantes</h2>

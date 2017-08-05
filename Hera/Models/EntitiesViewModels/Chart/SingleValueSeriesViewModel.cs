@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Hera.Models.EntitiesViewModels.Chart
 {
-    public class ChartSeriesViewModel
+    public class SingleValueSeriesViewModel
     {
         public int Data { get; set; }
         public string Label { get; set; }
@@ -18,7 +18,7 @@ namespace Hera.Models.EntitiesViewModels.Chart
             return Math.Round((amount / (float)total * 100), 2);
         }
 
-        public static int GetChartMax(IEnumerable<int> collection)
+        public static int GetChartMax(IEnumerable<float> collection)
         {
             try
             {

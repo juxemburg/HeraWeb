@@ -8,11 +8,10 @@ namespace Hera.Models.EntitiesViewModels.ProfesorCursos
 {
     public class InfoCursoViewModel
     {
-        public List<ChartSeriesViewModel> DistSexo { get; set; }
-        public Dictionary<string, int> ActividadCurso { get; set; }
+        public List<SingleValueSeriesViewModel> DistSexo { get; set; }
+        public Dictionary<string, MultiValueSeriesViewModel> ActividadCurso { get; set; }
 
-        public int ActividadCursoMax =>
-            ChartUtil.GetChartMax(ActividadCurso.Values);
+        
 
         public PieChartViewModel GetDistribucionSexo(string clss,
             string labelPosition, int labelOffset, bool showLabel = true)
@@ -28,15 +27,16 @@ namespace Hera.Models.EntitiesViewModels.ProfesorCursos
             };
         }
 
-        public string ActividadCursoJson => 
-            JsonConvert.SerializeObject(
-            new
+        public LineChartViewModel GetActividadCurso(string clss)
+        {
+            return new LineChartViewModel()
             {
-                labels = ActividadCurso.Keys.ToList(),
-                series = new List<List<int>>()
-                {
-                    ActividadCurso.Values.ToList()
-                }
-            });
+                Id="cart-activity",
+                Class = clss,
+                DataDictionary = ActividadCurso
+            };
+        }
+
+        
     }
 }
