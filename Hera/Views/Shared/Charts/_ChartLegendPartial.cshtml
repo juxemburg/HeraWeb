@@ -1,0 +1,10 @@
+@model ChartFooterViewModel
+<div id="@Model.Id" class="ct-legend"></div>
+<script>
+    window.addEventListener("load",() => {
+        var str = '@Model.ToLegendJson';
+        var data = JSON.parse(str.replace(/&quot;/g, '"'));
+        new CtExtension("#@Model.Id")
+            .Legend(data.legend);
+    });
+</script>

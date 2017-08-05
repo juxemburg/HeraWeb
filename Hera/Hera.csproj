@@ -120,6 +120,7 @@
     <Folder Include="Views\Shared\Components\Navbar\" />
     <Folder Include="Views\Shared\Default\" />
     <Folder Include="Views\Shared\Desafios\" />
+    <Folder Include="Views\Shared\Charts\" />
     <Folder Include="Views\Shared\ProgressBar\" />
     <Folder Include="Views\Shared\Rating\" />
     <Folder Include="Views\Shared\Util\" />

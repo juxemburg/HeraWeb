@@ -4,7 +4,7 @@ using Hera.Models.EntitiesViewModels.Chart;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Entities.Usuarios;
 
 namespace Hera.Models.EntitiesViewModels.ProfesorCursos
 {
@@ -21,34 +21,32 @@ namespace Hera.Models.EntitiesViewModels.ProfesorCursos
             Dictionary<Tuple<int, int>,
                 List<RegistroCalificacion>> registroCurso)
         {
-            this.Curso = curso;
-            this.RegistrosCurso = registroCurso;
+            Curso = curso;
+            RegistrosCurso = registroCurso;
             var numM = Curso.Estudiantes
-                    .Where(rel =>
-                    rel.Estudiante.Genero ==
-                    Entities.Usuarios.Genero.Masculino)
-                    .Count();
+                    .Count(rel => 
+                    rel.Estudiante.Genero == Genero.Masculino);
             var numF =
                 Curso.Estudiantes
-                    .Where(rel =>
-                    rel.Estudiante.Genero ==
-                    Entities.Usuarios.Genero.Femenino)
-                    .Count();
+                    .Count(rel => 
+                    rel.Estudiante.Genero == Genero.Femenino);
 
-            this.Info = new InfoCursoViewModel()
+            Info = new InfoCursoViewModel()
             {
-
-                NumNinos = new ChartSeriesViewModel()
+                DistSexo = new List<ChartSeriesViewModel>()
                 {
-                    Data = numM,
-                    Label = $"{ChartUtil.Percentage(numM, Curso.Estudiantes.Count)}%",
-                    Name = "Masculino"
-                },
-                NumNinas = new ChartSeriesViewModel()
-                {
-                    Data = numF,
-                    Label = $"{ChartUtil.Percentage(numF, Curso.Estudiantes.Count)}%",
-                    Name = "Femenino"
+                    new ChartSeriesViewModel()
+                    {
+                        Data = numM,
+                        Label = $"{ChartUtil.Percentage(numM, Curso.Estudiantes.Count)}%",
+                        Name = "Masculino"
+                    },
+                    new ChartSeriesViewModel()
+                    {
+                        Data = numF,
+                        Label = $"{ChartUtil.Percentage(numF, Curso.Estudiantes.Count)}%",
+                        Name = "Femenino"
+                    }
                 },
                 ActividadCurso = registroCurso.Values
                 .SelectMany(e =>

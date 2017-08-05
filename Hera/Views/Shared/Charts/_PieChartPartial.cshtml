@@ -1,0 +1,15 @@
+@model PieChartViewModel
+
+<div id="@Model.Id" class="@Model.Class">
+</div>
+
+<script>
+    window.addEventListener("load", () => {
+        var str = '@Model.ToJson';
+        var chartData = JSON.parse(str.replace(/&quot;/g, '"'));
+        var optionsStr = '@Model.ToJsonOptions';
+        var options = JSON.parse(optionsStr.replace(/&quot;/g, '"'));
+        new Chartist.Pie('#@Model.Id', chartData, options);
+    });
+</script>
+

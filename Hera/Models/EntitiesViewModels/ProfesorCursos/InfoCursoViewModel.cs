@@ -1,30 +1,42 @@
 ﻿using Hera.Models.EntitiesViewModels.Chart;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Hera.Models.UtilityViewModels;
 
 namespace Hera.Models.EntitiesViewModels.ProfesorCursos
 {
     public class InfoCursoViewModel
     {
-        public ChartSeriesViewModel NumNinos { get; set; }
-        public ChartSeriesViewModel NumNinas { get; set; }
-
+        public List<ChartSeriesViewModel> DistSexo { get; set; }
         public Dictionary<string, int> ActividadCurso { get; set; }
-        public int ActividadCursoMax
+
+        public int ActividadCursoMax =>
+            ChartUtil.GetChartMax(ActividadCurso.Values);
+
+        public PieChartViewModel GetDistribucionSexo(string clss,
+            string labelPosition, int labelOffset, bool showLabel = true)
         {
-            get => ChartUtil.GetChartMax(ActividadCurso.Values);
+            return new PieChartViewModel()
+            {
+                Id = "chart-sex",
+                Class = clss,
+                Models =  DistSexo,
+                ShowLabel = showLabel,
+                LabelPosition = labelPosition,
+                LabelOffset = labelOffset
+            };
         }
-        public string ActividadCursoJson
-        {
-            get => JsonConvert.SerializeObject(
-                new
+
+        public string ActividadCursoJson => 
+            JsonConvert.SerializeObject(
+            new
+            {
+                labels = ActividadCurso.Keys.ToList(),
+                series = new List<List<int>>()
                 {
-                    labels = ActividadCurso.Keys.ToList(),
-                    series = new List<List<int>>() { ActividadCurso.Values.ToList() }
-                });
-        }
+                    ActividadCurso.Values.ToList()
+                }
+            });
     }
 }

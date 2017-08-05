@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Details";
     var info = Model.Info;
+    var sexChart = info.GetDistribucionSexo("ct-chart ct-perfect-fifth ct-inner-label", "inside", 10);
 }
 
 @section Styles {
@@ -91,18 +92,39 @@
                             <i class="material-icons">pie_chart</i>
                             Distribución por sexo
                         </h4>
-                        <div id="sex-chart"
-                             class="ct-chart ct-perfect-fifth ct-inner-label">
-                        </div>
+                        @await Html.PartialAsync("Charts/_PieChartPartial", sexChart)
                     </div>
                     <div class="card-footer">
-                        <div id="ct-chart-1" class="ct-legend"></div>
+                        @await Html.PartialAsync("Charts/_ChartLegendPartial", sexChart.GetFooterViewModel)
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<script>
+    window.addEventListener("load",() => {
+
+        var data = '@info.ActividadCursoJson';
+
+        dataRoundedLineChart = JSON.parse(data.replace(/&quot;/g, '"'));
+
+        optionsRoundedLineChart = {
+            lineSmooth: Chartist.Interpolation.cardinal({
+                tension: 10
+            }),
+            axisX: {
+                showGrid: true,
+            },
+            low: 0,
+            high: @info.ActividadCursoMax,
+            chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
+            showPoint: false
+        }
+
+        var RoundedLineChart = new Chartist.Line('#roundedLineChart', dataRoundedLineChart, optionsRoundedLineChart);
+    });
+</script>
 <section>
     <div class="container-fluid">
         <h2 class="section-title">Progreso de tus estudiantes</h2>
@@ -384,36 +406,5 @@
         <script src="~/js/autocomplete.min.js"></script>
         <script src="~/js/cursos.min.js"></script>
     </environment>
-    <script>
-        new Chartist.Pie('#sex-chart', {
-            labels: ["@info.NumNinos.Label","@info.NumNinas.Label"],
-            series: [@info.NumNinos.Data, @info.NumNinas.Data]
-        }, {
-                showLabel: true,
-                labelPosition: 'inside',
-                labelOffset: 10
-            });
-        new CtExtension("#ct-chart-1")
-            .Legend(["@info.NumNinos.Name", "@info.NumNinas.Name"]);
 
-        var data = '@info.ActividadCursoJson';
-
-        dataRoundedLineChart = JSON.parse(data.replace(/&quot;/g,'"'));
-
-        optionsRoundedLineChart = {
-            lineSmooth: Chartist.Interpolation.cardinal({
-                tension: 10
-            }),
-            axisX: {
-                showGrid: true,
-            },
-            low: 0,
-            high: @info.ActividadCursoMax, 
-            chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
-            showPoint: false
-        }
-
-        var RoundedLineChart = new Chartist.Line('#roundedLineChart', dataRoundedLineChart, optionsRoundedLineChart);
-
-    </script>
 }
