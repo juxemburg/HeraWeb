@@ -30,12 +30,24 @@ namespace Hera.Models.EntitiesViewModels.ProfesorCursos
                 Curso.Estudiantes
                     .Count(rel => 
                     rel.Estudiante.Genero == Genero.Femenino);
-            var grpActividad = registroCurso.Values
-                .SelectMany(e =>
-                    e.SelectMany(e2 => e2.Calificaciones))
-                .Where(cal => cal.Tiempoinicio > DateTime.Now.AddDays(-7))
-                .GroupBy(cal => cal.Tiempoinicio.Date)
-                .OrderBy(grp => grp.Key);
+            var dates = Enumerable.Range(0, 7)
+                .Select(d => DateTime.Now.AddDays((d * -1)));
+
+            var califications = registroCurso.Values
+                .SelectMany(e => e.SelectMany(e2 => e2.Calificaciones));
+
+            var group = dates.GroupJoin(califications,
+                d => d.Date, cal => cal.Tiempoinicio.Date,
+                (d, cal) => new
+                {
+                    Key = string.Format("{0:d}", d),
+                    Date = d,
+                    Count = cal.Count()
+                })
+                .OrderBy(grp => grp.Date);
+
+            
+            
 
             Info = new InfoCursoViewModel()
             {
@@ -56,14 +68,15 @@ namespace Hera.Models.EntitiesViewModels.ProfesorCursos
                 },
                 ActividadCurso = new Dictionary<string, MultiValueSeriesViewModel>()
                 {
-                    ["Número de Calificaciones"] = new MultiValueSeriesViewModel()
+                    
+                    ["Número de Calificaciones"] 
+                        = new MultiValueSeriesViewModel()
                     {
-                        Data = grpActividad
-                            .Select(grp => (float)grp.Count()),
-                        Labels = grpActividad
-                        .Select(grp => string.Format("{0:d}", grp.Key)),
-                        Name= "Número de Calificaciones"
+                        Data = group.Select(grp => (float)grp.Count),
+                        Labels = group.Select(grp => grp.Key),
+                        Name = "Número de Calificaciones"
                     }
+
                 }
 
             };

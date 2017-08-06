@@ -1,7 +1,5 @@
 ﻿using Hera.Models.EntitiesViewModels.Chart;
-using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
 using Hera.Models.UtilityViewModels;
 
 namespace Hera.Models.EntitiesViewModels.ProfesorCursos
