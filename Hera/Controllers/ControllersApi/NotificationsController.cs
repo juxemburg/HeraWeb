@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Hera.Services.UserServices;
@@ -15,8 +11,8 @@ namespace Hera.Controllers.ControllersApi
     [Authorize]
     public class NotificationsController : Controller
     {
-        private UserService _usrService;
-        private NotificationService _ns;
+        private readonly UserService _usrService;
+        private readonly NotificationService _ns;
 
         public NotificationsController(UserService usrService,
             NotificationService ns)
@@ -29,7 +25,7 @@ namespace Hera.Controllers.ControllersApi
         [HttpPost("Count")]
         public async Task<IActionResult> Get_NotificationCount()
         {
-            var userId = _usrService.Get_Id(User.Claims);
+            var userId = _usrService.Get_UserId(User.Claims);
             if (userId > 0)
             {
                 return Ok(new
@@ -43,13 +39,12 @@ namespace Hera.Controllers.ControllersApi
         [HttpPost("Resume")]
         public async Task<IActionResult> Get_NotificationsResume()
         {
-            var userId = _usrService.Get_Id(User.Claims);
-            if(userId >0)
-            {
-                var model = await _ns.GetResumedNotifications(userId);
-                return Ok(model);
-            }
-            return BadRequest();
+            var userId = _usrService.Get_UserId(User.Claims);
+
+            if (userId <= 0) return BadRequest();
+
+            var model = await _ns.GetResumedNotifications(userId);
+            return Ok(model);
         }
     }
 }

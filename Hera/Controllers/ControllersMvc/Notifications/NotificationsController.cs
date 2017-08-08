@@ -15,8 +15,8 @@ namespace Hera.Controllers.ControllersMvc.Notifications
     [Authorize]
     public class NotificationsController : Controller
     {
-        private UserService _usrService;
-        private NotificationService _ns;
+        private readonly UserService _usrService;
+        private readonly NotificationService _ns;
 
         public NotificationsController(UserService usrService,
             NotificationService ns)
@@ -27,7 +27,7 @@ namespace Hera.Controllers.ControllersMvc.Notifications
 
         public async Task<IActionResult> Index(int skip, int take = 10)
         {
-            var id = _usrService.Get_Id(User.Claims);
+            var id = _usrService.Get_UserId(User.Claims);
             var notifications = await _ns.Get_Notifications(id, skip, take);
             
             return View(new PaginationViewModel<NotificationDateViewModel>(

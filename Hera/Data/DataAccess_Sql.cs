@@ -7,20 +7,18 @@ using Entities.Desafios;
 using Entities.Usuarios;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using System.Data.SqlClient;
 using Entities.Calificaciones;
 using Entities.Valoracion;
 using Hera.Services;
-using Hera.Services.NotificationServices;
 using Entities.Notifications;
 using Hera.Services.NotificationServices.NotificationBuilders;
 
 namespace Hera.Data
 {
-    public partial class DataAccess_Sql : IDataAccess
+    public class DataAccess_Sql : IDataAccess
     {
-        private ApplicationDbContext _context;
-        private FileManagerService _fmService;
+        private readonly ApplicationDbContext _context;
+        private readonly FileManagerService _fmService;
 
         public DataAccess_Sql(ApplicationDbContext context,
             FileManagerService fmService)
@@ -36,10 +34,8 @@ namespace Hera.Data
                 var res = claims
                     .FirstOrDefault(c => c.Type.Equals("UsuarioId"))
                     .Value;
-
-
-                int id = Convert.ToInt32(res);
-                return id;
+                
+                return Convert.ToInt32(res);
             }
             catch (Exception)
             {
@@ -244,7 +240,7 @@ namespace Hera.Data
         public async Task<Estudiante> Find_Estudiante(int id)
         {
             return await _context.Estudiantes
-                .FirstAsync(e => e.UsuarioId.Equals(id));
+                .FirstAsync(e => e.Id.Equals(id));
         }
 
         public async Task<Rel_CursoEstudiantes> Find_Estudiante(int idEstudiante,
@@ -274,7 +270,7 @@ namespace Hera.Data
             {
                 Add<Rel_CursoEstudiantes>(model);
                 Do_PushNotification(NotificationType.Notification_NuevoEstudiante,
-                    curso.Profesor.Id,
+                    curso.Profesor.UsuarioId,
                     new Dictionary<string, string>()
                     {
                         ["IdCurso"] = $"{curso.Id}",
@@ -501,7 +497,7 @@ namespace Hera.Data
             Edit<Calificacion>(calificacion);
             Do_PushNotification(
                 NotificationType.Notification_NuevaCalificacion,
-                curso.Profesor.Id,
+                curso.Profesor.UsuarioId,
                 new Dictionary<string, string>()
                 {
                     ["IdCurso"] = $"{curso.Id}",

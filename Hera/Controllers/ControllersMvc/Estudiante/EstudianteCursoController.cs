@@ -6,9 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Hera.Data;
 using Entities.Calificaciones;
 using Hera.Services;
-using Hera.Services.ScratchServices;
 using Hera.Models.EntitiesViewModels.EstudianteDesafio;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Hera.Models.EntitiesViewModels.EstudianteCurso;
 using Hera.Services.DesafiosServices;
@@ -21,10 +19,10 @@ namespace Hera.Controllers.ControllersMvc
     [Route("/Estudiante/Curso/{idCurso:int}/[action]")]
     public class EstudianteCursoController : Controller
     {
-        private IDataAccess _data;
-        private ScratchService _evaluator;
-        private DesafioService _desafioService;
-        private UserService _usrService;
+        private readonly IDataAccess _data;
+        private readonly ScratchService _evaluator;
+        private readonly DesafioService _desafioService;
+        private readonly UserService _usrService;
 
         public EstudianteCursoController(IDataAccess data,
             ScratchService scratchService,
@@ -133,8 +131,8 @@ namespace Hera.Controllers.ControllersMvc
                         return RedirectToAction("DesafioCompletado",
                         new
                         {
-                            idCurso = idCurso,
-                            idDesafio = idDesafio,
+                            idCurso,
+                            idDesafio,
                             idCalificacion = cal.Id
                         });
                 }
@@ -146,8 +144,8 @@ namespace Hera.Controllers.ControllersMvc
             return RedirectToAction("Desafio",
                 new
                 {
-                    idCurso = idCurso,
-                    idDesafio = idDesafio
+                    idCurso,
+                    idDesafio
                 });
 
         }
@@ -187,13 +185,12 @@ namespace Hera.Controllers.ControllersMvc
                 DesafioId = idDesafio
             };
             _data.Add<Calificacion>(model);
-            bool res = await _data.SaveAllAsync();
+            var res = await _data.SaveAllAsync();
             if (!res)
                 return BadRequest();
 
 
-            return RedirectToAction("Desafio"
-                , new { idDesafio = idDesafio, idCurso = idCurso });
+            return RedirectToAction("Desafio", new { idDesafio, idCurso });
 
         }
     }
