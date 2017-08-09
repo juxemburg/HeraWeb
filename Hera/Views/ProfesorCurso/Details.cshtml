@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Details";
     var info = Model.Info;
-    var sexChart = info.GetDistribucionSexo("ct-chart ct-perfect-fifth ct-inner-label", "inside", 10);
+    var sexChart = info.GetDistribucionSexo("ct-chart ct-octave ct-inner-label", "inside", 4);
     var activityChart = info.GetActividadCurso("ct-chart ct-chart-white ct-double-octave");
 }
 
@@ -33,7 +33,7 @@
 <section class="section section-gray">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-3 col-md-3 col-lg-2 ">
+            <div class="col-sm-6 col-md-offset-2 col-md-4 col-lg-3 ">
                 <div class="card">
                     <div class="card-content">
                         <h4 class="text-info category">
@@ -43,7 +43,7 @@
                         <div>
                             <dl class="">
                                 <dt>
-                                    @Html.DisplayNameFor(model => model.Curso.Nombre)
+                                    Nombre del Curso
                                 </dt>
                                 <dd>
                                     @Html.DisplayFor(model => model.Curso.Nombre)
@@ -52,13 +52,13 @@
                                     @Html.DisplayNameFor(model => model.Curso.Descripcion)
                                 </dt>
                                 <dd>
-                                    @Html.DisplayFor(model => model.Curso.Descripcion)
+                                    Descripción del Curso
                                 </dd>
                                 <dt>
                                     @Html.DisplayNameFor(model => model.Curso.Password)
                                 </dt>
                                 <dd>
-                                    @Html.DisplayFor(model => model.Curso.Password)
+                                    Contraseña del Curso
                                 </dd>
                                 <dt>
                                     Desafío inicial
@@ -66,25 +66,14 @@
                                 <dd>
                                     @Html.DisplayFor(model => model.Curso.Desafio.Nombre)
                                 </dd>
+                                <dt>Número de estudiantes matriculados</dt>
+                                <dd>@Model.Curso.Estudiantes.Count</dd>
                             </dl>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-9 col-md-9 col-lg-offset-1 col-lg-9">
-                <div class="card card-chart">
-                    <div class="card card-header" data-background-color="blue">
-                        @await Html.PartialAsync("Charts/_RoundLinePartial", activityChart)
-                    </div>
-                    <div class="card-content">
-                        <h4 class=""><span class="card-title">Actividad</span> del curso</h4>
-                        <p class="category">durante la última semana</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6 col-md-4 col-lg-4">
+            <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-content">
                         <h4 class="text-danger category">
@@ -95,6 +84,20 @@
                     </div>
                     <div class="card-footer">
                         @await Html.PartialAsync("Charts/_ChartLegendPartial", sexChart.GetFooterViewModel)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="col-lg-10 col-lg-offset-1">
+                <div class="card card-chart">
+                    <div class="card card-header" data-background-color="blue">
+                        @await Html.PartialAsync("Charts/_RoundLinePartial", activityChart)
+                    </div>
+                    <div class="card-content">
+                        <h4 class=""><span class="card-title">Actividad</span> del curso</h4>
+                        <p class="category">durante la última semana</p>
                     </div>
                 </div>
             </div>

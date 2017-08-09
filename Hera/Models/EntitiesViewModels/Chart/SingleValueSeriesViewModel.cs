@@ -18,12 +18,12 @@ namespace Hera.Models.EntitiesViewModels.Chart
             return Math.Round((amount / (float)total * 100), 2);
         }
 
-        public static int GetChartMax(IEnumerable<float> collection)
+        public static float GetChartMax(IEnumerable<float> collection)
         {
             try
             {
                 var max = collection.Max();
-                return (int)(max + (max * 0.1f) + 1);
+                return (max + (max * 0.15f));
             }
             catch(InvalidOperationException)
             {

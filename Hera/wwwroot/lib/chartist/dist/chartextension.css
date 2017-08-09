@@ -40,3 +40,31 @@
 .ct-chart-white .ct-line {
     stroke: rgba(255, 255, 255, 0.8);
 }
+
+/* col-lg*/
+@media only screen and (max-width : 1200px) {
+    .ct-label.ct-horizontal.ct-end {
+        font-size: 1.2em;
+    }
+}
+
+/* col-md */
+@media only screen and (max-width : 992px) {
+    .ct-label.ct-horizontal.ct-end {
+        font-size: 1.0em;
+    }
+}
+
+/* col-sm */
+@media only screen and (max-width : 768px) {
+    .ct-label.ct-horizontal.ct-end {
+        font-size: 0.8em;
+    }
+}
+
+/* col-xs */ 
+@media only screen and (max-width : 480px) {
+    .ct-label.ct-horizontal.ct-end {
+        font-size: 0.6em;
+    }
+}
