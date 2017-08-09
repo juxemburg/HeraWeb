@@ -52,7 +52,7 @@
                                 <div class="footer text-center">
                                     <button id="@item.Id" type="button"
                                             class="btn btn-info btn-round btn-item"
-                                            data-toggle="modal" data-target="#myModal">
+                                            data-toggle="modal" data-target="#modal-matricular-@item.Id">
                                         Matricular
                                     </button>
                                 </div>
@@ -85,34 +85,36 @@ else
 
 @section Modals {
     <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+@foreach (var item in Model)
+{
+    <div id="modal-matricular-@item.Id" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title"><span class="title">Matricula</span> éste curso</h3>
-            </div>
-            <div class="modal-body">
-                <form class="form-inline"
-                      asp-action="AddEstudiante" asp-controller="Cursos">
-                    <div class="text-center">
-                        <input id="input-curso" type="hidden" name="CursoId" value="" />
-                        <div class="form-group form-group-lg label-floating">
-                            <label class="control-label"> Contraseña del curso </label>
-                            <input name="Password" class="form-control" />
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title"><span class="title">Matricúlate</span> en @item.Nombre</h3>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline"
+                          asp-action="AddEstudiante" asp-controller="EstudianteCursos">
+                        <div class="text-center">
+                            <input  type="hidden" name="CursoId" value="@item.Id" />
+                            <div class="form-group form-group-lg label-floating">
+                                <label class="control-label"> Contraseña del curso </label>
+                                <input name="Password" class="form-control" />
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-round">Matricular!</button>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-round">Matricular!</button>
-                    </div>
                     
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
-</div>
+}
 }
 @section Scripts {
-    <script src="~/js/Cursos/index.js"></script>
 }

@@ -17,9 +17,9 @@ namespace Hera.Controllers.ControllersMvc
     [Authorize(Roles = "Profesor")]
     public class CursosController : Controller
     {
-        private IDataAccess _data;
-        private UserService _userService;
-        private ColorService _clrService;
+        private readonly IDataAccess _data;
+        private readonly UserService _userService;
+        private readonly ColorService _clrService;
 
         public CursosController(IDataAccess data,
             UserService userService,
@@ -114,32 +114,7 @@ namespace Hera.Controllers.ControllersMvc
 
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> AddEstudiante(
-            AddEstudianteViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var id = _data.Get_UserId(User.Claims);
-                try
-                {
-                    var curso = await _data.Find_Curso(model.CursoId);
-                    var estudiante = await _data.Find_Estudiante(id);
-                    _data.Do_MatricularEstudiante(curso, estudiante,
-                        model.Map(curso.Id, estudiante.Id), model.Password);
-
-                    if (await _data.SaveAllAsync())
-                        return RedirectToAction("Index", "EstudianteCursos");
-                    else
-                        this.SetAlerts("error-alerts",
-                            "Lo sentimos, la contraseña es inválida");
-                }
-                catch (Exception) {
-                }
-            }
-            return RedirectToAction("Busqueda","EstudianteCursos");
-        }
+        
         
         [HttpPost]
         public async Task<IActionResult> AddDesafio(AddDesafioViewModel model)
