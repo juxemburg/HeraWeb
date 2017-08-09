@@ -89,7 +89,7 @@
             </div>
         </div>
         <div class="row">
-            
+
             <div class="col-lg-10 col-lg-offset-1">
                 <div class="card card-chart">
                     <div class="card card-header" data-background-color="blue">
@@ -134,85 +134,84 @@
                             </th>
                             @foreach (var item in Model.Curso.Desafios)
                             {
-                            <th>
-                                <a asp-controller="ProfesorCurso" asp-action="Progres" asp-route-idDesafio="@item.DesafioId">
-                                    @item.Desafio.Nombre
-                                    @if (item.Initial)
+                                <th>
+                                    <a asp-action="Desafio" asp-route-idDesafio="@item.DesafioId">
+                                        @item.Desafio.Nombre
+                                        @if (item.Initial)
                                         {
-                                        <i class="material-icons text-warning">stars</i>
+                                            <i class="material-icons text-warning">stars</i>
                                         }
-                                </a>
-                                @if (!item.Initial)
+                                    </a>
+                                    @if (!item.Initial)
                                     {
-                                    <button class="btn btn-sm btn-simple btn-danger " data-toggle="modal" data-target="#modal-remove-@item.DesafioId">
-                                        <i class="material-icons icon-lg">remove_circle_outline</i>
-                                    </button>
+                                        <button class="btn btn-sm btn-simple btn-danger " data-toggle="modal" data-target="#modal-remove-@item.DesafioId">
+                                            <i class="material-icons icon-lg">remove_circle_outline</i>
+                                        </button>
                                     }
 
 
-                            </th>
+                                </th>
                             }
                         </tr>
                     </thead>
                     <tbody>
-                        @if(Model.Curso.Estudiantes.Count <= 0)
+                        @if (Model.Curso.Estudiantes.Count <= 0)
                         {
-                        <tr>
-                            <td colspan="@(Model.Curso.Desafios.Count+1)">
-                                @Html.Partial("_NoStudentsPartial");
-                            </td>
-                        </tr>
+                            <tr>
+                                <td colspan="@(Model.Curso.Desafios.Count+1)">
+                                    @Html.Partial("_NoStudentsPartial");
+                                </td>
+                            </tr>
 
                         }
                         @foreach (var item in Model.Curso.Estudiantes)
                         {
-                        <tr>
-                            <td>
-                                <strong>
-                                    <a asp-action="Estudiante" asp-route-idCurso="@Model.Curso.Id" asp-route-idEstudiante="@item.EstudianteId">
-                                        @item.Estudiante.NombreCompleto
-                                    </a>
-                                </strong>
-                            </td>
-                            @foreach (var desafio in Model.Curso.Desafios)
+                            <tr>
+                                <td>
+                                    <strong>
+                                        <a asp-action="Estudiante" asp-route-idCurso="@Model.Curso.Id" asp-route-idEstudiante="@item.EstudianteId">
+                                            @item.Estudiante.NombreCompleto
+                                        </a>
+                                    </strong>
+                                </td>
+                                @foreach (var desafio in Model.Curso.Desafios)
                                 {
                                     if (Model.RegistrosCurso.ContainsKey(
                                         new Tuple<int, int>(desafio.DesafioId, item.EstudianteId)))
                                     {
                                         var reg = Model.RegistrosCurso[
                                         new Tuple<int, int>(desafio.DesafioId, item.EstudianteId)];
-                                <td>
-                                    @if (reg.First().CalificacionCualitativa != null
-              && reg.First().CalificacionCualitativa.Completada)
-                                           {
-                                            <a class="btn btn-success btn-xs"
-                                               asp-action="Calificar"
-                                               asp-controller="ProfesorEstudiante"
-                                               asp-route-idCurso="@Model.Curso.Id"
-                                               asp-route-idEstudiante="@item.EstudianteId"
-                                               asp-route-idDesafio="@desafio.DesafioId">
-                                                <i class="material-icons">done</i>
-                                            </a>
-                                           }
-                                           else
-                                           {
-                                            <a class="btn btn-warning btn-xs"
-                                               asp-action="Calificar"
-                                               asp-controller="ProfesorEstudiante"
-                                               asp-route-idCurso="@Model.Curso.Id"
-                                               asp-route-idEstudiante="@item.EstudianteId"
-                                               asp-route-idDesafio="@desafio.DesafioId">
-                                                <i class="material-icons">priority_high</i>
-                                            </a>
-                                           }
-                                </td>
+                                        <td>
+                                            @if (reg.All(r => r.CalificacionCualitativa != null))
+                                            {
+                                                <a class="btn btn-success btn-xs"
+                                                   asp-action="Calificar"
+                                                   asp-controller="ProfesorEstudiante"
+                                                   asp-route-idCurso="@Model.Curso.Id"
+                                                   asp-route-idEstudiante="@item.EstudianteId"
+                                                   asp-route-idDesafio="@desafio.DesafioId">
+                                                    <i class="material-icons">done</i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-warning btn-xs"
+                                                   asp-action="Calificar"
+                                                   asp-controller="ProfesorEstudiante"
+                                                   asp-route-idCurso="@Model.Curso.Id"
+                                                   asp-route-idEstudiante="@item.EstudianteId"
+                                                   asp-route-idDesafio="@desafio.DesafioId">
+                                                    <i class="material-icons">priority_high</i>
+                                                </a>
+                                            }
+                                        </td>
                                     }
                                     else
                                     {
-                                <td></td>
+                                        <td></td>
                                     }
                                 }
-                        </tr>
+                            </tr>
                         }
                     </tbody>
                     <tfoot>

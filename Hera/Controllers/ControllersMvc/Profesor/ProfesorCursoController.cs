@@ -1,13 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Hera.Data;
 using Microsoft.AspNetCore.Authorization;
 using Hera.Models.EntitiesViewModels;
+using Hera.Models.EntitiesViewModels.EstudianteDesafio;
 using Microsoft.EntityFrameworkCore;
 using Hera.Models.EntitiesViewModels.ProfesorCursos;
+using Hera.Services.UserServices;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Hera.Controllers.ControllersMvc.Profesor
@@ -16,10 +17,13 @@ namespace Hera.Controllers.ControllersMvc.Profesor
     [Authorize(Roles = "Profesor")]
     public class ProfesorCursoController : Controller
     {
-        private IDataAccess _data;
+        private readonly IDataAccess _data;
+        private readonly UserService _usrService;
 
-        public ProfesorCursoController(IDataAccess data)
+        public ProfesorCursoController(IDataAccess data,
+            UserService userService)
         {
+            _usrService = userService;
             _data = data;
         }
 
@@ -62,14 +66,14 @@ namespace Hera.Controllers.ControllersMvc.Profesor
         [HttpGet("{idDesafio:int}")]
         public async Task<IActionResult> Desafio(int idCurso, int idDesafio)
         {
-            var curso = await _data.Find_Curso(idCurso);
-            var model = await _data.Find_Desafio(idDesafio);
-            if (model == null || curso == null
-                || curso.ContieneDesafio(idDesafio))
-            {
+            var idProfesor = _usrService.Get_ProfesorId(User.Claims);
+
+            if (!await _data.Exist_Desafio(idDesafio, idCurso, idProfesor))
                 return NotFound();
-            }
-            return View(model);
+
+            var desafio = await _data.Find_Desafio(idDesafio);
+            var curso = await _data.Find_Curso(idCurso);
+            return View(new DesafioCursoViewModel(desafio, curso));
         }
 
         [HttpGet("{idEstudiante:int}")]
@@ -87,34 +91,6 @@ namespace Hera.Controllers.ControllersMvc.Profesor
 
             return View(new EstudianteCalificacionViewModel(model));
         }
-        [HttpGet("{idDesafio:int}")]
-        public async Task<IActionResult> Progres(int idCurso,
-        int idDesafio)
-        {
-            var profId = await _data.Find_ProfesorId(
-                _data.Get_UserId(User.Claims));
-            if (!(await _data.Exist_Profesor_Curso(profId, idCurso))
-                && await _data.Exist_Desafio(idDesafio, idCurso))
-            {
-                return NotFound();
-            }
-            var calificaciones = _data
-                .GetAll_RegistroCalificacion(idCurso, null, idDesafio);
-
-            var nuevoProgreso = new ProgresoDesafioViewModel()
-            {
-                estudiantesQueFinalizaron = await _data
-                .Find_Estudiantes_Finalizaron(idDesafio, idCurso).ToListAsync(),
-
-                estudiantesQueNoFinalizaron = await _data
-                .Find_Estudiantes_No_Finalizaron(idDesafio, idCurso).ToListAsync(),
-
-                promedioTiempos = (calificaciones.Count() > 0) ? calificaciones
-                .Select(c => c.Calificaciones.Average(c1 => c1.Duracion.TotalSeconds))
-                .Average()
-                : 0
-            };
-            return View("Progres", nuevoProgreso);
-        }
+        
     }
 }

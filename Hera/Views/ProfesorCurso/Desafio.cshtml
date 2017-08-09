@@ -1,0 +1,42 @@
+﻿@model DesafioCursoViewModel
+
+@{
+    ViewData["Title"] = "Progres";
+    var activityChart = Model.GetDistActividad("ct-chart ct-octave ct-inner-label", "inside", 4);
+}
+
+<section class="">
+    <div class="container-fluid">
+        <h2>
+            <span class="title">Resúmen Desafío </span>
+            @Model.Desafio.Nombre
+        </h2>
+        <a asp-action="Details" asp-route-idCurso="@Model.CursoId"
+           class="btn btn-primary btn-round">
+            <i class="material-icons">arrow_back</i>
+            Volver al curso
+        </a>
+    </div>
+</section>
+<section class="section section-gray">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="text-danger category">
+                            <i class="material-icons">pie_chart</i>
+                            Actividad del desafío
+                        </h4>
+                        @await Html.PartialAsync("Charts/_PieChartPartial", activityChart)
+                    </div>
+                    <div class="card-footer">
+                        @await Html.PartialAsync("Charts/_ChartLegendPartial", activityChart.GetFooterViewModel)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

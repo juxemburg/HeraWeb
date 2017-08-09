@@ -14,25 +14,14 @@ namespace Hera.Models.EntitiesViewModels.ProfesorCursos
         public PieChartViewModel GetDistribucionSexo(string clss,
             string labelPosition, int labelOffset, bool showLabel = true)
         {
-            return new PieChartViewModel()
-            {
-                Id = "chart-sex",
-                Class = clss,
-                Models =  DistSexo,
-                ShowLabel = showLabel,
-                LabelPosition = labelPosition,
-                LabelOffset = labelOffset
-            };
+            return ChartUtil.GetPieChartViewModel(DistSexo, "chart-sex",
+                clss, labelPosition, labelOffset, showLabel);
         }
 
         public LineChartViewModel GetActividadCurso(string clss)
         {
-            return new LineChartViewModel()
-            {
-                Id="cart-activity",
-                Class = clss,
-                DataDictionary = ActividadCurso
-            };
+            return ChartUtil.GetLineChartViewModel(ActividadCurso, 
+                "chart-activity", clss);
         }
 
         

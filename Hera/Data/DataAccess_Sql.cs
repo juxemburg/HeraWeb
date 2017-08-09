@@ -12,6 +12,7 @@ using Entities.Valoracion;
 using Hera.Services;
 using Entities.Notifications;
 using Hera.Services.NotificationServices.NotificationBuilders;
+using Microsoft.EntityFrameworkCore.Query.ResultOperators.Internal;
 
 namespace Hera.Data
 {
@@ -106,6 +107,15 @@ namespace Hera.Data
             return await _context.Rel_Cursos_Desafios
                 .AnyAsync(des => des.CursoId == idCurso &&
                 des.DesafioId == idDesafio);
+        }
+        public async Task<bool> Exist_Desafio(int idDesafio, int idCurso,
+            int profesorId)
+        {
+            return await _context.Rel_Cursos_Desafios
+                .Include(rel => rel.Curso)
+                .AnyAsync(des => des.CursoId == idCurso &&
+                                 des.DesafioId == idDesafio
+                                 && des.Curso.ProfesorId == profesorId);
         }
         public async Task<bool> Exist_DesafioP(int id, int idProfesor)
         {
@@ -204,6 +214,8 @@ namespace Hera.Data
                 .Include(d => d.Profesor)
                 .Include(d => d.Ratings)
                 .Include(d => d.Cursos)
+                .Include(d => d.Calificaciones)
+                .ThenInclude(c => c.Calificaciones)
                 .FirstAsync(d => d.Id == id);
         }
 

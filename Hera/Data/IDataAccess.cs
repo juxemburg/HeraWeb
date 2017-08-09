@@ -51,6 +51,8 @@ namespace Hera.Data
         Task<Rel_DesafiosCursos> Find_Rel_DesafiosCursos(int desafioId, int cursoId);
         Task<bool> Exist_Desafio(int id);
         Task<bool> Exist_Desafio(int idDesafio, int idCurso);
+        Task<bool> Exist_Desafio(int idDesafio, int idCurso,
+            int idProfesor);
         Task<bool> Exist_DesafioP(int id, int idProfesor);
         Task Delete_Desafio(int id);
         Task Delete_Desafio(int cursoId, int desafioId);

@@ -30,12 +30,9 @@ namespace Entities.Calificaciones
         {
             get
             {
-                return (Calificaciones != null) ?
-                (Calificaciones
-                    .Where(cal => !cal.EnCurso)
-                    .Count() > 0
-                    && Calificaciones.Count > 0)
-                    : false;
+                return (Calificaciones != null) 
+                    && (Calificaciones.Any(cal => !cal.EnCurso)
+                    && Calificaciones.Count > 0);
             }
         }
 
