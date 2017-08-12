@@ -15,7 +15,8 @@ namespace Entities.Calificaciones
         public Desafio Desafio { get; set; }
 
         public virtual List<Calificacion> Calificaciones { get; set; }
-        public virtual CalificacionCualitativa CalificacionCualitativa { get; set; }
+        public virtual CalificacionCualitativa 
+            CalificacionCualitativa { get; set; }
 
         public bool Iniciada
         {
@@ -36,15 +37,8 @@ namespace Entities.Calificaciones
             }
         }
 
-        public Calificacion CalificacionPendiente
-        {
-            get
-            {
-                return Calificaciones
-                    .Where(cal => cal.EnCurso)
-                    .FirstOrDefault();
-            }
-        }
+        public Calificacion CalificacionPendiente =>
+            Calificaciones.FirstOrDefault(cal => cal.EnCurso);
 
     }
 }

@@ -84,9 +84,9 @@
   {
     "outputFileName": "wwwroot/js/theme.min.js",
     "inputFiles": [
-      "wwwroot/js/Theme/nouislider.min.js",
       "wwwroot/js/Theme/material-kit.js",
-      "wwwroot/js/Theme/material.min.js"
+      "wwwroot/js/Theme/material.min.js",
+      "wwwroot/js/Theme/nouislider.min.js"
     ],
     "minify": {
       "enabled": true,

@@ -1,217 +1,252 @@
 ﻿@model SearchDesafioViewModel
 
-<form asp-action='@ViewData["Pagination-Action"]'
+<form id="frm-buscar" asp-action='@ViewData["Pagination-Action"]'
       method="get" class="form-inline">
-    <div class="col-xs-12 text-center">
+<div class="col-xs-12 text-center">
 
-        <div class="form-group form-group-lg label-floating">
-            <label class="control-label">Búsqueda</label>
-            <input asp-for="SearchString" class="form-control input-lg" />
-        </div>
-        <button class="btn btn-primary btn-fab btn-fab-mini btn-round " type="submit">
-            <i class="material-icons">search</i>
-        </button>
-
+    <div class="form-group form-group-lg label-floating">
+        <label class="control-label">Búsqueda</label>
+        <input asp-for="SearchString" class="form-control input-lg" />
     </div>
-    <div class="col-xs-12 form-horizontal">
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="">
-                        <h4 class="panel-title">
-                            Búsqueda Avanzada
-                            <i class="material-icons pull-right">keyboard_arrow_down</i>
-                        </h4>
-                    </a>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <div class="form-group form-group-lg">
-                                    
-                                    <select class="form-control"
-                                            asp-for="SearchMode"
-                                            asp-items="Html.GetEnumSelectList<SearchMode>()"></select>
-                                </div>
+    <button class="btn btn-primary btn-fab btn-fab-mini btn-round " type="submit">
+        <i class="material-icons">search</i>
+    </button>
+
+</div>
+
+<div class="col-xs-12 form-horizontal">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="">
+                    <h4 class="panel-title">
+                        Búsqueda Avanzada
+                        <i class="material-icons pull-right">keyboard_arrow_down</i>
+                    </h4>
+                </a>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group col-xs-6">
+
+                                <select class="form-control"
+                                        asp-for="SearchMode"
+                                        asp-items="Html.GetEnumSelectList<SearchMode>()"></select>
+                            </div>
+                            <div class="form-group label-floating col-xs-6">
+                                <label asp-for="Popularity" class="control-label"></label>
+                                <input asp-for="Popularity" class="form-control" value="0" />
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="MultipleSpriteEvents" />
-                                        @Html.DisplayNameFor(Model => Model.MultipleSpriteEvents)
-                                    </label>
-                                </div>
+                        <div class="col-sm-8">
+                            <div class="col-xs-6 col-sm-4 col-lg-3 margin-top-20">
+                                <label class="control-label">Calificación Mínima</label>
+                                <div id="sliderRegular" class="slider slider-warning"></div>
+                                <input id="calificacionMin" asp-for="MinValoration" type="hidden"/>
                             </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="VariableUse" />
-                                        @Html.DisplayNameFor(Model => Model.VariableUse)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="MessageUse" />
-                                        @Html.DisplayNameFor(Model => Model.MessageUse)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="ListUse" />
-                                        @Html.DisplayNameFor(Model => Model.ListUse)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="NonUnusedBlocks" />
-                                        @Html.DisplayNameFor(Model => Model.NonUnusedBlocks)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="UserDefinedBlocks" />
-                                        @Html.DisplayNameFor(Model => Model.UserDefinedBlocks)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="CloneUse" />
-                                        @Html.DisplayNameFor(Model => Model.CloneUse)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="SecuenceUse" />
-                                        @Html.DisplayNameFor(Model => Model.SecuenceUse)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="MultipleThreads" />
-                                        @Html.DisplayNameFor(Model => Model.MultipleThreads)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="TwoGreenFlagThread" />
-                                        @Html.DisplayNameFor(Model => Model.TwoGreenFlagThread)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="AdvancedEventUse" />
-                                        @Html.DisplayNameFor(Model => Model.AdvancedEventUse)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="UseSimpleBlocks" />
-                                        @Html.DisplayNameFor(Model => Model.UseSimpleBlocks)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="UseMediumBlocks" />
-                                        @Html.DisplayNameFor(Model => Model.UseMediumBlocks)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="UseNestedControl" />
-                                        @Html.DisplayNameFor(Model => Model.UseNestedControl)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="BasicInputUse" />
-                                        @Html.DisplayNameFor(Model => Model.BasicInputUse)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="NonCreatedVariableUse" />
-                                        @Html.DisplayNameFor(Model => Model.NonCreatedVariableUse)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="SpriteSensisng" />
-                                        @Html.DisplayNameFor(Model => Model.SpriteSensisng)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="BasicOperators" />
-                                        @Html.DisplayNameFor(Model => Model.BasicOperators)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="MediumOperators" />
-                                        @Html.DisplayNameFor(Model => Model.MediumOperators)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-6 col-md-4 col-lg-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" asp-for="NestedOperators" />
-                                        @Html.DisplayNameFor(Model => Model.NestedOperators)
-                                    </label>
-                                </div>
-                            </div>
-
                             
-
                         </div>
-                        <div class="row text-center margin-top-30">
-                            
-
-                            <button class="btn btn-primary btn-round " type="submit">
-                                Buscar
-                                <i class="material-icons">search</i>
-                            </button>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="MultipleSpriteEvents" />
+                                    @Html.DisplayNameFor(Model => Model.MultipleSpriteEvents)
+                                </label>
+                            </div>
                         </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="VariableUse" />
+                                    @Html.DisplayNameFor(Model => Model.VariableUse)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="MessageUse" />
+                                    @Html.DisplayNameFor(Model => Model.MessageUse)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="ListUse" />
+                                    @Html.DisplayNameFor(Model => Model.ListUse)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="NonUnusedBlocks" />
+                                    @Html.DisplayNameFor(Model => Model.NonUnusedBlocks)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="UserDefinedBlocks" />
+                                    @Html.DisplayNameFor(Model => Model.UserDefinedBlocks)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="CloneUse" />
+                                    @Html.DisplayNameFor(Model => Model.CloneUse)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="SecuenceUse" />
+                                    @Html.DisplayNameFor(Model => Model.SecuenceUse)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="MultipleThreads" />
+                                    @Html.DisplayNameFor(Model => Model.MultipleThreads)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="TwoGreenFlagThread" />
+                                    @Html.DisplayNameFor(Model => Model.TwoGreenFlagThread)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="AdvancedEventUse" />
+                                    @Html.DisplayNameFor(Model => Model.AdvancedEventUse)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="UseSimpleBlocks" />
+                                    @Html.DisplayNameFor(Model => Model.UseSimpleBlocks)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="UseMediumBlocks" />
+                                    @Html.DisplayNameFor(Model => Model.UseMediumBlocks)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="UseNestedControl" />
+                                    @Html.DisplayNameFor(Model => Model.UseNestedControl)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="BasicInputUse" />
+                                    @Html.DisplayNameFor(Model => Model.BasicInputUse)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="NonCreatedVariableUse" />
+                                    @Html.DisplayNameFor(Model => Model.NonCreatedVariableUse)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="SpriteSensisng" />
+                                    @Html.DisplayNameFor(Model => Model.SpriteSensisng)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="BasicOperators" />
+                                    @Html.DisplayNameFor(Model => Model.BasicOperators)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="MediumOperators" />
+                                    @Html.DisplayNameFor(Model => Model.MediumOperators)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6 col-md-4 col-lg-3">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" asp-for="NestedOperators" />
+                                    @Html.DisplayNameFor(Model => Model.NestedOperators)
+                                </label>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="row text-center margin-top-30">
+
+
+                        <button class="btn btn-primary btn-round " type="submit">
+                            Buscar
+                            <i class="material-icons">search</i>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </form>
+
+<script>
+    
+    window.addEventListener('load', () => {
+
+        
+
+        $('#sliderRegular').noUiSlider({
+            start: 0,
+            connect: "lower",
+            range: {
+                min: 0,
+                max: 5
+            }
+        });
+        var slider2 = document.getElementById('sliderRegular');
+        var input = document.getElementById('calificacionMin');
+        $('#frm-buscar').on('submit', () => {
+            input.value = slider2.vGet();
+            });
+    });
+</script>

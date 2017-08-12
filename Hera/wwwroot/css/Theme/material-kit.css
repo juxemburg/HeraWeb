@@ -3850,6 +3850,10 @@ h2.title {
     padding: 12px 8px;
     vertical-align: middle;
 }
+.table .td-actions .btn {
+    margin: 0px;
+    padding: 5px;
+}
 
 /*Sections*/
 .section-gray {

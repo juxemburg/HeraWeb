@@ -14,6 +14,12 @@ namespace Hera.Models.EntitiesViewModels.Desafios
         [Display(Name = "Tipo de búsqueda")]
         public SearchMode SearchMode { get; set; }
 
+        [Display(Name="Calificación Mínima")]
+        public float MinValoration { get; set; }
+
+        [Display(Name="Popularidad")]
+        public int Popularity { get; set; }
+
         #region Valoration Attributes
 
         //General Valoration
