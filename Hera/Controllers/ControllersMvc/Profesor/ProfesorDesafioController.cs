@@ -1,13 +1,9 @@
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Hera.Data;
 using Hera.Services.UserServices;
-using Hera.Models.UtilityViewModels;
 using Hera.Models.EntitiesViewModels.Desafios;
 using Hera.Services.ApplicationServices;
-using Microsoft.EntityFrameworkCore;
 
 namespace Hera.Controllers.ControllersMvc.Profesor
 {

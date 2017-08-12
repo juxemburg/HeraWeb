@@ -1,15 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Hera.Data;
 using Microsoft.AspNetCore.Authorization;
 using Hera.Models.EntitiesViewModels;
-using Entities.Cursos;
-
-using Hera.Models.UtilityViewModels;
-using Microsoft.EntityFrameworkCore;
 using Hera.Services.UserServices;
-using Hera.Services.UtilServices;
 using Hera.Models.EntitiesViewModels.ProfesorCursos;
 using Hera.Services.ApplicationServices;
 
@@ -18,18 +12,12 @@ namespace Hera.Controllers.ControllersMvc
     [Authorize(Roles = "Profesor")]
     public class CursosController : Controller
     {
-        private readonly IDataAccess _data;
         private readonly UserService _userService;
-        private readonly ColorService _clrService;
         private readonly CursoService _ctrlService;
 
-        public CursosController(IDataAccess data,
-            UserService userService,
-            ColorService clrService,
+        public CursosController(UserService userService,
             CursoService ctrlService)
         {
-            _clrService = clrService;
-            _data = data;
             _userService = userService;
             _ctrlService = ctrlService;
         }

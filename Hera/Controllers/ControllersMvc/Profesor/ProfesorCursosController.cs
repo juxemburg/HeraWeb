@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Hera.Data;
-using Hera.Models.UtilityViewModels;
-using Entities.Cursos;
+using Hera.Services.ApplicationServices;
+using Hera.Services.UserServices;
 
 namespace Hera.Controllers.ControllersMvc
 {    
@@ -14,11 +10,14 @@ namespace Hera.Controllers.ControllersMvc
     [Authorize(Roles = "Profesor")]
     public class ProfesorCursosController : Controller
     {
-        private IDataAccess _data;
+        private readonly ProfesorService _ctrlService;
+        private readonly UserService _usrService;
 
-        public ProfesorCursosController(IDataAccess data)
+        public ProfesorCursosController(UserService usrService, 
+            ProfesorService ctrlService)
         {
-            _data = data;
+            _usrService = usrService;
+            _ctrlService = ctrlService;
         }
 
         [HttpGet]
@@ -26,15 +25,11 @@ namespace Hera.Controllers.ControllersMvc
         public async Task<IActionResult> Index(string searchString = "",
             int skip = 0, int take = 10)
         {
-            var profId = await _data.Find_ProfesorId(
-                _data.Get_UserId(User.Claims));
-
-            var model = (string.IsNullOrWhiteSpace(searchString))
-                ? _data.GetAll_Cursos(profId) :
-                _data.Autocomplete_Cursos(searchString, profId);
-
+            var profId = _usrService.Get_ProfesorId(User.Claims);
+            var model = await _ctrlService.GetAll_Cursos(profId, searchString,
+                skip, take);
             this.GetAlerts();
-            return View(new PaginationViewModel<Curso>(model, skip, take));
+            return View(model);
         }
 
         

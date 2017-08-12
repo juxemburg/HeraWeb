@@ -1,16 +1,9 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Hera.Data;
 using Microsoft.AspNetCore.Authorization;
-using Hera.Models.EntitiesViewModels;
-using Hera.Models.EntitiesViewModels.EstudianteDesafio;
-using Microsoft.EntityFrameworkCore;
-using Hera.Models.EntitiesViewModels.ProfesorCursos;
 using Hera.Services.ApplicationServices;
 using Hera.Services.UserServices;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Hera.Controllers.ControllersMvc.Profesor
 {
@@ -18,16 +11,14 @@ namespace Hera.Controllers.ControllersMvc.Profesor
     [Authorize(Roles = "Profesor")]
     public class ProfesorCursoController : Controller
     {
-        private readonly IDataAccess _data;
         private readonly UserService _usrService;
         private readonly ProfesorService _ctrlService;
 
-        public ProfesorCursoController(IDataAccess data,
-            UserService userService, ProfesorService ctrlService)
+        public ProfesorCursoController(UserService userService,
+            ProfesorService ctrlService)
         {
             _ctrlService = ctrlService;
             _usrService = userService;
-            _data = data;
         }
 
         [HttpGet]
@@ -36,8 +27,7 @@ namespace Hera.Controllers.ControllersMvc.Profesor
         {
             try
             {
-                var profId = await _data.Find_ProfesorId(
-                    _data.Get_UserId(User.Claims));
+                var profId = _usrService.Get_ProfesorId(User.Claims);
 
                 var model = await _ctrlService.Get_Curso(profId, idCurso);
 
@@ -77,9 +67,7 @@ namespace Hera.Controllers.ControllersMvc.Profesor
         public async Task<IActionResult> Estudiante(int idCurso,
             int idEstudiante)
         {
-            var profId = await _data.Find_ProfesorId(
-                _data.Get_UserId(User.Claims));
-
+            var profId = _usrService.Get_ProfesorId(User.Claims);
             try
             {
                 var model = await _ctrlService.Get_Estudiante(profId,
