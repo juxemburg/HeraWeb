@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Hera.Data;
 using Entities.Usuarios;
 using Hera.Services;
+using Hera.Services.ApplicationServices;
 using Microsoft.AspNetCore.Mvc;
 using Hera.Services.DesafiosServices;
 using Hera.Services.MessageServices;
@@ -63,6 +64,11 @@ namespace Hera
             services.AddScoped<NotificationService>();
             services.AddScoped<IDataAccess, DataAccess_Sql>();
             services.AddScoped<DesafioService>();
+
+            //AplicationServices
+            services.AddScoped<ProfesorService>();
+            services.AddScoped<CursoService>();
+
             services.AddTransient<DbSeeder>();
             services.AddMvc(opt =>
             {

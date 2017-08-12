@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Hera.Services.UserServices;
 using Hera.Services.UtilServices;
 using Hera.Models.EntitiesViewModels.ProfesorCursos;
+using Hera.Services.ApplicationServices;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -20,37 +21,35 @@ namespace Hera.Controllers.ControllersMvc
         private readonly IDataAccess _data;
         private readonly UserService _userService;
         private readonly ColorService _clrService;
+        private readonly CursoService _ctrlService;
 
         public CursosController(IDataAccess data,
             UserService userService,
-            ColorService clrService)
+            ColorService clrService,
+            CursoService ctrlService)
         {
             _clrService = clrService;
             _data = data;
             _userService = userService;
+            _ctrlService = ctrlService;
         }
 
-        
-        [HttpGet]
-        public IActionResult Index(string searchString = "",
-            int skip = 0, int take = 10)
-        {
-            var model = (string.IsNullOrWhiteSpace(searchString))
-                ? _data.GetAll_Cursos() :
-                _data.Autocomplete_Cursos(searchString);
 
-            return View(new PaginationViewModel<Curso>(model, skip, take));
-        }
+
 
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var model = await _data.Find_Curso_Public(id);
-            if(model != null)
+            try
             {
+                var model = await _ctrlService.Get_Curso(id);
                 return View(model);
             }
-            return NotFound();
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return NotFound();
+            }
         }
 
         [HttpGet]
@@ -59,7 +58,7 @@ namespace Hera.Controllers.ControllersMvc
             return View();
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateCursoViewModel model)
@@ -70,18 +69,12 @@ namespace Hera.Controllers.ControllersMvc
                 try
                 {
                     var profId = _userService.Get_ProfesorId(User.Claims);
-                    var desafio = await _data.Find_Desafio(model.DesafioId.GetValueOrDefault());
-                    if (desafio != null)
+                    var res = await _ctrlService.Create_Curso(profId, model);
+                    if (res)
                     {
-                        _data.AddCurso(model.Map(profId, desafio,
-                            _clrService.RandomColor));
-                        var res = await _data.SaveAllAsync();
-                        if (res)
-                        {
-                            this.SetAlerts("success-alerts", "El curso se creó exitosamente");
-                            return RedirectToAction("Cursos", "Profesor");
-                        }
-                            
+                        this.SetAlerts("success-alerts",
+                            "El curso se creó exitosamente");
+                        return RedirectToAction("Cursos", "Profesor");
                     }
                 }
                 catch (Exception e)
@@ -98,24 +91,21 @@ namespace Hera.Controllers.ControllersMvc
         public async Task<IActionResult> Delete(int id)
         {
             var profId = _userService.Get_ProfesorId(User.Claims);
-            if (await _data.Exist_Profesor_Curso(profId, id))
-            {
-                await _data.Delete_Curso(id);
-                var res = await _data.SaveAllAsync();
-                if (res)
-                    this.SetAlerts("success-alerts",
-                        "El curso se eliminó exitosamente");
-            }
+
+            var res = await _ctrlService.Delete_Curso(profId, id);
+            if (res)
+                this.SetAlerts("success-alerts",
+                    "El curso se eliminó exitosamente");
             else
                 this.SetAlerts("error-alerts",
                     "El curso no se pudo eliminar");
 
-            return RedirectToAction("Index", "ProfesorCursos");
 
+            return RedirectToAction("Index", "ProfesorCursos");
         }
 
-        
-        
+
+
         [HttpPost]
         public async Task<IActionResult> AddDesafio(AddDesafioViewModel model)
         {
@@ -123,24 +113,24 @@ namespace Hera.Controllers.ControllersMvc
             {
                 try
                 {
-                    if (!(await
-                        _data.Exist_Desafio(model.DesafioId, model.Id)))
-                    {
-                        var desafio =
-                        await _data.Find_Desafio(model.DesafioId);
-                        _data.AddDesafio(model.Id, desafio);
-                        var res = await _data.SaveAllAsync();
-                        if (res)
-                            this.SetAlerts("success-alerts",
-                                "El desafío se agregó exitosamente");
-                    }
+                    var profId = _userService.Get_ProfesorId(User.Claims);
+                    var res = await _ctrlService
+                        .Add_DesafioCurso(profId, model);
+
+                    if (res)
+                        this.SetAlerts("success-alerts",
+                            "El desafío se agregó exitosamente");
                     else
                         this.SetAlerts("error-alerts",
-                            "El desafío ya se encuntra en el curso!");
+                            "No se pudo agregar el desafío");
                 }
-                catch (Exception) { }
+                catch (ApplicationServicesException e)
+                {
+                    this.SetAlerts("error-alerts", e.Message);
+                }
             }
-            return RedirectToAction("Details","ProfesorCurso", new { idCurso = model.Id });
+            return RedirectToAction("Details", "ProfesorCurso",
+                new { idCurso = model.Id });
         }
 
         [HttpPost]
@@ -149,16 +139,18 @@ namespace Hera.Controllers.ControllersMvc
         {
             try
             {
-                if(await _data.Exist_Desafio(desafioId, cursoId))
-                {
-                    await _data.Delete_Desafio(cursoId, desafioId);
-                    var res = await _data.SaveAllAsync();
-                    if(res)
-                        this.SetAlerts("success-alerts",
-                            "El desafío se removió exitosamente");
-                }
+                var profId = _userService.Get_ProfesorId(User.Claims);
+                var res = await _ctrlService.Remove_DesafioCurso(profId,
+                    desafioId, cursoId);
+                if (res)
+                    this.SetAlerts("success-alerts",
+                        "El desafío se removió exitosamente");
             }
-            catch (Exception) { }
+            catch (Exception)
+            {
+                this.SetAlerts("error-alerts",
+                    "Error, no se pudo remover el desafío");
+            }
             return RedirectToAction("Details", "ProfesorCurso",
                 new { idCurso = cursoId });
         }
@@ -168,20 +160,28 @@ namespace Hera.Controllers.ControllersMvc
         public async Task<IActionResult> ChangeStarter(
             ChangeStarterViewModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                await _data.ChangeStarterDesafio(model.CursoId,
-                    model.OldStarterId, model.NewStarterId);
-                var res = await _data.SaveAllAsync();
-                if (res)
-                    this.SetAlerts("success-alerts", "Desafío inicial " +
-                        "cambiado exitosamente");
+                if (ModelState.IsValid)
+                {
+                    var profId = _userService.Get_ProfesorId(User.Claims);
+                    var res = await _ctrlService
+                        .Edit_DesafioInicial(profId, model);
+                    if (res)
+                        this.SetAlerts("success-alerts", "Desafío inicial " +
+                                                         "cambiado exitosamente");
+                }
+                else
+                    this.SetAlerts("error-alerts", "No es posible" +
+                                                   " cambiar el desafío");
             }
-            else
-                this.SetAlerts("error-alerts", "No es posible" +
-                    " cambiar el desafío");
+            catch (ApplicationServicesException e)
+            {
+                this.SetAlerts("error-alerts", e.Message);
+            }
             return RedirectToAction("Details",
                 "ProfesorCurso", new { idCurso = model.CursoId });
         }
     }
 }
+

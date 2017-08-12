@@ -8,6 +8,7 @@ using Hera.Models.EntitiesViewModels;
 using Hera.Models.EntitiesViewModels.EstudianteDesafio;
 using Microsoft.EntityFrameworkCore;
 using Hera.Models.EntitiesViewModels.ProfesorCursos;
+using Hera.Services.ApplicationServices;
 using Hera.Services.UserServices;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -19,10 +20,12 @@ namespace Hera.Controllers.ControllersMvc.Profesor
     {
         private readonly IDataAccess _data;
         private readonly UserService _usrService;
+        private readonly ProfesorService _ctrlService;
 
         public ProfesorCursoController(IDataAccess data,
-            UserService userService)
+            UserService userService, ProfesorService ctrlService)
         {
+            _ctrlService = ctrlService;
             _usrService = userService;
             _data = data;
         }
@@ -31,49 +34,43 @@ namespace Hera.Controllers.ControllersMvc.Profesor
         [Route("/Profesor/Curso/{idCurso:int}")]
         public async Task<IActionResult> Details(int idCurso)
         {
-            var model = await _data.Find_Curso(idCurso);
-            var profId = await _data.Find_ProfesorId(
-                _data.Get_UserId(User.Claims));
-            if (model == null || model.ProfesorId != profId)
+            try
             {
+                var profId = await _data.Find_ProfesorId(
+                    _data.Get_UserId(User.Claims));
+
+                var model = await _ctrlService.Get_Curso(profId, idCurso);
+
+                ViewData["select-desafios"] =
+                    await _ctrlService
+                    .GetAll_DesafiosSelectList(profId, idCurso);
+
+                this.GetAlerts();
+                return View(model);
+            }
+            catch (ApplicationServicesException e)
+            {
+                Console.WriteLine(e);
                 return NotFound();
             }
-            var registros =
-                await _data.GetAll_RegistroCalificacion(idCurso)
-                .GroupBy(reg => new
-                {
-                    reg.DesafioId,
-                    reg.EstudianteId
-                })
-                .ToDictionaryAsync(reg => 
-                new Tuple<int,int>(reg.Key.DesafioId, reg.Key.EstudianteId)
-                , reg => reg.ToList());
-            model.Desafios = model.Desafios
-                .OrderByDescending(d => d.Initial)
-                .ToList();
-            ViewData["select-desafios"] =
-                model.Desafios.Select(d =>
-                new SelectListItem()
-                {
-                    Value = d.DesafioId.ToString(),
-                    Text = d.Desafio.Nombre
-                });
-
-            this.GetAlerts();
-            return View(new ProfesorCursoViewModel(model, registros));
         }
 
         [HttpGet("{idDesafio:int}")]
         public async Task<IActionResult> Desafio(int idCurso, int idDesafio)
         {
             var idProfesor = _usrService.Get_ProfesorId(User.Claims);
+            try
+            {
 
-            if (!await _data.Exist_Desafio(idDesafio, idCurso, idProfesor))
+                var model =
+                    await _ctrlService.Get_Desafio(idProfesor, idCurso, idDesafio);
+                return View(model);
+            }
+            catch (ApplicationServicesException e)
+            {
+                Console.WriteLine(e);
                 return NotFound();
-
-            var desafio = await _data.Find_Desafio(idDesafio);
-            var curso = await _data.Find_Curso(idCurso);
-            return View(new DesafioCursoViewModel(desafio, curso));
+            }
         }
 
         [HttpGet("{idEstudiante:int}")]
@@ -82,15 +79,20 @@ namespace Hera.Controllers.ControllersMvc.Profesor
         {
             var profId = await _data.Find_ProfesorId(
                 _data.Get_UserId(User.Claims));
-            var model = await _data.Find_Estudiante(idEstudiante,
-                idCurso, profId);
-            if (model == null)
+
+            try
             {
+                var model = await _ctrlService.Get_Estudiante(profId,
+                    idCurso, idEstudiante);
+
+                return View(model);
+            }
+            catch (ApplicationServicesException e)
+            {
+                Console.WriteLine(e);
                 return NotFound();
             }
-
-            return View(new EstudianteCalificacionViewModel(model));
         }
-        
+
     }
 }

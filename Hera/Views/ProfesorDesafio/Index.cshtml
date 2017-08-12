@@ -10,13 +10,12 @@
 }
 
 <section>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <h2>
                 <span class="title">Tus</span> Desafíos
                 <a class="btn btn-icon btn-fab btn-fab-mini btn-info" asp-action="Create"
                    asp-controller="Desafios">
-
                     <i class="material-icons icon-lg">add</i>
                 </a>
             </h2>
@@ -62,7 +61,7 @@
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
-                {
+                    {
                         <tr>
                             <td>
                                 <a asp-action="Details"
@@ -92,7 +91,7 @@
                             </td>
                             <td class="td-actions">
                                 <div class="text-center">
-                                    <a class="btn btn-sm btn-info btn-round" asp-action="Edit">
+                                    <a class="btn btn-sm btn-info btn-round" >
                                         <i class="material-icons">create</i>
                                     </a>
                                     <button class="btn btn-sm btn-round btn-danger"
