@@ -195,6 +195,7 @@ namespace Hera.Data
                 .Include("Curso.Desafios.Desafio")
                 .Include("Curso.Profesor")
                 .Include(cur => cur.Registros)
+                .ThenInclude(reg=>  reg.Calificaciones)
                 .FirstOrDefaultAsync(rel => rel.CursoId == idCurso &&
                 rel.EstudianteId == idEstudiante);
 

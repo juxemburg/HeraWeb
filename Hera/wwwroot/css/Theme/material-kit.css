@@ -40,10 +40,14 @@ body.inverse .card .form-control {
   background: #FFFFFF;
 }
 
-body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 300;
-  line-height: 1.5em;
+.h1, .h2, .h3, .h4, body, h1, h2, h3, h4, h5, h6 {
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-weight: 300;
+    line-height: 1.5em;
+}
+.serif-title {
+    font-weight: 700;
+    font-family: "Roboto Slab","Times New Roman",serif;
 }
 
 a, a:hover, a:focus {
@@ -1918,6 +1922,9 @@ select.form-control[multiple], .form-group.is-focused select.form-control[multip
   display: block;
   font-size: 30px;
   padding: 15px 0;
+}
+.nav-pills:not(.nav-pills-icons) > li > a {
+    border-radius: 30px;
 }
 .nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
   background-color: #9c27b0;

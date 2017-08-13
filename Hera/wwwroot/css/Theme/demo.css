@@ -9,6 +9,7 @@
     margin-top: 30px;
     margin-bottom: 25px;
     min-height: 32px;
+    font-weight: 700;
 }
 .title.text-center{
     margin-bottom: 50px;
@@ -412,4 +413,12 @@
     font-size: 46px !important;
 }
 
+.nav-center > li, .nav-pills > li {
+    float: none;
+    display: inline-block;
+}
+
+.nav-center {
+    text-align: center;
+}
 
