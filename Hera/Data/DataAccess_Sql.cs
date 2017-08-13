@@ -359,13 +359,30 @@ namespace Hera.Data
             InfoDesafio similarInfo = null, bool equality = false,
             float avgValoration = 0)
         {
-            var query = Enumerable.Empty<Desafio>().AsQueryable();
-            query = _context.Desafios
-                .Include(d => d.InfoDesafio)
-                .Include(d => d.Profesor)
-                .Include(d => d.Ratings)
-                .Include(d => d.Cursos)
-                .Where(d => d.AverageRating >= avgValoration);
+            IQueryable<Desafio> query = Enumerable.Empty<Desafio>()
+                .AsQueryable();
+            if (cursoId != null)
+            {
+                query = _context
+                    .Rel_Cursos_Desafios
+                    .Include(rel => rel.Desafio)
+                    .Include("Desafio.InfoDesafio")
+                    .Include("Desafio.Profesor")
+                    .Include("Desafio.Ratings")
+                    .Include("Desafio.Cursos")
+                    .Where(rel => rel.CursoId == cursoId)
+                    .Select(rel => rel.Desafio);
+            }
+            else
+            {
+                query = _context.Desafios
+                    .Include(d => d.InfoDesafio)
+                    .Include(d => d.Profesor)
+                    .Include(d => d.Ratings)
+                    .Include(d => d.Cursos)
+                    .Where(d => d.AverageRating >= avgValoration);
+            }
+            
 
             if (!string.IsNullOrWhiteSpace(searchString))
             {
@@ -386,14 +403,7 @@ namespace Hera.Data
             if (profesorId != null)
                 query = query
                     .Where(d => d.ProfesorId == profesorId);
-            if (cursoId != null)
-            {
-                var ids = _context.Rel_Cursos_Desafios
-                    .Where(rel => rel.CursoId == cursoId)
-                    .Select(rel => rel.DesafioId);
-                query = query.
-                    Where(d => ids.Contains(d.Id));
-            }
+            
             return query.OrderByDescending(d => d.AverageRating)
                 .ThenByDescending(d => d.RatingCount)
                 .ThenBy(d => d.Nombre);

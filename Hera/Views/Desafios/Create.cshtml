@@ -59,26 +59,26 @@
                     </div>
                     <div class="tab-content">
                         <hr />
-                        <div class="tab-pane" id="details">
-                            <div class="col-sm-6">
-                                <div asp-validation-summary="All" class="text-danger">
-                                </div>
-                                <h5 class="info-text text-center">Llena unos datos básicos</h5>
-                            </div>
-                            <div class="row">
-                                <div class="form-group label-floating  col-sm-12 ">
-                                    <label asp-for="Nombre" class="control-label"></label>
-                                    <input asp-for="Nombre" class="form-control" />
-                                    <span asp-validation-for="Nombre" class="text-danger"></span>
-                                </div>
-                                <div class="form-group col-sm-12">
-                                    <textarea rows="6" asp-for="Descripcion"
-                                              class="form-control" placeholder="Escribe aquí tu descripción del desafío">
-                                            </textarea>
-                                    <span asp-validation-for="Descripcion" class="text-danger"></span>
-                                </div>
+                    <div class="tab-pane" id="details">
+                        <h5 class="info-text">Llena unos datos básicos</h5>
+                        <div class="col-sm-6">
+                            <div asp-validation-summary="All" class="text-danger">
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="form-group label-floating  col-sm-12 ">
+                                <label asp-for="Nombre" class="control-label"></label>
+                                <input asp-for="Nombre" class="form-control"/>
+                                <span asp-validation-for="Nombre" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <textarea rows="6" asp-for="Descripcion"
+                                              class="form-control" placeholder="Escribe aquí tu descripción del desafío">
+                                            </textarea>
+                                <span asp-validation-for="Descripcion" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
                         <div class="tab-pane" id="captain">
                             <h5 class="info-text">Ahora, regálanos la los proyectos del desafío</h5>
                             <div class="row">

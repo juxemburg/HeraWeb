@@ -113,10 +113,7 @@ namespace Hera.Services.ApplicationServices
             {
                 if (!await _data.Exist_Profesor_Curso(profId, cursoId))
                     return false;
-
-                if (await _data.Exist_Desafio(desafioId, cursoId))
-                    throw new ApplicationServicesException(
-                        "El desafío ya se encuentra en el curso");
+                
 
                 await _data.Delete_Desafio(cursoId, desafioId);
                 return await _data.SaveAllAsync();
