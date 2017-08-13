@@ -3,21 +3,20 @@ using Hera.Data;
 using Hera.Models.EntitiesViewModels.EstudianteCurso;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hera.Services.DesafiosServices
 {
-    public class DesafioService
+    public class DesafioEstudianteService
     {
-        private IDataAccess _data;
-        private Random _random;
+        private readonly IDataAccess _data;
+        private readonly Random _random;
 
-        public DesafioService(IDataAccess data)
+        public DesafioEstudianteService(IDataAccess data)
         {
             _data = data;
-            _random = new Random(4);
+            _random = new Random();
         }
 
         /// <summary>

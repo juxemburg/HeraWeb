@@ -21,16 +21,16 @@ namespace Hera.Controllers.ControllersMvc
     {
         private readonly IDataAccess _data;
         private readonly ScratchService _evaluator;
-        private readonly DesafioService _desafioService;
+        private readonly DesafioEstudianteService _desafioEstudianteService;
         private readonly UserService _usrService;
 
         public EstudianteCursoController(IDataAccess data,
             ScratchService scratchService,
-            DesafioService desafioService,
+            DesafioEstudianteService desafioEstudianteService,
             UserService usrService)
         {
             _usrService = usrService;
-            _desafioService = desafioService;
+            _desafioEstudianteService = desafioEstudianteService;
             _evaluator = scratchService;
             _data = data;
         }
@@ -43,7 +43,7 @@ namespace Hera.Controllers.ControllersMvc
 
             if (await _data.Exist_Estudiante_Curso(estId, idCurso))
             {
-                var model = await _desafioService.Get_RelEstudianteCurso(
+                var model = await _desafioEstudianteService.Get_RelEstudianteCurso(
                     idCurso, estId);
                 return View(model);
             }
@@ -158,7 +158,7 @@ namespace Hera.Controllers.ControllersMvc
 
             if (await _data.Exist_Estudiante_Curso(idEstudiante, idCurso))
             {
-                var desafio = await _desafioService
+                var desafio = await _desafioEstudianteService
                     .Get_SiguienteDesafio(idCurso, idEstudiante);
 
                 var resultado = await _data

@@ -1,17 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Hera.Data;
-using Hera.Models.UtilityViewModels;
-using Entities.Desafios;
 using Hera.Models.EntitiesViewModels;
 using Hera.Services.UserServices;
 using Hera.Models.EntitiesViewModels.Desafios;
-using Microsoft.EntityFrameworkCore;
 using Hera.Models.EntitiesViewModels.Ratings;
+using Hera.Services.ApplicationServices;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -19,66 +13,69 @@ namespace Hera.Controllers.ControllersMvc
     [Route("[controller]/[action]")]
     public class DesafiosController : Controller
     {
-        private IDataAccess _data;
-        private UserService _userService;
+        private readonly UserService _userService;
+        private readonly DesafioService _ctrlService;
 
-        public DesafiosController(IDataAccess data,
-            UserService userService)
+        public DesafiosController(UserService userService,
+            DesafioService ctrlService)
         {
-            _data = data;
             _userService = userService;
+            _ctrlService = ctrlService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(SearchDesafioViewModel searchModel,
-            int skip = 0, int take = 10)
+        public async Task<IActionResult> Index(
+            SearchDesafioViewModel searchModel, int skip = 0,
+            int take = 10)
         {
-            var searchString = searchModel.SearchString;
-            var model = _data.GetAll_Desafios(null, null,
-                searchString, searchModel.Map(), searchModel.EqualSearchModel)
-                .AsNoTracking();
             var profId = _userService.Get_ProfesorId(User.Claims);
-            if (profId > 0)
-            {
-                model = model.Where(d => d.ProfesorId != profId);
-            }
-
-            var list = model.Select(m =>
-                new DesafioDetailsViewModel(m))
-                .ToList();
-            return View(new PaginationViewModel<DesafioDetailsViewModel>(
-                list, skip, take));
+            var model = await _ctrlService.GetAll_Desafios(profId,
+                searchModel, skip, take);
+            return View(model);
         }
 
         [HttpGet("{desafioId}")]
         public async Task<IActionResult> Details(int desafioId)
         {
-            var model = await _data.Find_Desafio(desafioId);
+            var model = await _ctrlService.Get_Desafio(desafioId);
 
-            if (model != null)
-                return View(new DesafioDetailsViewModel(model));
-            return NotFound();
+            return (model == null)
+                ? (IActionResult)NotFound()
+                : View(model);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
+            this.GetAlerts();
             return View(new CreateDesafioViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateDesafioViewModel model)
+        public async Task<IActionResult> Create(
+            CreateDesafioViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
                     var profId = _userService.Get_ProfesorId(User.Claims);
-                    _data.AddDesafio(model.Map(profId));
-                    await _data.SaveAllAsync();
-                    return RedirectToAction("Index", "ProfesorDesafio");
+                    var res = await _ctrlService
+                        .Create_Desafio(profId, model);
+                    if (res)
+                    {
+                        this.SetAlerts("sucess-alerts",
+                            "Desafío creado Correctamente");
+                        return RedirectToAction("Index", "ProfesorDesafio");
+                    }
+                    this.SetAlerts("error-alerts",
+                        "Error en la creación del desafío");
+
                 }
-                catch (Exception) { }
+                catch (ApplicationServicesException e)
+                {
+                    this.SetAlerts("error-alerts", e.Message);
+                }
             }
             return View(model);
         }
@@ -91,28 +88,29 @@ namespace Hera.Controllers.ControllersMvc
             RateViewModel model)
         {
             var idProfesor = _userService.Get_ProfesorId(User.Claims);
-            var value = await _data.Exist_Desafio(desafioId);
-            if (!value)
-                return NotFound();
             if (ModelState.IsValid)
             {
-                await _data.Calificar_Desafio(desafioId, idProfesor,
-                        model.Rate);
-                await _data.SaveAllAsync();
+                var res = await
+                    _ctrlService.Do_CalificarDesafio(idProfesor, desafioId,
+                    model);
+                if(res)
+                    this.SetAlerts("success-alerts","se calificó el desafío exitosamente");
+                else
+                    this.SetAlerts("error-alerts", "error al calificar el desafío");
             }
             return RedirectToAction("Details",
-                new { desafioId = desafioId });
+                new { desafioId });
         }
 
         [HttpPost("{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var profId = _userService.Get_ProfesorId(User.Claims);
-            if (await _data.Exist_DesafioP(id, profId))
+            try
             {
-                await _data.Delete_Desafio(id);
-                var res = await _data.SaveAllAsync();
+                var profId = _userService.Get_ProfesorId(User.Claims);
+
+                var res = await _ctrlService.Delete_Desafio(profId, id);
                 if (res)
                     this.SetAlerts("success-alerts",
                         "El desafío se eliminó exitosamente");
@@ -120,10 +118,12 @@ namespace Hera.Controllers.ControllersMvc
                     this.SetAlerts("error-alerts",
                         "El desafío no se puede eliminar," +
                         " revisa que no esté siendo usado previamente");
-
                 return RedirectToAction("Index", "ProfesorDesafio");
             }
-            return NotFound();
+            catch (ApplicationServicesException )
+            {
+                return NotFound();
+            }
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Hera
             });
             services.AddScoped<NotificationService>();
             services.AddScoped<IDataAccess, DataAccess_Sql>();
-            services.AddScoped<DesafioService>();
+            services.AddScoped<DesafioEstudianteService>();
 
             //AplicationServices
             services.AddScoped<ProfesorService>();
