@@ -4,142 +4,168 @@
     ViewData["Title"] = Model.Desafio.Nombre;
 }
 
-<div class="row">
-    <div class="col-sm-6">
-        <h2>@Model.Desafio.Nombre</h2>
-        <h3>Instrucciones</h3>
-        <p>@Model.Desafio.Descripcion</p>
-    </div>    
-    <div class="col-sm-6">
-        <div class="panel-group" id="accordion">
-            <h3>Calificaciones Previas</h3>
-            @for (int i = 0; i < Model.Calificaciones.Count; i++)
-            {
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-@i">
-                                Calificación #@(i + 1)
-                                @if (Model.Calificaciones[i].EnCurso)
-                                {
-                                    <span>Pendiente</span>
-                                }
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapse-@i" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="col-sm-12">
-                                <label>Relaizado en: </label>
-                                <p class="text-centered">
-                                    @Model.Calificaciones[i].Tiempoinicio
-                                    -
-                                    @Model.Calificaciones[i].TiempoFinal
-                                </p>
-                                <label>Tiempo Transcurrido:</label>
-                                <p class="text-centered">
-                                    @Model.Calificaciones[i].Duracion.Hours Horas
-                                    @Model.Calificaciones[i].Duracion.Minutes Minutos
-                                    @Model.Calificaciones[i].Duracion.Seconds Segundos
-                                </p>
-                                <hr />
-                            </div>
-                            @if (@Model.Calificaciones[i].ResultadoGeneral != null)
+
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2>
+                    <span class="title">Desafío</span>
+                    @Model.Desafio.Nombre
+                </h2>
+                <a asp-action="Details"
+                   asp-controller="EstudianteCurso"
+                   asp-route-idCurso="@Model.CursoId"
+                   class="btn btn-primary btn-round">
+                    <i class="material-icons icon-lg">arrow_back</i>
+                    Volver al curso
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-basic section-gray">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card card-raised">
+                    <div class="card-content">
+                        <h3 class="title">¿Cómo completar el desafío?</h3>
+                        <p>@Model.Desafio.Descripcion</p>
+                        <div class="col-xs-12 text-center">
+                            @if (!Model.Iniciada)
                             {
-                                <h4>Evaluación General</h4>
-                                        <div class="col-sm-6">
-                                            <label>Nombre:</label>
-                                            <p>@Model.Calificaciones[i].ResultadoGeneral.Nombre</p>
-
-                                            <label>Total Scripts:</label>
-                                            <p>@Model.Calificaciones[i].ResultadoGeneral.NumScripts</p>
-
-                                            <label>Total bloques: </label>
-                                            <p>@Model.Calificaciones[i].ResultadoGeneral.NumBloques</p>
-
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label>Scripts duplicados</label>
-                                            <p>@Model.Calificaciones[i].ResultadoGeneral.DuplicateScriptsCount</p>
-
-                                            <label>Código Muerto:</label>
-                                            <p>@Model.Calificaciones[i].ResultadoGeneral.DeadCodeCount</p>
-                                        </div>
+                                <a class="btn btn-primary btn-raised btn-round" 
+                                   asp-action="IniciarDesafio" 
+                                   asp-route-desafioId="@Model.DesafioId"
+                                   asp-route-cursoId="@Model.CursoId">
+                                    Iniciar Desafío
+                                </a>
+                                <p class="text-muted">
+                                    <strong>Nota:</strong>
+                                    al realizar click en iniciar desafío se iniciará automáticamente el desafío.
+                                </p>
                             }
                         </div>
                     </div>
                 </div>
-            }
-        </div>
-    </div>
-    @if (!Model.Iniciada)
-            {
-        <div class="col-sm-6">
-            <a class="btn btn-info" asp-action="IniciarDesafio" asp-route-desafioId="@Model.DesafioId"
-               asp-route-cursoId="@Model.CursoId">
-                Iniciar Desafío
-            </a>
-            <p>
-                <strong>Nota:</strong>
-                al realizar click en iniciar desafío se iniciará automáticamente el desafío.
-            </p>
-        </div>
-    }
-
-
-
-
-
-
-
-
-
-</div>
-
-
-
-@if (Model.Iniciada)
-{
-    <div class="row">
-        <hr />
-        <div class="col-sm-6">
-            <div class="padding-20">
-                @if (Model.Iniciada)
-                {
-                    <h3>Iniciada</h3>
-                    <a class="btn btn-info"
-                       href="@Model.Desafio.DirDesafioInicial" target="_blank">
-                        Ir al escenario
-                        <i class="material-icons">open_in_new</i>
-                    </a>
-                }
             </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="content padding-40">
-                    <h4>Completa tu desafío</h4>
-                    <form asp-action="CalificarDesafio">
-                        <div class="form-horizontal">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input asp-for="@Model.DesafioId" type="hidden" />
-                            <input asp-for="@Model.EstudianteId" type="hidden" />
-                            <input asp-for="@Model.CursoId" type="hidden" />
-                            <div class="form-group label-floating">
-                                <label class="control-label">Id Proyecto:</label>
-                                <input type="text" name="projId" class="form-control"
-                                       required />
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-offset-1 col-md-10">
-                                    <input type="submit" value="¡Completar Desafío!" class="btn btn-info" />
+            @if (Model.Iniciada)
+            {
+                <div class="col-sm-6">
+                    <div class="card card-raised">
+                        <div class="card-content">
+                            <h5 class="category text-info">Desafío en curso</h5>
+                            <h3 class="card-title">Completa tu desafío
+                                <a class="btn btn-info btn-round"
+                                   href="@Model.Desafio.DirDesafioInicial" target="_blank">
+                                    Ir al escenario
+                                    <i class="material-icons icon-lg">open_in_new</i>
+                                </a>
+                            </h3>
+                            <form asp-action="CalificarDesafio">
+                                <div class="form-inline">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <input asp-for="@Model.DesafioId" type="hidden"/>
+                                    <input asp-for="@Model.EstudianteId" type="hidden"/>
+                                    <input asp-for="@Model.CursoId" type="hidden"/>
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Id Proyecto:</label>
+                                        <input type="text" name="projId" class="form-control"
+                                               required/>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-fab btn-fab-mini btn-success">
+                                            <i class="material-icons icon-lg">check</i>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
+                </div>
+            }
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="panel-group" id="accordion1">
+                            <h3 class="card-title">Calificaciones Previas</h3>
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                @for (var i = 0; i < Model.Calificaciones.Count; i++)
+                                {
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-@i" aria-expanded="true" aria-controls="collapseOne" class="">
+                                                <h4 class="panel-title">
+                                                    Calificación #@(i + 1)
+                                                    @if (Model.Calificaciones[i].EnCurso)
+                                                    {
+                                                        <span>Pendiente</span>
+                                                    }
+                                                    <i class="material-icons pull-right">keyboard_arrow_down</i>
+                                                </h4>
+                                            </a>
+                                        </div>
+                                        <div id="collapse-@i" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <label>Relaizado en: </label>
+                                                        <p class="text-centered">
+                                                            @Model.Calificaciones[i].Tiempoinicio
+                                                            -
+                                                            @Model.Calificaciones[i].TiempoFinal
+                                                        </p>
+                                                        <label>Tiempo Transcurrido:</label>
+                                                        <p class="text-centered">
+                                                            @Model.Calificaciones[i].Duracion.Hours Horas
+                                                            @Model.Calificaciones[i].Duracion.Minutes Minutos
+                                                            @Model.Calificaciones[i].Duracion.Seconds Segundos
+                                                        </p>
+                                                        <hr />
+                                                    </div>
+                                                    @if (@Model.Calificaciones[i].ResultadoGeneral != null)
+                                                    {
+                                                        <h4>Evaluación General</h4>
+                                                        <div class="col-sm-6">
+                                                            <label>Nombre:</label>
+                                                            <p>@Model.Calificaciones[i].ResultadoGeneral.Nombre</p>
+
+                                                            <label>Total Scripts:</label>
+                                                            <p>@Model.Calificaciones[i].ResultadoGeneral.NumScripts</p>
+
+                                                            <label>Total bloques: </label>
+                                                            <p>@Model.Calificaciones[i].ResultadoGeneral.NumBloques</p>
+
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <label>Scripts duplicados</label>
+                                                            <p>@Model.Calificaciones[i].ResultadoGeneral.DuplicateScriptsCount</p>
+
+                                                            <label>Código Muerto:</label>
+                                                            <p>@Model.Calificaciones[i].ResultadoGeneral.DeadCodeCount</p>
+                                                        </div>
+                                                    }
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+           
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-}
+</section>
+
+
+
+
+
 

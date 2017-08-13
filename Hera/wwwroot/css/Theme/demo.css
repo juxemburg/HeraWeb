@@ -413,7 +413,7 @@
     font-size: 46px !important;
 }
 
-.nav-center > li, .nav-pills > li {
+.nav-center > li {
     float: none;
     display: inline-block;
 }
