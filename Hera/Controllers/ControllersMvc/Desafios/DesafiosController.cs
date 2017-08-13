@@ -39,6 +39,7 @@ namespace Hera.Controllers.ControllersMvc
         {
             var model = await _ctrlService.Get_Desafio(desafioId);
 
+            this.GetAlerts();
             return (model == null)
                 ? (IActionResult)NotFound()
                 : View(model);

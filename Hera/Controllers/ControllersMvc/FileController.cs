@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Hera.Models.Attributes;
@@ -11,22 +8,25 @@ using Hera.Data;
 using Entities.Calificaciones;
 using Microsoft.AspNetCore.Authorization;
 using Hera.Services.UserServices;
-using Hera.Controllers;
+using Hera.Services.ApplicationServices;
 
 namespace Hera.Controllers.ControllersMvc
 {
     public class FileController : Controller
     {
-        private FileManagerService _fileManager;
-        private IDataAccess _data;
-        private UserService _userService;
+        private readonly FileManagerService _fileManager;
+        private readonly IDataAccess _data;
+        private readonly UserService _userService;
+        private readonly DesafioService _desafioService;
 
         public FileController(FileManagerService service,
-            IDataAccess data, UserService userService)
+            IDataAccess data, UserService userService,
+            DesafioService desafioService)
         {
             _data = data;
             _fileManager = service;
             _userService = userService;
+            _desafioService = desafioService;
 
         }
 
@@ -48,8 +48,8 @@ namespace Hera.Controllers.ControllersMvc
                 }
             }
 
-            var bindingSuccessful = await TryUpdateModelAsync(viewModel, prefix: "",
-               valueProvider: formModel);
+            var bindingSuccessful = await TryUpdateModelAsync(viewModel,
+                "", formModel);
 
             if (!bindingSuccessful)
             {
@@ -57,10 +57,14 @@ namespace Hera.Controllers.ControllersMvc
                 return View("../Desafios/Create", viewModel);
             }
             var profesorId =  _userService.Get_ProfesorId(User.Claims);
-            _data.AddDesafio(viewModel.Map(profesorId));
-            await _data.SaveAllAsync();
-            this.SetAlerts("success-alerts",
-                "El desafío se creó exitosamente");
+            var res = (await _desafioService.Create_Desafio(profesorId,
+                viewModel));
+            if(res)
+                this.SetAlerts("success-alerts",
+                    "El desafío se creó exitosamente");
+            else
+                this.SetAlerts("error-alerts",
+                    "Error al crear el desafío");
             return RedirectToAction("Index", "ProfesorDesafio");
 
         }

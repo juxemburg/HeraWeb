@@ -68,6 +68,7 @@ namespace Hera
             //AplicationServices
             services.AddScoped<ProfesorService>();
             services.AddScoped<CursoService>();
+            services.AddScoped<DesafioService>();
 
             services.AddTransient<DbSeeder>();
             services.AddMvc(opt =>

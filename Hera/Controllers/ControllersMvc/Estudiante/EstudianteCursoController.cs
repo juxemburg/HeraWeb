@@ -83,24 +83,7 @@ namespace Hera.Controllers.ControllersMvc
             return View(new CalificacionDesafioViewModel(model));
         }
 
-
-        //[HttpGet]
-        //[Route("/Estudiante/Curso/{idCurso:int}/Desafio/" +
-        //    "{idDesafio:int}/Resultado/{idCalificacion:int}")]        
-        //public async Task<IActionResult>Resultados(int idCurso,
-        //    int idCalificacion, int idDesafio)
-        //{
-        //    var estId = await _data.Find_EstudianteId(
-        //            _data.Get_UserId(User.Claims));
-        //    if(await _data.Exist_Desafio(idDesafio, idCurso) &&
-        //        await _data.Exist_Estudiante_Curso(estId, idCurso))
-        //    {
-        //        var model =await _data.Find_ResultadoScratchGeneral(
-        //            idCalificacion);
-        //        return View(new ResultadoGeneralViewModel(model));
-        //    }
-        //    return NotFound("asdad");
-        //}
+        
 
         [HttpPost("{idDesafio:int}/Calificar")]
         public async Task<IActionResult> CalificarDesafio(
