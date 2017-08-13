@@ -1,17 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Hera.Data;
-using Entities.Calificaciones;
-using Hera.Services;
-using Hera.Models.EntitiesViewModels.EstudianteDesafio;
 using Microsoft.AspNetCore.Authorization;
-using Hera.Models.EntitiesViewModels.EstudianteCurso;
-using Hera.Services.DesafiosServices;
+using Hera.Services.ApplicationServices;
 using Hera.Services.UserServices;
-using HeraScratch.Exceptions;
 
 namespace Hera.Controllers.ControllersMvc
 {
@@ -19,110 +11,77 @@ namespace Hera.Controllers.ControllersMvc
     [Route("/Estudiante/Curso/{idCurso:int}/[action]")]
     public class EstudianteCursoController : Controller
     {
-        private readonly IDataAccess _data;
-        private readonly ScratchService _evaluator;
-        private readonly DesafioEstudianteService _desafioEstudianteService;
         private readonly UserService _usrService;
+        private readonly EstudianteService _ctrlService;
 
-        public EstudianteCursoController(IDataAccess data,
-            ScratchService scratchService,
-            DesafioEstudianteService desafioEstudianteService,
-            UserService usrService)
+        public EstudianteCursoController(UserService usrService,
+            EstudianteService ctrlService)
         {
             _usrService = usrService;
-            _desafioEstudianteService = desafioEstudianteService;
-            _evaluator = scratchService;
-            _data = data;
+            _ctrlService = ctrlService;
         }
 
         [HttpGet]
         [Route("/Estudiante/Curso/{idCurso:int}")]
         public async Task<IActionResult> Details(int idCurso)
         {
-            var estId = _usrService.Get_EstudianteId(User.Claims);
-
-            if (await _data.Exist_Estudiante_Curso(estId, idCurso))
+            try
             {
-                var model = await _desafioEstudianteService.Get_RelEstudianteCurso(
-                    idCurso, estId);
+                var estId = _usrService.Get_EstudianteId(User.Claims);
+                var model = await _ctrlService.Get_Curso(estId, idCurso);
                 return View(model);
+            }
+            catch (ApplicationServicesException e)
+            {
+                Console.WriteLine(e);
+                return NotFound();
             }
 
 
 
-            return NotFound();
+
         }
 
         [HttpGet("{idDesafio:int}")]
         public async Task<IActionResult> Desafio(int idCurso,
             int idDesafio)
         {
-            var estId = _usrService.Get_EstudianteId(User.Claims);
-            var curso = await _data.Find_Curso(idCurso);
-            if (curso == null || !curso.ContieneEstudiante(estId)
-                || !curso.ContieneDesafio(idDesafio))
-                return NotFound();
-
-            var model = await _data.Find_RegistroCalificacion(
-                idCurso, estId, idDesafio);
-            if (model == null)
+            try
             {
-                model = new RegistroCalificacion()
-                {
-                    CursoId = idCurso,
-                    DesafioId = idDesafio,
-                    EstudianteId = estId,
-                    Calificaciones = new List<Calificacion>()
-                };
-                _data.Add<RegistroCalificacion>(model);
-                var res = await _data.SaveAllAsync();
-                if (!res)
-                    return BadRequest();
+                var estId = _usrService.Get_EstudianteId(User.Claims);
+                var model = await _ctrlService
+                    .Get_Desafio(estId, idCurso, idDesafio);
+                this.GetAlerts();
+                return View(model);
             }
-            this.GetAlerts();
-            return View(new CalificacionDesafioViewModel(model));
+            catch (ApplicationServicesException)
+            {
+                return NotFound();
+            }
         }
-
-        
 
         [HttpPost("{idDesafio:int}/Calificar")]
         public async Task<IActionResult> CalificarDesafio(
             int idCurso, int idDesafio, string projId)
         {
-            var estId = _usrService.Get_EstudianteId(User.Claims);
-
-            var model = await _data.Find_RegistroCalificacion(
-                idCurso, estId, idDesafio);
-
             try
             {
-                if (model != null && model.Iniciada)
-                {
-
-                    var cal = model.CalificacionPendiente;
-                    var res = await _evaluator.Get_Evaluation(projId);
-                    var est = await _data.Find_Estudiante(estId);
-                    var curso = await _data.Find_Curso(idCurso);
-                    var resultados = res.Select(val => val.Map(cal.Id))
-                        .ToList();
-
-                    _data.Do_TerminarCalificacion(curso,
-                        est, cal, resultados, projId);
-
-                    var result = await _data.SaveAllAsync();
-                    if (result)
-                        return RedirectToAction("DesafioCompletado",
+                var estId = _usrService.Get_EstudianteId(User.Claims);
+                var res = await _ctrlService
+                    .Do_CalificarDesafio(estId, idCurso, idDesafio,
+                        projId);
+                if (res > 0)
+                    return RedirectToAction("DesafioCompletado",
                         new
                         {
                             idCurso,
                             idDesafio,
-                            idCalificacion = cal.Id
+                            idCalificacion = res
                         });
-                }
             }
-            catch (EvaluationException)
+            catch (ApplicationServicesException e)
             {
-                this.SetAlerts("error-alerts", "id de desafío no válido");
+                this.SetAlerts("error-alerts", e.Message);
             }
             return RedirectToAction("Desafio",
                 new
@@ -139,19 +98,11 @@ namespace Hera.Controllers.ControllersMvc
         {
             var idEstudiante = _usrService.Get_EstudianteId(User.Claims);
 
-            if (await _data.Exist_Estudiante_Curso(idEstudiante, idCurso))
-            {
-                var desafio = await _desafioEstudianteService
-                    .Get_SiguienteDesafio(idCurso, idEstudiante);
-
-                var resultado = await _data
-                    .Find_ResultadoScratchGeneral(idCalificacion);
-
-                return View(
-                    new DesafioCompletadoViewModel(idCurso,
-                    resultado, desafio));
-            }
-            return NotFound();
+            var model = await _ctrlService.Get_DesafioCompletadoViewModel(
+                idEstudiante, idCurso, idDesafio, idCalificacion);
+            return (model == null)
+                ? (IActionResult)NotFound()
+                : View(model);
         }
 
         [HttpGet("{idDesafio:int}")]
@@ -160,18 +111,11 @@ namespace Hera.Controllers.ControllersMvc
         {
             var estId = _usrService.Get_EstudianteId(User.Claims);
 
-            var model = new Calificacion()
-            {
-                Tiempoinicio = DateTime.Now,
-                CursoId = idCurso,
-                EstudianteId = estId,
-                DesafioId = idDesafio
-            };
-            _data.Add<Calificacion>(model);
-            var res = await _data.SaveAllAsync();
+            var res = await _ctrlService
+                .IniciarDesafio(estId, idCurso, idDesafio);
+
             if (!res)
                 return BadRequest();
-
 
             return RedirectToAction("Desafio", new { idDesafio, idCurso });
 

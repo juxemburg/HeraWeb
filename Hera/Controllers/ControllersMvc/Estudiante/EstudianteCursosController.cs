@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Hera.Data;
-using Hera.Models.UtilityViewModels;
-using Entities.Cursos;
-using Microsoft.EntityFrameworkCore;
-using Entities.Calificaciones;
 using Hera.Models.EntitiesViewModels;
+using Hera.Services.ApplicationServices;
 using Hera.Services.UserServices;
 
 namespace Hera.Controllers.ControllersMvc
@@ -19,14 +12,14 @@ namespace Hera.Controllers.ControllersMvc
     [Authorize(Roles = "Estudiante")]
     public class EstudianteCursosController : Controller
     {
-        private readonly IDataAccess _data;
         private readonly UserService _usrService;
+        private EstudianteService _ctrlService;
 
-        public EstudianteCursosController(IDataAccess data,
-            UserService usrService)
+        public EstudianteCursosController(UserService usrService,
+            EstudianteService ctrlService)
         {
+            _ctrlService = ctrlService;
             _usrService = usrService;
-            _data = data;
         }
 
         [HttpGet]        
@@ -34,10 +27,10 @@ namespace Hera.Controllers.ControllersMvc
             int skip = 0, int take = 10)
         {
             var estId =  _usrService.Get_EstudianteId(User.Claims);
-            var model = _data.GetAll_CursosEstudiante(estId, 
-                searchString, true);
+            var model = await _ctrlService
+                .Search_Curso(estId, searchString, skip, take);
             this.GetAlerts();
-            return View(new PaginationViewModel<Curso>(model, skip, take));
+            return View(model);
         }
 
 
@@ -46,11 +39,10 @@ namespace Hera.Controllers.ControllersMvc
             int skip = 0, int take = 10)
         {
             var estudianteId = _usrService.Get_EstudianteId(User.Claims);
-            var model = _data.GetAll_CursosEstudiante(estudianteId,
-                searchString);
+            var model = await _ctrlService.GetAll_Curso(estudianteId,
+                searchString, skip, take);
             this.GetAlerts();
-            return View(new PaginationViewModel<Curso>
-                (await model.ToListAsync(), 0, 10));
+            return View(model);
         }
 
 
@@ -64,21 +56,14 @@ namespace Hera.Controllers.ControllersMvc
                 var id = _usrService.Get_EstudianteId(User.Claims);
                 try
                 {
-                    var curso = await _data.Find_Curso(model.CursoId);
-                    var estudiante = await _data.Find_Estudiante(id);
-                    _data.Do_MatricularEstudiante(curso, estudiante,
-                        model.Map(curso.Id, estudiante.Id), model.Password);
-
-                    if (await _data.SaveAllAsync())
+                    var res = await _ctrlService
+                        .Do_MatricularEstudiante(id, model);
+                    if(res)
                         return RedirectToAction("Index");
-                    else
-                        this.SetAlerts("error-alerts",
-                            "Lo sentimos, la contraseña es inválida");
                 }
-                catch (Exception)
+                catch (ApplicationServicesException e)
                 {
-                    this.SetAlerts("error-alerts",
-                        "Error en el proceso de matrícula del curso");
+                    this.SetAlerts("error-alerts", e.Message);
                 }
             }
             return RedirectToAction("Busqueda");
