@@ -65,7 +65,6 @@ namespace Entities.Desafios
         public int DesafioId { get; set; }
         public Desafio Desafio { get; set; }
 
-
         public List<string> ActiveProperties()
         {
             var properties = new List<string>();
@@ -114,54 +113,44 @@ namespace Entities.Desafios
 
             return properties;
         }
-
-       
-
-        public bool IsFalse
-        {
-            get => (MultipleSpriteEvents == false &&
-                    VariableUse == false &&
-                    MessageUse == false &&
-                    ListUse == false &&
-                    NonUnusedBlocks == false &&
-                    UserDefinedBlocks == false &&
-                    CloneUse == false &&
-                    SecuenceUse == false &&
-                    MultipleThreads == false &&
-                    TwoGreenFlagThread == false &&
-                    AdvancedEventUse == false &&
-                    UseSimpleBlocks == false &&
-                    UseMediumBlocks == false &&
-                    UseNestedControl == false &&
-                    BasicInputUse == false &&
-                    NonCreatedVariableUse == false &&
-                    SpriteSensisng == false &&
-                    BasicOperators == false &&
-                    MediumOperators == false &&
-                    NestedOperators == false); 
-        }
+        
+        public bool IsFalse => (MultipleSpriteEvents == false &&
+                                VariableUse == false &&
+                                MessageUse == false &&
+                                ListUse == false &&
+                                NonUnusedBlocks == false &&
+                                UserDefinedBlocks == false &&
+                                CloneUse == false &&
+                                SecuenceUse == false &&
+                                MultipleThreads == false &&
+                                TwoGreenFlagThread == false &&
+                                AdvancedEventUse == false &&
+                                UseSimpleBlocks == false &&
+                                UseMediumBlocks == false &&
+                                UseNestedControl == false &&
+                                BasicInputUse == false &&
+                                NonCreatedVariableUse == false &&
+                                SpriteSensisng == false &&
+                                BasicOperators == false &&
+                                MediumOperators == false &&
+                                NestedOperators == false);
 
         public bool IsEqualTo(object obj)
         {
+            if (!(obj is InfoDesafio info)) return false;
 
-            if (obj is InfoDesafio info)
-            {
-                var otherProperties = info.ActiveProperties();
-                return this.ActiveProperties()
-                    .All(i => otherProperties.Contains(i));
-            }
-            return false;
+            var otherProperties = info.ActiveProperties();
+            return ActiveProperties()
+                .All(i => otherProperties.Contains(i));
         }
 
         public bool IsSimilarTo(object obj)
         {
-            if (obj is InfoDesafio info)
-            {
-                var otherProperties = info.ActiveProperties();
-                return this.ActiveProperties()
-                    .Any(i => otherProperties.Contains(i));
-            }
-            return false;
+            if (!(obj is InfoDesafio info)) return false;
+
+            var otherProperties = info.ActiveProperties();
+            return ActiveProperties()
+                .Any(i => otherProperties.Contains(i));
         }
     }
 }

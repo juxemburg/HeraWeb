@@ -45,7 +45,8 @@ namespace Hera.Data
         void AddDesafio(int cursoId, Desafio model);
         IQueryable<Desafio> GetAll_Desafios(int? cursoId = null,
             int? profesorId = null, string searchString = "",
-            InfoDesafio similarInfo = null, bool equality = false);
+            InfoDesafio similarInfo = null, bool equality = false,
+            float avgValoration = 0);
         IQueryable<Desafio> Autocomplete_Desafios(string queryString);
         Task<Desafio> Find_Desafio(int id);
         Task<Rel_DesafiosCursos> Find_Rel_DesafiosCursos(int desafioId, int cursoId);

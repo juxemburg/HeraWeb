@@ -356,14 +356,16 @@ namespace Hera.Data
 
         public IQueryable<Desafio> GetAll_Desafios(int? cursoId = null,
             int? profesorId = null, string searchString = "",
-            InfoDesafio similarInfo = null, bool equality = false)
+            InfoDesafio similarInfo = null, bool equality = false,
+            float avgValoration = 0)
         {
             var query = Enumerable.Empty<Desafio>().AsQueryable();
             query = _context.Desafios
                 .Include(d => d.InfoDesafio)
                 .Include(d => d.Profesor)
                 .Include(d => d.Ratings)
-                .Include(d => d.Cursos);
+                .Include(d => d.Cursos)
+                .Where(d => d.AverageRating >= avgValoration);
 
             if (!string.IsNullOrWhiteSpace(searchString))
             {
@@ -392,7 +394,9 @@ namespace Hera.Data
                 query = query.
                     Where(d => ids.Contains(d.Id));
             }
-            return query;
+            return query.OrderByDescending(d => d.AverageRating)
+                .ThenByDescending(d => d.RatingCount)
+                .ThenBy(d => d.Nombre);
         }
         public IQueryable<Desafio> Autocomplete_Desafios(string queryString)
         {

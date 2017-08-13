@@ -26,8 +26,8 @@ namespace Hera.Controllers.ControllersMvc.Profesor
             int skip = 0, int take = 10)
         {
             var profId = _usrService.Get_ProfesorId(User.Claims);
-            var model = await _ctrlService.GetAll_Desafios(profId, searchModel,
-                skip, take);
+            var model = await _ctrlService.GetAll_Desafios(profId,
+                searchModel,skip, take);
             this.GetAlerts();
             return View(model);
         }

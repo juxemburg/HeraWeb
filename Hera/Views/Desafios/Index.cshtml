@@ -6,76 +6,87 @@
     ViewData["rating-size"] = "icon-md";
 }
 
-<section>
+<section class="section">
     <div class="container-fluid">
         <h2><span class="title">Buscar</span> Desafíos</h2>
 
         <div class="row">
-            @Html.Partial("Desafios/_BusquedaDesafioPartial",
-    new SearchDesafioViewModel(), ViewData)
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                @Html.Partial("Desafios/_BusquedaDesafioPartial",
+                    new SearchDesafioViewModel(), ViewData)
+            </div>
         </div>
     </div>
 </section>
 
 @if (Model.Count > 0)
 {
-    <section>
+    <section class="section-basic">
         <div class="container-fluid">
-            <table class="table table-condensed table-responsive">
-                <thead>
-                    <tr>
-                        <th>
-                            Nombre
-                        </th>
-                        <th>
-                            Autor
-                        </th>
-                        <th>
-                            Descipción
-                        </th>
-                        <th>Popularidad</th>
-                        <th>Valoración</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                {
+            <div class="row">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                    <table class="table table-condensed table-responsive">
+                        <thead>
                         <tr>
-                            <td>
-                                <a asp-action="Details" asp-route-id="@item.Id">
-                                    @Html.DisplayFor(modelItem => item.Nombre)
-                                </a>
-                            </td>
-                            <td>
-                                <p>@item.Profesor.NombreCompleto</p>
-                            </td>
-                            <td>
-                                <p>
-                                    @item.Descripcion
-                                </p>
-                            </td>
-                            <td>
-                                <i class="material-icons icon-lg">person</i>
-                                <span class="rating-text icon-md">@item.Popularidad</span>
-                            </td>
-                            <td>
-                                @Html.Partial("Rating/_RatingPartial", item.Valoracion, ViewData)
-                            </td>
-                            <td>
-                                <a asp-action="Remix"
-                                   asp-route-desafioId="@item.Id"
-                                   class="btn btn-primary btn-round btn-sm">
-                                    <i class="material-icons">cached</i>
-                                </a>
-                            </td>
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                Autor
+                            </th>
+                            <th>
+                                Descipción
+                            </th>
+                            <th>Popularidad</th>
+                            <th>Valoración</th>
+                            <th>Acciones</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@item.Id">
+                                        @Html.DisplayFor(modelItem => item.Nombre)
+                                    </a>
+                                </td>
+                                <td>
+                                    <p>@item.Profesor.NombreCompleto</p>
+                                </td>
+                                <td>
+                                    <p>
+                                        @item.Descripcion
+                                    </p>
+                                </td>
+                                <td>
+                                    <i class="material-icons icon-lg">person</i>
+                                    <span class="rating-text icon-md">@item.Popularidad</span>
+                                </td>
+                                <td>
+                                    @Html.Partial("Rating/_RatingPartial", item.Valoracion, ViewData)
+                                </td>
+                                <td>
+                                    <a asp-action="Remix"
+                                       asp-route-desafioId="@item.Id"
+                                       class="btn btn-primary btn-round btn-sm">
+                                        <i class="material-icons">cached</i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-xs-12 text-center">
+                    @await Html.PartialAsync("Pagination/_PaginationPartial", Model, ViewData)
+                </div>
+            </div>
+            
         </div>
+        
     </section>
-    @await Html.PartialAsync("Pagination/_PaginationPartial", Model, ViewData)
+    
 }
 else
 {

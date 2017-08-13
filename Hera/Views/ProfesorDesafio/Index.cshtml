@@ -21,91 +21,99 @@
             </h2>
         </div>
     </div>
-    <hr />
 </section>
 
-<section class="section">
+<section class="section section-gray">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-12">
-                @Html.Partial("Desafios/_BusquedaDesafioPartial",
-                    new SearchDesafioViewModel(), ViewData)
+            <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                <div class="card">
+                    <div class="card-content">
+                        @Html.Partial("Desafios/_BusquedaDesafioPartial",
+                            new SearchDesafioViewModel(), ViewData)
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <hr />
 </section>
 
 @if (Model.Count > 0)
 {
-    <section>
+    <section class="section-basic">
         <div class="container-fluid">
-            <table class="table table-condensed table-striped table-responsive">
-                <thead>
-                    <tr>
-                        <th>
-                            Nombre
-                        </th>
-                        <th>
-                            Descipción
-                        </th>
-                        <th>Popularidad</th>
-                        <th>Valoración</th>
-                        <th class="text-center">
-                            Criterios de Evaluación
-                        </th>
-                        <th class="text-center">
-                            Acciones
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                <a asp-action="Details"
-                                   asp-controller="Desafios"
-                                   asp-route-id="@item.Id">
-                                    @Html.DisplayFor(modelItem => item.Nombre)
-                                </a>
-                            </td>
-                            <td>
-                                <p>
-                                    @item.Descripcion
-                                </p>
-                            </td>
-                            <td>
-                                <i class="material-icons icon-lg">person</i>
-                                <span class="rating-text icon-md">@item.Popularidad</span>
-                            </td>
-                            <td>
-                                @Html.Partial("Rating/_RatingPartial", item.Valoracion, ViewData)
-                            </td>
-                            <td class="text-center td-actions">
-                                <button class="btn btn-info btn-simple"
-                                        data-toggle="modal"
-                                        data-target="#modal-info-@item.Id">
-                                    <i class="material-icons icon-lg">info_outline</i>
-                                </button>
-                            </td>
-                            <td class="td-actions">
-                                <div class="text-center">
-                                    <a class="btn btn-sm btn-info btn-round" >
-                                        <i class="material-icons">create</i>
-                                    </a>
-                                    <button class="btn btn-sm btn-round btn-danger"
-                                            data-toggle="modal"
-                                            data-target="#modal-delete-@item.Id">
-                                        <i class="material-icons">delete_forever</i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            @await Html.PartialAsync("Pagination/_PaginationPartial", Model, ViewData)
+            <div class="row">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+                    <table class="table table-condensed table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Nombre
+                                </th>
+                                <th>
+                                    Descipción
+                                </th>
+                                <th>Popularidad</th>
+                                <th>Valoración</th>
+                                <th class="text-center">
+                                    Criterios de Evaluación
+                                </th>
+                                <th class="text-center">
+                                    Acciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <a asp-action="Details"
+                                           asp-controller="Desafios"
+                                           asp-route-id="@item.Id">
+                                            @Html.DisplayFor(modelItem => item.Nombre)
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <p>
+                                            @item.Descripcion
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <i class="material-icons icon-lg">person</i>
+                                        <span class="rating-text icon-md">@item.Popularidad</span>
+                                    </td>
+                                    <td>
+                                        @Html.Partial("Rating/_RatingPartial", item.Valoracion, ViewData)
+                                    </td>
+                                    <td class="text-center td-actions">
+                                        <button class="btn btn-info btn-simple"
+                                                data-toggle="modal"
+                                                data-target="#modal-info-@item.Id">
+                                            <i class="material-icons icon-lg">info_outline</i>
+                                        </button>
+                                    </td>
+                                    <td class="td-actions">
+                                        <div class="text-center">
+                                            <a class="btn btn-sm btn-info btn-round">
+                                                <i class="material-icons">create</i>
+                                            </a>
+                                            <button class="btn btn-sm btn-round btn-danger"
+                                                    data-toggle="modal"
+                                                    data-target="#modal-delete-@item.Id">
+                                                <i class="material-icons">delete_forever</i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-xs-12 text-center">
+                    @await Html.PartialAsync("Pagination/_PaginationPartial", Model, ViewData)
+                </div>
+            </div>
         </div>
     </section>
 }

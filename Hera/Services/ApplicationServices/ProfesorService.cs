@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Entities.Calificaciones;
 using Entities.Cursos;
 using Entities.Desafios;
 using Hera.Data;
@@ -11,7 +10,6 @@ using Hera.Models.EntitiesViewModels.Desafios;
 using Hera.Models.EntitiesViewModels.EstudianteDesafio;
 using Hera.Models.EntitiesViewModels.ProfesorCursos;
 using Hera.Models.UtilityViewModels;
-using Hera.Services.UserServices;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,7 +31,8 @@ namespace Hera.Services.ApplicationServices
             var model = (string.IsNullOrWhiteSpace(searchString))
                 ? _data.GetAll_Cursos(profId) :
                 _data.Autocomplete_Cursos(searchString, profId);
-            return new PaginationViewModel<Curso>(model, skip, take);
+            return new PaginationViewModel<Curso>(await model.ToListAsync(),
+                skip, take);
         }
 
         public async Task<PaginationViewModel<DesafioDetailsViewModel>>
@@ -42,7 +41,7 @@ namespace Hera.Services.ApplicationServices
         {
             var model = await _data.GetAll_Desafios(null, profId,
                     searchModel.SearchString, searchModel.Map(),
-                    searchModel.EqualSearchModel)
+                    searchModel.EqualSearchModel, searchModel.MinValoration)
                 .AsNoTracking()
                 .Select(m =>
                     new DesafioDetailsViewModel(m))
@@ -159,7 +158,7 @@ namespace Hera.Services.ApplicationServices
                 model.EstudianteId))
                 return false;
 
-            _data.Add<CalificacionCualitativa>(model.Map());
+            _data.Add(model.Map());
             return await _data.SaveAllAsync();
         }
 
@@ -191,7 +190,7 @@ namespace Hera.Services.ApplicationServices
             entity.Completada = model.Completada;
             entity.Descripcion = model.Descripcion;
 
-            _data.Edit<CalificacionCualitativa>(entity);
+            _data.Edit(entity);
 
             return await _data.SaveAllAsync();
         }

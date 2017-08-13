@@ -13,7 +13,7 @@ namespace Hera.Controllers.ControllersMvc
     public class EstudianteCursosController : Controller
     {
         private readonly UserService _usrService;
-        private EstudianteService _ctrlService;
+        private readonly EstudianteService _ctrlService;
 
         public EstudianteCursosController(UserService usrService,
             EstudianteService ctrlService)

@@ -25,7 +25,8 @@ namespace Hera.Services.ApplicationServices
         {
             var searchString = searchModel.SearchString;
             var model = _data.GetAll_Desafios(null, null, searchString,
-                    searchModel.Map(), searchModel.EqualSearchModel)
+                    searchModel.Map(), searchModel.EqualSearchModel,
+                    searchModel.MinValoration)
                 .AsNoTracking();
 
             if (profId > 0)
@@ -56,7 +57,7 @@ namespace Hera.Services.ApplicationServices
             {
                 _data.AddDesafio(model.Map(profId));
                 return await _data.SaveAllAsync();
-                
+
             }
             catch (Exception e)
             {
