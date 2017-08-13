@@ -28,3 +28,20 @@
 .content-red {
     background: linear-gradient(60deg,#f44336,#ba000d);
 }
+
+.card-list ul {
+    list-style: none;
+    padding: 0;
+    max-width: 240px;
+    margin: 10px auto;
+}
+
+.card-list ul li {
+    color: #999;
+    text-align: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(153,153,153,.3);
+}
+.card-nav-tabs .nav-tabs, .card-plain {
+    background: 0 0;
+}

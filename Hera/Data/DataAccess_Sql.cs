@@ -193,6 +193,7 @@ namespace Hera.Data
                 .Include("Curso")
                 .Include("Curso.Desafios")
                 .Include("Curso.Desafios.Desafio")
+                .Include("Curso.Desafios.Desafio.InfoDesafio")
                 .Include("Curso.Profesor")
                 .Include(cur => cur.Registros)
                 .ThenInclude(reg=>  reg.Calificaciones)

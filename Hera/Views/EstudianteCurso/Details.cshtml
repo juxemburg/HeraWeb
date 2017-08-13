@@ -14,11 +14,10 @@
     </div>
 </section>
 
-<section class="section section-gray">
+<section class="section-basic section-gray">
     <div class="container">
-        
         <div class="row margin-20">
-            <h3 class="text-center margin-40"><span class="title">Tus</span> Desafíos</h3>
+            <h1 class="text-center margin-40"><span class="title">Tus</span> Desafíos</h1>
             <div class="col-xs-12 col-sm-12">
                 <ul class="nav nav-center nav-pills">
                     <li class="active"><a href="#pill1" data-toggle="tab" aria-expanded="false">Realizados</a></li>
@@ -30,61 +29,99 @@
             <div class="col-xs-12">
                 <div class="tab-content tab-space">
                     <div class="tab-pane active" id="pill1">
-                        <div class="list-group">
-                            @foreach (var item in Model.DesafiosRealizados)
-                            {
-                                <div class="list-group-item">
-                                    <span class="badge">
-                                        2
-                                    </span>
-                                    <h3>
-                                        <a asp-action="Desafio" asp-route-idCurso="@Model.Id" asp-route-idDesafio="@item.Id">
+                        @foreach (var item in Model.DesafiosRealizados)
+                        {
+                            <div class="col-md-4 col-sm-6">
+                                <div class="card card-list card-plain">
+                                    <div class="card-content ">
+                                        <h6 class="category text-success text-center">
+                                            Completado <i class="material-icons">check</i>
+                                        </h6>
+                                        <h2 class="card-title text-center title-serif">
                                             @item.Nombre
-                                        </a>
-                                    </h3>
+                                        </h2>
+                                        <ul>
+                                            <li><b>Descripción</b> @item.Descripcion</li>
+                                            @foreach (var prop in item.InfoDesafio.ActiveProperties().Take(3))
+                                            {
+                                                <li>@prop</li>
+                                            }
+                                        </ul>
+                                        <div class="text-center padding-20">
+                                            <a asp-action="Desafio" 
+                                               asp-route-idCurso="@Model.Id" 
+                                               asp-route-idDesafio="@item.Id" 
+                                               class="btn btn-primary btn-raised btn-round btn-block">
+                                                Iniciar
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
-                            }
-                        </div>
+                            </div>
+                        }
                     </div>
                     <div class="tab-pane" id="pill2">
-                        <div class="list-group">
-                            @foreach (var item in Model.DesafiosNoCompletados)
-                            {
-                                <div class="list-group-item">
-                                    <span class="badge">
-                                        2
-                                    </span>
-                                    <h3>
-                                        <a asp-action="Desafio" asp-route-idCurso="@Model.Id" asp-route-idDesafio="@item.Id">
+                        @foreach (var item in Model.DesafiosNoCompletados)
+                        {
+                            <div class="col-sm-6 col-md-4">
+                                <div class="card card-list card-plain">
+                                    <div class="card-content ">
+                                        <h6 class="category text-warning text-center">
+                                            Pendiente <i class="material-icons">priority_high</i>
+                                        </h6>
+                                        <h2 class="card-title text-center title-serif">
                                             @item.Nombre
-                                        </a>
-                                    </h3>
+                                        </h2>
+                                        <ul>
+                                            <li><b>Descripción</b> @item.Descripcion</li>
+                                            @foreach (var prop in item.InfoDesafio.ActiveProperties().Take(3))
+                                            {
+                                                <li>@prop</li>
+                                            }
+                                        </ul>
+                                        <div class="text-center padding-20">
+                                            <a asp-action="Desafio" 
+                                               asp-route-idCurso="@Model.Id" 
+                                               asp-route-idDesafio="@item.Id" 
+                                               class="btn btn-primary btn-raised btn-round btn-block">
+                                                Iniciar
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
-                            }
-                        </div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row text-center margin-top-60">
-            <h3>Siguiente Desafío</h3>
-            <hr />
-            <div class="list-group">
-                <div class="list-group-item">
-                    <span class="badge">
-                        2
-                    </span>
-                    <h3>
-                        <a asp-action="Desafio" asp-route-idCurso="@Model.Id" asp-route-idDesafio="@Model.DesafioPendiente.Id">
-                            @Model.DesafioPendiente.Nombre
-                        </a>
-                    </h3>
-                    <h4>@Model.DesafioPendiente.Descripcion</h4>
+    </div>
+</section>
+<section class="section-basic padding-20">
+    <div class="container">
+        <div class="row">
+            <h2 class="text-center margin-40"><span class="title">Siguiente</span> Desafío</h2>
+            <div class="col-xs-12">
+                <div class="card card-raised" style="background-image: url('../assets/img/examples/card-project6.jpg')">
+                    <div class="card-content">
+                        <h6 class="category text-info">Nuevo!</h6>
+                        <h3 class="card-title text-center title-serif">@Model.DesafioPendiente.Nombre</h3>
+                        <p class="card-description text-center">
+                            @Model.DesafioPendiente.Descripcion
+                        </p>
+                        <div class="col-xs-8 col-xs-offset-2 text-center">
+                            <a asp-action="Desafio" 
+                               asp-route-idCurso="@Model.Id" 
+                               asp-route-idDesafio="@Model.DesafioPendiente.Id" 
+                               class="btn btn-success btn-round">
+                                <i class="material-icons icon-xl">play_arrow</i>
+                            </a>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 </section>
-
 
