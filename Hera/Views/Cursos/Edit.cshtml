@@ -1,0 +1,57 @@
+﻿@model EditCursoViewModel
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+
+<section class="section-basic">
+    <div class="container">
+        <div class="row">
+            <h2><span class="title">Editar </span> información del curso</h2>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <form asp-action="Edit">
+            <div class="form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div>
+                        <input asp-for="Id" type="hidden" />
+                    </div>
+                    <div class="form-group label-floating col-sm-6 col-md-4 col-lg-3">
+                        <label asp-for="Nombre" class="control-label"></label>
+                        <input asp-for="Nombre" class="form-control" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+                    <div class="form-group label-floating col-sm-6 col-md-4 col-lg-3">
+                        <label asp-for="Descripcion" class="control-label"></label>
+                        <input asp-for="Descripcion" class="form-control" />
+                        <span asp-validation-for="Descripcion" class="text-danger"></span>
+                    </div>
+                    <div class="form-group label-floating col-sm-6 col-md-4 col-lg-3">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group label-floating col-sm-6 col-md-4 col-lg-3">
+                        <label asp-for="ConfirmPassword" class="control-label"></label>
+                        <input asp-for="ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row margin-top-30">
+                    <div class="col-xs-12 text-center">
+                        <input type="submit" value="Guardar Cambios" class="btn btn-primary btn-round" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial");
+}

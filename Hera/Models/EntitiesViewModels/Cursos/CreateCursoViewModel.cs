@@ -1,11 +1,8 @@
 ﻿using Entities.Colors;
 using Entities.Cursos;
 using Entities.Desafios;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Hera.Models.EntitiesViewModels
 {
@@ -30,15 +27,15 @@ namespace Hera.Models.EntitiesViewModels
 
         
 
-        public Curso Map(int ProfesorId,Desafio desafioInicial,
+        public Curso Map(int profesorId,Desafio desafioInicial,
             Color color = Color.Lightblue)
         {
             return new Curso()
             {
-                Nombre = this.Nombre,
-                Descripcion = this.Descripcion,
-                ProfesorId = ProfesorId,
-                Password = this.Password,
+                Nombre = Nombre,
+                Descripcion = Descripcion,
+                ProfesorId = profesorId,
+                Password = Password,
                 Desafios = new List<Rel_DesafiosCursos>()
                 {
                     new Rel_DesafiosCursos()

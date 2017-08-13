@@ -14,15 +14,19 @@
 
   <ItemGroup>
     <Compile Remove="Files\**" />
+    <Compile Remove="Views\Estudiante\**" />
     <Compile Remove="Views\ProgresoDesafio\**" />
     <Compile Remove="wwwroot\Files\**" />
     <Content Remove="Files\**" />
+    <Content Remove="Views\Estudiante\**" />
     <Content Remove="Views\ProgresoDesafio\**" />
     <Content Remove="wwwroot\Files\**" />
     <EmbeddedResource Remove="Files\**" />
+    <EmbeddedResource Remove="Views\Estudiante\**" />
     <EmbeddedResource Remove="Views\ProgresoDesafio\**" />
     <EmbeddedResource Remove="wwwroot\Files\**" />
     <None Remove="Files\**" />
+    <None Remove="Views\Estudiante\**" />
     <None Remove="Views\ProgresoDesafio\**" />
     <None Remove="wwwroot\Files\**" />
   </ItemGroup>
@@ -112,8 +116,6 @@
     <Folder Include="Evaluacion\EntitiesViewModels\Models\" />
     <Folder Include="Models\EntitiesViewModels\Notifications\" />
     <Folder Include="Views\Cursos\" />
-    <Folder Include="Views\Estudiante\" />
-    <Folder Include="Views\Estudiante\" />
     <Folder Include="Views\File\" />
     <Folder Include="Views\Notifications\" />
     <Folder Include="Views\Profesor\" />
@@ -121,6 +123,7 @@
     <Folder Include="Views\Shared\Default\" />
     <Folder Include="Views\Shared\Desafios\" />
     <Folder Include="Views\Shared\Charts\" />
+    <Folder Include="Views\Shared\Cursos\" />
     <Folder Include="Views\Shared\ProgressBar\" />
     <Folder Include="Views\Shared\Rating\" />
     <Folder Include="Views\Shared\Util\" />

@@ -1,4 +1,4 @@
-﻿@model Hera.Models.EntitiesViewModels.CreateCursoViewModel
+﻿@model CreateCursoViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -94,6 +94,7 @@
 </section>
 
 @section Scripts {
+    @Html.Partial("_ValidationScriptsPartial");
     <environment names="Development">
         <script src="~/js/Autocomplete/jquery.easy-autocomplete.min.js"></script>
         <script src="~/js/Autocomplete/autocomplete-client.js"></script>

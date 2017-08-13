@@ -23,7 +23,8 @@
             <span class="title">Curso</span>
             @Model.Curso.Nombre
             <a asp-action="Edit"
-               asp-controller="Curso"
+               asp-controller="Cursos"
+               asp-route-id="@Model.Curso.Id"
                class="btn btn-sm btn-info btn-fab btn-fab-mini">
                 <i class="material-icons icon-lg">edit</i>
             </a>
@@ -49,16 +50,16 @@
                                     @Html.DisplayFor(model => model.Curso.Nombre)
                                 </dd>
                                 <dt>
-                                    @Html.DisplayNameFor(model => model.Curso.Descripcion)
+                                    Descripción del curso
                                 </dt>
                                 <dd>
-                                    Descripción del Curso
+                                    @Model.Curso.Descripcion
                                 </dd>
                                 <dt>
-                                    @Html.DisplayNameFor(model => model.Curso.Password)
+                                    Contraseña del curso
                                 </dt>
                                 <dd>
-                                    Contraseña del Curso
+                                    @Model.Curso.Password
                                 </dd>
                                 <dt>
                                     Desafío inicial

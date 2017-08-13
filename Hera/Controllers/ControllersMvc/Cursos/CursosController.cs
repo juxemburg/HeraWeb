@@ -1,8 +1,10 @@
 using System;
 using System.Threading.Tasks;
+using Entities.Cursos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Hera.Models.EntitiesViewModels;
+using Hera.Models.EntitiesViewModels.Cursos;
 using Hera.Services.UserServices;
 using Hera.Models.EntitiesViewModels.ProfesorCursos;
 using Hera.Services.ApplicationServices;
@@ -169,6 +171,48 @@ namespace Hera.Controllers.ControllersMvc
             }
             return RedirectToAction("Details",
                 "ProfesorCurso", new { idCurso = model.CursoId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            try
+            {
+                var profId = _userService.Get_ProfesorId(User.Claims);
+                var model = await _ctrlService.Get_CursoEditViewModel(
+                    profId, id);
+                return View(model);
+            }
+            catch (ApplicationServicesException)
+            {
+                return NotFound();
+            }
+            
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditCursoViewModel model)
+        {
+            try
+            {
+                var profId = _userService.Get_ProfesorId(User.Claims);
+                var res = await _ctrlService.Edit_Cruso(profId, model);
+                if (!res)
+                {
+                    this.SetAlerts("error-alerts",
+                        "Error en la edición del curso");
+                    return View(model);
+                }
+                
+                this.SetAlerts("success-alerts",
+                    "El curso se editó exitosamente");
+                return RedirectToAction("Details", "ProfesorCurso",
+                    new{ idCurso = model.Id});
+            }
+            catch (ApplicationServicesException)
+            {
+                return NotFound();
+            }
         }
     }
 }

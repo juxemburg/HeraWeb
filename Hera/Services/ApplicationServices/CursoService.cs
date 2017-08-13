@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Entities.Cursos;
 using Hera.Data;
 using Hera.Models.EntitiesViewModels;
+using Hera.Models.EntitiesViewModels.Cursos;
 using Hera.Models.EntitiesViewModels.ProfesorCursos;
 using Hera.Services.UtilServices;
 
@@ -31,6 +32,20 @@ namespace Hera.Services.ApplicationServices
             return model;
         }
 
+        public async Task<Curso> Get_Curso(int profId, int cursoId)
+        {
+            if(!await _data.Exist_Profesor_Curso(profId, cursoId))
+                throw new ApplicationServicesException();
+            return await _data.Find_Curso(cursoId);
+        }
+
+        public async Task<EditCursoViewModel> Get_CursoEditViewModel(
+            int profId, int cursoId)
+        {
+            var model = await Get_Curso(profId, cursoId);
+            return new EditCursoViewModel(model);
+        }
+
         public async Task<bool> Create_Curso(int profId,
             CreateCursoViewModel model)
         {
@@ -42,6 +57,19 @@ namespace Hera.Services.ApplicationServices
 
             _data.AddCurso(model.Map(profId, desafio,
                 _clrService.RandomColor));
+            return await _data.SaveAllAsync();
+        }
+
+        public async Task<bool> Edit_Cruso(int profId,
+            EditCursoViewModel model)
+        {
+            if (!await _data.Exist_Profesor_Curso(profId, model.Id))
+                throw new ApplicationServicesException();
+            var newCurso = await _data.Find_Curso(model.Id);
+            newCurso.Nombre = model.Nombre;
+            newCurso.Descripcion = model.Descripcion;
+            newCurso.Password = model.Password;
+            _data.Edit(newCurso);
             return await _data.SaveAllAsync();
         }
 
@@ -127,3 +155,4 @@ namespace Hera.Services.ApplicationServices
         }
     }
 }
+
