@@ -4,8 +4,6 @@ using Entities.Desafios;
 using Entities.Notifications;
 using Entities.Usuarios;
 using Entities.Valoracion;
-using Hera.Services.NotificationServices.NotificationBuilders;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -62,9 +60,11 @@ namespace Hera.Data
         //Cursos
         void AddCurso(Curso model);        
         IQueryable<Curso> Autocomplete_Cursos(string queryString,
-            int? prodId = null);
+            int? profId = null);
+        IQueryable<Curso> Autocomplete_CursosI(string queryString,
+            int profId);
         IQueryable<Curso> GetAll_Cursos();
-        IQueryable<Curso> GetAll_Cursos(int profId);
+        IQueryable<Curso> GetAll_Cursos(int profId, bool active = true);
         IQueryable<Curso> GetAll_CursosEstudiante(int idEst,
             string courseName = "",
             bool inverse = false);

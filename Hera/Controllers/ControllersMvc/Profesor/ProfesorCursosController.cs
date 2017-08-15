@@ -32,9 +32,21 @@ namespace Hera.Controllers.ControllersMvc
             return View(model);
         }
 
-        
+        [HttpGet]
+        public async Task<IActionResult> Inactive(string searchString = "",
+            int skip = 0, int take = 10)
+        {
+            var profId = _usrService.Get_ProfesorId(User.Claims);
+            var model = await _ctrlService.GetAll_CursosI(profId, searchString,
+                skip, take);
+            this.GetAlerts();
+            return View(model);
+        }
 
-        
-        
+
+
+
+
+
     }
 }

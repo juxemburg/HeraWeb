@@ -319,27 +319,31 @@ namespace Hera.Data
         public IQueryable<Curso> GetAll_Cursos()
         {
             return _context.Cursos
+                .Where(c => c.Activo)
                 .Include(c => c.Desafios)
                 .Include(c => c.Profesor);
         }
-        public IQueryable<Curso> GetAll_Cursos(int profId)
+        public IQueryable<Curso> GetAll_Cursos(int profId, 
+            bool active = true)
         {
             return _context.Cursos
-                .Where(c => c.ProfesorId == profId)
+                .Where(c => c.ProfesorId == profId
+                && c.Activo == active)
                 .Include(c => c.Profesor);
         }
         public IQueryable<Curso> GetAll_CursosEstudiante(int idEst,
-            string courseName = "",
-            bool inverse = false)
+            string courseName = "", bool inverse = false)
         {
             var query = Enumerable.Empty<Curso>().AsQueryable();
+
             var ids = _context.Rel_Cursos_Estudiantes
                 .Where(rel => rel.EstudianteId == idEst)
                 .Select(rel => rel.CursoId);
-
             query = _context.Cursos
-                .Where(cur => ids.Contains(cur.Id) != inverse)
-                .Include(cur => cur.Profesor);
+                .Where(cur => ids.Contains(cur.Id)
+                && cur.Activo)
+                .Include(c => c.Profesor);
+            
             if (!string.IsNullOrWhiteSpace(courseName))
                 query = query.Where(c => c.Nombre.Contains(courseName));
 
@@ -354,6 +358,13 @@ namespace Hera.Data
                 GetAll_Cursos(profId.GetValueOrDefault());
             query = query.Where(c => c.Nombre.Contains(queryString));
             return query;
+        }
+
+        public IQueryable<Curso> Autocomplete_CursosI(string queryString,
+            int profId)
+        {
+            return GetAll_Cursos(profId, false)
+                .Where(c => c.Nombre.Contains(queryString));
         }
 
         public IQueryable<Desafio> GetAll_Desafios(int? cursoId = null,
@@ -646,8 +657,9 @@ namespace Hera.Data
             int cursoId)
         {
             return await _context.Rel_Cursos_Estudiantes
+                .Include(rel => rel.Curso)
                 .AnyAsync(rel => rel.EstudianteId == estudianteId &&
-                rel.CursoId == cursoId);
+                rel.CursoId == cursoId && rel.Curso.Activo);
 
         }
 

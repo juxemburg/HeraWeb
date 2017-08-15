@@ -35,6 +35,18 @@ namespace Hera.Services.ApplicationServices
                 skip, take);
         }
 
+        public async Task<PaginationViewModel<Curso>>
+            GetAll_CursosI(int profId, string searchString, int skip,
+                int take)
+        {
+            var model = (string.IsNullOrWhiteSpace(searchString))
+                ? _data.GetAll_Cursos(profId, false) :
+                _data.Autocomplete_CursosI(searchString, profId);
+            return new PaginationViewModel<Curso>(await model.ToListAsync(),
+                skip, take);
+        }
+
+
         public async Task<PaginationViewModel<DesafioDetailsViewModel>>
             GetAll_Desafios(int profId, SearchDesafioViewModel searchModel,
             int skip, int take = 10)

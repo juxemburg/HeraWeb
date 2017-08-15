@@ -78,6 +78,42 @@ namespace Hera.Controllers.ControllersMvc
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Deactivate(int id)
+        {
+            var profId = _userService.Get_ProfesorId(User.Claims);
+
+            var res = await _ctrlService.Activate_Curso(profId, id, false);
+            if (res)
+                this.SetAlerts("success-alerts",
+                    "El curso se desactivó exitosamente");
+            else
+                this.SetAlerts("error-alerts",
+                    "El curso no se pudo desactivar el curso");
+
+
+            return RedirectToAction("Index", "ProfesorCursos");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Activate(int id)
+        {
+            var profId = _userService.Get_ProfesorId(User.Claims);
+
+            var res = await _ctrlService.Activate_Curso(profId, id, true);
+            if (res)
+                this.SetAlerts("success-alerts",
+                    "El curso se activó exitosamente");
+            else
+                this.SetAlerts("error-alerts",
+                    "El curso no se pudo activar el curso");
+
+
+            return RedirectToAction("Index", "ProfesorCursos");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
             var profId = _userService.Get_ProfesorId(User.Claims);
@@ -88,10 +124,10 @@ namespace Hera.Controllers.ControllersMvc
                     "El curso se eliminó exitosamente");
             else
                 this.SetAlerts("error-alerts",
-                    "El curso no se pudo eliminar");
+                    "El curso no se pudo eliminar el curso");
 
 
-            return RedirectToAction("Index", "ProfesorCursos");
+            return RedirectToAction("Inactive", "ProfesorCursos");
         }
 
 

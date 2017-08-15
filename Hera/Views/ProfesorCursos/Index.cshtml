@@ -8,14 +8,20 @@
     ViewData["NoResults-ActionText"] = "crea un curso nuevo";
 }
 
-<section class="section">
-    <div class="container">
+<section class="section-basic">
+    <div class="container-fluid">
         <h2>
             <span class="title">Tus</span> Cursos
             <a class="btn btn-info btn-fab btn-fab-mini" asp-action="Create" asp-controller="Cursos">
                 <i class="material-icons icon-lg">add</i>
             </a>
         </h2>
+        <h6>
+            <a asp-action="Inactive"
+               class="btn btn-round btn-white btn-raised">
+                Ver cursos desactivados                
+            </a>
+        </h6>
         <div class="row">
             <div class="col-md-12 text-center">
                 <form asp-action="index" method="get" class="form-inline">
@@ -74,7 +80,7 @@
                                     <i class="material-icons">edit</i>
                                 </a>
                                 <a class="btn btn-sm btn-round btn-danger" data-toggle="modal" data-target="#modal-remove-@item.Id">
-                                    <i class="material-icons">delete</i>
+                                    <i class="material-icons">block</i>
                                 </a>
                             </td>
                         </tr>
@@ -100,24 +106,26 @@ else
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h3 class="modal-title">
-                            <span class="title">Eliminar</span> Curso
+                            <span class="title">Desactivar</span> Curso
                         </h3>
 
                     </div>
                     <div class="modal-body">
                         <div class="container-fluid">
                             <div class="row">
-                                <form asp-action="Delete"
+                                <form asp-action="Deactivate"
                                       asp-controller="Cursos"
                                       asp-route-id="@item.Id"
                                       asp-antiforgery="true"
                                       class="form-horizontal">
                                     <div>
-                                        Al remover éste curso, se eliminarán todas las información del mismo
-                                        ¿Desea Continuar?
+                                        <p>Al desactivar el curso, se 
+                                            <strong>revocará todo el acceso</strong> al mismo, 
+                                            incluyendo a tus estudiantes. ¿Deseas continuar?
+                                        </p>
                                     </div>
                                     <div class="text-center col-sm-12">
-                                        <input class="btn btn-primary btn-round" type="submit" value="Remover" />
+                                        <input class="btn btn-primary btn-round" type="submit" value="Desactivar" />
                                     </div>
                                 </form>
                             </div>

@@ -34,8 +34,9 @@ namespace Hera.Services.ApplicationServices
 
         public async Task<Curso> Get_Curso(int profId, int cursoId)
         {
-            if(!await _data.Exist_Profesor_Curso(profId, cursoId))
+            if (!await Do_validateProfesor(profId, cursoId))
                 throw new ApplicationServicesException();
+
             return await _data.Find_Curso(cursoId);
         }
 
@@ -63,8 +64,9 @@ namespace Hera.Services.ApplicationServices
         public async Task<bool> Edit_Cruso(int profId,
             EditCursoViewModel model)
         {
-            if (!await _data.Exist_Profesor_Curso(profId, model.Id))
+            if (!await Do_validateProfesor(profId, model.Id))
                 throw new ApplicationServicesException();
+
             var newCurso = await _data.Find_Curso(model.Id);
             newCurso.Nombre = model.Nombre;
             newCurso.Descripcion = model.Descripcion;
@@ -75,19 +77,31 @@ namespace Hera.Services.ApplicationServices
 
         public async Task<bool> Delete_Curso(int profId, int cursoId)
         {
-            if (!await _data.Exist_Profesor_Curso(profId, cursoId))
+            if (!await Do_validateProfesor(profId, cursoId))
                 return false;
 
             await _data.Delete_Curso(cursoId);
             return await _data.SaveAllAsync();
         }
 
+        public async Task<bool> Activate_Curso(int profId, int cursoId,
+            bool value)
+        {
+            if (!await Do_validateProfesor(profId, cursoId))
+                return false;
+
+            var model = await _data.Find_Curso(cursoId);
+            model.Activo = value;
+            _data.Edit(model);
+            return await _data.SaveAllAsync();
+
+        }
         public async Task<bool> Add_DesafioCurso(int profId,
             AddDesafioViewModel model)
         {
             try
             {
-                if (!await _data.Exist_Profesor_Curso(profId, model.Id))
+                if (!await Do_validateProfesor(profId, model.Id))
                     return false;
 
                 if (await _data.Exist_Desafio(model.DesafioId, model.Id))
@@ -111,9 +125,9 @@ namespace Hera.Services.ApplicationServices
         {
             try
             {
-                if (!await _data.Exist_Profesor_Curso(profId, cursoId))
+                if (!await Do_validateProfesor(profId, cursoId))
                     return false;
-                
+
 
                 await _data.Delete_Desafio(cursoId, desafioId);
                 return await _data.SaveAllAsync();
@@ -149,6 +163,11 @@ namespace Hera.Services.ApplicationServices
                 throw new ApplicationServicesException(
                     "Error en la eliminación de desafío", e);
             }
+        }
+
+        private async Task<bool> Do_validateProfesor(int profId, int cursoId)
+        {
+            return await _data.Exist_Profesor_Curso(profId, cursoId);
         }
     }
 }
