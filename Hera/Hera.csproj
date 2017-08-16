@@ -7,9 +7,6 @@
   <PropertyGroup>
     <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
   </PropertyGroup>
-  <PropertyGroup>
-    <EnableDefaultContentItems>false</EnableDefaultContentItems>
-  </PropertyGroup>
 
   <PropertyGroup>
     <UserSecretsId>aspnet-Hera-1cfe3ca2-e870-4449-8c34-3b1d6b0d8618</UserSecretsId>
@@ -38,52 +35,6 @@
     <Content Remove="wwwroot/css\Theme\material-kit.css~RF2d55fec4.TMP" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="wwwroot\css\Autocomplete\easy-autocomplete.min.css" />
-    <Content Include="wwwroot\css\Autocomplete\easy-autocomplete.themes.min.css" />
-    <Content Include="wwwroot\css\Calificar\calificar.css" />
-    <Content Include="wwwroot\css\card-body.css" />
-    <Content Include="wwwroot\css\cards.css" />
-    <Content Include="wwwroot\css\colors.css" />
-    <Content Include="wwwroot\css\Estudiante\cursos.css" />
-    <Content Include="wwwroot\css\Loading\loading.css" />
-    <Content Include="wwwroot\css\NoUiSlider\nouislider.min.css" />
-    <Content Include="wwwroot\css\padding.css" />
-    <Content Include="wwwroot\css\Rating\rating.css" />
-    <Content Include="wwwroot\css\Rating\rating.min.css" />
-    <Content Include="wwwroot\css\Theme\demo.css" />
-    <Content Include="wwwroot\css\Theme\material-kit.css" />
-    <Content Include="wwwroot\css\Theme\material-kit.css.map" />
-    <Content Include="wwwroot\css\ThemifyIcons\fonts\themify.eot" />
-    <Content Include="wwwroot\css\ThemifyIcons\fonts\themify.svg" />
-    <Content Include="wwwroot\css\ThemifyIcons\fonts\themify.ttf" />
-    <Content Include="wwwroot\css\ThemifyIcons\fonts\themify.woff" />
-    <Content Include="wwwroot\css\ThemifyIcons\style\themify-icons-demo.css" />
-    <Content Include="wwwroot\css\ThemifyIcons\style\themify-icons.css" />
-    <Content Include="wwwroot\css\ThemifyIcons\themify-icons-demo.css" />
-    <Content Include="wwwroot\css\ThemifyIcons\themify-icons.css" />
-    <Content Include="wwwroot\css\Wizard\demo.css" />
-    <Content Include="wwwroot\css\Wizard\paper-bootstrap-wizard.css" />
-    <Content Include="wwwroot\images\bg-login.jpg" />
-    <Content Include="wwwroot\images\Ellipsis.svg" />
-    <Content Include="wwwroot\images\stars.svg" />
-    <Content Include="wwwroot\js\Autocomplete\autocomplete-client.js" />
-    <Content Include="wwwroot\js\Autocomplete\jquery.easy-autocomplete.min.js" />
-    <Content Include="wwwroot\js\Cursos\create.js" />
-    <Content Include="wwwroot\js\Cursos\Details.js" />
-	<Content Include="wwwroot\js\Cursos\index.js" />
-	<Content Include="wwwroot\js\Desafios\create.js" />
-	<Content Include="wwwroot\js\FileManagement\fileManager.js" />
-	<Content Include="wwwroot\js\Loading\loading.js" />
-	<Content Include="wwwroot\js\Loading\loading}.js" />
-	<Content Include="wwwroot\js\Notifications\notification-manager.js" />
-	<Content Include="wwwroot\js\Rating\rating.js" />
-	<Content Include="wwwroot\js\Theme\material-kit.js" />
-	<Content Include="wwwroot\js\Theme\material.min.js" />
-	<Content Include="wwwroot\js\Theme\nouislider.min.js" />
-	<Content Include="wwwroot\js\Wizard\jquery.bootstrap.wizard.js" />
-	<Content Include="wwwroot\js\Wizard\paper-bootstrap-wizard.js" />
-	<Content Include="wwwroot\lib\chartist\dist\chartextension.css" />
-	<Content Include="wwwroot\lib\chartist\dist\chartextension.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
