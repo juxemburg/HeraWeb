@@ -7,6 +7,9 @@
   <PropertyGroup>
     <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
   </PropertyGroup>
+  <PropertyGroup>
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
+  </PropertyGroup>
 
   <PropertyGroup>
     <UserSecretsId>aspnet-Hera-1cfe3ca2-e870-4449-8c34-3b1d6b0d8618</UserSecretsId>

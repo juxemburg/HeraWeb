@@ -2,9 +2,23 @@
     ViewData["Title"] = "Confirm Email";
 }
 
-<h2>@ViewData["Title"].</h2>
-<div>
-    <p>
-        Thank you for confirming your email. Please <a asp-controller="Account" asp-action="Login">Click here to Log in</a>.
-    </p>
-</div>
+
+<section class="section section-basic">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2>
+                    <span class="title title-serif">Confirmar</span> Correo
+                </h2>
+            </div>
+            <div class="col-xs-12">
+                <p>
+                    Gracias por confirmar tu cuenta de correo 
+                    <a asp-controller="Account" asp-action="Login">
+                        Haz click aquí para iniciar sesión.
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

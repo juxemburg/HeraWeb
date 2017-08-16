@@ -27,8 +27,8 @@ namespace Hera.Controllers
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
         private readonly string _externalCookieScheme;
-        private RoleManager<IdentityRole> _roleManager;
-        private IDataAccess _dataAccess;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IDataAccess _dataAccess;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
@@ -175,6 +175,7 @@ namespace Hera.Controllers
                     });
                 if (result)
                 {
+                    
                     return RedirectToLocal(returnUrl);
                 }
 
@@ -211,7 +212,11 @@ namespace Hera.Controllers
                         userCreation(user.UsuarioId);
                     }
                     await _dataAccess.SaveAllAsync();
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account",
+                        new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                    await _emailSender.SendEmailAsync(model.Email, "Confirma tu cuenta",
+                        $"Por favor confirma tu correo al hacer click aquí: <a href='{callbackUrl}'>link</a>");
                     return true;
                 }
                 else

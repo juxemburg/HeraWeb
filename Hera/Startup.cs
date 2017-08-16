@@ -21,7 +21,7 @@ namespace Hera
 {
     public class Startup
     {
-        private IHostingEnvironment _env;
+        private readonly IHostingEnvironment _env;
 
         public Startup(IHostingEnvironment env)
         {
@@ -53,9 +53,12 @@ namespace Hera
                 .GetConnectionString("HERAdb")));
             services.AddSingleton<FileManagerService>();
             services.AddSingleton<ColorService>();
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>(config =>
+                {
+                    config.SignIn.RequireConfirmedEmail = true;
+                })
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(config =>
             {
