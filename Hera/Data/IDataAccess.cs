@@ -65,6 +65,8 @@ namespace Hera.Data
             int profId);
         IQueryable<Curso> GetAll_Cursos();
         IQueryable<Curso> GetAll_Cursos(int profId, bool active = true);
+        IQueryable<Curso> Search_CursosEstudiante(int idEst, 
+            string searchString = "");
         IQueryable<Curso> GetAll_CursosEstudiante(int idEst,
             string courseName = "",
             bool inverse = false);

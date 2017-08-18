@@ -8,10 +8,10 @@
 }
 
 @section Styles {
-    <enviroment names="Development">
+    <environment names="Development">
         <link href="~/css/Autocomplete/easy-autocomplete.min.css" rel="stylesheet" />
         <link href="~/css/Autocomplete/easy-autocomplete.themes.min.css" rel="stylesheet" />
-    </enviroment>
+    </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/css/autocomplete.min.css" asp-append-version="true" />
     </environment>
@@ -135,23 +135,23 @@
                             </th>
                             @foreach (var item in Model.Curso.Desafios)
                             {
-                                <th>
-                                    <a asp-action="Desafio" asp-route-idDesafio="@item.DesafioId">
-                                        @item.Desafio.Nombre
-                                        @if (item.Initial)
+                            <th>
+                                <a asp-action="Desafio" asp-route-idDesafio="@item.DesafioId">
+                                    @item.Desafio.Nombre
+                                    @if (item.Initial)
                                         {
-                                            <i class="material-icons text-warning">stars</i>
+                                        <i class="material-icons text-warning">stars</i>
                                         }
-                                    </a>
-                                    @if (!item.Initial)
+                                </a>
+                                @if (!item.Initial)
                                     {
-                                        <button class="btn btn-sm btn-simple btn-danger " data-toggle="modal" data-target="#modal-remove-@item.DesafioId">
-                                            <i class="material-icons icon-lg">remove_circle_outline</i>
-                                        </button>
+                                    <button class="btn btn-sm btn-simple btn-danger " data-toggle="modal" data-target="#modal-remove-@item.DesafioId">
+                                        <i class="material-icons icon-lg">remove_circle_outline</i>
+                                    </button>
                                     }
 
 
-                                </th>
+                            </th>
                             }
                         </tr>
                     </thead>
@@ -168,12 +168,19 @@
                         @foreach (var item in Model.Curso.Estudiantes)
                         {
                             <tr>
-                                <td>
-                                    <strong>
-                                        <a asp-action="Estudiante" asp-route-idCurso="@Model.Curso.Id" asp-route-idEstudiante="@item.EstudianteId">
+                                <td class="td-actions">
+                                    <button class="btn btn-sm btn-simple btn-danger"
+                                            data-toggle="modal"
+                                            data-target="#modal-remove-est-@item.EstudianteId">
+                                        <i class="material-icons icon-lg">cancel</i>
+                                    </button>
+                                    <a asp-action="Estudiante"
+                                       asp-route-idCurso="@Model.Curso.Id"
+                                       asp-route-idEstudiante="@item.EstudianteId">
+                                        <strong>
                                             @item.Estudiante.NombreCompleto
-                                        </a>
-                                    </strong>
+                                        </strong>
+                                    </a>
                                 </td>
                                 @foreach (var desafio in Model.Curso.Desafios)
                                 {
@@ -181,7 +188,7 @@
                                         new Tuple<int, int>(desafio.DesafioId, item.EstudianteId)))
                                     {
                                         var reg = Model.RegistrosCurso[
-                                        new Tuple<int, int>(desafio.DesafioId, item.EstudianteId)];
+                                            new Tuple<int, int>(desafio.DesafioId, item.EstudianteId)];
                                         <td>
                                             @if (reg.All(r => r.CalificacionCualitativa != null))
                                             {
@@ -364,6 +371,43 @@
                                     </div>
                                     <div class="text-center col-sm-12">
                                         <input class="btn btn-primary btn-round" type="submit" value="Remover" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @foreach (var item in Model.Curso.Estudiantes)
+    {
+        <div id="modal-remove-est-@item.EstudianteId" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h2 class="modal-title">
+                            <span class="title">Anular </span> matrícula estudiante
+                        </h2>
+
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <form asp-action="RemoveEstudiante"
+                                      asp-controller="Cursos"
+                                      asp-antiforgery="true"
+                                      asp-route-cursoId="@Model.Curso.Id"
+                                      asp-route-estudianteId="@item.EstudianteId"
+                                      class="form-horizontal">
+                                    <div>
+                                        Al anular la matrícula de éste estudiante, se eliminarán todas
+                                        las calificaciónes asociadas a éste
+                                        ¿Estás seguro que deseas continuar?
+                                    </div>
+                                    <div class="text-center col-sm-12">
+                                        <input class="btn btn-primary btn-danger btn-round" type="submit" value="Acepto" />
                                     </div>
                                 </form>
                             </div>

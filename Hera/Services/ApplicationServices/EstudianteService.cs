@@ -32,8 +32,8 @@ namespace Hera.Services.ApplicationServices
         public async Task<PaginationViewModel<Curso>> Search_Curso(int estId,
             string searchString, int skip, int take)
         {
-            var model = await _data.GetAll_CursosEstudiante(estId,
-                searchString, true)
+            var model = await _data
+                .Search_CursosEstudiante(estId, searchString)
                 .ToListAsync();
             return new PaginationViewModel<Curso>(model, skip, take);
         }

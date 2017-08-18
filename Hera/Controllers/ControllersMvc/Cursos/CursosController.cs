@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Entities.Cursos;
 using Microsoft.AspNetCore.Mvc;
@@ -176,6 +177,27 @@ namespace Hera.Controllers.ControllersMvc
             {
                 this.SetAlerts("error-alerts",
                     "Error, no se pudo remover el desafío");
+            }
+            return RedirectToAction("Details", "ProfesorCurso",
+                new { idCurso = cursoId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveEstudiante(int estudianteId,
+            int cursoId)
+        {
+            try
+            {
+                var profId = _userService.Get_ProfesorId(User.Claims);
+                var res = await _ctrlService
+                    .Remove_EstudianteCurso(profId, estudianteId, cursoId);
+                if(res)
+                    this.SetAlerts("success-alerts", 
+                        "La matrícula se anuló exitosamente");
+            }
+            catch (Exception e)
+            {
+                this.SetAlerts("error-alerts",e.Message);
             }
             return RedirectToAction("Details", "ProfesorCurso",
                 new { idCurso = cursoId });

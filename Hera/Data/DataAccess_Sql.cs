@@ -331,6 +331,22 @@ namespace Hera.Data
                 && c.Activo == active)
                 .Include(c => c.Profesor);
         }
+
+        public IQueryable<Curso> Search_CursosEstudiante(int idEst, 
+            string searchString = "")
+        {
+            var ids = _context.Rel_Cursos_Estudiantes
+                .Where(rel => rel.EstudianteId == idEst)
+                .Select(rel => rel.CursoId);
+            var query = Enumerable.Empty<Curso>().AsQueryable();
+            query =  _context.Cursos
+                .Where(c => !ids.Contains(c.Id)
+                && c.Activo)
+                .Include(c => c.Profesor);
+            if (!string.IsNullOrWhiteSpace(searchString))
+                query = query.Where(c => c.Nombre.Contains(searchString));
+            return query;
+        }
         public IQueryable<Curso> GetAll_CursosEstudiante(int idEst,
             string courseName = "", bool inverse = false)
         {

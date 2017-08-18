@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Entities.Cursos;
 using Hera.Data;
@@ -163,6 +161,20 @@ namespace Hera.Services.ApplicationServices
                 throw new ApplicationServicesException(
                     "Error en la eliminación de desafío", e);
             }
+        }
+
+        public async Task<bool> Remove_EstudianteCurso(int profId,
+            int estudianteId, int cursoId)
+        {
+            if (!await Do_validateProfesor(profId, cursoId))
+                return false;
+            if (!await _data.Exist_Estudiante_Curso(estudianteId, cursoId))
+                return false;
+
+            var rel = await _data
+                .Find_Rel_CursoEstudiantes(cursoId, estudianteId);
+            _data.Delete(rel);
+            return await _data.SaveAllAsync();
         }
 
         private async Task<bool> Do_validateProfesor(int profId, int cursoId)
