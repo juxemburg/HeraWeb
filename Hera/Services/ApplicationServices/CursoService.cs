@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Entities.Cursos;
+using Entities.Notifications;
 using Hera.Data;
 using Hera.Models.EntitiesViewModels;
 using Hera.Models.EntitiesViewModels.Cursos;
@@ -105,9 +107,22 @@ namespace Hera.Services.ApplicationServices
                 if (await _data.Exist_Desafio(model.DesafioId, model.Id))
                     throw new ApplicationServicesException(
                         "El desafío ya se encuentra en el curso");
-
+                
                 var desafio = await _data.Find_Desafio(model.DesafioId);
+                var profesor = await _data
+                    .Find_Profesor(desafio.ProfesorId);
                 _data.AddDesafio(model.Id, desafio);
+
+                if (profId != profesor.Id)
+                {
+                    _data.Do_PushNotification(
+                        NotificationType.Notification_DesafioUsado,
+                        profesor.UsuarioId, new Dictionary<string, string>()
+                        {
+                            ["IdDesafio"] = $"{desafio.Id}",
+                            ["NombreDesafio"] = $"{desafio.Nombre}"
+                        });
+                }
                 return await _data.SaveAllAsync();
             }
             catch (Exception e)

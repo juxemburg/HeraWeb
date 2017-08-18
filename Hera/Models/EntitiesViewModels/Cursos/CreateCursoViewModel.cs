@@ -45,7 +45,8 @@ namespace Hera.Models.EntitiesViewModels
                         Desafio = desafioInicial
                     }
                 },
-                Color = color
+                Color = color,
+                Activo = true
             };
         }
         

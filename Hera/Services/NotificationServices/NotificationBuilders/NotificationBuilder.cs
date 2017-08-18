@@ -68,6 +68,21 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                         Unread = true,
                         Type = NotificationType.Notification_DesafioCalificado
                     };
+                },
+                [NotificationType.Notification_DesafioUsado]
+                = (userId, values) =>
+                {
+                    var idDesafio = Convert.ToInt32(values["IdDesafio"]);
+                    return new Notification()
+                    {
+                        UsuarioId = userId,
+                        Date = DateTime.Now,
+                        Action = $"/Desafios/Details/{idDesafio}",
+                        Message = $"tu desafío {values["NombreDesafio"]} " +
+                                  "ha aumentado su popularidad",
+                        Unread = true,
+                        Type = NotificationType.Notification_DesafioCalificado
+                    };
                 }
             };
 
@@ -102,8 +117,16 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                               "en tu desafío",
                     Count = data.Count,
                     Date = data.Min(d => d.Date)
+                },
+                [NotificationType.Notification_DesafioUsado]
+                = (data) => new NotificationViewModel()
+                {
+                    Action = data.First().Action,
+                    Message = $"{data.Count} profesores están usando " +
+                              "tu desafío",
+                    Count = data.Count,
+                    Date = data.Min(d => d.Date)
                 }
-
             };
 
         private static NotificationViewModel NoNotifications
