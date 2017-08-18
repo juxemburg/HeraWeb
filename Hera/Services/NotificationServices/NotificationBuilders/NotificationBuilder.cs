@@ -3,15 +3,14 @@ using Hera.Models.NotificationViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Hera.Services.NotificationServices.NotificationBuilders
 {
     public static class NotificationBuilder
     {
-        private static Dictionary<NotificationType,
+        private static readonly Dictionary<NotificationType,
             Func<int, Dictionary<string, string>, Notification>>
-            factoryFunctions 
+            FactoryFunctions
             = new Dictionary<NotificationType,
                 Func<int, Dictionary<string, string>, Notification>>()
             {
@@ -20,7 +19,7 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                 {
                     var idCurso = Convert.ToInt32(values["IdCurso"]);
                     var key = $"NuevaCalificacion-{idCurso}";
-                    
+
                     return new Notification()
                     {
                         Key = key,
@@ -53,24 +52,40 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                         Type = NotificationType.Notification_NuevoEstudiante
                     };
 
+                },
+                [NotificationType.Notification_DesafioCalificado]
+                = (userId, values) =>
+                {
+                    var idDesafio = Convert.ToInt32(values["IdDesafio"]);
+                    return new Notification()
+                    {
+                        UsuarioId = userId,
+                        Date = DateTime.Now,
+                        Action = $"/Desafios/Details/{idDesafio}",
+                        Message = "Han realizado una nueva " +
+                                  "calificación en " +
+                                  $"tu desafío {values["NombreDesafio"]}",
+                        Unread = true,
+                        Type = NotificationType.Notification_DesafioCalificado
+                    };
                 }
             };
 
-        private static Dictionary<NotificationType,
+        private static readonly Dictionary<NotificationType,
             Func<List<Notification>, NotificationViewModel>>
-            groupFunctions =
+            GroupFunctions =
             new Dictionary<NotificationType, Func<List<Notification>, NotificationViewModel>>()
             {
                 [NotificationType.Notification_NuevaCalificacion] =
                 (data) => new NotificationViewModel()
-                    {
-                        Action = data.First().Action,
-                        Message = $"¡Tienes {data.Count} nuevas " +
+                {
+                    Action = data.First().Action,
+                    Message = $"¡Tienes {data.Count} nuevas " +
                         $"calificaciones en tu curso!",
-                        Count = data.Count,
-                        Date = data.Min(e => e.Date)
-                    },
-                [NotificationType.Notification_NuevoEstudiante] = 
+                    Count = data.Count,
+                    Date = data.Min(e => e.Date)
+                },
+                [NotificationType.Notification_NuevoEstudiante] =
                 (data) => new NotificationViewModel()
                 {
                     Action = data.First().Action,
@@ -78,21 +93,30 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                         $"estudiantes en tu curso!",
                     Count = data.Count,
                     Date = data.Min(e => e.Date)
+                },
+                [NotificationType.Notification_DesafioCalificado]
+                = (data) => new NotificationViewModel()
+                {
+                    Action = data.First().Action,
+                    Message = $"Tienes {data.Count} nuevas calificaciones" +
+                              "en tu desafío",
+                    Count = data.Count,
+                    Date = data.Min(d => d.Date)
                 }
+
             };
 
         private static NotificationViewModel NoNotifications
-        {
-            get => new NotificationViewModel()
+            => new NotificationViewModel()
             {
-                Action ="#",
+                Action = "#",
                 Message = "No tienes notificaciones..."
             };
-        }
+
         public static Notification CreateNotification(NotificationType type,
             int userId, Dictionary<string, string> values)
         {
-            return factoryFunctions[type](userId, values);
+            return FactoryFunctions[type](userId, values);
         }
 
         public static IEnumerable<NotificationViewModel> ResumeNotifications(
@@ -100,7 +124,7 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
         {
             foreach (var type in notifications.Keys)
             {
-                yield return 
+                yield return
                     Get_resumedNotification(type, notifications[type]);
             }
         }
@@ -116,11 +140,11 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                     Action = notifications[0].Action,
                     Message = notifications[0].Message
                 };
-            return groupFunctions[type](notifications);
+            return GroupFunctions[type](notifications);
         }
 
-        
+
     }
 
-    
+
 }

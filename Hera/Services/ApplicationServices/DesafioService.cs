@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities.Notifications;
 using Hera.Data;
 using Hera.Models.EntitiesViewModels;
 using Hera.Models.EntitiesViewModels.Desafios;
@@ -72,8 +74,19 @@ namespace Hera.Services.ApplicationServices
         {
             if (!await _data.Exist_Desafio(desafioId))
                 return false;
+            var desafio = await _data.Find_Desafio(desafioId);
+            var profesor = await _data.Find_Profesor(desafio.ProfesorId);
+            if (profId != profesor.Id)
+            {
+                _data.Do_PushNotification(
+                    NotificationType.Notification_DesafioCalificado,
+                    profesor.UsuarioId, new Dictionary<string, string>()
+                    {
+                        ["IdDesafio"] = $"{desafioId}",
+                        ["NombreDesafio"] = $"{desafio.Nombre}"
+                    });
+            }
 
-            //Todo add notification
 
             await _data.Calificar_Desafio(desafioId, profId,
                 model.Rate);
