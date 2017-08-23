@@ -95,7 +95,10 @@
                                     </td>
                                     <td class="td-actions">
                                         <div class="text-center">
-                                            <a class="btn btn-sm btn-info btn-round">
+                                            <a asp-action="Edit"
+                                               asp-controller="Desafios"
+                                               asp-route-desafioId="@item.Id"
+                                               class="btn btn-sm btn-info btn-round">
                                                 <i class="material-icons">create</i>
                                             </a>
                                             <button class="btn btn-sm btn-round btn-danger"
@@ -119,7 +122,7 @@
 }
 else
 {
-    @Html.Partial("Util/_NoResultsSectionPartial", ViewData);
+    @Html.Partial("Util/_NoResultsSectionPartial", ViewData)
 }
 
 @section Modals {

@@ -1,0 +1,44 @@
+﻿@model PaginationViewModel<Profesor>
+@{
+    ViewData["Title"] = "Gestión de profesores";
+}
+
+<section class="section-thin">
+    <div class="container-fluid">
+        <h2>
+            <span class="title">Gestionar</span> Profesores
+        </h2>
+    </div>
+</section>
+<section class="section-gray section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card card-raised">
+                    <div class="card-content">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <td>Nombre Profesor</td>
+                                    <td>Correo Profesor</td>
+                                    <td>Activo</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.NombreCompleto</td>
+                                    <td>@item.UsuarioId</td>
+                                    <td>@item.Activo</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

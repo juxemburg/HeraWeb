@@ -69,6 +69,7 @@ namespace Hera
             services.AddScoped<DesafioEstudianteService>();
 
             //AplicationServices
+            services.AddScoped<AdminService>();
             services.AddScoped<ProfesorService>();
             services.AddScoped<CursoService>();
             services.AddScoped<DesafioService>();

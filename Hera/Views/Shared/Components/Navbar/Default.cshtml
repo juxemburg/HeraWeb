@@ -34,20 +34,23 @@
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li>
                         <a asp-controller="Desafios"
-                           asp-action="index">Buscar desafíos
+                           asp-action="index">
+                            Buscar desafíos
                             <i class="material-icons">search</i>
                         </a>
                     </li>
                     <li>
                         <a asp-controller="ProfesorDesafio"
-                           asp-action="index">Mis Desafios
+                           asp-action="index">
+                            Mis Desafios
                             <i class="material-icons">assignment</i>
                         </a>
                     </li>
                     <li class="divider"></li>
                     <li>
                         <a asp-controller="Desafios"
-                           asp-action="Create">Crear desafio
+                           asp-action="Create">
+                            Crear desafio
                             <i class="material-icons">add_circle</i>
                         </a>
                     </li>
@@ -66,6 +69,14 @@
                    asp-action="Busqueda">
                     Buscar Cursos
                     <i class="material-icons">search</i>
+                </a>
+            </li>
+            break;
+        case 3:
+            <li>
+                <a asp-controller="AdminProfesores"
+                   asp-action="Index">
+                    Gestión de Profesores
                 </a>
             </li>
             break;

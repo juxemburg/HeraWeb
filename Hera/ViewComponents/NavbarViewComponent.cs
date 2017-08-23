@@ -23,6 +23,8 @@ namespace Hera.ViewComponents
                 roleValue = 1;
             else if (User.IsInRole("Estudiante"))
                 roleValue = 2;
+            else if (User.IsInRole("Admin"))
+                roleValue = 3;
 
             return View(roleValue);
         }

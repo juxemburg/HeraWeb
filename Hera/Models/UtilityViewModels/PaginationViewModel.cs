@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Hera.Models.UtilityViewModels
 {
@@ -25,11 +24,11 @@ namespace Hera.Models.UtilityViewModels
                 .Take(take).ToList();
             Skip = skip;
             Take = take;
-            PageCount = (int)Math.Ceiling((double)Count / (double)Take);
+            PageCount = (int)Math.Ceiling(Count / (double)Take);
             var pages = new List<Tuple<int, string>>();
-            for (int i = 1; i <= PageCount; i++)
+            for (var i = 1; i <= PageCount; i++)
             {
-                string itemClass = ((i-1)* take == skip) ? "active" : "";
+                var itemClass = ((i-1)* take == skip) ? "active" : "";
                 pages.Add(new Tuple<int, string>(i, itemClass));
             }
             Pages = (PageCount > 1) ? pages : new List<Tuple<int, string>>();

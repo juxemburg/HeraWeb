@@ -13,6 +13,7 @@ using Hera.Services;
 using Entities.Notifications;
 using Hera.Services.NotificationServices.NotificationBuilders;
 using Microsoft.EntityFrameworkCore.Query.ResultOperators.Internal;
+using Remotion.Linq.Utilities;
 
 namespace Hera.Data
 {
@@ -294,9 +295,28 @@ namespace Hera.Data
             }
         }
 
+        public async Task<bool> Exist_Profesor(int usuarioId)
+        {
+            return await _context.Profesores
+                .AnyAsync(p => p.UsuarioId == usuarioId);
+        }
         public async Task<Profesor> Find_Profesor(int id)
         {
             return await _context.Profesores.FindAsync(id);
+        }
+
+        public async Task<Profesor> Find_ProfesorU(int usuarioId)
+        {
+            try
+            {
+                var id = await Find_ProfesorId(usuarioId);
+                return await Find_Profesor(id);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
         }
 
         public async Task<int> Find_ProfesorId(int usuarioId)
@@ -451,7 +471,7 @@ namespace Hera.Data
 
         public IQueryable<Profesor> GetAll_Profesor()
         {
-            throw new NotImplementedException();
+            return _context.Profesores;
         }
 
         public async Task<bool> SaveAllAsync()

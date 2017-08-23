@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -75,7 +74,15 @@ namespace Hera.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                if(!await Validate_profesor(model.Email)){
+                    ModelState.AddModelError(string.Empty,
+                        "Cuenta no activada, " +
+                        "comuníquese con el administrador");
+                    return View(model);
+                }
+                var result = await _signInManager
+                    .PasswordSignInAsync(model.Email, model.Password,
+                    model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(1, "User logged in.");
@@ -83,7 +90,7 @@ namespace Hera.Controllers
                 }
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl,  model.RememberMe });
                 }
                 if (result.IsLockedOut)
                 {
@@ -99,6 +106,19 @@ namespace Hera.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        private async Task<bool> Validate_profesor(string email)
+        {
+            var item = await _userManager.FindByEmailAsync(email);
+            if (item == null)
+                return false;
+            if (!await _dataAccess.Exist_Profesor(item.UsuarioId))
+                return true;
+
+            var prof = await _dataAccess.Find_ProfesorU(item.UsuarioId);
+            return prof?.Activo ?? false;
+
         }
 
         //
@@ -214,7 +234,7 @@ namespace Hera.Controllers
                     await _dataAccess.SaveAllAsync();
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account",
-                        new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                        new { userId = user.Id, code }, protocol: HttpContext.Request.Scheme);
                     await _emailSender.SendEmailAsync(model.Email, "Confirma tu cuenta",
                         $"Por favor confirma tu correo al hacer click aquí: <a href='{callbackUrl}'>link</a>");
                     return true;

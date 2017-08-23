@@ -81,6 +81,12 @@ namespace Hera.Controllers.ControllersMvc
             return View(model);
         }
 
+        [HttpGet("{desafioId}")]
+        public async Task<IActionResult> Edit(int desafioId)
+        {
+            var model = await _ctrlService.Get_Desafio(desafioId);
+            return View(model);
+        }
 
         [HttpPost("{desafioId}")]
         [ValidateAntiForgeryToken]
