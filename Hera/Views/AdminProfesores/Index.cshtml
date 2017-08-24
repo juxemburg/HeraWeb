@@ -5,12 +5,12 @@
 
 <section class="section-thin">
     <div class="container-fluid">
-        <h2>
+        <h2 class="text-center">
             <span class="title">Gestionar</span> Profesores
         </h2>
     </div>
 </section>
-<section class="section">
+<section class="section section-thin">
     <div class="container-fluid">
         <div class="row">
             <form asp-action="Index"
@@ -30,34 +30,60 @@
         </div>
     </div>
 </section>
-<section class="section-gray section">
+<section class="section-gray section section-basic">
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12">
-                <div class="card">
-                    <div class="card-content">
-                        <table class="table table-responsive">
-                            <thead>
-                            <tr>
-                                <th>Nombre Profesor</th>
-                                <th>Correo Profesor</th>
-                                <th>Activo</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach (var item in Model)
-                            {
+                @if (Model.Any())
+                {
+                    <div class="card card-raised">
+                        <div class="card-content">
+                            <table class="table table-responsive table-condensed table-hover">
+                                <thead class="text-primary">
                                 <tr>
-                                    <td>@item.NombreCompleto</td>
-                                    <td>@item.UsuarioId</td>
-                                    <td>@item.Activo</td>
+                                    <th>Nombre Profesor</th>
+                                    <th>Correo Profesor</th>
+                                    <th>Activo</th>
                                 </tr>
-                            }
-                            </tbody>
-                        </table>
-                        @await Html.PartialAsync("Pagination/_PaginationPartial", Model)
+                                </thead>
+                                <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.NombreCompleto</td>
+                                        <td>@item.UsuarioId</td>
+                                        <td class="td-actions">
+                                            @if (item.Activo)
+                                            {
+                                                <a asp-action="Activate"
+                                                   asp-route-usuarioId="@item.UsuarioId"
+                                                   asp-route-value="false"
+                                                   class="btn btn-sm btn-round btn-warning">
+                                                    <i class="material-icons">clear</i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-action="Activate"
+                                                   asp-route-usuarioId="@item.UsuarioId"
+                                                   asp-route-value="true"
+                                                   class="btn btn-sm btn-round btn-info">
+                                                    <i class="material-icons">check</i>
+                                                </a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                            @await Html.PartialAsync("Pagination/_PaginationPartial", Model)
+                        </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    @await Html.PartialAsync("Util/_NoResultsPartial")
+                }
             </div>
         </div>
     </div>

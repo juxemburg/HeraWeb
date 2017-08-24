@@ -3852,15 +3852,30 @@ h2.title {
   padding-top: 25px;
 }
 
+
 .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
     padding: 12px 8px;
     vertical-align: middle;
 }
+
+
 .table .td-actions .btn {
     margin: 0px;
     padding: 5px;
 }
 
+.table > thead > tr > th {
+    border-bottom-width: 1px;
+    font-size: 1.25em;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+.table > tbody > tr td {
+    padding-left: 1%;
+}
+.table .td-actions {
+    padding-left: 20px;
+}
 /*Sections*/
 .section-gray {
     background: #E5E5E5;

@@ -25,6 +25,17 @@ namespace Hera.Services.ApplicationServices
 
             return new PaginationViewModel<Profesor>(model, skip, take);
         }
+
+        public async Task<bool> Activate_Profesor(int usuarioId,
+            bool value)
+        {
+            if (!await _data.Exist_Profesor(usuarioId))
+                return false;
+
+            var profesor = await _data.Find_ProfesorU(usuarioId);
+            profesor.Activo = value;
+            return await _data.SaveAllAsync();
+        }
         
     }
 }
