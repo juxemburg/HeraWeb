@@ -10,19 +10,39 @@
         </h2>
     </div>
 </section>
+<section class="section">
+    <div class="container-fluid">
+        <div class="row">
+            <form asp-action="Index"
+                  method="get" class="form-inline">
+                <div class="col-xs-12 text-center">
+
+                    <div class="form-group form-group-lg label-floating">
+                        <label name="searchString" class="control-label">Búsqueda</label>
+                        <input name ="searchString" class="form-control input-lg" />
+                    </div>
+                    <button class="btn btn-primary btn-fab btn-fab-mini btn-round " type="submit">
+                        <i class="material-icons">search</i>
+                    </button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
 <section class="section-gray section">
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12">
-                <div class="card card-raised">
+                <div class="card">
                     <div class="card-content">
                         <table class="table table-responsive">
                             <thead>
-                                <tr>
-                                    <td>Nombre Profesor</td>
-                                    <td>Correo Profesor</td>
-                                    <td>Activo</td>
-                                </tr>
+                            <tr>
+                                <th>Nombre Profesor</th>
+                                <th>Correo Profesor</th>
+                                <th>Activo</th>
+                            </tr>
                             </thead>
                             <tbody>
                             @foreach (var item in Model)
@@ -35,10 +55,10 @@
                             }
                             </tbody>
                         </table>
+                        @await Html.PartialAsync("Pagination/_PaginationPartial", Model)
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-

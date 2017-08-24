@@ -5,7 +5,7 @@ using Hera.Services.ApplicationServices;
 
 namespace Hera.Controllers.ControllersMvc.Admin
 {
-    
+
 
     [Authorize(Roles = "Admin")]
     [Route("/Admin/Profesores/[action]")]
@@ -19,10 +19,11 @@ namespace Hera.Controllers.ControllersMvc.Admin
         }
 
         [HttpGet("/Admin/Profesores")]
-        public async Task<IActionResult> Index(int skip = 0, int take = 10)
+        public async Task<IActionResult> Index(string searchString = "",
+            int skip = 0, int take = 10)
         {
             var model = await _ctrlService
-                .Get_Profesores(skip, take);
+                .Get_Profesores(searchString, skip, take);
             return View(model);
         }
     }

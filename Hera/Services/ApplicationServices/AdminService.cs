@@ -17,9 +17,10 @@ namespace Hera.Services.ApplicationServices
         }
 
         public async Task<PaginationViewModel<Profesor>>
-            Get_Profesores(int skip, int take)
+            Get_Profesores(string searchStrng, int skip, int take)
         {
-            var model = await _data.GetAll_Profesor()
+            var model = await _data.GetAll_Profesor(searchStrng)
+                .OrderBy(p => p.NombreCompleto)
                 .ToListAsync();
 
             return new PaginationViewModel<Profesor>(model, skip, take);

@@ -33,7 +33,7 @@ namespace Hera.Data
 
         //Profesores
         void AddProfesor(Profesor model);
-        IQueryable<Profesor> GetAll_Profesor();
+        IQueryable<Profesor> GetAll_Profesor(string searchString = "");
         Task<Profesor> Find_ProfesorU(int usuarioId);
         Task<int> Find_ProfesorId(int usuarioId);
         Task<int> Find_EstudianteId(int usuarioId);

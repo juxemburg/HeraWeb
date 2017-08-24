@@ -469,9 +469,14 @@ namespace Hera.Data
             throw new NotImplementedException();
         }
 
-        public IQueryable<Profesor> GetAll_Profesor()
+        public IQueryable<Profesor> GetAll_Profesor(
+            string searchString = "")
         {
-            return _context.Profesores;
+            IQueryable<Profesor> query = _context.Profesores;
+            if (!string.IsNullOrWhiteSpace(searchString))
+                query = query.Where(p =>
+                    p.NombreCompleto.Contains(searchString));
+            return query;
         }
 
         public async Task<bool> SaveAllAsync()
