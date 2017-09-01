@@ -51,6 +51,9 @@ namespace Hera
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration
                 .GetConnectionString("HERAdb")));
+            services.AddDbContext<NotificationDbContext>(options =>
+                options.UseSqlServer(Configuration
+                    .GetConnectionString("HERAdb")));
             services.AddSingleton<FileManagerService>();
             services.AddSingleton<ColorService>();
             services.AddIdentity<ApplicationUser, IdentityRole>(config =>

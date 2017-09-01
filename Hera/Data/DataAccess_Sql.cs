@@ -21,10 +21,13 @@ namespace Hera.Data
     {
         private readonly ApplicationDbContext _context;
         private readonly FileManagerService _fmService;
+        private readonly NotificationDbContext _notificationCtx;
 
         public DataAccess_Sql(ApplicationDbContext context,
-            FileManagerService fmService)
+            FileManagerService fmService,
+            NotificationDbContext notificationCtx)
         {
+            _notificationCtx = notificationCtx;
             _fmService = fmService;
             _context = context;
         }
@@ -738,23 +741,28 @@ namespace Hera.Data
             int userId,
             Dictionary<string, string> values)
         {
-            var not = NotificationBuilder.CreateNotification(type,
-                userId, values);
-            Add_Notification(not);
+            Task.Run(() =>
+            {
+                var not = NotificationBuilder.CreateNotification(type,
+                    userId, values);
+                Add_Notification(not);
+                _notificationCtx.SaveChangesAsync().Wait();
+            });
         }
         public void Add_Notification(Notification model)
         {
-            Add<Notification>(model);
+            _notificationCtx.Add(model);
         }
 
         public void Edit_Notification(Notification model)
         {
-            Edit<Notification>(model);
+            _notificationCtx.Entry(model).State =
+                EntityState.Modified;;
         }
 
         public async Task<Notification> Find_Notification(int id)
         {
-            var model = await _context.Notifications
+            var model = await _notificationCtx.Notifications
                 .FirstOrDefaultAsync(n => n.Id == id);
 
             return model;
@@ -762,7 +770,7 @@ namespace Hera.Data
         public async Task<Notification> Find_Notification
             (int userId, string key)
         {
-            var model = await _context.Notifications
+            var model = await _notificationCtx.Notifications
                 .FirstOrDefaultAsync(n => n.UsuarioId == userId &&
                 n.Key.Equals(key) && n.Unread);
 
@@ -771,7 +779,7 @@ namespace Hera.Data
         public IQueryable<Notification> GetAll_Notifications(int userId,
             bool unread = true)
         {
-            return _context.Notifications
+            return _notificationCtx.Notifications
                 .Where(c => c.UsuarioId.Equals(userId) &&
                 c.Unread == unread)
                 .OrderByDescending(c => c.Date);
@@ -782,9 +790,9 @@ namespace Hera.Data
             foreach (var item in notifications)
             {
                 item.Unread = false;
-                Edit<Notification>(item);
+                Edit_Notification(item);
             }
-            await SaveAllAsync();
+            await _notificationCtx.SaveChangesAsync();
         }
     }
 }

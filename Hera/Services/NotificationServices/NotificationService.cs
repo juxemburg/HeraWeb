@@ -2,11 +2,8 @@
 using Hera.Data;
 using Hera.Models.NotificationViewModels;
 using Hera.Services.NotificationServices.NotificationBuilders;
-using Hera.Services.UserServices;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -16,7 +13,7 @@ namespace Hera.Services
 {
     public class NotificationService
     {
-        private IDataAccess _data;
+        private readonly IDataAccess _data;
 
         public NotificationService(IDataAccess data)
         {
@@ -27,7 +24,7 @@ namespace Hera.Services
         {
             var notifications = (await Get_notifications(userId))
                 .ToList();
-            
+
             return notifications.Count;
         }
 
@@ -41,14 +38,14 @@ namespace Hera.Services
                 .Select(n =>
                 new NotificationDateViewModel()
                 {
-                    Resumed = String.Format("{0:D}", n.Key, new CultureInfo("es-ES")),
+                    Resumed = string.Format("{0:D}", n.Key, new CultureInfo("es-ES")),
                     Notifications = n.ToList()
                 });
 
             return notifications;
 
         }
-        
+
 
         public async Task<IEnumerable<NotificationViewModel>>
             GetResumedNotifications(int userId)
@@ -70,9 +67,9 @@ namespace Hera.Services
             var notifications = await _data
                 .GetAll_Notifications(userId, unread)
                 .Skip(skip)
-                .Take(100)
+                .Take(take)
                 .ToListAsync();
-            if(markAsRead)
+            if (markAsRead)
                 _data.Do_MarkAsRead(notifications).Wait();
 
             return notifications;
@@ -80,8 +77,8 @@ namespace Hera.Services
 
 
 
-        
 
-        
+
+
     }
 }

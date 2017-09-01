@@ -34,7 +34,7 @@ namespace Hera.Data
         public DbSet<IInfoScratch_Sprite> InfoSprites { get; set; }
         public DbSet<IInfoScratch_General> InfoGenerales { get; set; }
         public DbSet<Rel_Rating> Ratings { get; set; }
-        public DbSet<Notification> Notifications { get; set; }
+        
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
