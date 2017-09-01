@@ -3866,8 +3866,8 @@ h2.title {
 
 .table > thead > tr > th {
     border-bottom-width: 1px;
-    font-size: 1.25em;
-    font-weight: 400;
+    font-size: 1em;
+    font-weight: 500;
     text-transform: uppercase;
 }
 .table > tbody > tr td {

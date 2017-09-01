@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Hera.Services;
 using HeraScratch.Exceptions;
@@ -15,7 +11,7 @@ namespace Hera.Controllers.ControllersApi.Desafios
     [Route("api/Desafios")]
     public class DesafiosController : Controller
     {
-        private ScratchService _scratchService;
+        private readonly ScratchService _scratchService;
 
         public DesafiosController(ScratchService service)
         {

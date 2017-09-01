@@ -1,8 +1,47 @@
-﻿
+﻿@model EditDesafioViewModel
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
 <section class="section">
     <div class="container-fluid">
         <h2>
             <span class="title">Editar</span> desafío
         </h2>
+    </div>
+</section>
+
+<section class="section section-basic">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 col-md-12">
+                <form asp-action="Edit">
+                    <div class="form-group label-floating col-lg-4 col-md-4 col-sm-4">
+                        <label asp-for="Nombre" class="control-label"></label>
+                        <input asp-for="Nombre"  class="form-control" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+                    <div class="form-group label-floating col-lg-4 col-md-4 col-sm-6">
+                        <label asp-for="Descripcion" class="control-label"></label>
+                        <input asp-for="Descripcion" class="form-control" />
+                        <span asp-validation-for="Descripcion" class="text-danger"></span>
+                    </div>
+                    <div class="form-group label-floating col-lg-4 col-md-4 col-sm-4">
+                        <label asp-for="UrlEscenarioInicial" class="control-label"></label>
+                        <input asp-for="UrlEscenarioInicial"  class="form-control" />
+                        <span asp-validation-for="UrlEscenarioInicial" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <input asp-for="Id" type="hidden"/>
+                    </div>
+                    <div class="row margin-top-30">
+                        <div class="col-xs-12 text-center">
+                            <input type="submit" value="Guardar Cambios" class="btn btn-primary btn-round" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </section>

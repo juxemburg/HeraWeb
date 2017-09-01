@@ -93,6 +93,33 @@ namespace Hera.Services.ApplicationServices
             return await _data.SaveAllAsync();
         }
 
+
+        public async Task<EditDesafioViewModel> Get_DesafioEdit(int profId,
+            int desafioId)
+        {
+            if (!await _data.Exist_DesafioP(desafioId, profId))
+                throw new ApplicationServicesException();
+
+            var model = await _data.Find_Desafio(desafioId);
+            return new EditDesafioViewModel(model);
+        }
+
+        public async Task<bool> Edit_Desafio(int profId,
+            EditDesafioViewModel model)
+        {
+            if (!await _data.Exist_DesafioP(model.Id, profId))
+                throw new ApplicationServicesException();
+
+            var desafio = await _data.Find_Desafio(model.Id);
+            desafio.Nombre = model.Nombre;
+            desafio.Descripcion = model.Descripcion;
+            desafio.DirDesafioInicial = model.UrlEscenarioInicial;
+
+            _data.Edit(desafio);
+            return await _data.SaveAllAsync();
+
+        }
+
         public async Task<bool> Delete_Desafio(int profId, int desafioId)
         {
             if (!await _data.Exist_DesafioP(desafioId, profId))

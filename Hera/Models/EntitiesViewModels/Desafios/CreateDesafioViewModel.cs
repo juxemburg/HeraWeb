@@ -1,10 +1,6 @@
 ﻿using Entities.Desafios;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Hera.Models.EntitiesViewModels
 {
@@ -113,8 +109,8 @@ namespace Hera.Models.EntitiesViewModels
         {
             return new Desafio()
             {
-                Nombre = this.Nombre,
-                Descripcion = this.Descripcion,
+                Nombre = Nombre,
+                Descripcion = Descripcion,
                 DirDesafioInicial = UrlEscenarioInicial,
                 DirSolucion = DirArchivo,
                 ProfesorId = profesorId,

@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -84,8 +85,43 @@ namespace Hera.Controllers.ControllersMvc
         [HttpGet("{desafioId}")]
         public async Task<IActionResult> Edit(int desafioId)
         {
-            var model = await _ctrlService.Get_Desafio(desafioId);
-            return View(model);
+            try
+            {
+                var profId = _userService.Get_ProfesorId(User.Claims);
+                var model = await _ctrlService.Get_DesafioEdit(profId,
+                    desafioId);
+                return View(model);
+            }
+            catch (ApplicationServicesException)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost("{desafioId}")]
+        public async Task<IActionResult> Edit(EditDesafioViewModel model)
+        {
+            try
+            {
+                var profId = _userService.Get_ProfesorId(User.Claims);
+                var res = await _ctrlService.Edit_Desafio(profId, model);
+                if (res)
+                    this.SetAlerts("success-alerts",
+                        "Cambios guardados exitosamente");
+                else
+                    this.SetAlerts("error-alerts",
+                        "No se pudieron guardar los cambios");
+
+                return RedirectToAction("Details",
+                    new { desafioId = model.Id });
+            }
+            catch (ApplicationServicesException)
+            {
+                ModelState.AddModelError("", "Error al editar " +
+                                            "desafío revisa tus datos");
+                
+                return View(model);
+            }
         }
 
         [HttpPost("{desafioId}")]
@@ -100,8 +136,8 @@ namespace Hera.Controllers.ControllersMvc
                 var res = await
                     _ctrlService.Do_CalificarDesafio(idProfesor, desafioId,
                     model);
-                if(res)
-                    this.SetAlerts("success-alerts","se calificó el desafío exitosamente");
+                if (res)
+                    this.SetAlerts("success-alerts", "se calificó el desafío exitosamente");
                 else
                     this.SetAlerts("error-alerts", "error al calificar el desafío");
             }
@@ -127,7 +163,7 @@ namespace Hera.Controllers.ControllersMvc
                         " revisa que no esté siendo usado previamente");
                 return RedirectToAction("Index", "ProfesorDesafio");
             }
-            catch (ApplicationServicesException )
+            catch (ApplicationServicesException)
             {
                 return NotFound();
             }
