@@ -190,7 +190,7 @@
                                         var reg = Model.RegistrosCurso[
                                             new Tuple<int, int>(desafio.DesafioId, item.EstudianteId)];
                                         <td>
-                                            @if (reg.All(r => r.CalificacionCualitativa != null))
+                                            @if (reg.All(r => r.Valorada))
                                             {
                                                 <a class="btn btn-success btn-xs"
                                                    asp-action="Calificar"

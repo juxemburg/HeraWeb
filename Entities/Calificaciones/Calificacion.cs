@@ -14,6 +14,9 @@ namespace Entities.Calificaciones
 
         public virtual List<ResultadoScratch> Resultados { get; set; }
 
+        public int? CalificacionCualitativaId { get; set; }
+        public CalificacionCualitativa CalificacionCualitativa { get; set; }
+
         public int CursoId { get; set; }
         public int EstudianteId { get; set; }
         public int DesafioId { get; set; }
@@ -21,17 +24,12 @@ namespace Entities.Calificaciones
         public string DirArchivo { get; set; }
 
 
-        public TimeSpan Duracion { get { return (TiempoFinal - Tiempoinicio).GetValueOrDefault(); } }
-        public bool EnCurso
-        {
-            get
-            {
-                return TiempoFinal == null;
-            }
-        }
+        public TimeSpan Duracion => (TiempoFinal - Tiempoinicio).GetValueOrDefault();
+        public bool EnCurso => TiempoFinal == null;
+
         public void TerminarCalificacion(string dirArchivo)
         {
-            this.DirArchivo = dirArchivo;
+            DirArchivo = dirArchivo;
             TiempoFinal = DateTime.Now;
         }
         public ResultadoScratch ResultadoGeneral

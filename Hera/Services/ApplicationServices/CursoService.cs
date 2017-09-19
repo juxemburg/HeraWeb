@@ -116,7 +116,7 @@ namespace Hera.Services.ApplicationServices
                 if (profId != profesor.Id)
                 {
                     _data.Do_PushNotification(
-                        NotificationType.Notification_DesafioUsado,
+                        NotificationType.NotificationDesafioUsado,
                         profesor.UsuarioId, new Dictionary<string, string>()
                         {
                             ["IdDesafio"] = $"{desafio.Id}",

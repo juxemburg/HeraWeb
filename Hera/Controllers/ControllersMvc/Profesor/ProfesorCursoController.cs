@@ -70,10 +70,11 @@ namespace Hera.Controllers.ControllersMvc.Profesor
             var profId = _usrService.Get_ProfesorId(User.Claims);
             try
             {
-                var model = await _ctrlService.Get_Estudiante(profId,
-                    idCurso, idEstudiante);
+                //var model = await _ctrlService.Get_Estudiante(profId,
+                //    idCurso, idEstudiante);
 
-                return View(model);
+                //return View(model);
+                return Ok();
             }
             catch (ApplicationServicesException e)
             {

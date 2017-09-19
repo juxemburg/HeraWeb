@@ -8,7 +8,9 @@ using Hera.Data;
 using Hera.Models.EntitiesViewModels;
 using Hera.Models.EntitiesViewModels.Desafios;
 using Hera.Models.EntitiesViewModels.EstudianteDesafio;
+using Hera.Models.EntitiesViewModels.Evaluacion;
 using Hera.Models.EntitiesViewModels.ProfesorCursos;
+using Hera.Models.EntitiesViewModels.ProfesorEstudiante;
 using Hera.Models.UtilityViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -116,7 +118,7 @@ namespace Hera.Services.ApplicationServices
             int cursoId, int desafioId)
         {
             if (!await _data.Exist_Desafio(desafioId, cursoId, profId))
-                throw  new ApplicationServicesException("Desafío no encontrado");
+                throw new ApplicationServicesException("Desafío no encontrado");
 
             var desafio = await _data.Find_Desafio(desafioId);
             var curso = await _data.Find_Curso(cursoId);
@@ -124,21 +126,22 @@ namespace Hera.Services.ApplicationServices
             return new DesafioCursoViewModel(desafio, curso);
         }
 
-        public async Task<EstudianteCalificacionViewModel>
-            Get_Estudiante(int profId,int cursoId, int estudianteId)
-        {
-            var model = await _data.Find_Estudiante(estudianteId,
-                cursoId, profId);
-            if(model == null)
-                throw new ApplicationServicesException("Estudiante no encontrado");
-            return new EstudianteCalificacionViewModel(model);
-        }
+        //public async Task<EstudianteCalificacionViewModel>
+        //    Get_Estudiante(int profId, int cursoId, int estudianteId)
+        //{
+        //    var model = await _data.Find_Estudiante(estudianteId,
+        //        cursoId, profId);
+        //    if (model == null)
+        //        throw new ApplicationServicesException("Estudiante no encontrado");
+        //    return new EstudianteCalificacionViewModel(model);
+        //}
 
 
-        public async Task<CalificacionCualitativaViewModel> Get_CalificacionModel(
-            int idProf, int idCurso, int idEstudiante,int idDesafio)
+        public async Task<CalificacionesViewModel>
+            Get_CalificacionModel(int idProf, int idCurso,
+                int idEstudiante, int idDesafio)
         {
-            var model = await _data.Find_RegistroCalificacion(idCurso, 
+            var model = await _data.Find_RegistroCalificacion(idCurso,
                 idEstudiante, idDesafio, idProf);
 
             var desafio = await _data.Find_Desafio(idDesafio);
@@ -148,26 +151,21 @@ namespace Hera.Services.ApplicationServices
                 return null;
             }
 
-            var resultModel = new CalificacionCualitativaViewModel(
-                model,desafio);
+            var est = await _data.Find_Estudiante(model.EstudianteId);
+            var curso = await _data.Find_Curso(model.CursoId);
 
-            var formModel = await _data.Find_CalificacionCualitativa(
-                idEstudiante, idCurso, idDesafio);
-            if (formModel != null)
-            {
-                resultModel.FormModel =
-                    new CreateCalificacionCualitativaViewModel(formModel);
-                resultModel.Calificado = true;
-            }
+            var resultModel = new CalificacionesViewModel(curso.Nombre,
+                est.NombreCompleto, desafio.Nombre, model);
+
             return resultModel;
 
         }
 
-        public async Task<bool> Do_Calificar(int idProf,
-            CreateCalificacionCualitativaViewModel model)
+        public async Task<bool> Do_Calificar(int idProf, int idCurso,
+            int idEstudiante, CalificarViewModel model)
         {
-            if (!await Do_validationEstudiante(idProf, model.CursoId,
-                model.EstudianteId))
+            if (!await Do_validationEstudiante(idProf, idCurso,
+                idEstudiante))
                 return false;
 
             _data.Add(model.Map());
@@ -183,29 +181,30 @@ namespace Hera.Services.ApplicationServices
                 return null;
 
             var cal = await _data.Find_Calificacion(idCalificacion);
-            return cal == null ? null 
+            return cal == null ? null
                 : new ResultadosScratchViewModel(cal.Resultados);
         }
 
-        public async Task<bool> Do_EditCalificar(int profId,
-            CreateCalificacionCualitativaViewModel model)
-        {
-            if (!await Do_validationEstudiante(profId, model.CursoId,
-                model.EstudianteId))
-                return false;
-            if (model.Id == null)
-                return false;
+        //public async Task<bool> Do_EditCalificar(int profId,
+        //    CreateCalificacionCualitativaViewModel model)
+        //{
+        //    //if (!await Do_validationEstudiante(profId, model.CursoId,
+        //    //    model.EstudianteId))
+        //    //    return false;
 
-            var entity = await _data
-                .Find_CalificacionCualitativa(model.Id.Value);
+        //    if (model.Id == null)
+        //        return false;
 
-            entity.Completada = model.Completada;
-            entity.Descripcion = model.Descripcion;
+        //    var entity = await _data
+        //        .Find_CalificacionCualitativa(model.Id.Value);
 
-            _data.Edit(entity);
+        //    entity.Completada = model.Completada;
+        //    entity.Descripcion = model.Descripcion;
 
-            return await _data.SaveAllAsync();
-        }
+        //    _data.Edit(entity);
+
+        //    return await _data.SaveAllAsync();
+        //}
 
         #region private methods
 
@@ -220,5 +219,5 @@ namespace Hera.Services.ApplicationServices
 
     }
 
-    
+
 }

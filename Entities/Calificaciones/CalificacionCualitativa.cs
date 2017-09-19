@@ -9,9 +9,7 @@ namespace Entities.Calificaciones
         public DateTime FechaRegistro { get; set; }
         public string Descripcion { get; set; }
 
-        public int CursoId { get; set; }
-        public int EstudianteId { get; set; }
-        public int DesafioId { get; set; }
-        public RegistroCalificacion RegistroCalificacion { get; set; }
+        public int CalificacionId { get; set; }
+        public Calificacion Calificacion { get; set; }
     }
 }

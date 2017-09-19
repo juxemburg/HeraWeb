@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Hera.Models.EntitiesViewModels;
+using Hera.Models.EntitiesViewModels.Evaluacion;
+using Hera.Models.EntitiesViewModels.ProfesorEstudiante;
 using Hera.Services.ApplicationServices;
 using Hera.Services.UserServices;
 using Microsoft.AspNetCore.Authorization;
@@ -34,28 +35,32 @@ namespace Hera.Controllers.ControllersMvc.Profesor
             if (model == null)
                 return NotFound();
 
+            this.GetAlerts();
+
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Calificar(
-            CreateCalificacionCualitativaViewModel model)
+        public async Task<IActionResult> Calificar(int idCurso, 
+            int idEstudiante, int idDesafio, CalificarViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var profId = _usrService.Get_ProfesorId(User.Claims);
-                var res = await _ctrlService.Do_Calificar(profId, model);
+                var res = await _ctrlService.Do_Calificar(profId, idCurso,
+                    idEstudiante, model);
                 if (!res)
-                    ModelState.AddModelError("", "Error al insertar " +
-                        "la calificación");
+                    this.SetAlerts("error-alerts", "Error al insertar " +
+                                                   "la calificación");
+                    
             }
             return RedirectToAction("Calificar",
                 new
                 {
-                    idCurso = model.CursoId,
-                    idEstudiante = model.EstudianteId,
-                    idDesafio = model.DesafioId
+                    idCurso,
+                    idEstudiante,
+                    idDesafio
                 });
         }
 
@@ -74,24 +79,23 @@ namespace Hera.Controllers.ControllersMvc.Profesor
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditCalificar(
-            CreateCalificacionCualitativaViewModel model)
+            CalificacionViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var profId = _usrService.Get_ProfesorId(User.Claims);
-                var res = await _ctrlService
-                    .Do_EditCalificar(profId, model);
-                if (!res)
-                    ModelState.AddModelError("", "Error al editar " +
-                        "la calificación");
-            }
-            return RedirectToAction("Calificar",
-                new
-                {
-                    idCurso = model.CursoId,
-                    idEstudiante = model.EstudianteId,
-                    idDesafio = model.DesafioId
-                });
+            //if (ModelState.IsValid)
+            //{
+            //    var profId = _usrService.Get_ProfesorId(User.Claims);
+            //    var res = await _ctrlService
+            //        .Do_EditCalificar(profId, model);
+            //    if (!res)
+            //        ModelState.AddModelError("", "Error al editar " +
+            //            "la calificación");
+            //}
+            //return RedirectToAction("Calificar",
+            //    new
+            //    {
+                    
+            //    });
+            return Ok();
         }
     }
 
