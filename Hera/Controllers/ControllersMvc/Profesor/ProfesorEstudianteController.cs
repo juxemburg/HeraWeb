@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
+using Entities.Calificaciones;
 using Microsoft.AspNetCore.Mvc;
-using Hera.Models.EntitiesViewModels.Evaluacion;
 using Hera.Models.EntitiesViewModels.ProfesorEstudiante;
 using Hera.Services.ApplicationServices;
 using Hera.Services.UserServices;
@@ -78,24 +78,26 @@ namespace Hera.Controllers.ControllersMvc.Profesor
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditCalificar(
-            CalificacionViewModel model)
+        public async Task<IActionResult> EditCalificar(int idCurso,
+            int idEstudiante, int idDesafio, CalificacionCualitativa model)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    var profId = _usrService.Get_ProfesorId(User.Claims);
-            //    var res = await _ctrlService
-            //        .Do_EditCalificar(profId, model);
-            //    if (!res)
-            //        ModelState.AddModelError("", "Error al editar " +
-            //            "la calificación");
-            //}
-            //return RedirectToAction("Calificar",
-            //    new
-            //    {
-                    
-            //    });
-            return Ok();
+            if (ModelState.IsValid)
+            {
+                var profId = _usrService.Get_ProfesorId(User.Claims);
+                var res = await _ctrlService
+                    .Do_EditCalificar(profId, idCurso, idEstudiante,
+                     idDesafio, model);
+                if (!res)
+                    this.SetAlerts("error-alerts","Error al editar" +
+                                                  " la calificación");
+            }
+            return RedirectToAction("Calificar",
+                new
+                {
+                    idCurso,
+                    idEstudiante,
+                    idDesafio
+                });
         }
     }
 

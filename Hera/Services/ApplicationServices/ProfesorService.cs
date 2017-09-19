@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities.Calificaciones;
 using Entities.Cursos;
 using Entities.Desafios;
 using Hera.Data;
@@ -185,26 +186,26 @@ namespace Hera.Services.ApplicationServices
                 : new ResultadosScratchViewModel(cal.Resultados);
         }
 
-        //public async Task<bool> Do_EditCalificar(int profId,
-        //    CreateCalificacionCualitativaViewModel model)
-        //{
-        //    //if (!await Do_validationEstudiante(profId, model.CursoId,
-        //    //    model.EstudianteId))
-        //    //    return false;
+        public async Task<bool> Do_EditCalificar(int profId, int cursoId,
+            int estudianteId, int desafioId, CalificacionCualitativa model)
+        {
+            if (!await Do_validationEstudiante(profId, cursoId,
+                estudianteId))
+                return false;
 
-        //    if (model.Id == null)
-        //        return false;
+            var entity = await _data
+                .Find_CalificacionCualitativa(estudianteId, cursoId,
+                desafioId);
+            if (entity == null)
+                return false;
 
-        //    var entity = await _data
-        //        .Find_CalificacionCualitativa(model.Id.Value);
+            entity.Completada = model.Completada;
+            entity.Descripcion = model.Descripcion;
 
-        //    entity.Completada = model.Completada;
-        //    entity.Descripcion = model.Descripcion;
+            _data.Edit(entity);
 
-        //    _data.Edit(entity);
-
-        //    return await _data.SaveAllAsync();
-        //}
+            return await _data.SaveAllAsync();
+        }
 
         #region private methods
 

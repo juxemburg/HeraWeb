@@ -631,6 +631,7 @@ namespace Hera.Data
             var model = await _context.Calificaciones
                 .Where(cal => cal.DesafioId == desafioId &&
                 cal.CursoId == cursoId && cal.EstudianteId == estudianteId)
+                .Include(cal => cal.CalificacionCualitativa)
                 .FirstOrDefaultAsync();
             return model.CalificacionCualitativa;
         }
