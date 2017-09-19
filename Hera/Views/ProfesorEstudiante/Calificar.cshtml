@@ -94,9 +94,13 @@
 
 
 @section Modals {
+    @foreach (var cal in Model.CalificacionList)
+    {
+        @await Html.PartialAsync("Evaluacion/_Modal_ResultadoEstudiantePartial", cal)
+    }
+
     @foreach (var item in Model.Registro.Calificaciones)
     {
-        @*@await Html.PartialAsync("Evaluacion/_Modal_ResultadoEstudiantePartial", null)
-        @await Html.PartialAsync("Evaluacion/_Modal_ResultadoBloquesPartial", item.ResultadoGeneral)*@
+        @await Html.PartialAsync("Evaluacion/_Modal_ResultadoBloquesPartial", item.ResultadoGeneral)
     }
 }

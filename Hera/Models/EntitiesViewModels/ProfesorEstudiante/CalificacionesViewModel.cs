@@ -1,4 +1,6 @@
-﻿using Entities.Calificaciones;
+﻿using System.Collections.Generic;
+using Entities.Calificaciones;
+using Hera.Models.EntitiesViewModels.Evaluacion;
 
 namespace Hera.Models.EntitiesViewModels.ProfesorEstudiante
 {
@@ -8,6 +10,7 @@ namespace Hera.Models.EntitiesViewModels.ProfesorEstudiante
         public string NombreEstudiante { get; set; }
         public string NombreDesafio { get; set; }
         public RegistroCalificacion Registro { get; set; }
+        public List<CalificacionViewModel> CalificacionList { get; set; }
 
 
         public CalificacionesViewModel()
@@ -17,12 +20,14 @@ namespace Hera.Models.EntitiesViewModels.ProfesorEstudiante
 
         public CalificacionesViewModel(string nombreCurso,
             string nombreEstudiante, string nombreDesafio,
+            List<CalificacionViewModel> calificacionList,
             RegistroCalificacion registro)
         {
             NombreCurso = nombreCurso;
             NombreEstudiante = nombreEstudiante;
             NombreDesafio = nombreDesafio;
             Registro = registro;
+            CalificacionList = calificacionList;
         }
     }
 }

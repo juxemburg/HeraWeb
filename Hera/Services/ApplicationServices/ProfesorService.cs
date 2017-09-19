@@ -6,7 +6,6 @@ using Entities.Calificaciones;
 using Entities.Cursos;
 using Entities.Desafios;
 using Hera.Data;
-using Hera.Models.EntitiesViewModels;
 using Hera.Models.EntitiesViewModels.Desafios;
 using Hera.Models.EntitiesViewModels.EstudianteDesafio;
 using Hera.Models.EntitiesViewModels.Evaluacion;
@@ -127,15 +126,15 @@ namespace Hera.Services.ApplicationServices
             return new DesafioCursoViewModel(desafio, curso);
         }
 
-        //public async Task<EstudianteCalificacionViewModel>
-        //    Get_Estudiante(int profId, int cursoId, int estudianteId)
-        //{
-        //    var model = await _data.Find_Estudiante(estudianteId,
-        //        cursoId, profId);
-        //    if (model == null)
-        //        throw new ApplicationServicesException("Estudiante no encontrado");
-        //    return new EstudianteCalificacionViewModel(model);
-        //}
+        public async Task<EstudianteCalificacionViewModel>
+            Get_Estudiante(int profId, int cursoId, int estudianteId)
+        {
+            var model = await _data.Find_Estudiante(estudianteId,
+                cursoId, profId);
+            if (model == null)
+                throw new ApplicationServicesException("Estudiante no encontrado");
+            return new EstudianteCalificacionViewModel(model);
+        }
 
 
         public async Task<CalificacionesViewModel>
@@ -151,12 +150,17 @@ namespace Hera.Services.ApplicationServices
             {
                 return null;
             }
+            var calificacionList = model.Calificaciones
+                .Select(c =>
+                    new CalificacionViewModel(c, desafio.InfoDesafio))
+                    .ToList();
 
             var est = await _data.Find_Estudiante(model.EstudianteId);
             var curso = await _data.Find_Curso(model.CursoId);
 
             var resultModel = new CalificacionesViewModel(curso.Nombre,
-                est.NombreCompleto, desafio.Nombre, model);
+                est.NombreCompleto, desafio.Nombre, calificacionList,
+                model);
 
             return resultModel;
 
