@@ -40,8 +40,7 @@ namespace Hera.Models.EntitiesViewModels.EstudianteDesafio
             get
             {
                 return Calificaciones
-                    .Where(cal => cal.EnCurso)
-                    .FirstOrDefault();
+                    .FirstOrDefault(cal => cal.EnCurso);
             }
         }
 

@@ -1,11 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using Hera.Services.ApplicationServices;
 using Hera.Services.UserServices;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Hera.Controllers.ControllersMvc
+namespace Hera.Controllers.ControllersMvc.Estudiante
 {
     [Authorize(Roles = "Estudiante")]
     [Route("/Estudiante/Curso/{idCurso:int}/[action]")]
@@ -52,6 +52,23 @@ namespace Hera.Controllers.ControllersMvc
                 var model = await _ctrlService
                     .Get_Desafio(estId, idCurso, idDesafio);
                 this.GetAlerts();
+                return View(model);
+            }
+            catch (ApplicationServicesException)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("{idDesafio:int}")]
+        public async Task<IActionResult> DesafioProgreso(int idCurso,
+            int idDesafio)
+        {
+            try
+            {
+                var estId = _usrService.Get_EstudianteId(User.Claims);
+                var model = await _ctrlService.Get_DesafioProgreso(estId,
+                        idCurso, idDesafio);
                 return View(model);
             }
             catch (ApplicationServicesException)

@@ -1,9 +1,5 @@
 ﻿using Entities.Desafios;
 using Entities.Valoracion;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Hera.Models.EntitiesViewModels.Evaluacion
 {
@@ -41,50 +37,51 @@ namespace Hera.Models.EntitiesViewModels.Evaluacion
         {
             var infoGeneral = resultadoGeneral.IInfoScratch_General;
 
-            this.SpriteCount = infoGeneral.SpriteCount;
+            SpriteCount = infoGeneral.SpriteCount;
 
-            this.EventsUse = infoGeneral.EventsUse;
-            this.MessageUse = infoGeneral.MessageUse;
-            this.SharedVariables = infoGeneral.SharedVariables;
-            this.ListUse = infoGeneral.ListUse;
+            EventsUse = infoGeneral.EventsUse;
+            MessageUse = infoGeneral.MessageUse;
+            SharedVariables = infoGeneral.SharedVariables;
+            ListUse = infoGeneral.ListUse;
 
-            Func<int, bool, float> trans = (n, value) => {
-                return (value) ? (n / (float)SpriteCount) : -1f;
-            };
+            float Trans(int n, bool value)
+            {
+                return (value) ? (n / (float) SpriteCount) : -1f;
+            }
 
-            this.NonUnusedBlocks = trans(infoGeneral.NonUnusedBlocks,
+            NonUnusedBlocks = Trans(infoGeneral.NonUnusedBlocks,
                 infoDesafio.NonUnusedBlocks);
-            this.UserDefinedBlocks = trans(infoGeneral.UserDefinedBlocks,
+            UserDefinedBlocks = Trans(infoGeneral.UserDefinedBlocks,
                 infoDesafio.UserDefinedBlocks);
-            this.CloneUse = trans(infoGeneral.CloneUse,
+            CloneUse = Trans(infoGeneral.CloneUse,
                 infoDesafio.CloneUse);
-            this.SecuenceUse = trans(infoGeneral.SecuenceUse,
+            SecuenceUse = Trans(infoGeneral.SecuenceUse,
                 infoDesafio.SecuenceUse);
-            this.MultipleThreads = trans(infoGeneral.MultipleThreads,
+            MultipleThreads = Trans(infoGeneral.MultipleThreads,
                 infoDesafio.MultipleThreads);
-            this.TwoGreenFlagTrhead = trans(infoGeneral.TwoGreenFlagTrhead,
+            TwoGreenFlagTrhead = Trans(infoGeneral.TwoGreenFlagTrhead,
                 infoDesafio.TwoGreenFlagThread);
-            this.AdvancedEventUse = trans(infoGeneral.AdvancedEventUse,
+            AdvancedEventUse = Trans(infoGeneral.AdvancedEventUse,
                 infoDesafio.AdvancedEventUse);
-            this.UseSimpleBlocks = trans(infoGeneral.UseSimpleBlocks,
+            UseSimpleBlocks = Trans(infoGeneral.UseSimpleBlocks,
                 infoDesafio.UseSimpleBlocks);
-            this.UseMediumBlocks = trans(infoGeneral.UseMediumBlocks,
+            UseMediumBlocks = Trans(infoGeneral.UseMediumBlocks,
                 infoDesafio.UseMediumBlocks);
-            this.UseNestedControl = trans(infoGeneral.UseNestedControl,
+            UseNestedControl = Trans(infoGeneral.UseNestedControl,
                 infoDesafio.UseNestedControl);
-            this.BasicInputUse = trans(infoGeneral.BasicInputUse,
+            BasicInputUse = Trans(infoGeneral.BasicInputUse,
                 infoDesafio.BasicInputUse);
-            this.VariableUse = trans(infoGeneral.VariableUse,
+            VariableUse = Trans(infoGeneral.VariableUse,
                 infoDesafio.VariableUse);
-            this.SpriteSensing = trans(infoGeneral.SpriteSensing,
+            SpriteSensing = Trans(infoGeneral.SpriteSensing,
                 infoDesafio.SpriteSensisng);
-            this.VariableCreation = trans(infoGeneral.VariableCreation,
+            VariableCreation = Trans(infoGeneral.VariableCreation,
                 infoDesafio.NonCreatedVariableUse);
-            this.BasicOperators = trans(infoGeneral.BasicOperators,
+            BasicOperators = Trans(infoGeneral.BasicOperators,
                 infoDesafio.BasicOperators);
-            this.MediumOperators = trans(infoGeneral.MediumOperators,
+            MediumOperators = Trans(infoGeneral.MediumOperators,
                 infoDesafio.MediumOperators);
-            this.AdvancedOperators = trans(infoGeneral.AdvancedOperators,
+            AdvancedOperators = Trans(infoGeneral.AdvancedOperators,
                 infoDesafio.NestedOperators);
 
         }

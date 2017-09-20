@@ -1,0 +1,48 @@
+@model Calificacion
+@{ 
+    string _value, _value2, _value3;
+
+    if (Model.CalificacionCualitativa == null)
+    {
+        _value = "primary";
+        _value2 = "primary";
+        _value3 = "Sin calificar";
+    }
+    else
+    {
+        _value = (Model.CalificacionCualitativa.Completada) ? "success" : "danger";
+        _value2 = (Model.CalificacionCualitativa.Completada) ? "info" : "warning";
+        _value3 = (Model.CalificacionCualitativa.Completada) ? "Completada" : "Con errores";
+    }
+}
+
+<div class="timeline-badge @_value">
+    <p>
+        <i class="material-icons">timer</i>
+    </p>
+</div>
+<div class="timeline-panel">
+    <div class="timeline-heading">
+        <span class="label label-@_value2">
+            @_value3
+        </span>
+    </div>
+    <div class="timeline-body">
+        <p>
+            <span class="title">Tiempo: </span>
+            @Math.Round(Model.Duracion.TotalMinutes,2) minutos
+        </p>
+        @if (Model.CalificacionCualitativa != null)
+        {
+            <hr />
+            <p>
+                <b>El profesor dice: </b>
+                @Model.CalificacionCualitativa.Descripcion
+            </p>
+        }
+    </div>
+    <h6>
+        <i class="ti-time"></i>
+        Entregado en: @Model.TiempoFinal.Value
+    </h6>
+</div>

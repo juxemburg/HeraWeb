@@ -12,7 +12,7 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
             Func<int, Dictionary<string, string>, Notification>>
             FactoryFunctions
             = new Dictionary<NotificationType,
-                Func<int, Dictionary<string, string>, Notification>>()
+                Func<int, Dictionary<string, string>, Notification>>
             {
                 [NotificationType.NotificationNuevaCalificacion]
                 = (userId, values) =>
@@ -95,13 +95,13 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                 {
                     UsuarioId = userId,
                     Date = DateTime.Now,
-                    Action= "/Estudiante/Cursos",
+                    Action = "/Estudiante/Cursos",
                     Message = "¡Tu matricula de curso " +
                               $"{values["NombreCurso"]} " +
                               "ha sido eliminada!",
-                    Unread =  true,
+                    Unread = true,
                     Type = NotificationType.NotificationMatriculaAnulada
-                              
+
                 }
             };
 
