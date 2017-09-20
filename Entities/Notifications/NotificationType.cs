@@ -11,6 +11,7 @@ namespace Entities.Notifications
         NotificationDesafioUsado,
 
         //NotificacionesEstudiante
-        NotificationNuevaRevision
+        NotificationNuevaRevision,
+        NotificationMatriculaAnulada
     }
 }

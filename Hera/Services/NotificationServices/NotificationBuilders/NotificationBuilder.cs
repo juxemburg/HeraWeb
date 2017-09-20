@@ -54,54 +54,55 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
 
                 },
                 [NotificationType.NotificationDesafioCalificado]
-                = (userId, values) =>
+                = (userId, values) => new Notification()
                 {
-                    var idDesafio = Convert.ToInt32(values["IdDesafio"]);
-                    return new Notification()
-                    {
-                        UsuarioId = userId,
-                        Date = DateTime.Now,
-                        Action = $"/Desafios/Details/{idDesafio}",
-                        Message = "Han realizado una nueva " +
-                                  "calificación en " +
-                                  $"tu desafío {values["NombreDesafio"]}",
-                        Unread = true,
-                        Type = NotificationType.NotificationDesafioCalificado
-                    };
+                    UsuarioId = userId,
+                    Date = DateTime.Now,
+                    Action = $"/Desafios/Details/{values["IdDesafio"]}",
+                    Message = "Han realizado una nueva " +
+                              "calificación en " +
+                              $"tu desafío {values["NombreDesafio"]}",
+                    Unread = true,
+                    Type = NotificationType.NotificationDesafioCalificado
                 },
                 [NotificationType.NotificationDesafioUsado]
-                = (userId, values) =>
+                = (userId, values) => new Notification()
                 {
-                    var idDesafio = Convert.ToInt32(values["IdDesafio"]);
-                    return new Notification()
-                    {
-                        UsuarioId = userId,
-                        Date = DateTime.Now,
-                        Action = $"/Desafios/Details/{idDesafio}",
-                        Message = $"tu desafío {values["NombreDesafio"]} " +
-                                  "ha aumentado su popularidad",
-                        Unread = true,
-                        Type = NotificationType.NotificationDesafioCalificado
-                    };
+                    UsuarioId = userId,
+                    Date = DateTime.Now,
+                    Action = $"/Desafios/Details/{values["IdDesafio"]}",
+                    Message = $"tu desafío {values["NombreDesafio"]} " +
+                              "ha aumentado su popularidad",
+                    Unread = true,
+                    Type = NotificationType.NotificationDesafioUsado
                 },
 
                 //Notificaciones Estudiante
                 [NotificationType.NotificationNuevaRevision]
-                = (userId, values) =>
+                = (userId, values) => new Notification
                 {
-                    var idDesafio = Convert.ToInt32(values["IdDesafio"]);
-                    return new Notification()
-                    {
-                        UsuarioId = userId,
-                        Date = DateTime.Now,
-                        Action = $"/Desafios/Details/{idDesafio}",
-                        Message = $"tu desafío {values["NombreDesafio"]} " +
-                                  "ha aumentado su popularidad",
-                        Unread = true,
-                        Type = NotificationType.NotificationDesafioCalificado
-                    };
+                    UsuarioId = userId,
+                    Date = DateTime.Now,
+                    Action = $"/Desafios/Details/{values["IdDesafio"]}",
+                    Message = "han calificado tu desafío" +
+                              $" {values["NombreDesafio"]} " +
+                              $"en el curso {values["NombreCurso"]}",
+                    Unread = true,
+                    Type = NotificationType.NotificationNuevaRevision
+                },
+                [NotificationType.NotificationMatriculaAnulada]
+                = (userId, values) => new Notification
+                {
+                    UsuarioId = userId,
+                    Date = DateTime.Now,
+                    Action= "/Estudiante/Cursos",
+                    Message = "¡Tu matricula de curso " +
+                              $"{values["NombreCurso"]} " +
+                              "ha sido eliminada!",
+                    Unread =  true,
+                    Type = NotificationType.NotificationMatriculaAnulada
+                              
                 }
-
             };
 
         private static readonly Dictionary<NotificationType,

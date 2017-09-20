@@ -287,6 +287,7 @@ namespace Hera.Data
             if (curso.Password.Equals(password))
             {
                 Add<Rel_CursoEstudiantes>(model);
+
                 Do_PushNotification(NotificationType.NotificationNuevoEstudiante,
                     curso.Profesor.UsuarioId,
                     new Dictionary<string, string>()

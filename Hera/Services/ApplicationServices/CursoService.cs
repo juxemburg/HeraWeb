@@ -7,6 +7,7 @@ using Hera.Data;
 using Hera.Models.EntitiesViewModels;
 using Hera.Models.EntitiesViewModels.Cursos;
 using Hera.Models.EntitiesViewModels.ProfesorCursos;
+using Hera.Services.UserServices;
 using Hera.Services.UtilServices;
 
 namespace Hera.Services.ApplicationServices
@@ -15,11 +16,14 @@ namespace Hera.Services.ApplicationServices
     {
         private readonly IDataAccess _data;
         private readonly ColorService _clrService;
+        private readonly UserService _usrService;
 
-        public CursoService(IDataAccess data, ColorService clrService)
+        public CursoService(IDataAccess data,
+            ColorService clrService, UserService usrService)
         {
             _data = data;
             _clrService = clrService;
+            _usrService = usrService;
         }
 
 
@@ -107,7 +111,7 @@ namespace Hera.Services.ApplicationServices
                 if (await _data.Exist_Desafio(model.DesafioId, model.Id))
                     throw new ApplicationServicesException(
                         "El desafío ya se encuentra en el curso");
-                
+
                 var desafio = await _data.Find_Desafio(model.DesafioId);
                 var profesor = await _data
                     .Find_Profesor(desafio.ProfesorId);
@@ -185,6 +189,16 @@ namespace Hera.Services.ApplicationServices
                 return false;
             if (!await _data.Exist_Estudiante_Curso(estudianteId, cursoId))
                 return false;
+
+            var estUserId = (await _usrService
+                    .Get_EstudianteUserId(estudianteId)).GetValueOrDefault();
+            var curso = await _data.Find_Curso(cursoId);
+
+            _data.Do_PushNotification(NotificationType.NotificationMatriculaAnulada,
+                estUserId, new Dictionary<string, string>
+                {
+                    ["NombreCurso"] = curso.Nombre
+                });
 
             var rel = await _data
                 .Find_Rel_CursoEstudiantes(cursoId, estudianteId);

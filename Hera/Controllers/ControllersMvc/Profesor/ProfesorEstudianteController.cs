@@ -49,7 +49,7 @@ namespace Hera.Controllers.ControllersMvc.Profesor
             {
                 var profId = _usrService.Get_ProfesorId(User.Claims);
                 var res = await _ctrlService.Do_Calificar(profId, idCurso,
-                    idEstudiante, model);
+                    idEstudiante, idDesafio, model);
                 if (!res)
                     this.SetAlerts("error-alerts", "Error al insertar " +
                                                    "la calificación");

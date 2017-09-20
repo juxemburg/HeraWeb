@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Entities.Calificaciones;
 using Entities.Cursos;
 using Entities.Desafios;
+using Entities.Notifications;
 using Hera.Data;
 using Hera.Models.EntitiesViewModels.Desafios;
 using Hera.Models.EntitiesViewModels.EstudianteDesafio;
@@ -12,6 +13,7 @@ using Hera.Models.EntitiesViewModels.Evaluacion;
 using Hera.Models.EntitiesViewModels.ProfesorCursos;
 using Hera.Models.EntitiesViewModels.ProfesorEstudiante;
 using Hera.Models.UtilityViewModels;
+using Hera.Services.UserServices;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,9 +22,11 @@ namespace Hera.Services.ApplicationServices
     public class ProfesorService
     {
         private readonly IDataAccess _data;
+        private readonly UserService _usrService;
 
-        public ProfesorService(IDataAccess data)
+        public ProfesorService(IDataAccess data, UserService usrService)
         {
+            _usrService = usrService;
             _data = data;
         }
 
@@ -167,13 +171,26 @@ namespace Hera.Services.ApplicationServices
         }
 
         public async Task<bool> Do_Calificar(int idProf, int idCurso,
-            int idEstudiante, CalificarViewModel model)
+            int idEstudiante,int idDesafio, CalificarViewModel model)
         {
-            if (!await Do_validationEstudiante(idProf, idCurso,
-                idEstudiante))
+            
+            if (!await _data.Exist_Desafio(idDesafio, idCurso, idProf))
                 return false;
 
+            var estUserId = (await _usrService
+                .Get_EstudianteUserId(idEstudiante)).GetValueOrDefault();
+            var desafio = await _data.Find_Desafio(idDesafio);
+            var curso = await _data.Find_Curso(idCurso);
+
             _data.Add(model.Map());
+            _data.Do_PushNotification(
+                NotificationType.NotificationDesafioCalificado, estUserId,
+                new Dictionary<string, string>
+                {
+                    ["IdDesafio"] = $"{desafio.Id}",
+                    ["NombreDesafio"] = desafio.Nombre,
+                    ["NombreCurso"] = curso.Nombre
+                });
             return await _data.SaveAllAsync();
         }
 
