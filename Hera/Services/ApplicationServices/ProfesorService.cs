@@ -187,7 +187,8 @@ namespace Hera.Services.ApplicationServices
                 NotificationType.NotificationDesafioCalificado, estUserId,
                 new Dictionary<string, string>
                 {
-                    ["IdDesafio"] = $"{desafio.Id}",
+                    ["IdCurso"] = $"{idCurso}",
+                    ["IdDesafio"] = $"{idDesafio}",
                     ["NombreDesafio"] = desafio.Nombre,
                     ["NombreCurso"] = curso.Nombre
                 });

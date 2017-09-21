@@ -1,4 +1,4 @@
-@model Calificacion
+﻿@model Calificacion
 @{ 
     string _value, _value2, _value3;
 
@@ -10,9 +10,9 @@
     }
     else
     {
-        _value = (Model.CalificacionCualitativa.Completada) ? "success" : "danger";
-        _value2 = (Model.CalificacionCualitativa.Completada) ? "info" : "warning";
-        _value3 = (Model.CalificacionCualitativa.Completada) ? "Completada" : "Con errores";
+        _value = (Model.CalificacionCualitativa.Completada) ? "success" : "warning";
+        _value2 = (Model.CalificacionCualitativa.Completada) ? "info" : "danger";
+        _value3 = (Model.CalificacionCualitativa.Completada) ? "Completada" : "¡Con errores!";
     }
 }
 
@@ -28,9 +28,28 @@
         </span>
     </div>
     <div class="timeline-body">
+        <h6 class="title">
+            Datos de la calificación
+        </h6>
         <p>
             <span class="title">Tiempo: </span>
             @Math.Round(Model.Duracion.TotalMinutes,2) minutos
+        </p>
+        <p>
+            <span class="title">Bloques usados: </span>
+            @Model.ResultadoGeneral.NumBloques
+        </p>
+        <p>
+            <span class="title">Número de Scripts: </span>
+            @Model.ResultadoGeneral.NumScripts
+        </p>
+        <p class="text-danger">
+            <span class="title">Scripts duplicados: </span>
+            @Model.ResultadoGeneral.DuplicateScriptsCount
+        </p>
+        <p class="text-danger">
+            <span class="title">Código muerto: </span>
+            @Model.ResultadoGeneral.DeadCodeCount
         </p>
         @if (Model.CalificacionCualitativa != null)
         {

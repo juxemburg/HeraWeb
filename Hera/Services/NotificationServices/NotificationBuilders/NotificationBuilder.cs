@@ -83,7 +83,7 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                 {
                     UsuarioId = userId,
                     Date = DateTime.Now,
-                    Action = $"/Desafios/Details/{values["IdDesafio"]}",
+                    Action = $"/Estudiante/Curso/{values["IdCurso"]}/DesafioProgreso/{values["IdDesafio"]}",
                     Message = "han calificado tu desafío" +
                               $" {values["NombreDesafio"]} " +
                               $"en el curso {values["NombreCurso"]}",
