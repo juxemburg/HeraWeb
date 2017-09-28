@@ -72,10 +72,12 @@ namespace Hera.Data
         IQueryable<Curso> GetAll_CursosEstudiante(int idEst,
             string courseName = "",
             bool inverse = false);
-        Task<Curso> Find_Curso(int id);
+        Task<List<string>> Search_Criterios_Curso(int idCurso);
+            Task<Curso> Find_Curso(int id);
         Task<Curso> Find_Curso_Public(int id);
         Task ChangeStarterDesafio(int cursoId, int oldId, int newId);
         Task Delete_Curso(int id);
+        Task<bool> The_Course_Is_Over(int idEstudiante, int idCurso);
         
 
         //Rel_Cursos_Estudiantes

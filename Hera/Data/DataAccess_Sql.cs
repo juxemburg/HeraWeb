@@ -213,6 +213,34 @@ namespace Hera.Data
                 r.DesafioId == desafioId);
         }
 
+        //**************************************************
+        //  BUSCAR LOS DESAFIOS DE UN CURSO
+        public async 
+            Task<List<string>> Search_Criterios_Curso(int idCurso)
+        {
+            var query = _context.Rel_Cursos_Desafios
+                .Where(rel => rel.CursoId == idCurso)
+                .Include(rel => rel.Desafio)
+                .ThenInclude(d => d.InfoDesafio)
+                .SelectMany(rel => rel.Desafio.InfoDesafio.ActiveProperties())
+                .Distinct();
+            return await query.ToListAsync();       
+        }
+        //El curso ya esta finalizado ?
+        public async
+        Task<bool> The_Course_Is_Over(int idEstudiante, int idCurso) {
+
+            //Cuantos desafios tiene el curso
+            var NoDesafiosCurso = await _context.Rel_Cursos_Desafios
+                .Where(rel => rel.CursoId == idCurso).CountAsync();
+
+            var NoCalificacionesDesafio = await _context.RegistroCalificaiones
+                .Where(reg => reg.CursoId == idCurso && reg.EstudianteId == idEstudiante)
+                .GroupBy(reg => reg.DesafioId).CountAsync();
+
+            return NoDesafiosCurso == NoCalificacionesDesafio;
+        }
+
         public async Task<Desafio> Find_Desafio(int id)
         {
             return await _context.Desafios

@@ -77,7 +77,7 @@ namespace Hera.Controllers.ControllersMvc
                             idCurso,
                             idDesafio,
                             idCalificacion = res
-                        });
+                        });                
             }
             catch (ApplicationServicesException e)
             {
@@ -97,7 +97,8 @@ namespace Hera.Controllers.ControllersMvc
             int idDesafio, int idCalificacion)
         {
             var idEstudiante = _usrService.Get_EstudianteId(User.Claims);
-
+            this.SetAlerts("warning-alerts",await _ctrlService.Esta_Finalizado_Curso(idEstudiante, idCurso));
+            this.GetAlerts();
             var model = await _ctrlService.Get_DesafioCompletadoViewModel(
                 idEstudiante, idCurso, idDesafio, idCalificacion);
             return (model == null)

@@ -109,7 +109,8 @@ namespace Hera.Services.ApplicationServices
             model.Desafios = model.Desafios
                 .OrderByDescending(d => d.Initial)
                 .ToList();
-            return new ProfesorCursoViewModel(model, registros);
+            var criterios = await _data.Search_Criterios_Curso(cursoId);
+            return new ProfesorCursoViewModel(model, registros, criterios);
         }
 
         public async Task<DesafioCursoViewModel> Get_Desafio(int profId,

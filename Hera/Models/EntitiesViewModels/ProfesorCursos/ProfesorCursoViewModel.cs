@@ -19,7 +19,8 @@ namespace Hera.Models.EntitiesViewModels.ProfesorCursos
 
         public ProfesorCursoViewModel(Curso curso, 
             Dictionary<Tuple<int, int>,
-                List<RegistroCalificacion>> registroCurso)
+                List<RegistroCalificacion>> registroCurso,
+            List<string> criterios)
         {
             Curso = curso;
             RegistrosCurso = registroCurso;
@@ -51,6 +52,7 @@ namespace Hera.Models.EntitiesViewModels.ProfesorCursos
 
             Info = new InfoCursoViewModel()
             {
+                CriteriosEvaluados = criterios,
                 DistSexo = new List<SingleValueSeriesViewModel>()
                 {
                     new SingleValueSeriesViewModel()

@@ -15,7 +15,7 @@ namespace Hera.Models.AccountViewModels
             {
                 UsuarioId = usuarioId,
                 Nombres = this.Nombres,
-                Apellidos = this.Apellidos
+                Apellidos = this.Apellidos                
             };
         }
     }

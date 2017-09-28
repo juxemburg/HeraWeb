@@ -192,6 +192,12 @@ namespace Hera.Services.ApplicationServices
             return await _data.SaveAllAsync();
         }
 
+        //Servicio para obtener los criterios que un curso evalua
+        public async Task<bool> Get_Criterios_Curso(int idCurso) {
+            var infoDesafios = _data.Search_Criterios_Curso(idCurso);          
+            return false;
+        }
+
         private async Task<bool> Do_validateProfesor(int profId, int cursoId)
         {
             return await _data.Exist_Profesor_Curso(profId, cursoId);

@@ -165,6 +165,15 @@ namespace Hera.Services.ApplicationServices
             _data.Add<Calificacion>(model);
             return await _data.SaveAllAsync();
         }
+
+        public async Task<string> Esta_Finalizado_Curso( int idEst, int idCurso) {
+            bool res = await _data.The_Course_Is_Over(idEst, idCurso);
+            var curso = await _data.Find_Curso(idCurso);
+            if (res)
+                return "Tu curso" + curso.Nombre + " Ha sido finalizado con exito";
+            else
+                return "Aún te quedan unos cuanto desafios por terminar, sigue adelante";
+        }
     }
 }
 

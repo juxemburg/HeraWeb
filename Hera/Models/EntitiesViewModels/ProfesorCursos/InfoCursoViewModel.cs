@@ -8,6 +8,8 @@ namespace Hera.Models.EntitiesViewModels.ProfesorCursos
     {
         public List<SingleValueSeriesViewModel> DistSexo { get; set; }
         public Dictionary<string, MultiValueSeriesViewModel> ActividadCurso { get; set; }
+        public List<string> CriteriosEvaluados { get; set; }
+
 
         
 
@@ -22,7 +24,7 @@ namespace Hera.Models.EntitiesViewModels.ProfesorCursos
         {
             return ChartUtil.GetLineChartViewModel(ActividadCurso, 
                 "chart-activity", clss);
-        }
+        }        
 
         
     }
