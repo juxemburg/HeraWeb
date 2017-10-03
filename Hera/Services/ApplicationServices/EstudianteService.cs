@@ -12,6 +12,7 @@ using Hera.Models.UtilityViewModels;
 using Hera.Services.DesafiosServices;
 using HeraScratch.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Hera.Models.ServicesViewModels.Estudiante;
 
 namespace Hera.Services.ApplicationServices
 {
@@ -166,13 +167,15 @@ namespace Hera.Services.ApplicationServices
             return await _data.SaveAllAsync();
         }
 
-        public async Task<string> Esta_Finalizado_Curso( int idEst, int idCurso) {
-            bool res = await _data.The_Course_Is_Over(idEst, idCurso);
+        public async Task<CursoCompletadoViewModel> Esta_Finalizado_Curso( int idEst, int idCurso) {
+            CursoCompletadoViewModel cursoCompletado = new CursoCompletadoViewModel();
+            cursoCompletado.Estado = await _data.The_Course_Is_Over(idEst, idCurso);
             var curso = await _data.Find_Curso(idCurso);
-            if (res)
-                return "Tu curso" + curso.Nombre + " Ha sido finalizado con exito";
+            if (cursoCompletado.Estado)
+                cursoCompletado.Mensaje = "Tu curso " + curso.Nombre + " Ha sido finalizado con exito";
             else
-                return "Aún te quedan unos cuanto desafios por terminar, sigue adelante";
+                cursoCompletado.Mensaje = "Aún te quedan unos cuantos desafios por terminar en el curos"+ curso.Nombre +", sigue adelante";
+            return cursoCompletado;
         }
     }
 }

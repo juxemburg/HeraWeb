@@ -97,13 +97,20 @@ namespace Hera.Controllers.ControllersMvc
             int idDesafio, int idCalificacion)
         {
             var idEstudiante = _usrService.Get_EstudianteId(User.Claims);
-            this.SetAlerts("warning-alerts",await _ctrlService.Esta_Finalizado_Curso(idEstudiante, idCurso));
-            this.GetAlerts();
+            var cursoTerminado = await _ctrlService.Esta_Finalizado_Curso(idEstudiante, idCurso);
             var model = await _ctrlService.Get_DesafioCompletadoViewModel(
                 idEstudiante, idCurso, idDesafio, idCalificacion);
-            return (model == null)
+            if (cursoTerminado.Estado)
+            {
+                return View("~/Views/EstudianteCurso/CursoCompletado.cshtml", cursoTerminado);
+            }
+            else {                
+                this.SetAlerts("warning-alerts", cursoTerminado.Mensaje);
+                this.GetAlerts();
+                return (model == null)
                 ? (IActionResult)NotFound()
                 : View(model);
+            }
         }
 
         [HttpGet("{idDesafio:int}")]
