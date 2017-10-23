@@ -150,7 +150,7 @@
                             </th>
                             @foreach (var item in Model.Curso.Desafios)
                             {
-                            <th>
+                            <th class="text-center">
                                 <a asp-action="Desafio" asp-route-idDesafio="@item.DesafioId">
                                     @item.Desafio.Nombre
                                     @if (item.Initial)
@@ -204,8 +204,8 @@
                                     {
                                         var reg = Model.RegistrosCurso[
                                             new Tuple<int, int>(desafio.DesafioId, item.EstudianteId)];
-                                        <td>
-                                            @if (reg.All(r => r.CalificacionCualitativa != null))
+                                        <td class="text-center">
+                                            @if (reg.All(r => r.Valorada))
                                             {
                                                 <a class="btn btn-success btn-xs"
                                                    asp-action="Calificar"

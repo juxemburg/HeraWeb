@@ -1,13 +1,15 @@
-﻿@model CreateCalificacionCualitativaViewModel
+﻿@model CalificacionCualitativa
 
 <form asp-action="EditCalificar" asp-controller="ProfesorEstudiante"
+      asp-route-idCurso='@ViewData["idCurso"]' 
+      asp-route-idDesafio='@ViewData["idDesafio"]'
+      asp-route-idEstudiante='@ViewData["idEstudiante"]'
       class="form-horizontal">
     <div asp-validation-summary="All"></div>
     <div>
         <input asp-for="Id" type="hidden" />
-        <input asp-for="CursoId" type="hidden" />
-        <input asp-for="EstudianteId" type="hidden" />
-        <input asp-for="DesafioId" type="hidden" />
+        <input asp-for="CalificacionId" type="hidden" />
+        <input asp-for="FechaRegistro" type="hidden" />
     </div>
 
     <div class="">
@@ -15,7 +17,7 @@
             <label>
                 <input asp-for="Completada" type="checkbox" />
                 <span asp-validation-for="Completada"></span>
-                @Html.DisplayNameFor(Model => Model.Completada)
+                ¿El estudiante completó el desafío de manera adecuada?
             </label>
         </div>
     </div>

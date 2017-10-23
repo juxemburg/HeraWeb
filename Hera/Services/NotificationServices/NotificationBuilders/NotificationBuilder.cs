@@ -12,9 +12,9 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
             Func<int, Dictionary<string, string>, Notification>>
             FactoryFunctions
             = new Dictionary<NotificationType,
-                Func<int, Dictionary<string, string>, Notification>>()
+                Func<int, Dictionary<string, string>, Notification>>
             {
-                [NotificationType.Notification_NuevaCalificacion]
+                [NotificationType.NotificationNuevaCalificacion]
                 = (userId, values) =>
                 {
                     var idCurso = Convert.ToInt32(values["IdCurso"]);
@@ -30,11 +30,11 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                         "ha realizado una nueva calificación en " +
                         $"el curso {values["NombreCurso"]}",
                         Unread = true,
-                        Type = NotificationType.Notification_NuevaCalificacion
+                        Type = NotificationType.NotificationNuevaCalificacion
                     };
 
                 },
-                [NotificationType.Notification_NuevoEstudiante]
+                [NotificationType.NotificationNuevoEstudiante]
                 = (userId, values) =>
                 {
                     var idCurso = Convert.ToInt32(values["IdCurso"]);
@@ -49,40 +49,59 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                         Message = $"{values["NombreEstudiante"]} se ha matriculado en tu" +
                             $"curso {values["NombreCurso"]}!",
                         Unread = true,
-                        Type = NotificationType.Notification_NuevoEstudiante
+                        Type = NotificationType.NotificationNuevoEstudiante
                     };
 
                 },
-                [NotificationType.Notification_DesafioCalificado]
-                = (userId, values) =>
+                [NotificationType.NotificationDesafioCalificado]
+                = (userId, values) => new Notification()
                 {
-                    var idDesafio = Convert.ToInt32(values["IdDesafio"]);
-                    return new Notification()
-                    {
-                        UsuarioId = userId,
-                        Date = DateTime.Now,
-                        Action = $"/Desafios/Details/{idDesafio}",
-                        Message = "Han realizado una nueva " +
-                                  "calificación en " +
-                                  $"tu desafío {values["NombreDesafio"]}",
-                        Unread = true,
-                        Type = NotificationType.Notification_DesafioCalificado
-                    };
+                    UsuarioId = userId,
+                    Date = DateTime.Now,
+                    Action = $"/Desafios/Details/{values["IdDesafio"]}",
+                    Message = "Han realizado una nueva " +
+                              "calificación en " +
+                              $"tu desafío {values["NombreDesafio"]}",
+                    Unread = true,
+                    Type = NotificationType.NotificationDesafioCalificado
                 },
-                [NotificationType.Notification_DesafioUsado]
-                = (userId, values) =>
+                [NotificationType.NotificationDesafioUsado]
+                = (userId, values) => new Notification()
                 {
-                    var idDesafio = Convert.ToInt32(values["IdDesafio"]);
-                    return new Notification()
-                    {
-                        UsuarioId = userId,
-                        Date = DateTime.Now,
-                        Action = $"/Desafios/Details/{idDesafio}",
-                        Message = $"tu desafío {values["NombreDesafio"]} " +
-                                  "ha aumentado su popularidad",
-                        Unread = true,
-                        Type = NotificationType.Notification_DesafioCalificado
-                    };
+                    UsuarioId = userId,
+                    Date = DateTime.Now,
+                    Action = $"/Desafios/Details/{values["IdDesafio"]}",
+                    Message = $"tu desafío {values["NombreDesafio"]} " +
+                              "ha aumentado su popularidad",
+                    Unread = true,
+                    Type = NotificationType.NotificationDesafioUsado
+                },
+
+                //Notificaciones Estudiante
+                [NotificationType.NotificationNuevaRevision]
+                = (userId, values) => new Notification
+                {
+                    UsuarioId = userId,
+                    Date = DateTime.Now,
+                    Action = $"/Estudiante/Curso/{values["IdCurso"]}/DesafioProgreso/{values["IdDesafio"]}",
+                    Message = "han calificado tu desafío" +
+                              $" {values["NombreDesafio"]} " +
+                              $"en el curso {values["NombreCurso"]}",
+                    Unread = true,
+                    Type = NotificationType.NotificationNuevaRevision
+                },
+                [NotificationType.NotificationMatriculaAnulada]
+                = (userId, values) => new Notification
+                {
+                    UsuarioId = userId,
+                    Date = DateTime.Now,
+                    Action = "/Estudiante/Cursos",
+                    Message = "¡Tu matricula de curso " +
+                              $"{values["NombreCurso"]} " +
+                              "ha sido eliminada!",
+                    Unread = true,
+                    Type = NotificationType.NotificationMatriculaAnulada
+
                 }
             };
 
@@ -91,7 +110,7 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
             GroupFunctions =
             new Dictionary<NotificationType, Func<List<Notification>, NotificationViewModel>>()
             {
-                [NotificationType.Notification_NuevaCalificacion] =
+                [NotificationType.NotificationNuevaCalificacion] =
                 (data) => new NotificationViewModel()
                 {
                     Action = data.First().Action,
@@ -100,7 +119,7 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                     Count = data.Count,
                     Date = data.Min(e => e.Date)
                 },
-                [NotificationType.Notification_NuevoEstudiante] =
+                [NotificationType.NotificationNuevoEstudiante] =
                 (data) => new NotificationViewModel()
                 {
                     Action = data.First().Action,
@@ -109,7 +128,7 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                     Count = data.Count,
                     Date = data.Min(e => e.Date)
                 },
-                [NotificationType.Notification_DesafioCalificado]
+                [NotificationType.NotificationDesafioCalificado]
                 = (data) => new NotificationViewModel()
                 {
                     Action = data.First().Action,
@@ -118,7 +137,7 @@ namespace Hera.Services.NotificationServices.NotificationBuilders
                     Count = data.Count,
                     Date = data.Min(d => d.Date)
                 },
-                [NotificationType.Notification_DesafioUsado]
+                [NotificationType.NotificationDesafioUsado]
                 = (data) => new NotificationViewModel()
                 {
                     Action = data.First().Action,

@@ -1,6 +1,9 @@
-﻿@model CalificacionCualitativaViewModel
+﻿@model CalificacionesViewModel
 @{
     ViewData["Title"] = "Calificar";
+    ViewData["idDesafio"] = Model.Registro.DesafioId;
+    ViewData["idCurso"] = Model.Registro.CursoId;
+    ViewData["idEstudiante"] = Model.Registro.EstudianteId;
 }
 
 @section Styles {
@@ -12,8 +15,11 @@
     <div class="container-fluid">
         <h2>
             <span class="title">Calificación</span> 
-            estudiante - @Model.NombreDesafio
+            @Model.NombreDesafio
         </h2>
+        <h4>
+            @Model.NombreEstudiante - @Model.NombreCurso
+        </h4>
         <div>
             <a asp-action="Details" 
                asp-controller="ProfesorCurso"
@@ -29,64 +35,72 @@
 
 <section class="section-gray section">
     <div class="container-fluid">
+    @foreach (var item in Model.Registro.Calificaciones)
+    {
+
         <div class="col-sm-4 col-md-3">
             <div class="card">
                 <div class="card-content">
-                    @if (!Model.Calificado)
-                    { 
+                    @if (item.CalificacionCualitativa == null)
+                    {
                         <h6 class="category text-warning">
                             Calificación
                             <i class="material-icons">priority_high</i>
                         </h6>
-                        <hr/>
-                        @Html.Partial("_AddCalificacionCualitativa", Model.FormModel)
+                        <hr />
+                        @Html.Partial("_AddCalificacionCualitativa",
+                       new CalificarViewModel(item.Id), ViewData)
                     }
                     else
                     {
                         <h6 class="category text-success">
-                            Calificado el:
-                            @Model.FormModel.FechaRegistro
+                            Calificado el: @item.CalificacionCualitativa.FechaRegistro
                             <i class="material-icons">done</i>
                         </h6>
-                        @Html.Partial("_EditCalificacionCualitativa", Model.FormModel)
-                        
+                        @Html.Partial("_EditCalificacionCualitativa",
+                            item.CalificacionCualitativa)
+
                     }
                 </div>
             </div>
+
         </div>
         <div class="col-sm-8 col-md-9">
-            @foreach (var item in Model.Registro.Calificaciones)
-            {
-                @await Html.PartialAsync("_ResultadoScratchPartial", item.ResultadoGeneral);
-                <div class="sub-card">
-                    <a asp-action="EvaluacionCompleta"
-                       asp-controller="ProfesorEstudiante"
-                       asp-route-idCurso="@item.CursoId"
-                       asp-route-idEstudiante="@item.EstudianteId"
-                       asp-route-idDesafio="@item.DesafioId"
-                       asp-route-idCalificacion="@item.Id"
-                       class="btn btn-white btn-round btn-raised pull-right">
-                        Ver más
-                        <i class="material-icons">description</i>
-                    </a>
-                     <a href="https://scratch.mit.edu/projects/@item.DirArchivo"
-                       target="_blank"
-                       class="btn btn-white btn-round btn-raised pull-right">
-                        Ver proyecto
-                        <i class="material-icons">launch</i>
-                    </a>
-                </div>
-            }
+            @await Html.PartialAsync("_ResultadoScratchPartial", item.ResultadoGeneral)
+            ;
+            <div class="sub-card">
+                <a asp-action="EvaluacionCompleta"
+                   asp-controller="ProfesorEstudiante"
+                   asp-route-idCurso="@item.CursoId"
+                   asp-route-idEstudiante="@item.EstudianteId"
+                   asp-route-idDesafio="@item.DesafioId"
+                   asp-route-idCalificacion="@item.Id"
+                   class="btn btn-white btn-round btn-raised pull-right">
+                    Ver más
+                    <i class="material-icons">description</i>
+                </a>
+                <a href="https://scratch.mit.edu/projects/@item.DirArchivo"
+                   target="_blank"
+                   class="btn btn-white btn-round btn-raised pull-right">
+                    Ver proyecto
+                    <i class="material-icons">launch</i>
+                </a>
+            </div>
         </div>
+    }
     </div>
 </section>
 
 
 
 @section Modals {
-    @foreach (var item in Model.Calificaciones)
+    @foreach (var cal in Model.CalificacionList)
     {
-        @await Html.PartialAsync("Evaluacion/_Modal_ResultadoEstudiantePartial", item);
-        @await Html.PartialAsync("Evaluacion/_Modal_ResultadoBloquesPartial", item.Calificacion.ResultadoGeneral)
+        @await Html.PartialAsync("Evaluacion/_Modal_ResultadoEstudiantePartial", cal)
+    }
+
+    @foreach (var item in Model.Registro.Calificaciones)
+    {
+        @await Html.PartialAsync("Evaluacion/_Modal_ResultadoBloquesPartial", item.ResultadoGeneral)
     }
 }

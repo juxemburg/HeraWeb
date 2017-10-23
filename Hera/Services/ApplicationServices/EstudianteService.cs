@@ -107,6 +107,28 @@ namespace Hera.Services.ApplicationServices
             return new CalificacionDesafioViewModel(model);
         }
 
+        public async Task<DesafioProgresoViewModel> Get_DesafioProgreso(
+            int estId, int cursoId, int desafioId)
+        {
+            var registro = await _data.Find_RegistroCalificacion(cursoId,
+                    estId, desafioId);
+            if(registro == null)
+                throw new ApplicationServicesException("");
+
+            var desafio = await _data.Find_Desafio(desafioId);
+            var curso = await _data.Find_Curso(cursoId);
+
+            return new DesafioProgresoViewModel
+            {
+                Calificaciones = registro.Calificaciones
+                    .Where(c => !c.EnCurso)
+                    .ToList(),
+                CursoId = cursoId,
+                NombreCurso = curso.Nombre,
+                NombreDesafio = desafio.Nombre
+            };
+        }
+
         public async Task<int> Do_CalificarDesafio(int estId,
             int idCurso, int idDesafio, string idProj)
         {
@@ -163,7 +185,7 @@ namespace Hera.Services.ApplicationServices
                 EstudianteId = idEst,
                 DesafioId = idDesafio
             };
-            _data.Add<Calificacion>(model);
+            _data.Add(model);
             return await _data.SaveAllAsync();
         }
 

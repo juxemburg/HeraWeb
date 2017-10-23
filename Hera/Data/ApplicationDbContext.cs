@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Hera.Models;
 using Entities.Usuarios;
 using Entities.Cursos;
 using Entities.Desafios;
-using Hera.Models.EntitiesViewModels;
 using Entities.Calificaciones;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Entities.Valoracion;
-using Entities.Notifications;
 
 namespace Hera.Data
 {
@@ -116,12 +109,6 @@ namespace Hera.Data
                 .HasKey(entity =>
                 new { entity.CursoId, entity.EstudianteId, entity.DesafioId });
 
-            builder.Entity<RegistroCalificacion>()
-                .HasOne(e => e.CalificacionCualitativa)
-                .WithOne(e2 => e2.RegistroCalificacion)
-                .HasForeignKey<CalificacionCualitativa>(entity =>
-                new { entity.CursoId, entity.EstudianteId, entity.DesafioId })
-                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<RegistroCalificacion>()
                 .HasMany(e => e.Calificaciones)
@@ -134,6 +121,12 @@ namespace Hera.Data
                 .WithMany(e2 => e2.Calificaciones)
                 .HasForeignKey(entity =>
                 new { entity.CursoId, entity.EstudianteId, entity.DesafioId })
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Calificacion>()
+                .HasOne(e => e.CalificacionCualitativa)
+                .WithOne(e2 => e2.Calificacion)
+                .HasForeignKey<CalificacionCualitativa>(c => c.CalificacionId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Calificacion>()

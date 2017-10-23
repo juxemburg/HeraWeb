@@ -1,10 +1,5 @@
 ﻿using Entities.Calificaciones;
-using Entities.Cursos;
 using Entities.Desafios;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Hera.Models.EntitiesViewModels.Evaluacion
 {

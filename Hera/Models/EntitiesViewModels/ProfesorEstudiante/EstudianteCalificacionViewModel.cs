@@ -1,20 +1,17 @@
-﻿using Entities.Calificaciones;
+﻿using System.Collections.Generic;
+using Entities.Calificaciones;
 using Entities.Cursos;
 using Entities.Usuarios;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Hera.Models.EntitiesViewModels
+namespace Hera.Models.EntitiesViewModels.ProfesorEstudiante
 {
     public class EstudianteCalificacionViewModel
     {
         public EstudianteCalificacionViewModel(Rel_CursoEstudiantes model)
         {
-            this.CursoId = model.CursoId;
-            this.Estudiante = model.Estudiante;
-            this.Calificaciones = model.Registros;
+            CursoId = model.CursoId;
+            Estudiante = model.Estudiante;
+            Calificaciones = model.Registros;
         }
 
         public int CursoId { get; set; }

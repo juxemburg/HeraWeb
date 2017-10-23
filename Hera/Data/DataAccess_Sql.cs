@@ -315,7 +315,8 @@ namespace Hera.Data
             if (curso.Password.Equals(password))
             {
                 Add<Rel_CursoEstudiantes>(model);
-                Do_PushNotification(NotificationType.Notification_NuevoEstudiante,
+
+                Do_PushNotification(NotificationType.NotificationNuevoEstudiante,
                     curso.Profesor.UsuarioId,
                     new Dictionary<string, string>()
                     {
@@ -540,6 +541,7 @@ namespace Hera.Data
                 && reg.DesafioId == desafioId)
                 .Include(reg => reg.Desafio)
                 .Include("Calificaciones.Resultados")
+                .Include("Calificaciones.CalificacionCualitativa")
                 .Include("Calificaciones.Resultados.Bloques")
                 .Include("Calificaciones.Resultados.IInfoScratch_General")
                 .Include("Calificaciones.Resultados.IInfoScratch_Sprite");
@@ -554,8 +556,8 @@ namespace Hera.Data
             var query =
                 (IQueryable<RegistroCalificacion>)
                 _context.RegistroCalificaiones
-                .Include(reg => reg.CalificacionCualitativa)
                 .Include(reg => reg.Calificaciones)
+                .ThenInclude(cal => cal.CalificacionCualitativa)
                 .Where(cal => !cal.Iniciada);
 
             if (cursoId != null)
@@ -607,7 +609,7 @@ namespace Hera.Data
             AddRange_ResultadoScratch(resultados);
             Edit<Calificacion>(calificacion);
             Do_PushNotification(
-                NotificationType.Notification_NuevaCalificacion,
+                NotificationType.NotificationNuevaCalificacion,
                 curso.Profesor.UsuarioId,
                 new Dictionary<string, string>()
                 {
@@ -655,11 +657,12 @@ namespace Hera.Data
             Find_CalificacionCualitativa(int estudianteId,
             int cursoId, int desafioId)
         {
-            var model = await _context.CalificacionesCualitativas
+            var model = await _context.Calificaciones
                 .Where(cal => cal.DesafioId == desafioId &&
                 cal.CursoId == cursoId && cal.EstudianteId == estudianteId)
+                .Include(cal => cal.CalificacionCualitativa)
                 .FirstOrDefaultAsync();
-            return model;
+            return model.CalificacionCualitativa;
         }
 
         //Resultados Scratch

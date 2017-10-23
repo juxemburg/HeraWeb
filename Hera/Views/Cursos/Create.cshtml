@@ -5,10 +5,10 @@
 }
 
 @section Styles {
-    <enviroment names="Development">
+    <environment names="Development">
         <link href="~/css/Autocomplete/easy-autocomplete.min.css" rel="stylesheet" />
         <link href="~/css/Autocomplete/easy-autocomplete.themes.min.css" rel="stylesheet" />
-    </enviroment>
+    </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/css/autocomplete.min.css" asp-append-version="true" />
     </environment>
@@ -23,7 +23,7 @@
 <section>
     <div class="container">
         <form asp-action="Create">
-            <div class="form">
+            <div>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="row">
                     <h3>Datos del curso</h3>
